@@ -9,6 +9,8 @@ CREATE TABLE "users" (
     "phone" TEXT,
     "username" TEXT,
     "password_hash" TEXT NOT NULL,
+    "hashed_refresh_token" TEXT,
+
     "profile" JSONB,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3),
@@ -86,6 +88,7 @@ CREATE TABLE "user_roles" (
 -- CreateTable
 CREATE TABLE "brands" (
     "id" SERIAL NOT NULL,
+    "merchant_id" INTEGER,
     "name" TEXT,
     "slug" TEXT,
     "description" TEXT,
@@ -395,3 +398,6 @@ ALTER TABLE "reviews" ADD CONSTRAINT "reviews_product_id_fkey" FOREIGN KEY ("pro
 
 -- AddForeignKey
 ALTER TABLE "reviews" ADD CONSTRAINT "reviews_merchant_id_fkey" FOREIGN KEY ("merchant_id") REFERENCES "merchants"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "brands" ADD CONSTRAINT "brands_merchant_id_fkey" FOREIGN KEY ("merchant_id") REFERENCES "merchants"("id") ON DELETE SET NULL ON UPDATE CASCADE;
