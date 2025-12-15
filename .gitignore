@@ -6,6 +6,14 @@ tmp
 out-tsc
 
 # dependencies
+# Environment Files
+.env
+.env.development
+.env.production
+.env.test
+.env.local
+
+# Node modules
 node_modules
 
 # IDEs and editors
@@ -46,3 +54,4 @@ Thumbs.db
 .angular
 
 vitest.config.*.timestamp*
+/generated/prisma

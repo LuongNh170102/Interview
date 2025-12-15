@@ -1,0 +1,465 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// --- CORE IDENTITY & ACCESS MANAGEMENT ---
+
+model User {
+  id            Int       @id @default(autoincrement())
+  externalId    String    @unique @default(uuid()) @map("external_id") @db.Uuid
+  email         String    @unique
+  phone         String?
+  username      String?
+  passwordHash  String    @map("password_hash")
+  hashedRefreshToken String? @map("hashed_refresh_token")
+  profile       Json?
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime? @updatedAt @map("updated_at")
+  lastSeenAt    DateTime? @map("last_seen_at")
+
+  // Relations
+  userRoles     UserRole[]
+  ownedAgencies Agency[]  @relation("AgencyOwner")
+  carts         Cart[]
+  courier       Courier?
+  orders        Order[]
+  reviews       Review[]
+
+  @@map("users")
+}
+
+model Role {
+  id          Int      @id @default(autoincrement())
+  name        String   @unique // e.g., 'merchant_admin'
+  scope       RoleScope // Enum: PLATFORM, MERCHANT
+  description String?
+  
+  // Relations
+  permissions RolePermission[]
+  userRoles   UserRole[]
+  
+  @@map("roles")
+}
+
+model Permission {
+  id          Int      @id @default(autoincrement())
+  resource    String   // e.g., 'product', 'order'
+  action      String   // e.g., 'create', 'read', 'delete'
+  description String?
+  
+  // Relations
+  roles       RolePermission[]
+
+  @@unique([resource, action])
+  @@map("permissions")
+}
+
+model RolePermission {
+  roleId       Int      @map("role_id")
+  permissionId Int      @map("permission_id")
+  description  String?
+  
+  role       Role       @relation(fields: [roleId], references: [id])
+  permission Permission @relation(fields: [permissionId], references: [id])
+
+  @@id([roleId, permissionId])
+  @@map("role_permissions")
+}
+
+enum RoleScope {
+  PLATFORM
+  MERCHANT
+}
+
+model UserRole {
+  id        Int      @id @default(autoincrement())
+  userId    Int      @map("user_id")
+  roleId    Int      @map("role_id")
+  
+  // Scopes
+  merchantId Int?    @map("merchant_id")
+  agencyId   Int?    @map("agency_id")
+  brandId    Int?    @map("brand_id")
+  
+  createdAt DateTime @default(now()) @map("created_at")
+
+  // Relations
+  user     User      @relation(fields: [userId], references: [id])
+  role     Role      @relation(fields: [roleId], references: [id])
+  
+  merchant Merchant? @relation(fields: [merchantId], references: [id])
+  agency   Agency?   @relation(fields: [agencyId], references: [id])
+  brand    Brand?    @relation(fields: [brandId], references: [id])
+
+  @@unique([userId, roleId, merchantId, agencyId, brandId])
+  @@map("user_roles")
+}
+
+model Agency {
+  id          Int      @id @default(autoincrement())
+  externalId  String   @unique @default(uuid()) @map("external_id") @db.Uuid
+  name        String
+  taxCode     String?  @map("tax_code")
+  bankAccount String?  @map("bank_account")
+  
+  // Contact Info
+  address     String?  @db.Text
+  phone       String?
+  email       String?
+  logo        String?
+  status      String   @default("PENDING") // ACTIVE, INACTIVE, PENDING
+
+  // Ownership
+  ownerId     Int?     @map("owner_id")
+  owner       User?    @relation("AgencyOwner", fields: [ownerId], references: [id])
+
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime? @updatedAt @map("updated_at")
+  
+  brands      Brand[]
+  merchants   Merchant[]
+  userRoles   UserRole[]
+
+  @@map("agencies")
+}
+
+model Brand {
+  id          Int     @id @default(autoincrement())
+  externalId  String  @unique @default(uuid()) @map("external_id") @db.Uuid
+  name        String?
+  slug        String? @unique
+  description String? @db.Text
+  metadata    Json?
+  
+  agencyId    Int?    @map("agency_id")
+
+  // Relations
+  agency     Agency?  @relation(fields: [agencyId], references: [id])
+  merchants  Merchant[]
+  categories BrandCategory[] 
+  userRoles  UserRole[] 
+
+  @@map("brands")
+}
+
+model Category {
+  id       Int     @id @default(autoincrement())
+  externalId String @unique @default(uuid()) @map("external_id") @db.Uuid
+  name     String?
+  parentId Int?    @map("parent_id")
+  slug     String?
+
+  // Relations
+  parent   Category?  @relation("CategoryToCategory", fields: [parentId], references: [id])
+  children Category[] @relation("CategoryToCategory")
+  
+  brands   BrandCategory[]
+
+  @@map("categories")
+}
+
+model BrandCategory {
+  brandId     Int      @map("brand_id")
+  categoryId  Int      @map("category_id")
+  
+  isFeatured  Boolean  @default(false) @map("is_featured")
+  displayOrder Int     @default(0) @map("display_order")
+
+  brand       Brand    @relation(fields: [brandId], references: [id])
+  category    Category @relation(fields: [categoryId], references: [id])
+
+  @@id([brandId, categoryId])
+  @@map("brand_categories")
+}
+
+model Tag {
+  id          Int      @id @default(autoincrement())
+  code        String   @unique // e.g., 'PREMIUM', 'PARTNER'
+  name        String
+  icon        String?
+  color       String?
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime? @updatedAt @map("updated_at")
+  
+  merchants   MerchantTag[]
+
+  @@map("tags")
+}
+
+model MerchantTag {
+  merchantId  Int      @map("merchant_id")
+  tagId       Int      @map("tag_id")
+  description String?
+  
+  merchant    Merchant @relation(fields: [merchantId], references: [id])
+  tag         Tag      @relation(fields: [tagId], references: [id])
+
+  @@id([merchantId, tagId])
+  @@map("merchant_tags")
+}
+
+model Merchant {
+  id          Int      @id @default(autoincrement())
+  externalId  String   @unique @default(uuid()) @map("external_id") @db.Uuid
+  name        String
+  
+  // Ownership & Branding
+  brandId     Int?     @map("brand_id")
+  agencyId    Int?     @map("agency_id")
+  
+  address     String?  @db.Text
+  latitude    Float?
+  longitude   Float?
+  phone       String?
+  status      String?  // 'active' | 'inactive' | 'suspended'
+  metadata    Json?
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime? @updatedAt @map("updated_at")
+
+  // Relations
+  brand        Brand?         @relation(fields: [brandId], references: [id])
+  agency       Agency?        @relation(fields: [agencyId], references: [id])
+  
+  tags         MerchantTag[]
+  products     Product[]
+  menus        Menu[]
+  carts        Cart[]
+  promotions   Promotion[]
+  shippingFees ShippingFee[]
+  orders       Order[]
+  reviews      Review[]
+  userRoles    UserRole[]
+
+  @@map("merchants")
+}
+
+// --- PRODUCT & MENU ---
+
+model Menu {
+  id          Int     @id @default(autoincrement())
+  merchantId  Int     @map("merchant_id")
+  name        String? // e.g. "Main Menu", "Lunch Menu"
+  isActive    Boolean @default(true) @map("is_active")
+  description String? @db.Text
+
+  // Relations
+  merchant Merchant      @relation(fields: [merchantId], references: [id])
+  sections MenuSection[]
+
+  @@map("menus")
+}
+
+model MenuSection {
+  id           Int     @id @default(autoincrement())
+  menuId       Int     @map("menu_id")
+  name         String  // e.g. "Appetizers", "Drinks"
+  displayOrder Int     @default(0) @map("display_order")
+  
+  // Relations
+  menu     Menu      @relation(fields: [menuId], references: [id])
+  products Product[]
+
+  @@map("menu_sections")
+}
+
+model Product {
+  id          Int      @id @default(autoincrement())
+  externalId  String   @unique @default(uuid()) @map("external_id") @db.Uuid
+  merchantId  Int      @map("merchant_id")
+  
+  // Menu Organization
+  sectionId   Int?     @map("section_id")
+  
+  name        String
+  description String?  @db.Text
+  price       Decimal? @db.Decimal(12, 2)
+  currency    String?  @default("VND")
+  sku         String?
+  stock       Int?
+  isActive    Boolean? @default(true) @map("is_active")
+  metadata    Json?
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime? @updatedAt @map("updated_at")
+
+  // Relations
+  merchant          Merchant          @relation(fields: [merchantId], references: [id])
+  section           MenuSection?      @relation(fields: [sectionId], references: [id])
+  
+  variants          ProductVariant[]
+  cartItems         CartItem[]
+  orderItems        OrderItem[]
+  reviews           Review[]
+
+  @@map("products")
+}
+
+model ProductVariant {
+  id        Int      @id @default(autoincrement())
+  productId Int      @map("product_id")
+  name      String?
+  price     Decimal? @db.Decimal(12, 2)
+  stock     Int?
+  metadata  Json?
+
+  // Relations
+  product Product @relation(fields: [productId], references: [id])
+
+  @@map("product_variants")
+}
+
+// --- ORDER & CART ---
+
+model Cart {
+  id          Int      @id @default(autoincrement())
+  userId      Int      @map("user_id")
+  merchantId  Int      @map("merchant_id")
+  totalAmount Decimal? @map("total_amount") @db.Decimal(12, 2)
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime? @updatedAt @map("updated_at")
+
+  // Relations
+  user      User       @relation(fields: [userId], references: [id])
+  merchant  Merchant   @relation(fields: [merchantId], references: [id])
+  cartItems CartItem[]
+
+  @@map("carts")
+}
+
+model CartItem {
+  id        Int      @id @default(autoincrement())
+  cartId    Int      @map("cart_id")
+  productId Int      @map("product_id")
+  variantId Int?     @map("variant_id")
+  quantity  Int?
+  price     Decimal? @db.Decimal(12, 2)
+  total     Decimal? @db.Decimal(12, 2)
+  metadata  Json?
+
+  // Relations
+  cart    Cart    @relation(fields: [cartId], references: [id])
+  product Product @relation(fields: [productId], references: [id])
+
+  @@map("cart_items")
+}
+
+model Courier {
+  id              Int      @id @default(autoincrement())
+  userId          Int      @unique @map("user_id")
+  name            String?
+  phone           String?
+  status          String?  // 'available' | 'busy' | 'offline'
+  vehicleType     String?  @map("vehicle_type") // 'bike' | 'motorbike' | 'car'
+  currentLocation Json?    @map("current_location")
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime? @updatedAt @map("updated_at")
+
+  // Relations
+  user   User    @relation(fields: [userId], references: [id])
+  orders Order[]
+
+  @@map("couriers")
+}
+
+model Promotion {
+  id             Int       @id @default(autoincrement())
+  merchantId     Int?      @map("merchant_id")
+  code           String?
+  description    String?   @db.Text
+  discountType   String?   @map("discount_type") // 'percentage' | 'fixed'
+  discountValue  Decimal?  @map("discount_value") @db.Decimal(12, 2)
+  minOrderAmount Decimal?  @map("min_order_amount") @db.Decimal(12, 2)
+  startAt        DateTime? @map("start_at")
+  endAt          DateTime? @map("end_at")
+  maxUses        Int?      @map("max_uses")
+  metadata       Json?
+
+  // Relations
+  merchant Merchant? @relation(fields: [merchantId], references: [id])
+  orders   Order[]
+
+  @@map("promotions")
+}
+
+model ShippingFee {
+  id          Int      @id @default(autoincrement())
+  merchantId  Int      @map("merchant_id")
+  minDistance Decimal? @map("min_distance")
+  maxDistance Decimal? @map("max_distance")
+  baseFee     Decimal? @map("base_fee") @db.Decimal(12, 2)
+  feePerKm    Decimal? @map("fee_per_km") @db.Decimal(12, 2)
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime? @updatedAt @map("updated_at")
+
+  // Relations
+  merchant Merchant @relation(fields: [merchantId], references: [id])
+
+  @@map("shipping_fees")
+}
+
+model Order {
+  id              Int      @id @default(autoincrement())
+  externalId      String   @unique @default(uuid()) @map("external_id") @db.Uuid
+  userId          Int      @map("user_id")
+  merchantId      Int      @map("merchant_id")
+  totalAmount     Decimal? @map("total_amount") @db.Decimal(12, 2)
+  currency        String?  @default("VND")
+  status          String?  // 'pending' | 'confirmed' | 'preparing' | 'delivering' | 'completed' | 'cancelled'
+  paymentStatus   String?  @map("payment_status") // 'pending' | 'paid' | 'failed' | 'refunded'
+  deliveryAddress Json?    @map("delivery_address")
+  courierId       Int?     @map("courier_id")
+  shippingFee     Decimal? @map("shipping_fee")
+  promotionId     Int?     @map("promotion_id")
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime? @updatedAt @map("updated_at")
+
+  // Relations
+  user      User       @relation(fields: [userId], references: [id])
+  merchant  Merchant   @relation(fields: [merchantId], references: [id])
+  courier   Courier?   @relation(fields: [courierId], references: [id])
+  promotion Promotion? @relation(fields: [promotionId], references: [id])
+  orderItems OrderItem[]
+
+  @@map("orders")
+}
+
+model OrderItem {
+  id        Int      @id @default(autoincrement())
+  orderId   Int      @map("order_id")
+  productId Int      @map("product_id")
+  variantId Int?     @map("variant_id")
+  quantity  Int?
+  price     Decimal? @db.Decimal(12, 2)
+  total     Decimal? @db.Decimal(12, 2)
+  metadata  Json?
+
+  // Relations
+  order   Order   @relation(fields: [orderId], references: [id])
+  product Product @relation(fields: [productId], references: [id])
+
+  @@map("order_items")
+}
+
+model Review {
+  id         Int      @id @default(autoincrement())
+  userId     Int      @map("user_id")
+  productId  Int?     @map("product_id")
+  merchantId Int?     @map("merchant_id")
+  rating     Decimal?
+  comment    String?  @db.Text
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime? @updatedAt @map("updated_at")
+
+  // Relations
+  user     User      @relation(fields: [userId], references: [id])
+  product  Product?  @relation(fields: [productId], references: [id])
+  merchant Merchant? @relation(fields: [merchantId], references: [id])
+
+  @@map("reviews")
+}
