@@ -1,19 +1,46 @@
-import { IsNotEmpty, IsOptional, IsString, IsEmail, IsPhoneNumber } from 'class-validator';
+import { IsNotEmpty, IsOptional, IsString, IsEmail, IsPhoneNumber, IsBoolean } from 'class-validator';
 
 export class CreateMerchantDto {
   @IsNotEmpty()
   @IsString()
   name: string;
 
-  @IsOptional()
+  @IsNotEmpty()
   @IsString()
-  address?: string;
+  address: string;
+
+  @IsNotEmpty()
+  @IsString()
+  city: string;
+
+  @IsNotEmpty()
+  @IsString()
+  contactName: string;
+
+  @IsNotEmpty()
+  @IsString()
+  businessType: string;
+
+  @IsNotEmpty()
+  @IsString()
+  businessCategory: string;
+
+  @IsNotEmpty()
+  @IsString()
+  referralSource: string;
+
+  @IsNotEmpty()
+  @IsBoolean()
+  hasBusinessLicense: boolean;
+
+  @IsOptional()
+  socialLinks?: any;
 
   @IsNotEmpty()
   @IsString()
   phone: string;
 
-  @IsOptional()
+  @IsNotEmpty()
   @IsString()
   verificationToken: string;
 }

@@ -218,6 +218,13 @@ model Merchant {
   ownerId     Int?     @map("owner_id")
   
   address     String?  @db.Text
+  city        String?  // Tên thành phố
+  contactName String?  @map("contact_name") // contact name
+  businessType String? @map("business_type") // ONLINE, OFFLINE, HYBRID
+  businessCategory String? @map("business_category") // Business items (F&B, Grocery, etc.)
+  referralSource String? @map("referral_source") // Reasons to know the app
+  hasBusinessLicense Boolean? @default(false) @map("has_business_license") // With or without business license
+  
   latitude    Float?
   longitude   Float?
   phone       String?

@@ -44,6 +44,13 @@ export class MerchantService {
       data: {
         name: dto.name,
         address: dto.address,
+        city: dto.city,
+        contactName: dto.contactName,
+        businessType: dto.businessType,
+        businessCategory: dto.businessCategory,
+        referralSource: dto.referralSource,
+        hasBusinessLicense: dto.hasBusinessLicense,
+        metadata: dto.socialLinks ? { socialLinks: dto.socialLinks } : {},
         phone: dto.phone,
         ownerId: userId,
         status: MERCHANT_STATUS.PENDING,
