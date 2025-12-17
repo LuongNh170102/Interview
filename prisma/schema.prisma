@@ -27,6 +27,7 @@ model User {
   // Relations
   userRoles     UserRole[]
   ownedAgencies Agency[]  @relation("AgencyOwner")
+  ownedMerchants Merchant[] @relation("MerchantOwner")
   carts         Cart[]
   courier       Courier?
   orders        Order[]
@@ -114,6 +115,7 @@ model Agency {
   phone       String?
   email       String?
   logo        String?
+  businessLicenseUrl String? @map("business_license_url")
   status      String   @default("PENDING") // ACTIVE, INACTIVE, PENDING
 
   // Ownership
@@ -213,6 +215,7 @@ model Merchant {
   // Ownership & Branding
   brandId     Int?     @map("brand_id")
   agencyId    Int?     @map("agency_id")
+  ownerId     Int?     @map("owner_id")
   
   address     String?  @db.Text
   latitude    Float?
@@ -226,6 +229,7 @@ model Merchant {
   // Relations
   brand        Brand?         @relation(fields: [brandId], references: [id])
   agency       Agency?        @relation(fields: [agencyId], references: [id])
+  owner        User?          @relation("MerchantOwner", fields: [ownerId], references: [id])
   
   tags         MerchantTag[]
   products     Product[]
@@ -462,4 +466,16 @@ model Review {
   merchant Merchant? @relation(fields: [merchantId], references: [id])
 
   @@map("reviews")
+}
+
+model OtpVerification {
+  id        Int      @id @default(autoincrement())
+  phone     String
+  code      String
+  verified  Boolean  @default(false)
+  expiresAt DateTime @map("expires_at")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("otp_verifications")
 }
