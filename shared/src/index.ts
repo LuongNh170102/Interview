@@ -3,5 +3,7 @@ export * from './lib/interfaces/auth.interface';
 export * from './lib/interfaces/otp.interface';
 export * from './lib/interfaces/agency.interface';
 export * from './lib/interfaces/merchant.interface';
+export * from './lib/interfaces/localized-string.interface';
+export * from './lib/pipes/localized-text.pipe';
 
 

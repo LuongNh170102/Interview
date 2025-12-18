@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "prepare": "husky install",
-    "start:backend": "npx prisma migrate dev && nx serve api-service",
+    "start:backend": "npx prisma generate && npx prisma migrate dev && nx serve api-service",
     "start:backend:prod": "NODE_ENV=production nx serve api-service",
     "db:studio": "prisma studio"
   },
@@ -25,6 +25,8 @@
     "@nestjs/jwt": "^11.0.2",
     "@nestjs/passport": "^11.0.5",
     "@nestjs/platform-express": "^11.0.0",
+    "@ngx-translate/core": "^17.0.0",
+    "@ngx-translate/http-loader": "^17.0.0",
     "@prisma/adapter-pg": "^7.1.0",
     "@prisma/client": "^7.1.0",
     "axios": "^1.6.0",
