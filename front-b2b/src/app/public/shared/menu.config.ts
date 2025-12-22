@@ -6,15 +6,15 @@ export interface MenuItem {
 
 export const MENU_CONFIG: MenuItem[] = [
   {
-    label: 'VHan Delivery',
+    label: 'MENU.VHAN_DELIVERY',
     children: [
-      { label: 'Sub Menu 1', route: '#' },
-      { label: 'Sub Menu 2', route: '#' },
-      { label: 'Sub Menu 3', route: '#' },
+      { label: 'MENU.SUB_MENU_1', route: '#' },
+      { label: 'MENU.SUB_MENU_2', route: '#' },
+      { label: 'MENU.SUB_MENU_3', route: '#' },
     ],
   },
   {
-    label: 'Đăng ký đối tác',
+    label: 'MENU.MERCHANT_SIGNUP',
     route: '/merchant-signup',
   },
 ];

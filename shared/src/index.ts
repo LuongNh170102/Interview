@@ -3,5 +3,7 @@ export * from './lib/interfaces/auth.interface';
 export * from './lib/interfaces/otp.interface';
 export * from './lib/interfaces/agency.interface';
 export * from './lib/interfaces/merchant.interface';
+export * from './lib/i18n/translation.service';
+export * from './lib/i18n/translate.pipe';
 
 

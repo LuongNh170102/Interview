@@ -11,13 +11,13 @@
   <nav class="pc-nav">
     <ng-container *ngFor="let menu of menus">
       <div class="nav-item" *ngIf="menu.children?.length">
-        <span class="nav-link">{{ menu.label }}</span>
+        <span class="nav-link">{{ menu.label | translate }}</span>
         <ul class="dropdown-menu">
           <li
             *ngFor="let child of menu.children"
             [routerLink]="child.route"
           >
-            {{ child.label }}
+            {{ child.label | translate }}
           </li>
         </ul>
       </div>
@@ -27,7 +27,7 @@
         *ngIf="!menu.children"
         [routerLink]="menu.route"
       >
-        <span class="nav-link">{{ menu.label }}</span>
+        <span class="nav-link">{{ menu.label | translate }}</span>
       </div>
     </ng-container>
   </nav>
@@ -45,7 +45,7 @@
         name="lang">
       </app-custom-select>
     </div>
-    <button class="app-btn">APP <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1} stroke="currentColor" className="size-4" style="width: 1rem;">
+    <button class="app-btn">{{ 'HEADER.APP' | translate }} <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1} stroke="currentColor" className="size-4" style="width: 1rem;">
   <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
 </svg>
 </button>
@@ -64,7 +64,7 @@
 
   <!-- language -->
   <div class="side-lang">
-    <span>Language</span>
+    <span>{{ 'HEADER.LANGUAGE' | translate }}</span>
     <div class="flags">
       <img src="https://flagcdn.com/w20/vn.png" alt="Vietnam flag" (click)="lang = 'vi'">
       <img src="https://flagcdn.com/w20/kr.png" alt="Korean flag" (click)="lang = 'ko'">
@@ -77,7 +77,7 @@
     <ng-container *ngFor="let menu of menus; let i = index">
       <li *ngIf="menu.children?.length">
         <div class="side-parent" (click)="toggleSub(i)">
-          {{ menu.label }}
+          {{ menu.label | translate }}
           <span class="arrow" [class.open]="activeIndex === i">▾</span>
         </div>
 
@@ -87,7 +87,7 @@
             [routerLink]="child.route"
             (click)="closeMenu()"
           >
-            {{ child.label }}
+            {{ child.label | translate }}
           </li>
         </ul>
       </li>
@@ -98,7 +98,7 @@
         [routerLink]="menu.route"
         (click)="closeMenu()"
       >
-        {{ menu.label }}
+        {{ menu.label | translate }}
       </li>
     </ng-container>
   </ul>

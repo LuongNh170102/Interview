@@ -1,8 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
+@use 'styles/variables' as *;
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     "Helvetica Neue", Arial, sans-serif;
-  color: var(--text-dark);
+  color: $text-dark;
   line-height: 1.6;
   padding: 0;
   margin: 0;

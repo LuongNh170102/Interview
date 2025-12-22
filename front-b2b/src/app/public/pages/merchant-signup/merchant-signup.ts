@@ -3,13 +3,14 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CustomSelectComponent } from '../../shared/custom-select.component';
 import { MerchantService } from '../../services/merchant.service';
+import { TranslatePipe } from '@deliveryk/shared-ui';
 
 @Component({
   selector: 'app-merchant-signup',
   standalone: true,
-  imports: [CommonModule, FormsModule, CustomSelectComponent],
+  imports: [CommonModule, FormsModule, CustomSelectComponent, TranslatePipe],
   templateUrl: './merchant-signup.html',
-  styleUrls: ['./merchant-signup.css'],
+  styleUrls: ['./merchant-signup.scss'],
 })
 export class MerchantSignup {
   otpRequested = false;
@@ -47,47 +48,47 @@ export class MerchantSignup {
   // Cities
   cities = [
     // main
-    { value: 'hanoi', label: 'Hà Nội' },
-    { value: 'hcm', label: 'TP. Hồ Chí Minh' },
-    { value: 'danang', label: 'Đà Nẵng' },
-    { value: 'haiphong', label: 'Hải Phòng' },
-    { value: 'cantho', label: 'Cần Thơ' },
+    { value: 'hanoi', label: 'CITIES.hanoi' },
+    { value: 'hcm', label: 'CITIES.hcm' },
+    { value: 'danang', label: 'CITIES.danang' },
+    { value: 'haiphong', label: 'CITIES.haiphong' },
+    { value: 'cantho', label: 'CITIES.cantho' },
     // north
-    { value: 'bacninh', label: 'Bắc Ninh' },
-    { value: 'thainguyen', label: 'Thái Nguyên' },
-    { value: 'vinhphuc', label: 'Vĩnh Phúc' },
-    { value: 'quangninh', label: 'Quảng Ninh' },
-    { value: 'haiduong', label: 'Hải Dương' },
-    { value: 'namdinh', label: 'Nam Định' },
-    { value: 'thaibinh', label: 'Thái Bình' },
+    { value: 'bacninh', label: 'CITIES.bacninh' },
+    { value: 'thainguyen', label: 'CITIES.thainguyen' },
+    { value: 'vinhphuc', label: 'CITIES.vinhphuc' },
+    { value: 'quangninh', label: 'CITIES.quangninh' },
+    { value: 'haiduong', label: 'CITIES.haiduong' },
+    { value: 'namdinh', label: 'CITIES.namdinh' },
+    { value: 'thaibinh', label: 'CITIES.thaibinh' },
     // center
-    { value: 'hue', label: 'Thừa Thiên Huế' },
-    { value: 'quangnam', label: 'Quảng Nam' },
-    { value: 'quangngai', label: 'Quảng Ngãi' },
-    { value: 'binhdinh', label: 'Bình Định' },
-    { value: 'khanhhoa', label: 'Khánh Hòa' },
-    { value: 'phuyen', label: 'Phú Yên' },
-    { value: 'nghean', label: 'Nghệ An' },
-    { value: 'hatinh', label: 'Hà Tĩnh' },
+    { value: 'hue', label: 'CITIES.hue' },
+    { value: 'quangnam', label: 'CITIES.quangnam' },
+    { value: 'quangngai', label: 'CITIES.quangngai' },
+    { value: 'binhdinh', label: 'CITIES.binhdinh' },
+    { value: 'khanhhoa', label: 'CITIES.khanhhoa' },
+    { value: 'phuyen', label: 'CITIES.phuyen' },
+    { value: 'nghean', label: 'CITIES.nghean' },
+    { value: 'hatinh', label: 'CITIES.hatinh' },
     // south
-    { value: 'binhduong', label: 'Bình Dương' },
-    { value: 'dongnai', label: 'Đồng Nai' },
-    { value: 'longan', label: 'Long An' },
-    { value: 'tayninh', label: 'Tây Ninh' },
-    { value: 'bariavungtau', label: 'Bà Rịa - Vũng Tàu' },
-    { value: 'tiengiang', label: 'Tiền Giang' },
-    { value: 'vinhlong', label: 'Vĩnh Long' },
-    { value: 'angiang', label: 'An Giang' },
-    { value: 'kiengiang', label: 'Kiên Giang' },
-    { value: 'soctrang', label: 'Sóc Trăng' },
-    { value: 'baclieu', label: 'Bạc Liêu' },
-    { value: 'camau', label: 'Cà Mau' },
+    { value: 'binhduong', label: 'CITIES.binhduong' },
+    { value: 'dongnai', label: 'CITIES.dongnai' },
+    { value: 'longan', label: 'CITIES.longan' },
+    { value: 'tayninh', label: 'CITIES.tayninh' },
+    { value: 'bariavungtau', label: 'CITIES.bariavungtau' },
+    { value: 'tiengiang', label: 'CITIES.tiengiang' },
+    { value: 'vinhlong', label: 'CITIES.vinhlong' },
+    { value: 'angiang', label: 'CITIES.angiang' },
+    { value: 'kiengiang', label: 'CITIES.kiengiang' },
+    { value: 'soctrang', label: 'CITIES.soctrang' },
+    { value: 'baclieu', label: 'CITIES.baclieu' },
+    { value: 'camau', label: 'CITIES.camau' },
   ];
 
   businessLicenses = [
-    { value: 'HAS_LICENSE', label: 'Có' },
-    { value: 'NO_LICENSE', label: 'Chưa có' },
-    { value: 'PENDING_LICENSE', label: 'Đang chờ cấp phép' },
+    { value: 'HAS_LICENSE', label: 'LICENSES.HAS_LICENSE' },
+    { value: 'NO_LICENSE', label: 'LICENSES.NO_LICENSE' },
+    { value: 'PENDING_LICENSE', label: 'LICENSES.PENDING_LICENSE' },
   ];
 
 

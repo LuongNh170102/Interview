@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter, forwardRef, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { TranslatePipe } from '@deliveryk/shared-ui';
 
 export interface SelectOption {
   value: string;
@@ -10,7 +11,7 @@ export interface SelectOption {
 @Component({
   selector: 'app-custom-select',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TranslatePipe],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -22,7 +23,7 @@ export interface SelectOption {
     <div class="custom-select" [class.open]="isOpen" [class.disabled]="disabled">
       <div class="select-trigger" (click)="toggle()">
         <span class="select-value" [class.placeholder]="!selectedOption">
-          {{ selectedOption?.label || placeholder }}
+          {{ (selectedOption?.label || placeholder) | translate }}
         </span>
         <span class="select-arrow" [class.rotate]="isOpen">▼</span>
       </div>
@@ -32,7 +33,7 @@ export interface SelectOption {
              *ngFor="let option of options" 
              [class.selected]="option.value === value"
              (click)="selectOption(option)">
-          {{ option.label }}
+          {{ option.label | translate }}
         </div>
       </div>
     </div>
