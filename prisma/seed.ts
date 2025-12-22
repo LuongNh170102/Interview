@@ -146,8 +146,9 @@ async function main() {
   console.log('Assigned permissions to roles.');
 
   // 4. Create Default Admin User
-  const adminEmail = 'admin@vhandelivery.com';
-  const passwordHash = await bcrypt.hash('admin123', 10);
+  const adminEmail = process.env.ADMIN_EMAIL || 'admin@vhandelivery.com';
+  const adminPassword = process.env.ADMIN_PASSWORD || 'admin123';
+  const passwordHash = await bcrypt.hash(adminPassword, 10);
 
   const adminUser = await prisma.user.upsert({
     where: { email: adminEmail },

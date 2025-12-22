@@ -7,17 +7,24 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { AgencyModule } from './agency/agency.module';
 import { MerchantModule } from './merchant/merchant.module';
+import { ProductModule } from './product/product.module';
+import { CommonModule } from './common/common.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: process.env.NODE_ENV === 'production' ? '.env.production' : '.env.development',
+      envFilePath:
+        process.env.NODE_ENV === 'production'
+          ? '.env.production'
+          : '.env.development',
     }),
+    CommonModule,
     AuthModule,
     UsersModule,
     AgencyModule,
     MerchantModule,
+    ProductModule,
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService],
