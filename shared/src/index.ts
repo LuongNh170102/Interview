@@ -5,5 +5,5 @@ export * from './lib/interfaces/agency.interface';
 export * from './lib/interfaces/merchant.interface';
 export * from './lib/i18n/translation.service';
 export * from './lib/i18n/translate.pipe';
-
-
+export * from './lib/interfaces/localized-string.interface';
+export * from './lib/pipes/localized-text.pipe';

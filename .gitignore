@@ -55,3 +55,7 @@ Thumbs.db
 
 vitest.config.*.timestamp*
 /generated/prisma
+
+# MinIO Data
+minio_data/
+
