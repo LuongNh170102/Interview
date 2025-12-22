@@ -1,0 +1,289 @@
+  <!-- Main Content -->
+  <div class="register-content">
+    <!-- Left Section: Hero -->
+    <aside class="hero-section">
+      <div class="hero-content">
+        <h1 class="hero-title">
+          VHan Delivery<br />
+          <strong>đăng ký cửa hàng</strong>
+        </h1>
+        <div class="hero-image">
+          <img src="assets/images/store.png" style="max-width: 200px;margin-left: 20px;margin-bottom: -80px; display: block;" alt="Store" />
+        </div>
+        <div class="benefits-card">
+          <h3 class="benefits-title">Lợi ích đặc biệt</h3>
+          <div class="benefits-grid">
+            <div class="benefit-item">
+              <div class="benefit-icon">
+                <img src="assets/images/store-icon1.png" alt="Technology" />
+              </div>
+              <p class="benefit-text">
+                <b>THỊ TRƯỜNG NGÁCH</b><br />Khách Hàn Quốc
+              </p>
+            </div>
+            <div class="benefit-item">
+              <div class="benefit-icon">
+                <img src="assets/images/store-icon2.png" alt="Fee" />
+              </div>
+              <p class="benefit-text">
+                <b>CHIẾT KHẨU ĐỘC QUYỀN</b><br />Thấp nhất thị trường
+              </p>
+            </div>
+            <div class="benefit-item">
+              <div class="benefit-icon">
+                <img src="assets/images/store-icon3.png" alt="Support" />
+              </div>
+              <p class="benefit-text">
+                <b>ĐĂNG KÝ NHANH CHÔNG</b><br />ngày kích hoạt
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="cta-section desktop-only">
+          <h3 class="cta-title">Đăng ký ngay!</h3>
+          <div class="category-grid">
+            <div class="category-item">
+              <img src="assets/images/store-img1.png" alt="store-img1" />
+              <p>Mì xào</p>
+            </div>
+            <div class="category-item">
+              <img src="assets/images/store-img2.png" alt="store-img2" />
+              <p>Quán cafe</p>
+            </div>
+            <div class="category-item">
+              <img src="assets/images/store-img3.png" alt="store-img3" />
+              <p>Bánh mỳ</p>
+            </div>
+            <div class="category-item">
+              <img src="assets/images/store-img4.png" alt="store-img4" />
+              <p>Đồ uống</p>
+            </div>
+            <div class="category-item">
+              <img src="assets/images/store-img5.png" alt="store-img5" />
+              <p>Bán cực kỳ</p>
+            </div>
+            <div class="category-item">
+              <img src="assets/images/store-img6.png" alt="store-img6" />
+              <p>Thuê xe</p>
+            </div>
+            <div class="category-item">
+              <img src="assets/images/store-img7.png" alt="store-img7" />
+              <p>Hoa tươi</p>
+            </div>
+            <div class="category-item">
+              <img src="assets/images/store-img8.png" alt="store-img8" />
+              <p>Hiệu thuốc bán</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Right Section: Registration Form -->
+    <main class="form-section">
+      <form class="register-form" (submit)="onSubmit($event)">
+        
+        <div class="form-group">
+          <label class="form-label required">Tên cửa hàng</label>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Vui lòng nhập tên cửa hàng"
+            [(ngModel)]="formData.storeName"
+            name="storeName"
+            (blur)="onBlur('storeName')"
+          />
+          <small class="form-hint error" *ngIf="hasError('storeName')">
+            <i class="fa-solid fa-circle-exclamation"></i> Vui lòng nhập tên cửa hàng
+          </small>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label required">Thành phố</label>
+            <app-custom-select 
+              [options]="cities"
+              placeholder="Vui lòng chọn Thành phố"
+              [(ngModel)]="formData.city"
+              name="city"
+              (blur)="onBlur('city')">
+            </app-custom-select>
+            <small class="form-hint error" *ngIf="hasError('city')">
+              <i class="fa-solid fa-circle-exclamation"></i> Vui lòng chọn Thành phố
+            </small>
+          </div>
+          <div class="form-group">
+            <label class="form-label required">Địa chỉ cửa hàng</label>
+            <input 
+              type="text" 
+              class="form-control"
+              placeholder="Nhập địa chỉ"
+              [(ngModel)]="formData.storeAddress"
+              name="storeAddress"
+              (blur)="onBlur('storeAddress')"
+            />
+            <small class="form-hint error" *ngIf="hasError('storeAddress')">
+              <i class="fa-solid fa-circle-exclamation"></i> Vui lòng nhập địa chỉ cửa hàng
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label required">Mặt hàng kinh doanh</label>
+          <input 
+            type="text" 
+            class="form-control"
+            placeholder="Nhập mặt hàng"
+            [(ngModel)]="formData.businessCategory"
+            name="businessCategory"
+            (blur)="onBlur('businessCategory')"
+          />
+          <small class="form-hint error" *ngIf="hasError('businessCategory')">
+            <i class="fa-solid fa-circle-exclamation"></i> Vui lòng nhập mặt hàng kinh doanh
+          </small>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label required">Tên người liên hệ</label>
+          <input 
+            type="text" 
+            class="form-control"
+            placeholder="Nhập tên"
+            [(ngModel)]="formData.contactName"
+            name="contactName"
+            (blur)="onBlur('contactName')"
+          />
+          <small class="form-hint error" *ngIf="hasError('contactName')">
+            <i class="fa-solid fa-circle-exclamation"></i> Vui lòng nhập tên người liên hệ
+          </small>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label required">Số điện thoại liên hệ</label>
+          <div class="otp-request-wrapper">
+            <input 
+              type="text" 
+              class="form-control"
+              placeholder="0123-456-7890"
+              [(ngModel)]="formData.phoneNumber"
+              name="phoneNumber"
+              (input)="formatPhoneNumber($event)"
+              (blur)="onBlur('phoneNumber')"
+            />
+            <button
+              type="button"
+              class="btn-red"
+              [disabled]="otpRequested"
+              (click)="requestOtp()">
+              {{ otpRequested ? 'Đã gửi OTP' : 'Gửi mã OTP' }}
+            </button>
+          </div>
+          <small class="form-hint error" *ngIf="hasError('phoneNumber')">
+            <i class="fa-solid fa-circle-exclamation"></i> Vui lòng nhập số điện thoại
+          </small>
+        </div>
+
+
+        <!-- OTP Verify -->
+        <div class="form-group" *ngIf="otpRequested">
+          <label class="form-label required">Mã OTP</label>    
+            <div class="otp-request-wrapper">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Nhập mã OTP"
+              [(ngModel)]="otpCode"
+              name="otpCode"
+            />
+            <button
+              type="button"
+              class="btn-red"
+              (click)="verifyOtp()">
+              Xác nhận OTP
+            </button>
+          </div>
+          <small class="form-hint error" *ngIf="otpError">
+            {{ otpError }}
+          </small>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label required">Lí do biết đến App</label>
+          <input 
+            type="text" 
+            class="form-control"
+            placeholder="Nhập lí do"
+            [(ngModel)]="formData.knowReason"
+            name="knowReason"
+            (blur)="onBlur('knowReason')"
+          />
+          <small class="form-hint error" *ngIf="hasError('knowReason')">
+            <i class="fa-solid fa-circle-exclamation"></i> Vui lòng nhập lí do biết đến App
+          </small>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label required">Cửa hàng Online/Offline</label>
+          <div class="radio-options">
+            <label class="radio-option">
+              <input 
+                type="radio" 
+                name="shopType" 
+                value="online"
+                [(ngModel)]="formData.shopType"
+                (change)="onShopTypeChange('online')"
+              />
+              <span class="radio-circle"></span>
+              <span>Online</span>
+            </label>
+            <label class="radio-option">
+              <input 
+                type="radio" 
+                name="shopType" 
+                value="offline"
+                [(ngModel)]="formData.shopType"
+                (change)="onShopTypeChange('offline')"
+              />
+              <span class="radio-circle"></span>
+              <span>Offline</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label required">Giấy phép kinh doanh</label>
+          <app-custom-select 
+              [options]="businessLicenses"
+              placeholder="Vui lòng chọn Có hoặc Chưa có Giấy phép kinh doanh"
+              [(ngModel)]="formData.businessLicense"
+              name="businessLicense"
+              (blur)="onBlur('businessLicense')">
+          </app-custom-select>
+          <small class="form-note">
+            Vui lòng lựa chọn chính xác. Thông tin này sẽ ảnh hưởng đến quá trình xét 
+            duyệt cửa hàng, đặc biệt nếu bạn chưa có giấy phép kinh doanh hợp lệ.
+          </small>
+          <small class="form-hint error" *ngIf="hasError('businessLicense')">
+            <i class="fa-solid fa-circle-exclamation"></i> Vui lòng chọn tình trạng giấy phép
+          </small>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Link Facebook/Instagram/Website</label>
+          <input 
+            type="url" 
+            class="form-control"
+            placeholder="https://"
+            [(ngModel)]="formData.socialLinks"
+            name="socialLinks"
+          />
+        </div>
+
+        <!-- Submit Button -->
+        <div class="form-actions">
+          <button type="submit" class="btn-submit">Tiếp theo</button>
+        </div>
+      </form>
+    </main>
+  </div>
