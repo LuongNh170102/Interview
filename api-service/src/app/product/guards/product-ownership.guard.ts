@@ -1,0 +1,42 @@
+import { Injectable, CanActivate, ExecutionContext, ForbiddenException, NotFoundException } from '@nestjs/common';
+import { PrismaService } from '../../prisma.service';
+import { PRODUCT_MESSAGES } from '../../common/constants/messages.constant';
+
+@Injectable()
+export class ProductOwnershipGuard implements CanActivate {
+  constructor(private prisma: PrismaService) {}
+
+  async canActivate(context: ExecutionContext): Promise<boolean> {
+    const request = context.switchToHttp().getRequest();
+    const user = request.user;
+    const externalId = request.params.id;
+
+    if (!user || !externalId) {
+      return false;
+    }
+
+    const product = await this.prisma.product.findUnique({
+      where: { externalId },
+      include: {
+        merchant: {
+          include: {
+            agency: true,
+          },
+        },
+      },
+    });
+
+    if (!product) {
+      throw new NotFoundException(PRODUCT_MESSAGES.PRODUCT_NOT_FOUND);
+    }
+
+    const isMerchantOwner = product.merchant.ownerId === user.userId;
+    const isAgencyOwner = product.merchant.agency?.ownerId === user.userId;
+
+    if (!isMerchantOwner && !isAgencyOwner) {
+      throw new ForbiddenException(PRODUCT_MESSAGES.PERMISSION_DENIED_MODIFICATION);
+    }
+
+    return true;
+  }
+}

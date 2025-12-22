@@ -1,4 +1,9 @@
-import { Injectable, UnauthorizedException, ConflictException, ForbiddenException } from '@nestjs/common';
+import {
+  Injectable,
+  UnauthorizedException,
+  ConflictException,
+  ForbiddenException,
+} from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
@@ -6,16 +11,20 @@ import * as bcrypt from 'bcrypt';
 import { LoginDto } from './dto/login.dto';
 import { RegisterDto } from './dto/register.dto';
 import { AUTH_MESSAGES } from '../common/constants/messages.constant';
+import { JWT_CONSTANTS } from '../common/constants/token.constant';
 
 @Injectable()
 export class AuthService {
   constructor(
     private usersService: UsersService,
     private jwtService: JwtService,
-    private configService: ConfigService,
+    private configService: ConfigService
   ) {}
 
-  async validateUser(email: string, pass: string): Promise<Omit<any, 'passwordHash'> | null> {
+  async validateUser(
+    email: string,
+    pass: string
+  ): Promise<Omit<any, 'passwordHash'> | null> {
     const user = await this.usersService.findOne(email);
     if (user && (await bcrypt.compare(pass, user.passwordHash))) {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -34,9 +43,11 @@ export class AuthService {
           roles,
         },
         {
-          secret: this.configService.get<string>('JWT_SECRET'),
-          expiresIn: '15m',
-        },
+          secret: this.configService.get<string>(JWT_CONSTANTS.SECRET),
+          expiresIn: (this.configService.get<string>(
+            JWT_CONSTANTS.EXPIRATION
+          ) || '15m') as any,
+        }
       ),
       this.jwtService.signAsync(
         {
@@ -45,9 +56,11 @@ export class AuthService {
           roles,
         },
         {
-          secret: this.configService.get<string>('JWT_REFRESH_SECRET'),
-          expiresIn: '7d',
-        },
+          secret: this.configService.get<string>(JWT_CONSTANTS.REFRESH_SECRET),
+          expiresIn: (this.configService.get<string>(
+            JWT_CONSTANTS.REFRESH_EXPIRATION
+          ) || '7d') as any,
+        }
       ),
     ]);
 
@@ -70,7 +83,7 @@ export class AuthService {
     if (!user) {
       throw new UnauthorizedException(AUTH_MESSAGES.INVALID_CREDENTIALS);
     }
-    
+
     const roles = user.userRoles?.map((ur) => ur.role.name) || [];
     const tokens = await this.getTokens(user.id, user.email, roles);
     await this.updateRefreshToken(user.id, tokens.refresh_token);
@@ -81,8 +94,8 @@ export class AuthService {
         id: user.id,
         email: user.email,
         username: user.username,
-        roles
-      }
+        roles,
+      },
     };
   }
 
@@ -93,9 +106,9 @@ export class AuthService {
   async refreshTokens(refreshToken: string) {
     try {
       const payload = await this.jwtService.verifyAsync(refreshToken, {
-        secret: this.configService.get<string>('JWT_REFRESH_SECRET'),
+        secret: this.configService.get<string>(JWT_CONSTANTS.REFRESH_SECRET),
       });
-      
+
       const userId = payload.sub;
       const user = await this.usersService.findOneById(userId);
       if (!user || !user.hashedRefreshToken)
@@ -103,9 +116,10 @@ export class AuthService {
 
       const refreshTokenMatches = await bcrypt.compare(
         refreshToken,
-        user.hashedRefreshToken,
+        user.hashedRefreshToken
       );
-      if (!refreshTokenMatches) throw new ForbiddenException(AUTH_MESSAGES.ACCESS_DENIED);
+      if (!refreshTokenMatches)
+        throw new ForbiddenException(AUTH_MESSAGES.ACCESS_DENIED);
 
       const roles = (user as any).userRoles?.map((ur) => ur.role.name) || [];
       const tokens = await this.getTokens(user.id, user.email, roles);
@@ -124,15 +138,15 @@ export class AuthService {
     }
 
     const { password, ...userData } = registerDto;
-    
+
     // Create user with hashed password (hashing is handled in UsersService)
     // We pass the raw password as 'passwordHash' because UsersService expects Prisma.UserCreateInput
-    // but inside UsersService.create we re-hash it. 
+    // but inside UsersService.create we re-hash it.
     // Wait, UsersService.create expects Prisma.UserCreateInput which has passwordHash.
     // Let's adjust UsersService logic or pass it correctly here.
     // In UsersService I wrote: const passwordHash = await bcrypt.hash(data.passwordHash, salt);
     // So I should pass the raw password into the passwordHash field for now, knowing it will be hashed.
-    
+
     const newUser = await this.usersService.create({
       email: userData.email,
       passwordHash: password, // Will be hashed in service

@@ -1,4 +1,11 @@
 export const TOKEN_TYPE = {
-  TOKEN :'token',
-  REFRESH_TOKEN :'refresh_token',
+  TOKEN: 'token',
+  REFRESH_TOKEN: 'refresh_token',
 };
+
+export const JWT_CONSTANTS = {
+  SECRET: 'JWT_SECRET',
+  EXPIRATION: 'JWT_EXPIRATION',
+  REFRESH_SECRET: 'JWT_REFRESH_SECRET',
+  REFRESH_EXPIRATION: 'JWT_REFRESH_EXPIRATION',
+} as const;
