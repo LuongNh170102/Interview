@@ -26,11 +26,21 @@
           {
             "glob": "**/*",
             "input": "front-b2b/public"
+          },
+          {
+            "glob": "**/*",
+            "input": "front-b2b/src/assets",
+            "output": "assets"
           }
         ],
         "styles": [
           "front-b2b/src/styles.scss"
-        ]
+        ],
+        "stylePreprocessorOptions": {
+          "includePaths": [
+            "front-b2b/src/styles"
+          ]
+        }
       },
       "configurations": {
         "production": {
@@ -61,10 +71,12 @@
       "executor": "@angular/build:dev-server",
       "configurations": {
         "production": {
-          "buildTarget": "front-b2b:build:production"
+          "buildTarget": "front-b2b:build:production",
+          "proxyConfig": "front-b2b/proxy.conf.json"
         },
         "development": {
-          "buildTarget": "front-b2b:build:development"
+          "buildTarget": "front-b2b:build:development",
+          "proxyConfig": "front-b2b/proxy.conf.json"
         }
       },
       "defaultConfiguration": "development"
