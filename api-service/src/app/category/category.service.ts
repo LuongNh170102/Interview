@@ -49,7 +49,7 @@ export class CategoryService {
     await this.findOne(externalId); // Check existence
 
     const { name, parentId, slug } = updateCategoryDto;
-    
+
     const data: any = {};
     if (name) data.name = toLocalizedJson(name);
     if (parentId !== undefined) data.parentId = parentId;

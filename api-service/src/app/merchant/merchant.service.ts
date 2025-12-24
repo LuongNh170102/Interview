@@ -1,10 +1,20 @@
-import { Injectable, UnauthorizedException, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  UnauthorizedException,
+  NotFoundException,
+} from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
 import { CreateMerchantDto } from './dto/create-merchant.dto';
 import { RequestOtpDto, VerifyOtpDto } from '../otp/dto/otp.dto';
 import { JwtService } from '@nestjs/jwt';
-import { MERCHANT_REGISTRATION_OTP, MERCHANT_STATUS } from '../common/constants/merchant.constant';
-import { AUTH_MESSAGES, RESOURCE_MESSAGES } from '../common/constants/messages.constant';
+import {
+  MERCHANT_REGISTRATION_OTP,
+  MERCHANT_STATUS,
+} from '../common/constants/merchant.constant';
+import {
+  AUTH_MESSAGES,
+  RESOURCE_MESSAGES,
+} from '../common/constants/messages.constant';
 import { OtpService } from '../otp/otp.service';
 import { ROLE } from '../common/constants/role.constants';
 import { RESOURCE_TARGETS } from '../common/constants/resource.constant';
@@ -108,11 +118,13 @@ export class MerchantService {
     try {
       payload = this.jwtService.verify(dto.verificationToken);
     } catch (e) {
-      throw new UnauthorizedException(AUTH_MESSAGES.INVALID_OR_EXPIRED_VERIFICATION_TOKEN);
+      throw new UnauthorizedException(
+        AUTH_MESSAGES.INVALID_OR_EXPIRED_VERIFICATION_TOKEN
+      );
     }
 
     if (payload.type !== MERCHANT_REGISTRATION_OTP) {
-       throw new UnauthorizedException(AUTH_MESSAGES.INVALID_TOKEN_TYPE);
+      throw new UnauthorizedException(AUTH_MESSAGES.INVALID_TOKEN_TYPE);
     }
 
     if (payload.phone !== dto.phone) {

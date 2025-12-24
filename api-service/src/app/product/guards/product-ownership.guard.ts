@@ -1,6 +1,15 @@
-import { Injectable, CanActivate, ExecutionContext, ForbiddenException, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  CanActivate,
+  ExecutionContext,
+  ForbiddenException,
+  NotFoundException,
+} from '@nestjs/common';
 import { PrismaService } from '../../prisma.service';
-import { PRODUCT_MESSAGES, RESOURCE_MESSAGES } from '../../common/constants/messages.constant';
+import {
+  PRODUCT_MESSAGES,
+  RESOURCE_MESSAGES,
+} from '../../common/constants/messages.constant';
 import { MERCHANT_STATUS } from '../../common/constants/merchant.constant';
 import { RESOURCE_TARGETS } from '../../common/constants/resource.constant';
 
@@ -46,7 +55,9 @@ export class ProductOwnershipGuard implements CanActivate {
     const isAgencyOwner = product.merchant.agency?.ownerId === user.userId;
 
     if (!isMerchantOwner && !isAgencyOwner) {
-      throw new ForbiddenException(PRODUCT_MESSAGES.PERMISSION_DENIED_MODIFICATION);
+      throw new ForbiddenException(
+        PRODUCT_MESSAGES.PERMISSION_DENIED_MODIFICATION
+      );
     }
 
     return true;
