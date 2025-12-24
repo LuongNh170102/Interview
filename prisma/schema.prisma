@@ -229,6 +229,7 @@ model Merchant {
   longitude   Float?
   phone       String?
   status      String?  // 'active' | 'inactive' | 'suspended'
+  isAcceptingOrders Boolean @default(true) @map("is_accepting_orders") 
   metadata    Json?
   createdAt   DateTime @default(now()) @map("created_at")
   updatedAt   DateTime? @updatedAt @map("updated_at")
@@ -247,8 +248,25 @@ model Merchant {
   orders       Order[]
   reviews      Review[]
   userRoles    UserRole[]
+  operatingHours OperatingHour[]
 
   @@map("merchants")
+}
+
+model OperatingHour {
+  id         Int      @id @default(autoincrement())
+  merchantId Int      @map("merchant_id")
+  
+  // 0: Sunday, 1: Monday, ..., 6: Saturday
+  dayOfWeek  Int      @map("day_of_week") 
+  
+  // Format: "HH:mm" (e.g., "08:00", "22:00")
+  openTime   String   @map("open_time")   
+  closeTime  String   @map("close_time")
+
+  merchant   Merchant @relation(fields: [merchantId], references: [id], onDelete: Cascade)
+
+  @@map("operating_hours")
 }
 
 // --- PRODUCT & MENU ---

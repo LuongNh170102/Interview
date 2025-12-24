@@ -15,23 +15,28 @@ import {
 import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
-import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
-import { PermissionsGuard } from '../auth/guards/permissions.guard';
-import { Permissions } from '../auth/decorators/permissions.decorator';
+import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
+import { Permissions } from '../common/decorators/permissions.decorator';
 import { ProductOwnershipGuard } from './guards/product-ownership.guard';
+import { ResourceStatusGuard } from '../common/guards/resource-status.guard';
+import { CheckStatus } from '../common/decorators/check-status.decorator';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { MerchantOwnershipPipe } from '../common/pipes/merchant-ownership.pipe';
 import { PaginationDto } from '../common/dto/pagination.dto';
+import { RESOURCE_TARGETS } from '../common/constants/resource.constant';
+import { PermissionsGuard } from '../common/guards/permissions.guard';
 
 @Controller('products')
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
   @Post()
-  @UseGuards(JwtAuthGuard, PermissionsGuard)
+  @UseGuards(JwtAuthGuard, PermissionsGuard, ResourceStatusGuard)
+  @CheckStatus(RESOURCE_TARGETS.MERCHANT)
   @Permissions('product:create')
   @UseInterceptors(FilesInterceptor('images', 10))
   async create(
+    @Query('merchantId') merchantId: string,
     @Body(MerchantOwnershipPipe) createProductDto: CreateProductDto,
     @UploadedFiles() files: Array<Express.Multer.File>
   ) {

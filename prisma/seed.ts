@@ -16,32 +16,183 @@ async function main() {
   // Define resources and actions
   const permissionsData = [
     // Product
-    { resource: 'product', action: 'create', description: { en: 'Create new product', vi: 'Tạo sản phẩm mới', ko: '새 제품 만들기' } },
-    { resource: 'product', action: 'update', description: { en: 'Update product details', vi: 'Cập nhật thông tin sản phẩm', ko: '제품 정보 업데이트' } },
-    { resource: 'product', action: 'delete', description: { en: 'Delete product', vi: 'Xóa sản phẩm', ko: '제품 삭제' } },
-    { resource: 'product', action: 'read', description: { en: 'View product details', vi: 'Xem chi tiết sản phẩm', ko: '제품 상세 보기' } },
-    
+    {
+      resource: 'product',
+      action: 'create',
+      description: {
+        en: 'Create new product',
+        vi: 'Tạo sản phẩm mới',
+        ko: '새 제품 만들기',
+      },
+    },
+    {
+      resource: 'product',
+      action: 'update',
+      description: {
+        en: 'Update product details',
+        vi: 'Cập nhật thông tin sản phẩm',
+        ko: '제품 정보 업데이트',
+      },
+    },
+    {
+      resource: 'product',
+      action: 'delete',
+      description: {
+        en: 'Delete product',
+        vi: 'Xóa sản phẩm',
+        ko: '제품 삭제',
+      },
+    },
+    {
+      resource: 'product',
+      action: 'read',
+      description: {
+        en: 'View product details',
+        vi: 'Xem chi tiết sản phẩm',
+        ko: '제품 상세 보기',
+      },
+    },
+
+    // Category (NEW)
+    {
+      resource: 'category',
+      action: 'create',
+      description: {
+        en: 'Create category',
+        vi: 'Tạo danh mục',
+        ko: '카테고리 생성',
+      },
+    },
+    {
+      resource: 'category',
+      action: 'update',
+      description: {
+        en: 'Update category',
+        vi: 'Cập nhật danh mục',
+        ko: '카테고리 업데이트',
+      },
+    },
+    {
+      resource: 'category',
+      action: 'delete',
+      description: {
+        en: 'Delete category',
+        vi: 'Xóa danh mục',
+        ko: '카테고리 삭제',
+      },
+    },
+    {
+      resource: 'category',
+      action: 'read',
+      description: {
+        en: 'View category',
+        vi: 'Xem danh mục',
+        ko: '카테고리 보기',
+      },
+    },
+
     // Order
-    { resource: 'order', action: 'read', description: { en: 'View orders', vi: 'Xem đơn hàng', ko: '주문 보기' } },
-    { resource: 'order', action: 'update_status', description: { en: 'Update order status', vi: 'Cập nhật trạng thái đơn hàng', ko: '주문 상태 업데이트' } },
-    { resource: 'order', action: 'create', description: { en: 'Place an order', vi: 'Đặt hàng', ko: '주문하기' } },
-    
+    {
+      resource: 'order',
+      action: 'read',
+      description: { en: 'View orders', vi: 'Xem đơn hàng', ko: '주문 보기' },
+    },
+    {
+      resource: 'order',
+      action: 'update_status',
+      description: {
+        en: 'Update order status',
+        vi: 'Cập nhật trạng thái đơn hàng',
+        ko: '주문 상태 업데이트',
+      },
+    },
+    {
+      resource: 'order',
+      action: 'create',
+      description: { en: 'Place an order', vi: 'Đặt hàng', ko: '주문하기' },
+    },
+
     // Merchant
-    { resource: 'merchant', action: 'create', description: { en: 'Create merchant', vi: 'Tạo cửa hàng', ko: '상점 만들기' } },
-    { resource: 'merchant', action: 'update', description: { en: 'Update merchant info', vi: 'Cập nhật thông tin cửa hàng', ko: '상점 정보 업데이트' } },
-    { resource: 'merchant', action: 'delete', description: { en: 'Delete merchant', vi: 'Xóa cửa hàng', ko: '상점 삭제' } },
-    
+    {
+      resource: 'merchant',
+      action: 'create',
+      description: {
+        en: 'Create merchant',
+        vi: 'Tạo cửa hàng',
+        ko: '상점 만들기',
+      },
+    },
+    {
+      resource: 'merchant',
+      action: 'update',
+      description: {
+        en: 'Update merchant info',
+        vi: 'Cập nhật thông tin cửa hàng',
+        ko: '상점 정보 업데이트',
+      },
+    },
+    {
+      resource: 'merchant',
+      action: 'delete',
+      description: {
+        en: 'Delete merchant',
+        vi: 'Xóa cửa hàng',
+        ko: '상점 삭제',
+      },
+    },
+    {
+      resource: 'merchant',
+      action: 'update_status',
+      description: {
+        en: 'Update merchant status',
+        vi: 'Cập nhật trạng thái cửa hàng',
+        ko: '상점 상태 업데이트',
+      },
+    },
+
     // Agency
-    { resource: 'agency', action: 'create', description: { en: 'Create agency', vi: 'Tạo đại lý', ko: '대리점 만들기' } },
-    { resource: 'agency', action: 'update', description: { en: 'Update agency info', vi: 'Cập nhật thông tin đại lý', ko: '대리점 정보 업데이트' } },
-    
+    {
+      resource: 'agency',
+      action: 'create',
+      description: {
+        en: 'Create agency',
+        vi: 'Tạo đại lý',
+        ko: '대리점 만들기',
+      },
+    },
+    {
+      resource: 'agency',
+      action: 'update',
+      description: {
+        en: 'Update agency info',
+        vi: 'Cập nhật thông tin đại lý',
+        ko: '대리점 정보 업데이트',
+      },
+    },
+
     // System
-    { resource: 'system', action: 'manage_users', description: { en: 'Manage system users', vi: 'Quản lý người dùng hệ thống', ko: '시스템 사용자 관리' } },
-    { resource: 'system', action: 'view_reports', description: { en: 'View system reports', vi: 'Xem báo cáo hệ thống', ko: '시스템 보고서 보기' } },
+    {
+      resource: 'system',
+      action: 'manage_users',
+      description: {
+        en: 'Manage system users',
+        vi: 'Quản lý người dùng hệ thống',
+        ko: '시스템 사용자 관리',
+      },
+    },
+    {
+      resource: 'system',
+      action: 'view_reports',
+      description: {
+        en: 'View system reports',
+        vi: 'Xem báo cáo hệ thống',
+        ko: '시스템 보고서 보기',
+      },
+    },
   ];
 
   console.log(`Creating ${permissionsData.length} permissions...`);
-  
+
   // Upsert permissions to avoid duplicates
   for (const p of permissionsData) {
     await prisma.permission.upsert({
@@ -52,19 +203,59 @@ async function main() {
         },
       },
       update: {
-        description: p.description, 
+        description: p.description as any, // Explicit cast to ensure JSON update
       },
-      create: p,
+      create: {
+        resource: p.resource,
+        action: p.action,
+        description: p.description as any, // Explicit cast
+      },
     });
   }
 
   // 2. Create Roles
   const rolesData = [
-    { name: 'PLATFORM_ADMIN', scope: 'PLATFORM', description: { en: 'System Administrator', vi: 'Quản trị viên hệ thống', ko: '시스템 관리자' } },
-    { name: 'AGENCY_OWNER', scope: 'MERCHANT', description: { en: 'Owner of an Agency', vi: 'Chủ sở hữu đại lý', ko: '대리점 소유자' } },
-    { name: 'MERCHANT_OWNER', scope: 'MERCHANT', description: { en: 'Owner of a Merchant', vi: 'Chủ sở hữu cửa hàng', ko: '상점 소유자' } },
-    { name: 'CUSTOMER', scope: 'PLATFORM', description: { en: 'End User / Customer', vi: 'Khách hàng', ko: '고객' } },
-    { name: 'COURIER', scope: 'PLATFORM', description: { en: 'Delivery Driver', vi: 'Tài xế giao hàng', ko: '배달 기사' } },
+    {
+      name: 'PLATFORM_ADMIN',
+      scope: 'PLATFORM',
+      description: {
+        en: 'System Administrator',
+        vi: 'Quản trị viên hệ thống',
+        ko: '시스템 관리자',
+      },
+    },
+    {
+      name: 'AGENCY_OWNER',
+      scope: 'MERCHANT',
+      description: {
+        en: 'Owner of an Agency',
+        vi: 'Chủ sở hữu đại lý',
+        ko: '대리점 소유자',
+      },
+    },
+    {
+      name: 'MERCHANT_OWNER',
+      scope: 'MERCHANT',
+      description: {
+        en: 'Owner of a Merchant',
+        vi: 'Chủ sở hữu cửa hàng',
+        ko: '상점 소유자',
+      },
+    },
+    {
+      name: 'CUSTOMER',
+      scope: 'PLATFORM',
+      description: { en: 'End User / Customer', vi: 'Khách hàng', ko: '고객' },
+    },
+    {
+      name: 'COURIER',
+      scope: 'PLATFORM',
+      description: {
+        en: 'Delivery Driver',
+        vi: 'Tài xế giao hàng',
+        ko: '배달 기사',
+      },
+    },
   ];
 
   console.log(`Creating ${rolesData.length} roles...`);
@@ -73,7 +264,7 @@ async function main() {
     await prisma.role.upsert({
       where: { name: r.name },
       update: {
-        description: r.description, 
+        description: r.description,
       },
       create: {
         name: r.name,
@@ -89,7 +280,7 @@ async function main() {
   const allRoles = await prisma.role.findMany();
 
   const getRole = (name: string) => allRoles.find((r) => r.name === name);
-  const getPerm = (res: string, act: string) => 
+  const getPerm = (res: string, act: string) =>
     allPermissions.find((p) => p.resource === res && p.action === act);
 
   // Define mappings
@@ -100,15 +291,16 @@ async function main() {
     },
     {
       role: 'AGENCY_OWNER',
-      perms: allPermissions.filter(p => 
+      perms: allPermissions.filter((p) =>
         ['merchant', 'product', 'order', 'agency'].includes(p.resource)
       ),
     },
     {
       role: 'MERCHANT_OWNER',
-      perms: allPermissions.filter(p => 
-        ['product', 'order'].includes(p.resource) || 
-        (p.resource === 'merchant' && p.action === 'update')
+      perms: allPermissions.filter(
+        (p) =>
+          ['product', 'order'].includes(p.resource) ||
+          (p.resource === 'merchant' && p.action === 'update')
       ),
     },
     {
@@ -127,7 +319,7 @@ async function main() {
 
     for (const perm of map.perms) {
       if (!perm) continue;
-      
+
       await prisma.rolePermission.upsert({
         where: {
           roleId_permissionId: {
@@ -188,7 +380,7 @@ async function main() {
     } else {
       console.log(`User ${adminEmail} already has PLATFORM_ADMIN role.`);
     }
-    
+
     console.log(`Created admin user: ${adminEmail}`);
   }
 

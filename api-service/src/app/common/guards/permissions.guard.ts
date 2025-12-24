@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { PrismaService } from '../../prisma.service';
-import { PERMISSIONS_KEY } from '../decorators/permissions.decorator';
+import { PERMISSIONS_KEY } from '../../common/decorators/permissions.decorator';
 import { AUTH_MESSAGES } from '../../common/constants/messages.constant';
 
 @Injectable()
