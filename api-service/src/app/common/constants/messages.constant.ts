@@ -28,3 +28,13 @@ export const PRODUCT_MESSAGES = {
   PERMISSION_DENIED_CREATION:
     'You do not have permission to create products for this merchant',
 };
+
+export const CATEGORY_MESSAGES = {
+  NOT_FOUND: 'Category not found',
+};
+
+export const RESOURCE_MESSAGES = {
+  NOT_FOUND: (target: string) => `${target} not found`,
+  OPERATION_DENIED: (target: string, status: string) =>
+    `Operation denied. ${target} status is ${status}. Please contact support.`,
+};

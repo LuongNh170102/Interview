@@ -1,8 +1,19 @@
-import { Controller, Post, Body, UseGuards, Request } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  UseGuards,
+  Request,
+  Patch,
+  Param,
+} from '@nestjs/common';
 import { MerchantService } from './merchant.service';
 import { CreateMerchantDto } from './dto/create-merchant.dto';
 import { RequestOtpDto, VerifyOtpDto } from '../otp/dto/otp.dto';
-import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
+import { UpdateMerchantStatusDto } from './dto/update-merchant-status.dto';
+import { PermissionsGuard } from '../common/guards/permissions.guard';
+import { Permissions } from '../common/decorators/permissions.decorator';
 
 @Controller('merchants')
 export class MerchantController {
@@ -16,6 +27,16 @@ export class MerchantController {
   @Post('otp/verify')
   verifyOtp(@Body() dto: VerifyOtpDto) {
     return this.merchantService.verifyOtp(dto);
+  }
+
+  @Patch(':id/status')
+  @UseGuards(JwtAuthGuard, PermissionsGuard)
+  @Permissions('merchant:update_status')
+  updateStatus(
+    @Param('id') externalId: string,
+    @Body() dto: UpdateMerchantStatusDto
+  ) {
+    return this.merchantService.updateStatus(externalId, dto.status);
   }
 
   @UseGuards(JwtAuthGuard)
