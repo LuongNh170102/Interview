@@ -9,6 +9,7 @@ import { AgencyModule } from './agency/agency.module';
 import { MerchantModule } from './merchant/merchant.module';
 import { ProductModule } from './product/product.module';
 import { CategoryModule } from './category/category.module';
+import { BrandModule } from './brand/brand.module';
 import { CommonModule } from './common/common.module';
 
 @Module({
@@ -27,6 +28,7 @@ import { CommonModule } from './common/common.module';
     MerchantModule,
     ProductModule,
     CategoryModule,
+    BrandModule,
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService],

@@ -33,6 +33,12 @@ export const CATEGORY_MESSAGES = {
   NOT_FOUND: 'Category not found',
 };
 
+export const BRAND_MESSAGES = {
+  AGENCY_REQUIRED: 'You must own an Agency to create a Brand',
+  NOT_FOUND: 'Brand not found',
+  NOT_OWNER: 'You do not own this Brand',
+};
+
 export const RESOURCE_MESSAGES = {
   NOT_FOUND: (target: string) => `${target} not found`,
   OPERATION_DENIED: (target: string, status: string) =>
