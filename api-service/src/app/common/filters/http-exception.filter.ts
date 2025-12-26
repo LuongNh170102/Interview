@@ -28,7 +28,9 @@ export class AllExceptionsFilter implements ExceptionFilter {
       switch (exception.code) {
         case 'P2002':
           status = HttpStatus.CONFLICT;
-          message = `Unique constraint failed on the fields: ${(exception.meta as any)?.target}`;
+          message = `Unique constraint failed on the fields: ${
+            (exception.meta as any)?.target
+          }`;
           break;
         case 'P2025':
           status = HttpStatus.NOT_FOUND;

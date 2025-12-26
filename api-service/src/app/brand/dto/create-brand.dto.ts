@@ -8,7 +8,7 @@ export class CreateBrandDto {
   @IsString()
   @IsOptional()
   description?: string;
-  
+
   @IsString()
   @IsOptional()
   slug?: string;
