@@ -139,6 +139,7 @@ model Brand {
   slug        String? @unique
   description Json?
   metadata    Json?
+  businessCategory String? @map("business_category") // Lĩnh vực kinh doanh (VD: F&B, Retail...)
   
   agencyId    Int?    @map("agency_id")
 
@@ -163,6 +164,7 @@ model Category {
   children Category[] @relation("CategoryToCategory")
   
   brands   BrandCategory[]
+  merchants MerchantCategory[]
 
   @@map("categories")
 }
@@ -249,8 +251,23 @@ model Merchant {
   reviews      Review[]
   userRoles    UserRole[]
   operatingHours OperatingHour[]
+  categories     MerchantCategory[]
 
   @@map("merchants")
+}
+
+model MerchantCategory {
+  merchantId  Int      @map("merchant_id")
+  categoryId  Int      @map("category_id")
+  
+  isFeatured  Boolean  @default(false) @map("is_featured")
+  displayOrder Int     @default(0) @map("display_order")
+
+  merchant    Merchant @relation(fields: [merchantId], references: [id])
+  category    Category @relation(fields: [categoryId], references: [id])
+
+  @@id([merchantId, categoryId])
+  @@map("merchant_categories")
 }
 
 model OperatingHour {

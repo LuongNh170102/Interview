@@ -6,4 +6,5 @@ export * from './lib/interfaces/merchant.interface';
 export * from './lib/services/translation.service';
 export * from './lib/pipes/translate.pipe';
 export * from './lib/interfaces/localized-string.interface';
+export * from './lib/interfaces/brand.interface';
 export * from './lib/pipes/localized-text.pipe';
