@@ -1,6 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import {
+  CreateMerchantRequest,
+  MerchantResponse,
+  RequestOtpRequest,
+  RequestOtpResponse,
+  VerifyOtpRequest,
+  VerifyOtpResponse,
+} from '@vhandelivery/shared-ui';
 
 @Injectable({ providedIn: 'root' })
 export class MerchantService {
@@ -8,21 +16,34 @@ export class MerchantService {
 
   constructor(private http: HttpClient) {}
 
-  requestOtp(phone: string): Observable<any> {
-    return this.http.post(`${this.baseUrl}/otp/request`, { phone });
+  requestOtp(phone: string): Observable<RequestOtpResponse> {
+    const payload: RequestOtpRequest = { phone };
+    return this.http.post<RequestOtpResponse>(
+      `${this.baseUrl}/otp/request`,
+      payload
+    );
   }
 
-  verifyOtp(phone: string, code: string): Observable<any> {
-    return this.http.post(`${this.baseUrl}/otp/verify`, { phone, code });
+  verifyOtp(phone: string, code: string): Observable<VerifyOtpResponse> {
+    const payload: VerifyOtpRequest = { phone, code };
+    return this.http.post<VerifyOtpResponse>(
+      `${this.baseUrl}/otp/verify`,
+      payload
+    );
   }
 
-  registerMerchant(payload: any, access_token: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/register`, payload,
+  registerMerchant(
+    payload: CreateMerchantRequest,
+    access_token: string
+  ): Observable<MerchantResponse> {
+    return this.http.post<MerchantResponse>(
+      `${this.baseUrl}/register`,
+      payload,
       {
         headers: {
-          Authorization: `Bearer ${access_token}`
-        }
+          Authorization: `Bearer ${access_token}`,
+        },
       }
-    ); 
+    );
   }
 }

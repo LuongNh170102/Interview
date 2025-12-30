@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { TranslatePipe } from '@deliveryk/shared-ui';
+import { TranslatePipe } from '@vhandelivery/shared-ui';
 
 @Component({
   selector: 'app-footer',

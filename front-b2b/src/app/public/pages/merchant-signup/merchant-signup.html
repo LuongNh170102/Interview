@@ -161,53 +161,20 @@
 
         <div class="form-group">
           <label class="form-label required">{{ 'MERCHANT_SIGNUP.FORM.PHONE' | translate }}</label>
-          <div class="otp-request-wrapper">
-            <input 
-              type="text" 
-              class="form-control"
-              [placeholder]="'MERCHANT_SIGNUP.FORM.PHONE_PLACEHOLDER' | translate"
-              [(ngModel)]="formData.phoneNumber"
-              name="phoneNumber"
-              (input)="formatPhoneNumber($event)"
-              (blur)="onBlur('phoneNumber')"
-            />
-            <button
-              type="button"
-              class="btn-red"
-              [disabled]="otpRequested"
-              (click)="requestOtp()">
-              {{ (otpRequested ? 'MERCHANT_SIGNUP.FORM.OTP_SENT' : 'MERCHANT_SIGNUP.FORM.SEND_OTP') | translate }}
-            </button>
-          </div>
+          <input 
+            type="text" 
+            class="form-control"
+            [placeholder]="'MERCHANT_SIGNUP.FORM.PHONE_PLACEHOLDER' | translate"
+            [(ngModel)]="formData.phoneNumber"
+            name="phoneNumber"
+            (input)="formatPhoneNumber($event)"
+            (blur)="onBlur('phoneNumber')"
+          />
           <small class="form-hint error" *ngIf="hasError('phoneNumber')">
             <i class="fa-solid fa-circle-exclamation"></i> {{ 'MERCHANT_SIGNUP.FORM.PHONE_ERROR' | translate }}
           </small>
         </div>
 
-
-        <!-- OTP Verify -->
-        <div class="form-group" *ngIf="otpRequested">
-          <label class="form-label required">{{ 'MERCHANT_SIGNUP.FORM.OTP_CODE' | translate }}</label>    
-            <div class="otp-request-wrapper">
-            <input
-              type="text"
-              class="form-control"
-              [placeholder]="'MERCHANT_SIGNUP.FORM.OTP_PLACEHOLDER' | translate"
-              [(ngModel)]="otpCode"
-              name="otpCode"
-            />
-            <button
-              type="button"
-              class="btn-red"
-              (click)="verifyOtp()">
-              {{ 'MERCHANT_SIGNUP.FORM.VERIFY_OTP' | translate }}
-            </button>
-          </div>
-          <small class="form-hint error" *ngIf="otpError">
-            {{ otpError }}
-          </small>
-        </div>
-        
         <div class="form-group">
           <label class="form-label required">{{ 'MERCHANT_SIGNUP.FORM.KNOW_REASON' | translate }}</label>
           <input 
@@ -286,3 +253,21 @@
       </form>
     </main>
   </div>
+
+  <!-- Modals -->
+  <app-otp-modal
+    [isOpen]="showOtpModal"
+    [phoneNumber]="formData.phoneNumber"
+    (close)="showOtpModal = false"
+    (verify)="onOtpVerify($event)"
+    (resend)="onOtpResend()">
+  </app-otp-modal>
+
+  <app-global-modal
+    [isOpen]="modalConfig.isOpen"
+    [type]="modalConfig.type"
+    [title]="modalConfig.title"
+    [message]="modalConfig.message"
+    (close)="closeModal()"
+    (confirm)="closeModal()">
+  </app-global-modal>

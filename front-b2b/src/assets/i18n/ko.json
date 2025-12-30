@@ -113,5 +113,22 @@
       "FLOWERS": "꽃",
       "PHARMACY": "약국"
     }
+  },
+  "MODAL": {
+    "SUCCESS": "성공",
+    "ERROR": "오류",
+    "WARNING": "경고",
+    "CLOSE": "닫기",
+    "CONFIRM": "확인",
+    "OTP_TITLE": "OTP 입력",
+    "OTP_DESC": "인증 코드를 다음 번호로 발송했습니다:",
+    "OTP_RESEND": "OTP 재발송",
+    "OTP_RESEND_IN": "재발송 대기:",
+    "OTP_INVALID": "잘못된 OTP 코드입니다",
+    "REGISTRATION_SUCCESS": "등록 성공!",
+    "REGISTRATION_SUCCESS_DESC": "신청서가 제출되었습니다. 곧 연락드리겠습니다.",
+    "REGISTRATION_FAILED": "등록 실패",
+    "REGISTRATION_FAILED_DESC": "문제가 발생했습니다. 나중에 다시 시도해주세요.",
+    "OTP_NOT_RECEIVED": "OTP를 받지 못하셨나요?"
   }
 }

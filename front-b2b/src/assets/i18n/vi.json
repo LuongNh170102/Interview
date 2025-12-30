@@ -113,5 +113,22 @@
       "FLOWERS": "Hoa tươi",
       "PHARMACY": "Hiệu thuốc bán"
     }
+  },
+  "MODAL": {
+    "SUCCESS": "Thành công",
+    "ERROR": "Lỗi",
+    "WARNING": "Cảnh báo",
+    "CLOSE": "Đóng",
+    "CONFIRM": "Xác nhận",
+    "OTP_TITLE": "Nhập mã OTP",
+    "OTP_DESC": "Chúng tôi đã gửi mã xác thực đến số",
+    "OTP_RESEND": "Gửi lại OTP",
+    "OTP_RESEND_IN": "Gửi lại sau",
+    "OTP_INVALID": "Mã OTP không hợp lệ",
+    "REGISTRATION_SUCCESS": "Đăng ký thành công!",
+    "REGISTRATION_SUCCESS_DESC": "Hồ sơ của bạn đã được gửi. Chúng tôi sẽ liên hệ sớm nhất.",
+    "REGISTRATION_FAILED": "Đăng ký thất bại",
+    "REGISTRATION_FAILED_DESC": "Có lỗi xảy ra. Vui lòng thử lại sau.",
+    "OTP_NOT_RECEIVED": "Bạn chưa nhận được mã OTP?"
   }
 }

@@ -1,22 +1,45 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { CustomSelectComponent } from '../../shared/custom-select.component';
+import { CustomSelectComponent } from '../../shared/custom-select/custom-select.component';
+import {
+  GlobalModalComponent,
+  ModalType,
+} from '../../shared/global-modal/global-modal.component';
+import { OtpModalComponent } from '../../shared/otp-modal/otp-modal.component';
 import { MerchantService } from '../../services/merchant.service';
-import { TranslatePipe } from '@deliveryk/shared-ui';
+import { TranslatePipe, CreateMerchantRequest } from '@vhandelivery/shared-ui';
+import {
+  CITIES,
+  BUSINESS_LICENSES,
+} from '../../constants/form-options.constant';
 
 @Component({
   selector: 'app-merchant-signup',
   standalone: true,
-  imports: [CommonModule, FormsModule, CustomSelectComponent, TranslatePipe],
+  imports: [
+    CommonModule,
+    FormsModule,
+    CustomSelectComponent,
+    TranslatePipe,
+    GlobalModalComponent,
+    OtpModalComponent,
+  ],
   templateUrl: './merchant-signup.html',
   styleUrls: ['./merchant-signup.scss'],
 })
 export class MerchantSignup {
-  otpRequested = false;
+  // Modal states
+  showOtpModal = false;
+
+  modalConfig = {
+    isOpen: false,
+    type: 'info' as ModalType,
+    title: '',
+    message: '',
+  };
+
   otpVerified = false;
-  otpCode = '';
-  otpError = '';
   verificationToken: string | null = null;
 
   // Form data
@@ -33,7 +56,7 @@ export class MerchantSignup {
     socialLinks: '',
   };
 
-  // Touched fields 
+  // Touched fields
   touched = {
     storeName: false,
     city: false,
@@ -46,51 +69,11 @@ export class MerchantSignup {
   };
 
   // Cities
-  cities = [
-    // main
-    { value: 'hanoi', label: 'CITIES.hanoi' },
-    { value: 'hcm', label: 'CITIES.hcm' },
-    { value: 'danang', label: 'CITIES.danang' },
-    { value: 'haiphong', label: 'CITIES.haiphong' },
-    { value: 'cantho', label: 'CITIES.cantho' },
-    // north
-    { value: 'bacninh', label: 'CITIES.bacninh' },
-    { value: 'thainguyen', label: 'CITIES.thainguyen' },
-    { value: 'vinhphuc', label: 'CITIES.vinhphuc' },
-    { value: 'quangninh', label: 'CITIES.quangninh' },
-    { value: 'haiduong', label: 'CITIES.haiduong' },
-    { value: 'namdinh', label: 'CITIES.namdinh' },
-    { value: 'thaibinh', label: 'CITIES.thaibinh' },
-    // center
-    { value: 'hue', label: 'CITIES.hue' },
-    { value: 'quangnam', label: 'CITIES.quangnam' },
-    { value: 'quangngai', label: 'CITIES.quangngai' },
-    { value: 'binhdinh', label: 'CITIES.binhdinh' },
-    { value: 'khanhhoa', label: 'CITIES.khanhhoa' },
-    { value: 'phuyen', label: 'CITIES.phuyen' },
-    { value: 'nghean', label: 'CITIES.nghean' },
-    { value: 'hatinh', label: 'CITIES.hatinh' },
-    // south
-    { value: 'binhduong', label: 'CITIES.binhduong' },
-    { value: 'dongnai', label: 'CITIES.dongnai' },
-    { value: 'longan', label: 'CITIES.longan' },
-    { value: 'tayninh', label: 'CITIES.tayninh' },
-    { value: 'bariavungtau', label: 'CITIES.bariavungtau' },
-    { value: 'tiengiang', label: 'CITIES.tiengiang' },
-    { value: 'vinhlong', label: 'CITIES.vinhlong' },
-    { value: 'angiang', label: 'CITIES.angiang' },
-    { value: 'kiengiang', label: 'CITIES.kiengiang' },
-    { value: 'soctrang', label: 'CITIES.soctrang' },
-    { value: 'baclieu', label: 'CITIES.baclieu' },
-    { value: 'camau', label: 'CITIES.camau' },
-  ];
+  cities = CITIES;
 
-  businessLicenses = [
-    { value: 'HAS_LICENSE', label: 'LICENSES.HAS_LICENSE' },
-    { value: 'NO_LICENSE', label: 'LICENSES.NO_LICENSE' },
-    { value: 'PENDING_LICENSE', label: 'LICENSES.PENDING_LICENSE' },
-  ];
+  businessLicenses = BUSINESS_LICENSES;
 
+  @ViewChild(OtpModalComponent) otpModal!: OtpModalComponent;
 
   constructor(private merchantService: MerchantService) {}
 
@@ -121,7 +104,7 @@ export class MerchantSignup {
    */
   formatPhoneNumber(event: Event): void {
     const input = event.target as HTMLInputElement;
-    let value = input.value.replace(/\D/g, '');
+    const value = input.value.replace(/\D/g, '');
 
     // Format: 0123-456-7890
     if (value.length <= 4) {
@@ -129,7 +112,10 @@ export class MerchantSignup {
     } else if (value.length <= 7) {
       this.formData.phoneNumber = value.replace(/(\d{4})(\d{1,3})/, '$1-$2');
     } else {
-      this.formData.phoneNumber = value.replace(/(\d{4})(\d{3})(\d{1,4})/, '$1-$2-$3');
+      this.formData.phoneNumber = value.replace(
+        /(\d{4})(\d{3})(\d{1,4})/,
+        '$1-$2-$3'
+      );
     }
   }
 
@@ -138,7 +124,7 @@ export class MerchantSignup {
    */
   validateForm(): boolean {
     // all field touched
-    Object.keys(this.touched).forEach(key => {
+    Object.keys(this.touched).forEach((key) => {
       this.touched[key as keyof typeof this.touched] = true;
     });
 
@@ -151,13 +137,26 @@ export class MerchantSignup {
       'contactName',
       'phoneNumber',
       'knowReason',
-      'businessLicense'
+      'businessLicense',
     ];
 
-    return requiredFields.every(field => {
+    return requiredFields.every((field) => {
       const value = this.formData[field];
       return value && value.toString().trim() !== '';
     });
+  }
+
+  showModal(type: ModalType, title: string, message: string) {
+    this.modalConfig = {
+      isOpen: true,
+      type,
+      title,
+      message,
+    };
+  }
+
+  closeModal() {
+    this.modalConfig.isOpen = false;
   }
 
   requestOtp() {
@@ -165,52 +164,42 @@ export class MerchantSignup {
 
     this.merchantService.requestOtp(phone).subscribe({
       next: () => {
-        this.otpRequested = true;
+        this.showOtpModal = true;
+        // Start countdown in modal
+        setTimeout(() => this.otpModal?.startCountdown(), 0);
       },
       error: () => {
-        this.otpError = 'Không thể gửi mã OTP';
-      }
+        this.showModal(
+          'error',
+          'MODAL.ERROR',
+          'MODAL.REGISTRATION_FAILED_DESC'
+        );
+      },
     });
   }
-  verifyOtp() {
+
+  onOtpVerify(code: string) {
     const phone = this.formData.phoneNumber.replace(/-/g, '');
 
-    this.merchantService.verifyOtp(phone, this.otpCode).subscribe({
+    this.merchantService.verifyOtp(phone, code).subscribe({
       next: (res) => {
         this.otpVerified = true;
         this.verificationToken = res.verificationToken;
-        this.otpError = '';
+        this.showOtpModal = false;
+        this.submitRegistration();
       },
       error: () => {
-        this.otpError = 'Mã OTP không hợp lệ hoặc đã hết hạn';
-      }
+        this.showModal('error', 'MODAL.ERROR', 'MODAL.OTP_INVALID');
+      },
     });
   }
 
-  
-  /**
-   * Form submit
-   */
-  onSubmit(event: Event): void {
-    event.preventDefault();
+  onOtpResend() {
+    this.requestOtp();
+  }
 
-    if (!this.validateForm()) {
-      console.error('Form validation failed');
-      // go scroll to first err 
-      const firstError = document.querySelector('.form-hint.error');
-      if (firstError) {
-        firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }
-      return;
-    }
-
-    if (!this.otpVerified || !this.verificationToken) {
-      alert('Vui lòng xác thực OTP trước');
-      return;
-    }
-    
-
-    const payload = {
+  submitRegistration() {
+    const payload: CreateMerchantRequest = {
       name: this.formData.storeName,
       address: this.formData.storeAddress,
       city: this.formData.city,
@@ -220,21 +209,56 @@ export class MerchantSignup {
       referralSource: this.formData.knowReason,
       hasBusinessLicense: this.formData.businessLicense === 'HAS_LICENSE',
       phone: this.formData.phoneNumber.replace(/-/g, ''),
-      verificationToken: this.verificationToken, 
+      verificationToken: this.verificationToken!,
       socialLinks: this.formData.socialLinks || null,
     };
 
     // Login Authentication Token Temporary Hardcoding
-    const access_token='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsInVzZXJuYW1lIjoienhjdkB6eGN2LmNvbSIsInJvbGVzIjpbIkNVU1RPTUVSIl0sImlhdCI6MTc2NjM2NzI3NiwiZXhwIjoxNzY2MzY4MTc2fQ.1TSg2X_sXnbvQaz6PTSHPvAbxX2RjBOExsiLeaMynyo';
+    const access_token =
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsInVzZXJuYW1lIjoiYWRtaW5AZ21haWwuY29tIiwicm9sZXMiOlsiUExBVEZPUk1fQURNSU4iLCJNRVJDSEFOVF9PV05FUiJdLCJpYXQiOjE3NjcwODE5MjIsImV4cCI6MTc2ODM3NzkyMn0.T4wslNqVW4VNH_JnWwDpkeUFU15GRGwPOj8ctlVW4j4';
+
     this.merchantService.registerMerchant(payload, access_token).subscribe({
       next: (res) => {
-        console.log('merchant register success !', res);
-        alert('success');
+        this.showModal(
+          'success',
+          'MODAL.REGISTRATION_SUCCESS',
+          'MODAL.REGISTRATION_SUCCESS_DESC'
+        );
       },
       error: (err) => {
         console.error('merchant register failed ..', err);
+        this.showModal(
+          'error',
+          'MODAL.REGISTRATION_FAILED',
+          'MODAL.REGISTRATION_FAILED_DESC'
+        );
       },
     });
+  }
 
+  /**
+   * Form submit
+   */
+  onSubmit(event: Event): void {
+    event.preventDefault();
+
+    if (!this.validateForm()) {
+      console.error('Form validation failed');
+      // go scroll to first err
+      const firstError = document.querySelector('.form-hint.error');
+      if (firstError) {
+        firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+      return;
+    }
+
+    // If not verified, request OTP first
+    if (!this.otpVerified) {
+      this.requestOtp();
+      return;
+    }
+
+    // If already verified (rare case if they closed modal but somehow verified), submit directly
+    this.submitRegistration();
   }
 }

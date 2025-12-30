@@ -1,0 +1,105 @@
+<div
+  class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
+  *ngIf="isOpen"
+>
+  <div
+    class="bg-white rounded-2xl shadow-xl w-full max-w-md mx-4 overflow-hidden p-8 relative"
+  >
+    <!-- Close Button -->
+    <button
+      (click)="onClose()"
+      class="absolute top-4 right-4 text-gray-400 hover:text-gray-600"
+    >
+      <svg
+        class="h-6 w-6"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M6 18L18 6M6 6l12 12"
+        />
+      </svg>
+    </button>
+
+    <!-- Icon -->
+    <div class="flex justify-center mb-6">
+      <div
+        class="w-16 h-16 bg-red-50 rounded-full flex items-center justify-center"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-8 w-8 text-primary-red"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+          />
+        </svg>
+      </div>
+    </div>
+
+    <!-- Title & Description -->
+    <div class="text-center mb-8">
+      <h3 class="text-2xl font-bold text-gray-900 mb-2">
+        {{ 'MODAL.OTP_TITLE' | translate }}
+      </h3>
+      <p class="text-gray-500 text-sm">
+        {{ 'MODAL.OTP_DESC' | translate }}
+        <br />
+        <span class="font-semibold text-gray-900">{{ maskedPhone }}</span>
+      </p>
+    </div>
+
+    <!-- OTP Inputs -->
+    <div class="mb-8 px-2">
+      <input
+        #otpInput
+        type="text"
+        [(ngModel)]="otpCode"
+        (input)="onInput($event)"
+        class="w-full text-center text-3xl tracking-[1em] py-3 border-b-2 border-gray-300 focus:border-primary-red focus:outline-none transition-colors font-bold"
+        placeholder="••••••"
+        maxlength="6"
+        inputmode="numeric"
+      />
+    </div>
+
+    <!-- Actions -->
+    <div class="flex flex-col space-y-4">
+      <button
+        (click)="onVerify()"
+        [disabled]="otpCode.length < 6"
+        class="w-full py-3.5 bg-black text-white rounded-lg font-semibold hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+      >
+        {{ 'MODAL.CONFIRM' | translate }}
+      </button>
+
+      <div class="text-center">
+        <p class="text-sm text-gray-500 mb-1">
+          {{ 'MODAL.OTP_NOT_RECEIVED' | translate }}
+        </p>
+        <button
+          (click)="onResend()"
+          [disabled]="countdown > 0"
+          class="text-sm font-semibold text-primary-red hover:text-primary-red disabled:text-gray-400 transition-colors"
+        >
+          <span *ngIf="countdown > 0">
+            {{ 'MODAL.OTP_RESEND_IN' | translate }} {{ countdown }}s
+          </span>
+          <span *ngIf="countdown === 0">
+            {{ 'MODAL.OTP_RESEND' | translate }}
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

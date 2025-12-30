@@ -385,24 +385,6 @@ select.form-control {
   text-align: center;
 }
 
-.otp-request-wrapper{
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 10px;
-  align-items: start;
-}
-
-.btn-red{
-  padding: 12px 20px;
-  height: 42px;
-  background: var(--primary-red);
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-}
 
 .btn-submit {
   padding: 15px 60px;
