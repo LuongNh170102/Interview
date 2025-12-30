@@ -42,5 +42,8 @@ export const CITIES: SelectOption[] = [
 export const BUSINESS_LICENSES: SelectOption[] = [
   { value: 'HAS_LICENSE', label: 'MERCHANT_SIGNUP.LICENSES.HAS_LICENSE' },
   { value: 'NO_LICENSE', label: 'MERCHANT_SIGNUP.LICENSES.NO_LICENSE' },
-  { value: 'PENDING_LICENSE', label: 'MERCHANT_SIGNUP.LICENSES.PENDING_LICENSE' },
+  {
+    value: 'PENDING_LICENSE',
+    label: 'MERCHANT_SIGNUP.LICENSES.PENDING_LICENSE',
+  },
 ];

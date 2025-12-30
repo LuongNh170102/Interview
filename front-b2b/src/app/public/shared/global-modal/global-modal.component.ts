@@ -1,7 +1,13 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '@vhandelivery/shared-ui';
-import { trigger, transition, style, animate, state } from '@angular/animations';
+import {
+  trigger,
+  transition,
+  style,
+  animate,
+  state,
+} from '@angular/animations';
 
 export type ModalType = 'success' | 'error' | 'warning' | 'info';
 
@@ -15,22 +21,26 @@ export type ModalType = 'success' | 'error' | 'warning' | 'info';
     trigger('backdropAnimation', [
       transition(':enter', [
         style({ opacity: 0 }),
-        animate('300ms ease-out', style({ opacity: 1 }))
+        animate('300ms ease-out', style({ opacity: 1 })),
       ]),
-      transition(':leave', [
-        animate('200ms ease-in', style({ opacity: 0 }))
-      ])
+      transition(':leave', [animate('200ms ease-in', style({ opacity: 0 }))]),
     ]),
     trigger('modalAnimation', [
       transition(':enter', [
         style({ opacity: 0, transform: 'scale(0.95) translateY(10px)' }),
-        animate('300ms cubic-bezier(0.16, 1, 0.3, 1)', style({ opacity: 1, transform: 'scale(1) translateY(0)' }))
+        animate(
+          '300ms cubic-bezier(0.16, 1, 0.3, 1)',
+          style({ opacity: 1, transform: 'scale(1) translateY(0)' })
+        ),
       ]),
       transition(':leave', [
-        animate('200ms ease-in', style({ opacity: 0, transform: 'scale(0.95) translateY(10px)' }))
-      ])
-    ])
-  ]
+        animate(
+          '200ms ease-in',
+          style({ opacity: 0, transform: 'scale(0.95) translateY(10px)' })
+        ),
+      ]),
+    ]),
+  ],
 })
 export class GlobalModalComponent {
   @Input() isOpen = false;
@@ -50,10 +60,14 @@ export class GlobalModalComponent {
 
   get iconClass(): string {
     switch (this.type) {
-      case 'success': return 'text-status-success bg-green-50';
-      case 'error': return 'text-status-error bg-red-50';
-      case 'warning': return 'text-primary-yellow bg-yellow-50';
-      default: return 'text-primary-dark bg-bg-gray';
+      case 'success':
+        return 'text-status-success bg-green-50';
+      case 'error':
+        return 'text-status-error bg-red-50';
+      case 'warning':
+        return 'text-primary-yellow bg-yellow-50';
+      default:
+        return 'text-primary-dark bg-bg-gray';
     }
   }
 }

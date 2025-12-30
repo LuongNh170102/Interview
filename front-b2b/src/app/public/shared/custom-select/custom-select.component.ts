@@ -1,4 +1,12 @@
-import { Component, Input, Output, EventEmitter, forwardRef, HostListener, ElementRef } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  forwardRef,
+  HostListener,
+  ElementRef,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { TranslatePipe, SelectOption } from '@vhandelivery/shared-ui';
@@ -11,20 +19,20 @@ import { TranslatePipe, SelectOption } from '@vhandelivery/shared-ui';
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => CustomSelectComponent),
-      multi: true
-    }
+      multi: true,
+    },
   ],
   templateUrl: './custom-select.component.html',
-  styleUrls: ['./custom-select.component.scss']
+  styleUrls: ['./custom-select.component.scss'],
 })
 export class CustomSelectComponent implements ControlValueAccessor {
   @Input() options: SelectOption[] = [];
-  @Input() placeholder: string = '선택하세요';
-  @Input() disabled: boolean = false;
+  @Input() placeholder = '선택하세요';
+  @Input() disabled = false;
   @Output() selectionChange = new EventEmitter<string>();
 
   isOpen = false;
-  value: string = '';
+  value = '';
   selectedOption: SelectOption | null = null;
 
   private onChange: (value: any) => void = () => {};
@@ -35,7 +43,8 @@ export class CustomSelectComponent implements ControlValueAccessor {
   // ControlValueAccessor 구현
   writeValue(value: string): void {
     this.value = value;
-    this.selectedOption = this.options.find(opt => opt.value === value) || null;
+    this.selectedOption =
+      this.options.find((opt) => opt.value === value) || null;
   }
 
   registerOnChange(fn: any): void {
