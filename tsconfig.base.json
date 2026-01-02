@@ -15,7 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@deliveryk/shared-ui": ["shared/src/index.ts"]
+      "@vhandelivery/shared-ui": ["shared/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

@@ -1,11 +1,12 @@
 {
-  "name": "@deliveryk/source",
+  "name": "@vhandelivery/source",
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
     "prepare": "husky install",
     "start:backend": "npx prisma generate && npx prisma migrate dev && nx serve api-service",
     "start:backend:prod": "NODE_ENV=production nx serve api-service",
+    "start:front-b2b": "nx serve front-b2b",
     "db:studio": "prisma studio"
   },
   "prisma": {
@@ -13,6 +14,7 @@
   },
   "private": true,
   "dependencies": {
+    "@angular/animations": "^20.3.15",
     "@angular/common": "~20.3.0",
     "@angular/compiler": "~20.3.0",
     "@angular/core": "~20.3.0",

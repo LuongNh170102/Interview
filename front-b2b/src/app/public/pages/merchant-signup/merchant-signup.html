@@ -1,288 +1,320 @@
-  <!-- Main Content -->
-  <div class="register-content">
-    <!-- Left Section: Hero -->
-    <aside class="hero-section">
-      <div class="hero-content">
-        <h1 class="hero-title">
-          {{ 'MERCHANT_SIGNUP.HERO_TITLE_1' | translate }}<br />
-          <strong>{{ 'MERCHANT_SIGNUP.HERO_TITLE_2' | translate }}</strong>
-        </h1>
-        <div class="hero-image">
-          <img src="assets/images/store.png" style="max-width: 200px;margin-left: 20px;margin-bottom: -80px; display: block;" alt="Store" />
-        </div>
-        <div class="benefits-card">
-          <h3 class="benefits-title">{{ 'MERCHANT_SIGNUP.BENEFITS_TITLE' | translate }}</h3>
-          <div class="benefits-grid">
-            <div class="benefit-item">
-              <div class="benefit-icon">
-                <img src="assets/images/store-icon1.png" alt="Technology" />
-              </div>
-              <p class="benefit-text">
-                <b>{{ 'MERCHANT_SIGNUP.BENEFIT_1_TITLE' | translate }}</b><br />{{ 'MERCHANT_SIGNUP.BENEFIT_1_DESC' | translate }}
-              </p>
+<!-- Main Content -->
+<div class="register-content">
+  <!-- Left Section: Hero -->
+  <aside class="hero-section">
+    <div class="hero-content">
+      <h1 class="hero-title">
+        {{ 'MERCHANT_SIGNUP.HERO_TITLE_1' | translate }}<br />
+        <strong>{{ 'MERCHANT_SIGNUP.HERO_TITLE_2' | translate }}</strong>
+      </h1>
+      <div class="hero-image">
+        <img
+          src="assets/images/store.png"
+          style="
+            max-width: 200px;
+            margin-left: 20px;
+            margin-bottom: -80px;
+            display: block;
+          "
+          alt="Store"
+        />
+      </div>
+      <div class="benefits-card">
+        <h3 class="benefits-title">
+          {{ 'MERCHANT_SIGNUP.BENEFITS_TITLE' | translate }}
+        </h3>
+        <div class="benefits-grid">
+          <div class="benefit-item">
+            <div class="benefit-icon">
+              <img src="assets/images/store-icon1.png" alt="Technology" />
             </div>
-            <div class="benefit-item">
-              <div class="benefit-icon">
-                <img src="assets/images/store-icon2.png" alt="Fee" />
-              </div>
-              <p class="benefit-text">
-                <b>{{ 'MERCHANT_SIGNUP.BENEFIT_2_TITLE' | translate }}</b><br />{{ 'MERCHANT_SIGNUP.BENEFIT_2_DESC' | translate }}
-              </p>
-            </div>
-            <div class="benefit-item">
-              <div class="benefit-icon">
-                <img src="assets/images/store-icon3.png" alt="Support" />
-              </div>
-              <p class="benefit-text">
-                <b>{{ 'MERCHANT_SIGNUP.BENEFIT_3_TITLE' | translate }}</b><br />{{ 'MERCHANT_SIGNUP.BENEFIT_3_DESC' | translate }}
-              </p>
-            </div>
+            <p class="benefit-text">
+              <b>{{ 'MERCHANT_SIGNUP.BENEFIT_1_TITLE' | translate }}</b><br />{{
+              'MERCHANT_SIGNUP.BENEFIT_1_DESC' | translate }}
+            </p>
           </div>
-        </div>
-
-        <div class="cta-section desktop-only">
-          <h3 class="cta-title">{{ 'MERCHANT_SIGNUP.CTA_TITLE' | translate }}</h3>
-          <div class="category-grid">
-            <div class="category-item">
-              <img src="assets/images/store-img1.png" alt="store-img1" />
-              <p>{{ 'MERCHANT_SIGNUP.CATEGORIES.NOODLES' | translate }}</p>
+          <div class="benefit-item">
+            <div class="benefit-icon">
+              <img src="assets/images/store-icon2.png" alt="Fee" />
             </div>
-            <div class="category-item">
-              <img src="assets/images/store-img2.png" alt="store-img2" />
-              <p>{{ 'MERCHANT_SIGNUP.CATEGORIES.CAFE' | translate }}</p>
+            <p class="benefit-text">
+              <b>{{ 'MERCHANT_SIGNUP.BENEFIT_2_TITLE' | translate }}</b><br />{{
+              'MERCHANT_SIGNUP.BENEFIT_2_DESC' | translate }}
+            </p>
+          </div>
+          <div class="benefit-item">
+            <div class="benefit-icon">
+              <img src="assets/images/store-icon3.png" alt="Support" />
             </div>
-            <div class="category-item">
-              <img src="assets/images/store-img3.png" alt="store-img3" />
-              <p>{{ 'MERCHANT_SIGNUP.CATEGORIES.BREAD' | translate }}</p>
-            </div>
-            <div class="category-item">
-              <img src="assets/images/store-img4.png" alt="store-img4" />
-              <p>{{ 'MERCHANT_SIGNUP.CATEGORIES.DRINKS' | translate }}</p>
-            </div>
-            <div class="category-item">
-              <img src="assets/images/store-img5.png" alt="store-img5" />
-              <p>{{ 'MERCHANT_SIGNUP.CATEGORIES.BEST_SELLER' | translate }}</p>
-            </div>
-            <div class="category-item">
-              <img src="assets/images/store-img6.png" alt="store-img6" />
-              <p>{{ 'MERCHANT_SIGNUP.CATEGORIES.RENTAL' | translate }}</p>
-            </div>
-            <div class="category-item">
-              <img src="assets/images/store-img7.png" alt="store-img7" />
-              <p>{{ 'MERCHANT_SIGNUP.CATEGORIES.FLOWERS' | translate }}</p>
-            </div>
-            <div class="category-item">
-              <img src="assets/images/store-img8.png" alt="store-img8" />
-              <p>{{ 'MERCHANT_SIGNUP.CATEGORIES.PHARMACY' | translate }}</p>
-            </div>
+            <p class="benefit-text">
+              <b>{{ 'MERCHANT_SIGNUP.BENEFIT_3_TITLE' | translate }}</b><br />{{
+              'MERCHANT_SIGNUP.BENEFIT_3_DESC' | translate }}
+            </p>
           </div>
         </div>
       </div>
-    </aside>
 
-    <!-- Right Section: Registration Form -->
-    <main class="form-section">
-      <form class="register-form" (submit)="onSubmit($event)">
-        
+      <div class="cta-section desktop-only">
+        <h3 class="cta-title">{{ 'MERCHANT_SIGNUP.CTA_TITLE' | translate }}</h3>
+        <div class="category-grid">
+          <div class="category-item">
+            <img src="assets/images/store-img1.png" alt="store-img1" />
+            <p>{{ 'MERCHANT_SIGNUP.CATEGORIES.NOODLES' | translate }}</p>
+          </div>
+          <div class="category-item">
+            <img src="assets/images/store-img2.png" alt="store-img2" />
+            <p>{{ 'MERCHANT_SIGNUP.CATEGORIES.CAFE' | translate }}</p>
+          </div>
+          <div class="category-item">
+            <img src="assets/images/store-img3.png" alt="store-img3" />
+            <p>{{ 'MERCHANT_SIGNUP.CATEGORIES.BREAD' | translate }}</p>
+          </div>
+          <div class="category-item">
+            <img src="assets/images/store-img4.png" alt="store-img4" />
+            <p>{{ 'MERCHANT_SIGNUP.CATEGORIES.DRINKS' | translate }}</p>
+          </div>
+          <div class="category-item">
+            <img src="assets/images/store-img5.png" alt="store-img5" />
+            <p>{{ 'MERCHANT_SIGNUP.CATEGORIES.BEST_SELLER' | translate }}</p>
+          </div>
+          <div class="category-item">
+            <img src="assets/images/store-img6.png" alt="store-img6" />
+            <p>{{ 'MERCHANT_SIGNUP.CATEGORIES.RENTAL' | translate }}</p>
+          </div>
+          <div class="category-item">
+            <img src="assets/images/store-img7.png" alt="store-img7" />
+            <p>{{ 'MERCHANT_SIGNUP.CATEGORIES.FLOWERS' | translate }}</p>
+          </div>
+          <div class="category-item">
+            <img src="assets/images/store-img8.png" alt="store-img8" />
+            <p>{{ 'MERCHANT_SIGNUP.CATEGORIES.PHARMACY' | translate }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Right Section: Registration Form -->
+  <main class="form-section">
+    <form class="register-form" (submit)="onSubmit($event)">
+      <div class="form-group">
+        <label class="form-label required"
+          >{{ 'MERCHANT_SIGNUP.FORM.STORE_NAME' | translate }}</label
+        >
+        <input
+          type="text"
+          class="form-control"
+          [placeholder]="'MERCHANT_SIGNUP.FORM.STORE_NAME_PLACEHOLDER' | translate"
+          [(ngModel)]="formData.storeName"
+          name="storeName"
+          (blur)="onBlur('storeName')"
+        />
+        <small class="form-hint error" *ngIf="hasError('storeName')">
+          <i class="fa-solid fa-circle-exclamation"></i> {{
+          'MERCHANT_SIGNUP.FORM.STORE_NAME_ERROR' | translate }}
+        </small>
+      </div>
+
+      <div class="form-row">
         <div class="form-group">
-          <label class="form-label required">{{ 'MERCHANT_SIGNUP.FORM.STORE_NAME' | translate }}</label>
+          <label class="form-label required"
+            >{{ 'MERCHANT_SIGNUP.FORM.CITY' | translate }}</label
+          >
+          <app-custom-select
+            [options]="cities"
+            [placeholder]="'MERCHANT_SIGNUP.FORM.CITY_PLACEHOLDER' | translate"
+            [(ngModel)]="formData.city"
+            name="city"
+            (blur)="onBlur('city')"
+          >
+          </app-custom-select>
+          <small class="form-hint error" *ngIf="hasError('city')">
+            <i class="fa-solid fa-circle-exclamation"></i> {{
+            'MERCHANT_SIGNUP.FORM.CITY_ERROR' | translate }}
+          </small>
+        </div>
+        <div class="form-group">
+          <label class="form-label required"
+            >{{ 'MERCHANT_SIGNUP.FORM.ADDRESS' | translate }}</label
+          >
           <input
             type="text"
             class="form-control"
-            [placeholder]="'MERCHANT_SIGNUP.FORM.STORE_NAME_PLACEHOLDER' | translate"
-            [(ngModel)]="formData.storeName"
-            name="storeName"
-            (blur)="onBlur('storeName')"
+            [placeholder]="'MERCHANT_SIGNUP.FORM.ADDRESS_PLACEHOLDER' | translate"
+            [(ngModel)]="formData.storeAddress"
+            name="storeAddress"
+            (blur)="onBlur('storeAddress')"
           />
-          <small class="form-hint error" *ngIf="hasError('storeName')">
-            <i class="fa-solid fa-circle-exclamation"></i> {{ 'MERCHANT_SIGNUP.FORM.STORE_NAME_ERROR' | translate }}
+          <small class="form-hint error" *ngIf="hasError('storeAddress')">
+            <i class="fa-solid fa-circle-exclamation"></i> {{
+            'MERCHANT_SIGNUP.FORM.ADDRESS_ERROR' | translate }}
           </small>
         </div>
+      </div>
 
-        <div class="form-row">
-          <div class="form-group">
-            <label class="form-label required">{{ 'MERCHANT_SIGNUP.FORM.CITY' | translate }}</label>
-            <app-custom-select 
-              [options]="cities"
-              [placeholder]="'MERCHANT_SIGNUP.FORM.CITY_PLACEHOLDER' | translate"
-              [(ngModel)]="formData.city"
-              name="city"
-              (blur)="onBlur('city')">
-            </app-custom-select>
-            <small class="form-hint error" *ngIf="hasError('city')">
-              <i class="fa-solid fa-circle-exclamation"></i> {{ 'MERCHANT_SIGNUP.FORM.CITY_ERROR' | translate }}
-            </small>
-          </div>
-          <div class="form-group">
-            <label class="form-label required">{{ 'MERCHANT_SIGNUP.FORM.ADDRESS' | translate }}</label>
-            <input 
-              type="text" 
-              class="form-control"
-              [placeholder]="'MERCHANT_SIGNUP.FORM.ADDRESS_PLACEHOLDER' | translate"
-              [(ngModel)]="formData.storeAddress"
-              name="storeAddress"
-              (blur)="onBlur('storeAddress')"
-            />
-            <small class="form-hint error" *ngIf="hasError('storeAddress')">
-              <i class="fa-solid fa-circle-exclamation"></i> {{ 'MERCHANT_SIGNUP.FORM.ADDRESS_ERROR' | translate }}
-            </small>
-          </div>
-        </div>
+      <div class="form-group">
+        <label class="form-label required"
+          >{{ 'MERCHANT_SIGNUP.FORM.CATEGORY' | translate }}</label
+        >
+        <input
+          type="text"
+          class="form-control"
+          [placeholder]="'MERCHANT_SIGNUP.FORM.CATEGORY_PLACEHOLDER' | translate"
+          [(ngModel)]="formData.businessCategory"
+          name="businessCategory"
+          (blur)="onBlur('businessCategory')"
+        />
+        <small class="form-hint error" *ngIf="hasError('businessCategory')">
+          <i class="fa-solid fa-circle-exclamation"></i> {{
+          'MERCHANT_SIGNUP.FORM.CATEGORY_ERROR' | translate }}
+        </small>
+      </div>
 
-        <div class="form-group">
-          <label class="form-label required">{{ 'MERCHANT_SIGNUP.FORM.CATEGORY' | translate }}</label>
-          <input 
-            type="text" 
-            class="form-control"
-            [placeholder]="'MERCHANT_SIGNUP.FORM.CATEGORY_PLACEHOLDER' | translate"
-            [(ngModel)]="formData.businessCategory"
-            name="businessCategory"
-            (blur)="onBlur('businessCategory')"
-          />
-          <small class="form-hint error" *ngIf="hasError('businessCategory')">
-            <i class="fa-solid fa-circle-exclamation"></i> {{ 'MERCHANT_SIGNUP.FORM.CATEGORY_ERROR' | translate }}
-          </small>
-        </div>
+      <div class="form-group">
+        <label class="form-label required"
+          >{{ 'MERCHANT_SIGNUP.FORM.CONTACT_NAME' | translate }}</label
+        >
+        <input
+          type="text"
+          class="form-control"
+          [placeholder]="'MERCHANT_SIGNUP.FORM.CONTACT_NAME_PLACEHOLDER' | translate"
+          [(ngModel)]="formData.contactName"
+          name="contactName"
+          (blur)="onBlur('contactName')"
+        />
+        <small class="form-hint error" *ngIf="hasError('contactName')">
+          <i class="fa-solid fa-circle-exclamation"></i> {{
+          'MERCHANT_SIGNUP.FORM.CONTACT_NAME_ERROR' | translate }}
+        </small>
+      </div>
 
-        <div class="form-group">
-          <label class="form-label required">{{ 'MERCHANT_SIGNUP.FORM.CONTACT_NAME' | translate }}</label>
-          <input 
-            type="text" 
-            class="form-control"
-            [placeholder]="'MERCHANT_SIGNUP.FORM.CONTACT_NAME_PLACEHOLDER' | translate"
-            [(ngModel)]="formData.contactName"
-            name="contactName"
-            (blur)="onBlur('contactName')"
-          />
-          <small class="form-hint error" *ngIf="hasError('contactName')">
-            <i class="fa-solid fa-circle-exclamation"></i> {{ 'MERCHANT_SIGNUP.FORM.CONTACT_NAME_ERROR' | translate }}
-          </small>
-        </div>
+      <div class="form-group">
+        <label class="form-label required"
+          >{{ 'MERCHANT_SIGNUP.FORM.PHONE' | translate }}</label
+        >
+        <input
+          type="text"
+          class="form-control"
+          [placeholder]="'MERCHANT_SIGNUP.FORM.PHONE_PLACEHOLDER' | translate"
+          [(ngModel)]="formData.phoneNumber"
+          name="phoneNumber"
+          (input)="formatPhoneNumber($event)"
+          (blur)="onBlur('phoneNumber')"
+        />
+        <small class="form-hint error" *ngIf="hasError('phoneNumber')">
+          <i class="fa-solid fa-circle-exclamation"></i> {{
+          'MERCHANT_SIGNUP.FORM.PHONE_ERROR' | translate }}
+        </small>
+      </div>
 
-        <div class="form-group">
-          <label class="form-label required">{{ 'MERCHANT_SIGNUP.FORM.PHONE' | translate }}</label>
-          <div class="otp-request-wrapper">
-            <input 
-              type="text" 
-              class="form-control"
-              [placeholder]="'MERCHANT_SIGNUP.FORM.PHONE_PLACEHOLDER' | translate"
-              [(ngModel)]="formData.phoneNumber"
-              name="phoneNumber"
-              (input)="formatPhoneNumber($event)"
-              (blur)="onBlur('phoneNumber')"
-            />
-            <button
-              type="button"
-              class="btn-red"
-              [disabled]="otpRequested"
-              (click)="requestOtp()">
-              {{ (otpRequested ? 'MERCHANT_SIGNUP.FORM.OTP_SENT' : 'MERCHANT_SIGNUP.FORM.SEND_OTP') | translate }}
-            </button>
-          </div>
-          <small class="form-hint error" *ngIf="hasError('phoneNumber')">
-            <i class="fa-solid fa-circle-exclamation"></i> {{ 'MERCHANT_SIGNUP.FORM.PHONE_ERROR' | translate }}
-          </small>
-        </div>
+      <div class="form-group">
+        <label class="form-label required"
+          >{{ 'MERCHANT_SIGNUP.FORM.KNOW_REASON' | translate }}</label
+        >
+        <input
+          type="text"
+          class="form-control"
+          [placeholder]="'MERCHANT_SIGNUP.FORM.KNOW_REASON_PLACEHOLDER' | translate"
+          [(ngModel)]="formData.knowReason"
+          name="knowReason"
+          (blur)="onBlur('knowReason')"
+        />
+        <small class="form-hint error" *ngIf="hasError('knowReason')">
+          <i class="fa-solid fa-circle-exclamation"></i> {{
+          'MERCHANT_SIGNUP.FORM.KNOW_REASON_ERROR' | translate }}
+        </small>
+      </div>
 
-
-        <!-- OTP Verify -->
-        <div class="form-group" *ngIf="otpRequested">
-          <label class="form-label required">{{ 'MERCHANT_SIGNUP.FORM.OTP_CODE' | translate }}</label>    
-            <div class="otp-request-wrapper">
+      <div class="form-group">
+        <label class="form-label required"
+          >{{ 'MERCHANT_SIGNUP.FORM.SHOP_TYPE' | translate }}</label
+        >
+        <div class="radio-options">
+          <label class="radio-option">
             <input
-              type="text"
-              class="form-control"
-              [placeholder]="'MERCHANT_SIGNUP.FORM.OTP_PLACEHOLDER' | translate"
-              [(ngModel)]="otpCode"
-              name="otpCode"
+              type="radio"
+              name="shopType"
+              value="online"
+              [(ngModel)]="formData.shopType"
+              (change)="onShopTypeChange('online')"
             />
-            <button
-              type="button"
-              class="btn-red"
-              (click)="verifyOtp()">
-              {{ 'MERCHANT_SIGNUP.FORM.VERIFY_OTP' | translate }}
-            </button>
-          </div>
-          <small class="form-hint error" *ngIf="otpError">
-            {{ otpError }}
-          </small>
+            <span class="radio-circle"></span>
+            <span>{{ 'MERCHANT_SIGNUP.FORM.ONLINE' | translate }}</span>
+          </label>
+          <label class="radio-option">
+            <input
+              type="radio"
+              name="shopType"
+              value="offline"
+              [(ngModel)]="formData.shopType"
+              (change)="onShopTypeChange('offline')"
+            />
+            <span class="radio-circle"></span>
+            <span>{{ 'MERCHANT_SIGNUP.FORM.OFFLINE' | translate }}</span>
+          </label>
         </div>
-        
-        <div class="form-group">
-          <label class="form-label required">{{ 'MERCHANT_SIGNUP.FORM.KNOW_REASON' | translate }}</label>
-          <input 
-            type="text" 
-            class="form-control"
-            [placeholder]="'MERCHANT_SIGNUP.FORM.KNOW_REASON_PLACEHOLDER' | translate"
-            [(ngModel)]="formData.knowReason"
-            name="knowReason"
-            (blur)="onBlur('knowReason')"
-          />
-          <small class="form-hint error" *ngIf="hasError('knowReason')">
-            <i class="fa-solid fa-circle-exclamation"></i> {{ 'MERCHANT_SIGNUP.FORM.KNOW_REASON_ERROR' | translate }}
-          </small>
-        </div>
+      </div>
 
-        <div class="form-group">
-          <label class="form-label required">{{ 'MERCHANT_SIGNUP.FORM.SHOP_TYPE' | translate }}</label>
-          <div class="radio-options">
-            <label class="radio-option">
-              <input 
-                type="radio" 
-                name="shopType" 
-                value="online"
-                [(ngModel)]="formData.shopType"
-                (change)="onShopTypeChange('online')"
-              />
-              <span class="radio-circle"></span>
-              <span>{{ 'MERCHANT_SIGNUP.FORM.ONLINE' | translate }}</span>
-            </label>
-            <label class="radio-option">
-              <input 
-                type="radio" 
-                name="shopType" 
-                value="offline"
-                [(ngModel)]="formData.shopType"
-                (change)="onShopTypeChange('offline')"
-              />
-              <span class="radio-circle"></span>
-              <span>{{ 'MERCHANT_SIGNUP.FORM.OFFLINE' | translate }}</span>
-            </label>
-          </div>
-        </div>
+      <div class="form-group">
+        <label class="form-label required"
+          >{{ 'MERCHANT_SIGNUP.FORM.LICENSE' | translate }}</label
+        >
+        <app-custom-select
+          [options]="businessLicenses"
+          [placeholder]="'MERCHANT_SIGNUP.FORM.LICENSE_PLACEHOLDER' | translate"
+          [(ngModel)]="formData.businessLicense"
+          name="businessLicense"
+          (blur)="onBlur('businessLicense')"
+        >
+        </app-custom-select>
+        <small class="form-note">
+          {{ 'MERCHANT_SIGNUP.FORM.LICENSE_NOTE' | translate }}
+        </small>
+        <small class="form-hint error" *ngIf="hasError('businessLicense')">
+          <i class="fa-solid fa-circle-exclamation"></i> {{
+          'MERCHANT_SIGNUP.FORM.LICENSE_ERROR' | translate }}
+        </small>
+      </div>
 
-        <div class="form-group">
-          <label class="form-label required">{{ 'MERCHANT_SIGNUP.FORM.LICENSE' | translate }}</label>
-          <app-custom-select 
-              [options]="businessLicenses"
-              [placeholder]="'MERCHANT_SIGNUP.FORM.LICENSE_PLACEHOLDER' | translate"
-              [(ngModel)]="formData.businessLicense"
-              name="businessLicense"
-              (blur)="onBlur('businessLicense')">
-          </app-custom-select>
-          <small class="form-note">
-            {{ 'MERCHANT_SIGNUP.FORM.LICENSE_NOTE' | translate }}
-          </small>
-          <small class="form-hint error" *ngIf="hasError('businessLicense')">
-            <i class="fa-solid fa-circle-exclamation"></i> {{ 'MERCHANT_SIGNUP.FORM.LICENSE_ERROR' | translate }}
-          </small>
-        </div>
+      <div class="form-group">
+        <label class="form-label"
+          >{{ 'MERCHANT_SIGNUP.FORM.SOCIAL_LINKS' | translate }}</label
+        >
+        <input
+          type="url"
+          class="form-control"
+          placeholder="https://"
+          [(ngModel)]="formData.socialLinks"
+          name="socialLinks"
+        />
+      </div>
 
-        <div class="form-group">
-          <label class="form-label">{{ 'MERCHANT_SIGNUP.FORM.SOCIAL_LINKS' | translate }}</label>
-          <input 
-            type="url" 
-            class="form-control"
-            placeholder="https://"
-            [(ngModel)]="formData.socialLinks"
-            name="socialLinks"
-          />
-        </div>
+      <!-- Submit Button -->
+      <div class="form-actions">
+        <button type="submit" class="btn-submit">
+          {{ 'MERCHANT_SIGNUP.FORM.NEXT' | translate }}
+        </button>
+      </div>
+    </form>
+  </main>
+</div>
 
-        <!-- Submit Button -->
-        <div class="form-actions">
-          <button type="submit" class="btn-submit">{{ 'MERCHANT_SIGNUP.FORM.NEXT' | translate }}</button>
-        </div>
-      </form>
-    </main>
-  </div>
+<!-- Modals -->
+<app-otp-modal
+  [isOpen]="showOtpModal"
+  [phoneNumber]="formData.phoneNumber"
+  (close)="showOtpModal = false"
+  (verify)="onOtpVerify($event)"
+  (resend)="onOtpResend()"
+>
+</app-otp-modal>
+
+<app-global-modal
+  [isOpen]="modalConfig.isOpen"
+  [type]="modalConfig.type"
+  [title]="modalConfig.title"
+  [message]="modalConfig.message"
+  (close)="closeModal()"
+  (confirm)="closeModal()"
+>
+</app-global-modal>

@@ -113,5 +113,22 @@
       "FLOWERS": "Fresh Flowers",
       "PHARMACY": "Pharmacy"
     }
+  },
+  "MODAL": {
+    "SUCCESS": "Success",
+    "ERROR": "Error",
+    "WARNING": "Warning",
+    "CLOSE": "Close",
+    "CONFIRM": "Confirm",
+    "OTP_TITLE": "Enter OTP",
+    "OTP_DESC": "We have sent a verification code to",
+    "OTP_RESEND": "Resend OTP",
+    "OTP_RESEND_IN": "Resend in",
+    "OTP_INVALID": "Invalid OTP code",
+    "REGISTRATION_SUCCESS": "Registration Successful!",
+    "REGISTRATION_SUCCESS_DESC": "Your application has been submitted. We will contact you shortly.",
+    "REGISTRATION_FAILED": "Registration Failed",
+    "REGISTRATION_FAILED_DESC": "Something went wrong. Please try again later.",
+    "OTP_NOT_RECEIVED": "Did not receive OTP?"
   }
 }
