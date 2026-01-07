@@ -37,7 +37,9 @@ export class LandingComponent implements OnInit, OnDestroy {
 
   readonly newsPageSize = computed(() => (this.isDesktop() ? 3 : 1));
   readonly newsLimit = computed(() => (this.isDesktop() ? 9 : 3));
-  readonly pagedNews = computed(() => this.newsItems.slice(0, this.newsLimit()));
+  readonly pagedNews = computed(() =>
+    this.newsItems.slice(0, this.newsLimit())
+  );
   readonly totalNewsPages = computed(() =>
     Math.max(1, Math.ceil(this.pagedNews().length / this.newsPageSize()))
   );

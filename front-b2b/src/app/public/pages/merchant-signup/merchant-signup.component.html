@@ -32,8 +32,8 @@
               />
             </div>
             <p class="benefit-text">
-              <b>{{ 'MERCHANT_SIGNUP.BENEFIT_1_TITLE' | translate }}</b><br />{{
-              'MERCHANT_SIGNUP.BENEFIT_1_DESC' | translate }}
+              <b>{{ 'MERCHANT_SIGNUP.BENEFIT_1_TITLE' | translate }}</b
+              ><br />{{ 'MERCHANT_SIGNUP.BENEFIT_1_DESC' | translate }}
             </p>
           </div>
           <div class="benefit-item">
@@ -44,8 +44,8 @@
               />
             </div>
             <p class="benefit-text">
-              <b>{{ 'MERCHANT_SIGNUP.BENEFIT_2_TITLE' | translate }}</b><br />{{
-              'MERCHANT_SIGNUP.BENEFIT_2_DESC' | translate }}
+              <b>{{ 'MERCHANT_SIGNUP.BENEFIT_2_TITLE' | translate }}</b
+              ><br />{{ 'MERCHANT_SIGNUP.BENEFIT_2_DESC' | translate }}
             </p>
           </div>
           <div class="benefit-item">
@@ -56,8 +56,8 @@
               />
             </div>
             <p class="benefit-text">
-              <b>{{ 'MERCHANT_SIGNUP.BENEFIT_3_TITLE' | translate }}</b><br />{{
-              'MERCHANT_SIGNUP.BENEFIT_3_DESC' | translate }}
+              <b>{{ 'MERCHANT_SIGNUP.BENEFIT_3_TITLE' | translate }}</b
+              ><br />{{ 'MERCHANT_SIGNUP.BENEFIT_3_DESC' | translate }}
             </p>
           </div>
         </div>
@@ -131,28 +131,30 @@
   <main class="form-section">
     <form class="register-form" (submit)="onSubmit($event)">
       <div class="form-group">
-        <label class="form-label required"
-          >{{ 'MERCHANT_SIGNUP.FORM.STORE_NAME' | translate }}</label
-        >
+        <label class="form-label required">{{
+          'MERCHANT_SIGNUP.FORM.STORE_NAME' | translate
+        }}</label>
         <input
           type="text"
           class="form-control"
-          [placeholder]="'MERCHANT_SIGNUP.FORM.STORE_NAME_PLACEHOLDER' | translate"
+          [placeholder]="
+            'MERCHANT_SIGNUP.FORM.STORE_NAME_PLACEHOLDER' | translate
+          "
           [(ngModel)]="formData.storeName"
           name="storeName"
           (blur)="onBlur('storeName')"
         />
         <small class="form-hint error" *ngIf="hasError('storeName')">
-          <i class="fa-solid fa-circle-exclamation"></i> {{
-          'MERCHANT_SIGNUP.FORM.STORE_NAME_ERROR' | translate }}
+          <i class="fa-solid fa-circle-exclamation"></i>
+          {{ 'MERCHANT_SIGNUP.FORM.STORE_NAME_ERROR' | translate }}
         </small>
       </div>
 
       <div class="form-row">
         <div class="form-group">
-          <label class="form-label required"
-            >{{ 'MERCHANT_SIGNUP.FORM.CITY' | translate }}</label
-          >
+          <label class="form-label required">{{
+            'MERCHANT_SIGNUP.FORM.CITY' | translate
+          }}</label>
           <app-custom-select
             [options]="cities"
             [placeholder]="'MERCHANT_SIGNUP.FORM.CITY_PLACEHOLDER' | translate"
@@ -162,69 +164,75 @@
           >
           </app-custom-select>
           <small class="form-hint error" *ngIf="hasError('city')">
-            <i class="fa-solid fa-circle-exclamation"></i> {{
-            'MERCHANT_SIGNUP.FORM.CITY_ERROR' | translate }}
+            <i class="fa-solid fa-circle-exclamation"></i>
+            {{ 'MERCHANT_SIGNUP.FORM.CITY_ERROR' | translate }}
           </small>
         </div>
         <div class="form-group">
-          <label class="form-label required"
-            >{{ 'MERCHANT_SIGNUP.FORM.ADDRESS' | translate }}</label
-          >
+          <label class="form-label required">{{
+            'MERCHANT_SIGNUP.FORM.ADDRESS' | translate
+          }}</label>
           <input
             type="text"
             class="form-control"
-            [placeholder]="'MERCHANT_SIGNUP.FORM.ADDRESS_PLACEHOLDER' | translate"
+            [placeholder]="
+              'MERCHANT_SIGNUP.FORM.ADDRESS_PLACEHOLDER' | translate
+            "
             [(ngModel)]="formData.storeAddress"
             name="storeAddress"
             (blur)="onBlur('storeAddress')"
           />
           <small class="form-hint error" *ngIf="hasError('storeAddress')">
-            <i class="fa-solid fa-circle-exclamation"></i> {{
-            'MERCHANT_SIGNUP.FORM.ADDRESS_ERROR' | translate }}
+            <i class="fa-solid fa-circle-exclamation"></i>
+            {{ 'MERCHANT_SIGNUP.FORM.ADDRESS_ERROR' | translate }}
           </small>
         </div>
       </div>
 
       <div class="form-group">
-        <label class="form-label required"
-          >{{ 'MERCHANT_SIGNUP.FORM.CATEGORY' | translate }}</label
-        >
+        <label class="form-label required">{{
+          'MERCHANT_SIGNUP.FORM.CATEGORY' | translate
+        }}</label>
         <input
           type="text"
           class="form-control"
-          [placeholder]="'MERCHANT_SIGNUP.FORM.CATEGORY_PLACEHOLDER' | translate"
+          [placeholder]="
+            'MERCHANT_SIGNUP.FORM.CATEGORY_PLACEHOLDER' | translate
+          "
           [(ngModel)]="formData.businessCategory"
           name="businessCategory"
           (blur)="onBlur('businessCategory')"
         />
         <small class="form-hint error" *ngIf="hasError('businessCategory')">
-          <i class="fa-solid fa-circle-exclamation"></i> {{
-          'MERCHANT_SIGNUP.FORM.CATEGORY_ERROR' | translate }}
+          <i class="fa-solid fa-circle-exclamation"></i>
+          {{ 'MERCHANT_SIGNUP.FORM.CATEGORY_ERROR' | translate }}
         </small>
       </div>
 
       <div class="form-group">
-        <label class="form-label required"
-          >{{ 'MERCHANT_SIGNUP.FORM.CONTACT_NAME' | translate }}</label
-        >
+        <label class="form-label required">{{
+          'MERCHANT_SIGNUP.FORM.CONTACT_NAME' | translate
+        }}</label>
         <input
           type="text"
           class="form-control"
-          [placeholder]="'MERCHANT_SIGNUP.FORM.CONTACT_NAME_PLACEHOLDER' | translate"
+          [placeholder]="
+            'MERCHANT_SIGNUP.FORM.CONTACT_NAME_PLACEHOLDER' | translate
+          "
           [(ngModel)]="formData.contactName"
           name="contactName"
           (blur)="onBlur('contactName')"
         />
         <small class="form-hint error" *ngIf="hasError('contactName')">
-          <i class="fa-solid fa-circle-exclamation"></i> {{
-          'MERCHANT_SIGNUP.FORM.CONTACT_NAME_ERROR' | translate }}
+          <i class="fa-solid fa-circle-exclamation"></i>
+          {{ 'MERCHANT_SIGNUP.FORM.CONTACT_NAME_ERROR' | translate }}
         </small>
       </div>
 
       <div class="form-group">
-        <label class="form-label required"
-          >{{ 'MERCHANT_SIGNUP.FORM.PHONE' | translate }}</label
-        >
+        <label class="form-label required">{{
+          'MERCHANT_SIGNUP.FORM.PHONE' | translate
+        }}</label>
         <input
           type="text"
           class="form-control"
@@ -235,33 +243,35 @@
           (blur)="onBlur('phoneNumber')"
         />
         <small class="form-hint error" *ngIf="hasError('phoneNumber')">
-          <i class="fa-solid fa-circle-exclamation"></i> {{
-          'MERCHANT_SIGNUP.FORM.PHONE_ERROR' | translate }}
+          <i class="fa-solid fa-circle-exclamation"></i>
+          {{ 'MERCHANT_SIGNUP.FORM.PHONE_ERROR' | translate }}
         </small>
       </div>
 
       <div class="form-group">
-        <label class="form-label required"
-          >{{ 'MERCHANT_SIGNUP.FORM.KNOW_REASON' | translate }}</label
-        >
+        <label class="form-label required">{{
+          'MERCHANT_SIGNUP.FORM.KNOW_REASON' | translate
+        }}</label>
         <input
           type="text"
           class="form-control"
-          [placeholder]="'MERCHANT_SIGNUP.FORM.KNOW_REASON_PLACEHOLDER' | translate"
+          [placeholder]="
+            'MERCHANT_SIGNUP.FORM.KNOW_REASON_PLACEHOLDER' | translate
+          "
           [(ngModel)]="formData.knowReason"
           name="knowReason"
           (blur)="onBlur('knowReason')"
         />
         <small class="form-hint error" *ngIf="hasError('knowReason')">
-          <i class="fa-solid fa-circle-exclamation"></i> {{
-          'MERCHANT_SIGNUP.FORM.KNOW_REASON_ERROR' | translate }}
+          <i class="fa-solid fa-circle-exclamation"></i>
+          {{ 'MERCHANT_SIGNUP.FORM.KNOW_REASON_ERROR' | translate }}
         </small>
       </div>
 
       <div class="form-group">
-        <label class="form-label required"
-          >{{ 'MERCHANT_SIGNUP.FORM.SHOP_TYPE' | translate }}</label
-        >
+        <label class="form-label required">{{
+          'MERCHANT_SIGNUP.FORM.SHOP_TYPE' | translate
+        }}</label>
         <div class="radio-options">
           <label class="radio-option">
             <input
@@ -289,9 +299,9 @@
       </div>
 
       <div class="form-group">
-        <label class="form-label required"
-          >{{ 'MERCHANT_SIGNUP.FORM.LICENSE' | translate }}</label
-        >
+        <label class="form-label required">{{
+          'MERCHANT_SIGNUP.FORM.LICENSE' | translate
+        }}</label>
         <app-custom-select
           [options]="businessLicenses"
           [placeholder]="'MERCHANT_SIGNUP.FORM.LICENSE_PLACEHOLDER' | translate"
@@ -304,19 +314,21 @@
           {{ 'MERCHANT_SIGNUP.FORM.LICENSE_NOTE' | translate }}
         </small>
         <small class="form-hint error" *ngIf="hasError('businessLicense')">
-          <i class="fa-solid fa-circle-exclamation"></i> {{
-          'MERCHANT_SIGNUP.FORM.LICENSE_ERROR' | translate }}
+          <i class="fa-solid fa-circle-exclamation"></i>
+          {{ 'MERCHANT_SIGNUP.FORM.LICENSE_ERROR' | translate }}
         </small>
       </div>
 
       <div class="form-group">
-        <label class="form-label"
-          >{{ 'MERCHANT_SIGNUP.FORM.SOCIAL_LINKS' | translate }}</label
-        >
+        <label class="form-label">{{
+          'MERCHANT_SIGNUP.FORM.SOCIAL_LINKS' | translate
+        }}</label>
         <input
           type="url"
           class="form-control"
-          [placeholder]="'MERCHANT_SIGNUP.FORM.SOCIAL_LINKS_PLACEHOLDER' | translate"
+          [placeholder]="
+            'MERCHANT_SIGNUP.FORM.SOCIAL_LINKS_PLACEHOLDER' | translate
+          "
           [(ngModel)]="formData.socialLinks"
           name="socialLinks"
         />
