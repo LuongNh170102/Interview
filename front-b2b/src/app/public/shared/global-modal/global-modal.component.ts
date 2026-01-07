@@ -61,13 +61,13 @@ export class GlobalModalComponent {
   get iconClass(): string {
     switch (this.type) {
       case 'success':
-        return 'text-status-success bg-green-50';
+        return 'modal-icon--success';
       case 'error':
-        return 'text-status-error bg-red-50';
+        return 'modal-icon--error';
       case 'warning':
-        return 'text-primary-yellow bg-yellow-50';
+        return 'modal-icon--warning';
       default:
-        return 'text-primary-dark bg-bg-gray';
+        return 'modal-icon--info';
     }
   }
 }

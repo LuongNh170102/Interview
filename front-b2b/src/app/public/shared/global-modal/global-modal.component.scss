@@ -3,3 +3,28 @@
 :host {
   display: block;
 }
+
+.modal-icon {
+  background: $color-surface-muted;
+  color: $color-text-primary;
+
+  &--success {
+    background: rgba($color-status-success, 0.12);
+    color: $color-status-success;
+  }
+
+  &--error {
+    background: rgba($color-status-error, 0.12);
+    color: $color-status-error;
+  }
+
+  &--warning {
+    background: rgba($color-accent, 0.12);
+    color: $color-accent;
+  }
+
+  &--info {
+    background: rgba($color-secondary, 0.12);
+    color: $color-secondary;
+  }
+}

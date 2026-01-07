@@ -1,68 +1,155 @@
 {
   "HEADER": {
     "APP": "APP",
-    "LANGUAGE": "언어"
+    "LANGUAGE": "언어",
+    "LANGUAGES": {
+      "VI": "베트남어",
+      "EN": "영어",
+      "KO": "한국어"
+    },
+    "BRAND_SUFFIX": "Delivery",
+    "NAV": {
+      "LOGIN": "로그인",
+      "INTRO": "서비스 소개",
+      "OFFERS": "제휴 혜택",
+      "PROCESS": "협력 절차",
+      "NEWS": "소식",
+      "PARTNER": "파트너 신청"
+    }
   },
-  "MENU": {
-    "VHAN_DELIVERY": "VHan Delivery",
-    "SUB_MENU_1": "서브 메뉴 1",
-    "SUB_MENU_2": "서브 메뉴 2",
-    "SUB_MENU_3": "서브 메뉴 3",
-    "MERCHANT_SIGNUP": "파트너 등록"
-  },
-  "FOOTER": {
-    "CONTACT_US": "문의하기",
-    "BRAND": "VHan Delivery",
-    "ADDRESS": "05 Noi Khu Hung Phuoc 1, Phu My Hung, Tan Hung Ward, HCMC.",
-    "COPYRIGHT": "© VHan Delivery Co.,Ltd. All rights reserved."
+  "LANDING": {
+    "HERO": {
+      "TITLE_1": "베트남 인기 맛집을 빠르게 만나보세요",
+      "TITLE_2": "VHan Delivery",
+      "BUTTON": "파트너 신청하기"
+    },
+    "INTRO": {
+      "SUBTITLE": "VHan Delivery는 한국 고객과 베트남 현지 맛집을 연결하는 배달 플랫폼입니다.",
+      "DESC_1": "간편한 주문과 실시간 추적으로 몇 번의 터치만으로 고객 경험을 완성합니다.",
+      "DESC_2": "현지 가게가 한국 고객을 쉽게 만나고 안정적으로 매출을 키우도록 돕습니다."
+    },
+    "STATS": {
+      "REGIONS": "전국 63개 지역 서비스",
+      "STORES": "1만여 개 제휴 매장"
+    },
+    "FEATURES": {
+      "TAG": "제휴 혜택",
+      "TITLE": "VHan Delivery와 함께해야 하는 이유",
+      "COST_CUT": {
+        "TITLE": "운영 비용 최적화",
+        "DESC": "고정 비용을 낮추고 유연한 수수료로 비용을 절감합니다."
+      },
+      "SETTLEMENT": {
+        "TITLE": "당일 정산(T+0)",
+        "DESC": "하루 안에 입금되어 안정적인 현금 흐름을 유지합니다."
+      },
+      "FAST_DELIVERY": {
+        "TITLE": "신속한 배차와 배송",
+        "DESC": "주문 즉시 접수되어 고객에게 빠르게 전달됩니다."
+      },
+      "SUPPORT": {
+        "TITLE": "전담 파트너 지원",
+        "DESC": "24시간 상담과 교육으로 운영 전반을 함께합니다."
+      }
+    },
+    "PROCESS": {
+      "TAG": "협력 절차",
+      "TITLE": "세 단계로 완료되는 파트너 등록"
+    },
+    "STEPS": {
+      "STEP1": {
+        "TITLE": "회원 등록 및 인증",
+        "DESC": "휴대폰 번호 입력과 OTP 인증으로 무료 파트너 계정을 만듭니다."
+      },
+      "STEP2": {
+        "TITLE": "유연한 심사 진행",
+        "DESC": "VHan Delivery 담당자가 정보를 확인하고 24시간 내 활성화합니다."
+      },
+      "STEP3": {
+        "TITLE": "매장 오픈 및 주문 시작",
+        "DESC": "메뉴 설정 후 첫 주문을 받아 매출 성장을 시작하세요."
+      }
+    },
+    "NEWS": {
+      "TAG": "뉴스",
+      "TITLE": "VHan Delivery 소식",
+      "VIEW_MORE": "전체 보기",
+      "ITEM1": {
+        "TITLE": "누구나 쉬운 파트너 등록",
+        "DESC": "신속하게 계정을 활성화할 수 있는 단계별 안내를 제공합니다."
+      },
+      "ITEM2": {
+        "TITLE": "신뢰받는 배달 플랫폼",
+        "DESC": "전국 63개 지역, 1만여 파트너와 함께 성장하고 있습니다."
+      },
+      "ITEM3": {
+        "TITLE": "새로운 지원 센터 오픈",
+        "DESC": "주요 도시에서 파트너 지원 역량을 더욱 강화합니다."
+      }
+    },
+    "BOTTOM_CTA": {
+      "TITLE_1": "레스토랑과 브랜드",
+      "TITLE_2": "지금 새로운 여정을 시작하세요",
+      "TITLE_3": "VHan Delivery와 함께",
+      "BUTTON": "파트너 신청하기"
+    }
   },
   "MERCHANT_SIGNUP": {
-    "HERO_TITLE_1": "VHan Delivery",
-    "HERO_TITLE_2": "가맹점 등록",
-    "BENEFITS_TITLE": "특별 혜택",
-    "BENEFIT_1_TITLE": "틈새 시장",
-    "BENEFIT_1_DESC": "한국 고객",
-    "BENEFIT_2_TITLE": "독점 할인",
-    "BENEFIT_2_DESC": "시장 최저가",
-    "BENEFIT_3_TITLE": "빠른 등록",
-    "BENEFIT_3_DESC": "당일 활성화",
-    "CTA_TITLE": "지금 등록하세요!",
+    "HERO_TITLE_1": "안정적인 매출 성장을 위한 최고의 파트너",
+    "HERO_TITLE_2": "VHan Delivery 가맹 신청",
+    "IMAGES": {
+      "HERO_ALT": "VHan Delivery 파트너 매장 일러스트"
+    },
+    "BENEFITS_TITLE": "지금 시작하면 얻을 수 있는 혜택",
+    "BENEFIT_1_TITLE": "한국 고객에게 즉시 노출",
+    "BENEFIT_1_DESC": "베트남에 거주하는 한국 고객에게 메뉴를 손쉽게 홍보하세요.",
+    "BENEFIT_2_TITLE": "간편한 온보딩과 정산",
+    "BENEFIT_2_DESC": "온라인 등록, 자동 주문 관리, 당일 정산으로 운영을 단순화합니다.",
+    "BENEFIT_3_TITLE": "전담 매니저 지원",
+    "BENEFIT_3_DESC": "현지 전문가가 메뉴 구성부터 마케팅까지 24시간 지원합니다.",
+    "CTA_TITLE": "어떤 업종도 환영합니다",
+    "CATEGORIES": {
+      "NOODLES": "면요리 전문점",
+      "CAFE": "카페 & 디저트",
+      "BREAD": "베이커리",
+      "DRINKS": "음료 / 티 전문점",
+      "BEST_SELLER": "베스트셀러 매장",
+      "RENTAL": "대여·서비스 업종",
+      "FLOWERS": "플라워 숍",
+      "PHARMACY": "약국 & 헬스케어"
+    },
     "FORM": {
-      "STORE_NAME": "가맹점명",
-      "STORE_NAME_PLACEHOLDER": "가맹점명을 입력해주세요",
-      "STORE_NAME_ERROR": "가맹점명을 입력해주세요",
-      "CITY": "도시",
-      "CITY_PLACEHOLDER": "도시를 선택해주세요",
-      "CITY_ERROR": "도시를 선택해주세요",
-      "ADDRESS": "가맹점 주소",
-      "ADDRESS_PLACEHOLDER": "주소를 입력해주세요",
-      "ADDRESS_ERROR": "가맹점 주소를 입력해주세요",
+      "STORE_NAME": "매장 이름",
+      "STORE_NAME_PLACEHOLDER": "사업자 또는 영업 명칭 입력",
+      "STORE_NAME_ERROR": "매장 이름을 입력해주세요.",
+      "CITY": "도시 / 성",
+      "CITY_PLACEHOLDER": "도시를 선택하세요",
+      "CITY_ERROR": "도시를 선택해주세요.",
+      "ADDRESS": "매장 주소",
+      "ADDRESS_PLACEHOLDER": "번지, 거리, 동/읍, 구/군",
+      "ADDRESS_ERROR": "정확한 주소를 입력해주세요.",
       "CATEGORY": "업종",
-      "CATEGORY_PLACEHOLDER": "업종을 입력해주세요",
-      "CATEGORY_ERROR": "업종을 입력해주세요",
-      "CONTACT_NAME": "담당자명",
-      "CONTACT_NAME_PLACEHOLDER": "이름을 입력해주세요",
-      "CONTACT_NAME_ERROR": "담당자명을 입력해주세요",
+      "CATEGORY_PLACEHOLDER": "예: 한식, 카페, 디저트",
+      "CATEGORY_ERROR": "업종을 입력해주세요.",
+      "CONTACT_NAME": "담당자 이름",
+      "CONTACT_NAME_PLACEHOLDER": "대표자 또는 담당자 이름",
+      "CONTACT_NAME_ERROR": "담당자 이름을 입력해주세요.",
       "PHONE": "연락처",
-      "PHONE_PLACEHOLDER": "0123-456-7890",
-      "PHONE_ERROR": "연락처를 입력해주세요",
-      "SEND_OTP": "OTP 발송",
-      "OTP_SENT": "OTP 발송됨",
-      "OTP_CODE": "OTP 코드",
-      "OTP_PLACEHOLDER": "OTP를 입력해주세요",
-      "VERIFY_OTP": "OTP 확인",
-      "KNOW_REASON": "앱을 알게 된 경로",
-      "KNOW_REASON_PLACEHOLDER": "경로를 입력해주세요",
-      "KNOW_REASON_ERROR": "앱을 알게 된 경로를 입력해주세요",
-      "SHOP_TYPE": "온라인/오프라인 매장",
-      "ONLINE": "온라인",
-      "OFFLINE": "오프라인",
-      "LICENSE": "사업자 등록증",
-      "LICENSE_PLACEHOLDER": "사업자 등록증 유무를 선택해주세요",
-      "LICENSE_NOTE": "정확하게 선택해주세요. 이 정보는 매장 승인 과정에 영향을 미칠 수 있습니다. 특히 유효한 사업자 등록증이 없는 경우 더욱 그렇습니다.",
-      "LICENSE_ERROR": "사업자 등록증 상태를 선택해주세요",
-      "SOCIAL_LINKS": "페이스북/인스타그램/웹사이트 링크",
-      "NEXT": "다음"
+      "PHONE_PLACEHOLDER": "OTP 수신 전화번호",
+      "PHONE_ERROR": "유효한 전화번호를 입력해주세요.",
+      "KNOW_REASON": "VHan Delivery를 알게 된 경로",
+      "KNOW_REASON_PLACEHOLDER": "추천, SNS, 행사 등",
+      "KNOW_REASON_ERROR": "알게 된 경로를 입력해주세요.",
+      "SHOP_TYPE": "영업 형태",
+      "ONLINE": "온라인 중심",
+      "OFFLINE": "오프라인 매장",
+      "LICENSE": "사업자등록증 상태",
+      "LICENSE_PLACEHOLDER": "상태를 선택하세요",
+      "LICENSE_NOTE": "정산 인증에 필요한 정보입니다. 발급 진행 중이라면 \"신청 중\"을 선택하세요.",
+      "LICENSE_ERROR": "사업자등록증 상태를 선택해주세요.",
+      "SOCIAL_LINKS": "SNS / 웹사이트 (선택)",
+      "SOCIAL_LINKS_PLACEHOLDER": "Facebook, Instagram 또는 웹사이트 링크",
+      "NEXT": "인증 코드 요청"
     },
     "CITIES": {
       "hanoi": "하노이",
@@ -89,7 +176,7 @@
       "dongnai": "동나이",
       "longan": "롱안",
       "tayninh": "떠이닌",
-      "bariavungtau": "바리아-붕따우",
+      "bariavungtau": "바리아붕따우",
       "tiengiang": "띠엔장",
       "vinhlong": "빈롱",
       "angiang": "안장",
@@ -99,36 +186,40 @@
       "camau": "까마우"
     },
     "LICENSES": {
-      "HAS_LICENSE": "있음",
-      "NO_LICENSE": "없음",
-      "PENDING_LICENSE": "발급 대기 중"
-    },
-    "CATEGORIES": {
-      "NOODLES": "볶음면",
-      "CAFE": "카페",
-      "BREAD": "빵",
-      "DRINKS": "음료",
-      "BEST_SELLER": "베스트셀러",
-      "RENTAL": "렌터카",
-      "FLOWERS": "꽃",
-      "PHARMACY": "약국"
+      "HAS_LICENSE": "사업자등록증 보유",
+      "NO_LICENSE": "사업자등록증 없음",
+      "PENDING_LICENSE": "등록증 신청 중"
     }
   },
+  "FOOTER": {
+    "COPYRIGHT": "© VHan Delivery Co.,Ltd. All rights reserved.",
+    "ADMIN": "관리자",
+    "TERMS": "이용약관",
+    "PRIVACY": "개인정보 처리방침",
+    "CONTACT_US": "문의하기",
+    "BRAND": "VHan Delivery",
+    "PHONE": "0778 79 1004 – 0933 51 2838",
+    "EMAIL": "vhanit.business@gmail.com",
+    "ADDRESS": "05 Noi Khu Hung Phuoc 1, Phu My Hung, Tan Hung Ward, HCMC."
+  },
+  "MENU": {
+    "VHAN_DELIVERY": "VHan Delivery",
+    "SUB_MENU_1": "회사 소개",
+    "SUB_MENU_2": "서비스",
+    "SUB_MENU_3": "연락처",
+    "MERCHANT_SIGNUP": "파트너 등록"
+  },
   "MODAL": {
-    "SUCCESS": "성공",
-    "ERROR": "오류",
-    "WARNING": "경고",
-    "CLOSE": "닫기",
-    "CONFIRM": "확인",
-    "OTP_TITLE": "OTP 입력",
-    "OTP_DESC": "인증 코드를 다음 번호로 발송했습니다:",
-    "OTP_RESEND": "OTP 재발송",
-    "OTP_RESEND_IN": "재발송 대기:",
-    "OTP_INVALID": "잘못된 OTP 코드입니다",
-    "REGISTRATION_SUCCESS": "등록 성공!",
-    "REGISTRATION_SUCCESS_DESC": "신청서가 제출되었습니다. 곧 연락드리겠습니다.",
-    "REGISTRATION_FAILED": "등록 실패",
-    "REGISTRATION_FAILED_DESC": "문제가 발생했습니다. 나중에 다시 시도해주세요.",
-    "OTP_NOT_RECEIVED": "OTP를 받지 못하셨나요?"
+    "ERROR": "오류가 발생했습니다",
+    "REGISTRATION_FAILED": "신청이 완료되지 않았습니다",
+    "REGISTRATION_FAILED_DESC": "정보 전송에 실패했습니다. 다시 시도하거나 고객지원팀에 문의해주세요.",
+    "OTP_INVALID": "인증번호가 올바르지 않거나 만료되었습니다. 새 OTP를 요청한 뒤 다시 시도해주세요.",
+    "REGISTRATION_SUCCESS": "신청이 접수되었습니다",
+    "REGISTRATION_SUCCESS_DESC": "등록해주셔서 감사합니다. 24시간 이내에 담당자가 연락드릴 예정입니다."
+  },
+  "COMMON": {
+    "VIEW_MORE": "더 보기",
+    "PARTNER_REG": "파트너 등록",
+    "START": "시작"
   }
 }

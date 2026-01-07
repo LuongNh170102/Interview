@@ -1,0 +1,247 @@
+<header class="bg-surface-elevated sticky top-0 z-50 shadow-md">
+  <!-- Desktop -->
+  <div class="hidden md:flex h-20 items-center">
+    <div
+      class="max-w-7xl mx-auto px-6 md:px-20 w-full flex justify-between items-center"
+    >
+      <a
+        href="/"
+        class="flex items-center gap-2 no-underline text-[31px] font-normal text-text-primary"
+      >
+        <span>VHan</span>
+        <span class="text-text-primary">{{
+          'HEADER.BRAND_SUFFIX' | translate
+        }}</span>
+      </a>
+      <div class="flex items-center gap-4">
+        <nav>
+          <ul class="flex gap-8 list-none m-0 p-0">
+            <li *ngFor="let item of navItems()">
+              <a
+                class="text-[16px] font-medium text-text-secondary transition-colors duration-200 ease-out hover:text-primary"
+                [class.text-primary]="item.active"
+                [class.font-bold]="item.active"
+                [routerLink]="isRouterLink(item.link) ? item.link : null"
+                [attr.href]="!isRouterLink(item.link) ? item.link : null"
+                [attr.target]="item.link?.startsWith('http') ? '_blank' : null"
+                [attr.rel]="
+                  item.link?.startsWith('http') ? 'noopener noreferrer' : null
+                "
+                (click)="handleNavigation($event, item.link)"
+              >
+                {{ item.labelKey | translate }}
+              </a>
+            </li>
+          </ul>
+        </nav>
+        <div class="relative text-left">
+          <button
+            type="button"
+            class="flex items-center gap-2 bg-transparent rounded-full px-3 py-1.5 hover:border-primary transition-colors focus:outline-none"
+            [attr.aria-expanded]="isLanguageDropdownOpen()"
+            aria-haspopup="listbox"
+            (click)="toggleLanguageDropdown()"
+          >
+            <img
+              [src]="currentLanguageOption?.flag"
+              [alt]="currentLanguageOption?.label"
+              class="w-5 h-3.5 object-cover rounded-[2px] shadow-sm"
+            />
+            <span
+              class="text-[14px] font-medium text-text-primary min-w-[70px] text-left"
+            >
+              {{ currentLanguageOption?.label }}
+            </span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="text-text-secondary transition-transform duration-200"
+              [class.rotate-180]="isLanguageDropdownOpen()"
+            >
+              <path d="m6 9 6 6 6-6" />
+            </svg>
+          </button>
+
+          <div
+            *ngIf="isLanguageDropdownOpen()"
+            class="absolute top-full right-0 mt-2 w-48 bg-white dark:bg-surface-elevated border border-border-base rounded-lg shadow-xl py-1 z-50 overflow-hidden ring-1 ring-black ring-opacity-5 focus:outline-none"
+            role="listbox"
+          >
+            <button
+              *ngFor="let lang of languageOptions"
+              type="button"
+              class="w-full flex items-center justify-between px-4 py-2.5 hover:bg-surface-neutral/10 transition-colors group"
+              [attr.aria-selected]="currentLanguage() === lang.value"
+              role="option"
+              (click)="selectLanguage(lang.value)"
+            >
+              <div class="flex items-center gap-3">
+                <img
+                  [src]="lang.flag"
+                  [alt]="lang.label"
+                  class="w-5 h-3.5 object-cover rounded-[2px] shadow-sm"
+                />
+                <span
+                  class="text-[14px] font-medium"
+                  [class.text-primary]="currentLanguage() === lang.value"
+                  [class.text-text-primary]="currentLanguage() !== lang.value"
+                >
+                  {{ lang.label }}
+                </span>
+              </div>
+              <svg
+                *ngIf="currentLanguage() === lang.value"
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                class="text-primary"
+              >
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile -->
+  <div class="md:hidden flex flex-col gap-3 px-4 py-3">
+    <div class="flex items-center justify-between gap-3">
+      <a
+        href="/"
+        class="flex items-center gap-2 no-underline text-[20px] font-semibold text-text-primary"
+      >
+        <span>VHan</span>
+        <span class="text-text-primary">{{
+          'HEADER.BRAND_SUFFIX' | translate
+        }}</span>
+      </a>
+      <div class="flex items-center gap-3">
+        <div class="relative text-left">
+          <button
+            type="button"
+            class="flex items-center gap-1.5 bg-transparent rounded-full px-2.5 py-1 hover:border-primary transition-colors focus:outline-none"
+            [attr.aria-expanded]="isLanguageDropdownOpen()"
+            aria-haspopup="listbox"
+            (click)="toggleLanguageDropdown()"
+          >
+            <img
+              [src]="currentLanguageOption?.flag"
+              [alt]="currentLanguageOption?.label"
+              class="w-5 h-3.5 object-cover rounded-[2px] shadow-sm"
+            />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="text-text-secondary transition-transform duration-200"
+              [class.rotate-180]="isLanguageDropdownOpen()"
+            >
+              <path d="m6 9 6 6 6-6" />
+            </svg>
+          </button>
+
+          <div
+            *ngIf="isLanguageDropdownOpen()"
+            class="absolute top-full right-0 mt-2 w-44 bg-white dark:bg-surface-elevated border border-border-base rounded-lg shadow-xl py-1 z-50 overflow-hidden ring-1 ring-black ring-opacity-5 focus:outline-none"
+            role="listbox"
+          >
+            <button
+              *ngFor="let lang of languageOptions"
+              type="button"
+              class="w-full flex items-center justify-between px-4 py-2.5 hover:bg-surface-neutral/10 transition-colors group"
+              [attr.aria-selected]="currentLanguage() === lang.value"
+              role="option"
+              (click)="selectLanguage(lang.value)"
+            >
+              <div class="flex items-center gap-3">
+                <img
+                  [src]="lang.flag"
+                  [alt]="lang.label"
+                  class="w-5 h-3.5 object-cover rounded-[2px] shadow-sm"
+                />
+                <span
+                  class="text-[14px] font-medium"
+                  [class.text-primary]="currentLanguage() === lang.value"
+                  [class.text-text-primary]="currentLanguage() !== lang.value"
+                >
+                  {{ lang.label }}
+                </span>
+              </div>
+              <svg
+                *ngIf="currentLanguage() === lang.value"
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                class="text-primary"
+              >
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </button>
+          </div>
+        </div>
+        <button type="button" class="p-2 text-text-primary">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="22"
+            height="22"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <circle cx="12" cy="7" r="4" />
+            <path d="M5.5 21a6.5 6.5 0 0 1 13 0" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <nav class="-mx-4 px-4">
+      <ul
+        class="header-scroll flex gap-5 list-none m-0 p-0 overflow-x-auto whitespace-nowrap text-[15px] font-medium text-text-secondary"
+      >
+        <li *ngFor="let item of navItems()">
+          <a
+            class="transition-colors duration-200 ease-out hover:text-primary"
+            [class.text-primary]="item.active"
+            [class.font-bold]="item.active"
+            [routerLink]="isRouterLink(item.link) ? item.link : null"
+            [attr.href]="!isRouterLink(item.link) ? item.link : null"
+            [attr.target]="item.link?.startsWith('http') ? '_blank' : null"
+            [attr.rel]="
+              item.link?.startsWith('http') ? 'noopener noreferrer' : null
+            "
+            (click)="handleNavigation($event, item.link)"
+          >
+            {{ item.labelKey | translate }}
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>
