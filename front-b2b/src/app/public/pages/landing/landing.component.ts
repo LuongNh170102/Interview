@@ -99,47 +99,47 @@ export class LandingComponent implements OnInit, OnDestroy {
     {
       titleKey: 'LANDING.NEWS.ITEM1.TITLE',
       descKey: 'LANDING.NEWS.ITEM1.DESC',
-      image: '/assets/images/landing/news-item-1-56586a.png',
+      image: '/assets/images/landing/news-item-1.png',
     },
     {
       titleKey: 'LANDING.NEWS.ITEM2.TITLE',
       descKey: 'LANDING.NEWS.ITEM2.DESC',
-      image: '/assets/images/landing/news-item-2-56586a.png',
+      image: '/assets/images/landing/news-item-2.png',
     },
     {
       titleKey: 'LANDING.NEWS.ITEM3.TITLE',
       descKey: 'LANDING.NEWS.ITEM3.DESC',
-      image: '/assets/images/landing/news-item-3-56586a.png',
+      image: '/assets/images/landing/news-item-3.png',
     },
     {
       titleKey: 'LANDING.NEWS.ITEM1.TITLE',
       descKey: 'LANDING.NEWS.ITEM1.DESC',
-      image: '/assets/images/landing/news-item-1-56586a.png',
+      image: '/assets/images/landing/news-item-1.png',
     },
     {
       titleKey: 'LANDING.NEWS.ITEM2.TITLE',
       descKey: 'LANDING.NEWS.ITEM2.DESC',
-      image: '/assets/images/landing/news-item-2-56586a.png',
+      image: '/assets/images/landing/news-item-2.png',
     },
     {
       titleKey: 'LANDING.NEWS.ITEM3.TITLE',
       descKey: 'LANDING.NEWS.ITEM3.DESC',
-      image: '/assets/images/landing/news-item-3-56586a.png',
+      image: '/assets/images/landing/news-item-3.png',
     },
     {
       titleKey: 'LANDING.NEWS.ITEM1.TITLE',
       descKey: 'LANDING.NEWS.ITEM1.DESC',
-      image: '/assets/images/landing/news-item-1-56586a.png',
+      image: '/assets/images/landing/news-item-1.png',
     },
     {
       titleKey: 'LANDING.NEWS.ITEM2.TITLE',
       descKey: 'LANDING.NEWS.ITEM2.DESC',
-      image: '/assets/images/landing/news-item-2-56586a.png',
+      image: '/assets/images/landing/news-item-2.png',
     },
     {
       titleKey: 'LANDING.NEWS.ITEM3.TITLE',
       descKey: 'LANDING.NEWS.ITEM3.DESC',
-      image: '/assets/images/landing/news-item-3-56586a.png',
+      image: '/assets/images/landing/news-item-3.png',
     },
   ];
 
