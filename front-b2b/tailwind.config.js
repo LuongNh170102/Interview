@@ -11,6 +11,7 @@ module.exports = {
     extend: {
       colors: {
         primary: 'var(--color-primary)',
+        'primary-hover': 'var(--color-primary-hover)',
         secondary: 'var(--color-secondary)',
         accent: 'var(--color-accent)',
         surface: {

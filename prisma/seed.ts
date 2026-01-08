@@ -113,6 +113,7 @@ async function main() {
     },
 
     // Merchant
+
     {
       resource: 'merchant',
       action: 'create',
@@ -149,6 +150,15 @@ async function main() {
         ko: '상점 상태 업데이트',
       },
     },
+    {
+      resource: 'merchant',
+      action: 'read',
+      description: {
+        en: 'View merchant details',
+        vi: 'Xem chi tiết cửa hàng',
+        ko: '상점 상세 보기',
+      },
+    },
 
     // Agency
     {
@@ -167,6 +177,33 @@ async function main() {
         en: 'Update agency info',
         vi: 'Cập nhật thông tin đại lý',
         ko: '대리점 정보 업데이트',
+      },
+    },
+    {
+      resource: 'agency',
+      action: 'delete',
+      description: {
+        en: 'Delete agency',
+        vi: 'Xóa đại lý',
+        ko: '대리점 삭제',
+      },
+    },
+    {
+      resource: 'agency',
+      action: 'update_status',
+      description: {
+        en: 'Update agency status',
+        vi: 'Cập nhật trạng thái đại lý',
+        ko: '대리점 상태 업데이트',
+      },
+    },
+    {
+      resource: 'agency',
+      action: 'read',
+      description: {
+        en: 'View agency details',
+        vi: 'Xem chi tiết đại lý',
+        ko: '대리점 상세 보기',
       },
     },
 
@@ -291,8 +328,10 @@ async function main() {
     },
     {
       role: 'AGENCY_OWNER',
-      perms: allPermissions.filter((p) =>
-        ['merchant', 'product', 'order', 'agency'].includes(p.resource)
+      perms: allPermissions.filter(
+        (p) =>
+          ['merchant', 'product', 'order'].includes(p.resource) ||
+          (p.resource === 'agency' && ['update', 'read'].includes(p.action))
       ),
     },
     {
@@ -300,7 +339,7 @@ async function main() {
       perms: allPermissions.filter(
         (p) =>
           ['product', 'order'].includes(p.resource) ||
-          (p.resource === 'merchant' && p.action === 'update')
+          (p.resource === 'merchant' && ['update', 'read'].includes(p.action))
       ),
     },
     {

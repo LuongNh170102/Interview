@@ -1,54 +1,80 @@
-<footer class="bg-secondary text-content-on-secondary py-20 border-t border-border-base mt-16">
-  <div class="max-w-7xl mx-auto px-4 md:px-20">
-    <div class="flex flex-col md:flex-row justify-between items-start mb-16">
-      <div class="mb-10 md:mb-0">
-        <div class="flex items-center gap-2 mb-6">
-          <span class="text-[54px] font-normal">VHan</span>
-          <span class="text-[54px] font-normal text-primary">Delivery</span>
+<footer
+  class="relative overflow-hidden bg-secondary text-content-on-secondary py-16 md:py-20 mt-16"
+>
+  <div class="relative max-w-7xl mx-auto px-4 md:px-20">
+    <div class="grid gap-12 md:grid-cols-[1fr_auto_1fr] items-start">
+      <!-- Brand & Links -->
+      <div class="space-y-8">
+        <div class="flex items-baseline gap-3">
+          <h1
+            class="text-content-on-secondary font-semibold leading-none text-[40px] md:text-[52px]"
+          >
+            VHan
+          </h1>
+          <h1
+            class="text-primary font-semibold leading-none text-[40px] md:text-[52px]"
+          >
+            Delivery
+          </h1>
         </div>
-        <div class="space-y-4">
+
+        <div class="space-y-3 text-[16px] md:text-[18px] font-semibold">
           <a
             href="#"
-            class="block text-[16px] transition-colors hover:text-primary"
-            >{{ 'FOOTER.ADMIN' | translate }}</a
+            class="inline-flex items-center gap-2 text-content-on-secondary hover:text-primary transition-colors"
           >
+            {{ 'FOOTER.ADMIN' | translate }}
+            <span aria-hidden="true">↗</span> </a
+          ><br />
           <a
             href="#"
-            class="block text-[16px] transition-colors hover:text-primary"
-            >{{ 'FOOTER.TERMS' | translate }}</a
+            class="inline-flex items-center gap-2 text-content-on-secondary hover:text-primary transition-colors"
           >
+            {{ 'FOOTER.TERMS' | translate }}
+            <span aria-hidden="true">↗</span> </a
+          ><br />
           <a
             href="#"
-            class="block text-[16px] transition-colors hover:text-primary"
-            >{{ 'FOOTER.PRIVACY' | translate }}</a
+            class="inline-flex items-center gap-2 text-content-on-secondary hover:text-primary transition-colors"
           >
+            {{ 'FOOTER.PRIVACY' | translate }}
+            <span aria-hidden="true">↗</span>
+          </a>
         </div>
       </div>
 
-      <div>
-        <h3 class="text-[16px] text-primary font-normal mb-8 uppercase">
-          {{ 'FOOTER.CONTACT_US' | translate }}
-        </h3>
+      <!-- Divider -->
+      <div class="hidden md:block w-px h-full bg-border-base/60 mx-auto"></div>
 
-        <div class="space-y-6">
-          <div class="flex items-start gap-4">
-            <div class="w-4 h-4 mt-1 bg-primary rounded-full flex-shrink-0"></div>
-            <span class="text-[14px]">{{ 'FOOTER.PHONE' | translate }}</span>
+      <!-- Contact -->
+      <div class="space-y-6">
+        <h2
+          class="text-content-on-secondary text-[28px] md:text-[32px] font-semibold"
+        >
+          {{ 'FOOTER.CONTACT_US' | translate }}
+        </h2>
+
+        <div
+          class="space-y-5 text-[15px] md:text-[16px] text-content-on-secondary/90"
+        >
+          <div class="flex items-center gap-3">
+            <span class="text-primary text-lg" aria-hidden="true">☎</span>
+            <a>{{ 'FOOTER.PHONE' | translate }}</a>
           </div>
-          <div class="flex items-start gap-4">
-            <div class="w-4 h-4 mt-1 bg-text-secondary rounded-full flex-shrink-0"></div>
-            <span class="text-[14px]">{{ 'FOOTER.EMAIL' | translate }}</span>
+          <div class="flex items-center gap-3">
+            <span class="text-primary text-lg" aria-hidden="true">✉</span>
+            <a>{{ 'FOOTER.EMAIL' | translate }}</a>
           </div>
-          <div class="flex items-start gap-4">
-            <div class="w-4 h-4 mt-1 bg-text-secondary rounded-full flex-shrink-0"></div>
-            <span class="text-[14px]">{{ 'FOOTER.ADDRESS' | translate }}</span>
+          <div class="flex items-center gap-3">
+            <span class="text-primary text-lg" aria-hidden="true">📍</span>
+            <a>{{ 'FOOTER.ADDRESS' | translate }}</a>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="pt-8 border-t border-border-base text-center">
-      <p class="text-[14px] text-text-tertiary">
+    <div class="mt-14 pt-8 border-t border-border-base/60 text-center">
+      <p class="text-[14px] text-text-tertiary/90">
         {{ 'FOOTER.COPYRIGHT' | translate }}
       </p>
     </div>

@@ -24,7 +24,7 @@
       "BUTTON": "Become a partner today"
     },
     "INTRO": {
-      "SUBTITLE": "VHan Delivery connects Korean diners with trusted restaurants across Vietnam.",
+      "SUBTITLE": "Connects Korean diners with trusted restaurants across Vietnam.",
       "DESC_1": "Order, track, and pay in just a few taps with our seamless experience.",
       "DESC_2": "We help local partners engage Korean customers and drive sustainable revenue growth."
     },
@@ -34,7 +34,7 @@
     },
     "FEATURES": {
       "TAG": "Key benefits",
-      "TITLE": "Why partner with VHan Delivery?",
+      "TITLE": "Why choose",
       "COST_CUT": {
         "TITLE": "Optimize operating costs",
         "DESC": "Lower fixed expenses with flexible service fees."
@@ -72,7 +72,7 @@
     },
     "NEWS": {
       "TAG": "News",
-      "TITLE": "VHan Delivery updates",
+      "TITLE": "Newsletter",
       "VIEW_MORE": "See all",
       "ITEM1": {
         "TITLE": "Partner enrollment made simple",
@@ -89,8 +89,8 @@
     },
     "BOTTOM_CTA": {
       "TITLE_1": "Restaurants and brands",
-      "TITLE_2": "Take the next step",
-      "TITLE_3": "with VHan Delivery",
+      "TITLE_2": "A new beginning",
+      "TITLE_3": "With VHan Delivery",
       "BUTTON": "Start partnering now"
     }
   },

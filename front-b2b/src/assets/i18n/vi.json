@@ -24,7 +24,7 @@
       "BUTTON": "Đăng ký đối tác ngay"
     },
     "INTRO": {
-      "SUBTITLE": "VHan Delivery kết nối khách hàng Hàn Quốc với hàng nghìn cửa hàng uy tín tại Việt Nam.",
+      "SUBTITLE": "Kết nối khách hàng Hàn Quốc với hàng nghìn cửa hàng uy tín tại Việt Nam.",
       "DESC_1": "Trải nghiệm đặt món, theo dõi đơn và thanh toán chỉ trong vài thao tác đơn giản.",
       "DESC_2": "Chúng tôi đồng hành cùng cửa hàng mở rộng tập khách Hàn Quốc và tăng trưởng doanh thu bền vững."
     },
@@ -34,7 +34,7 @@
     },
     "FEATURES": {
       "TAG": "Lợi ích nổi bật",
-      "TITLE": "Vì sao nên chọn VHan Delivery?",
+      "TITLE": "Vì sao nên chọn",
       "COST_CUT": {
         "TITLE": "Tối ưu chi phí vận hành",
         "DESC": "Giảm các khoản phí cố định và linh hoạt theo nhu cầu kinh doanh."
@@ -72,7 +72,7 @@
     },
     "NEWS": {
       "TAG": "Tin tức",
-      "TITLE": "Bản tin VHan Delivery",
+      "TITLE": "Bản tin",
       "VIEW_MORE": "Xem thêm",
       "ITEM1": {
         "TITLE": "Đăng ký đối tác dễ dàng",
@@ -89,8 +89,8 @@
     },
     "BOTTOM_CTA": {
       "TITLE_1": "Nhà hàng và thương hiệu",
-      "TITLE_2": "Cùng bước vào hành trình mới",
-      "TITLE_3": "với VHan Delivery",
+      "TITLE_2": "Một khởi đầu mới",
+      "TITLE_3": "Với VHan Delivery",
       "BUTTON": "Bắt đầu hợp tác ngay"
     }
   },

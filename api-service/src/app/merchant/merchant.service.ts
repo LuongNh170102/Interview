@@ -18,6 +18,7 @@ import {
 import { OtpService } from '../otp/otp.service';
 import { ROLE } from '../common/constants/role.constants';
 import { RESOURCE_TARGETS } from '../common/constants/resource.constant';
+import { PaginationDto } from '../common/dto/pagination.dto';
 
 @Injectable()
 export class MerchantService {
@@ -33,6 +34,41 @@ export class MerchantService {
 
   async verifyOtp(dto: VerifyOtpDto) {
     return this.otpService.verifyOtp(dto, MERCHANT_REGISTRATION_OTP);
+  }
+
+  async findAll(pagination: PaginationDto) {
+    const take = pagination.limit ?? 10;
+    const skip = pagination.skip;
+
+    const [items, total] = await this.prisma.$transaction([
+      this.prisma.merchant.findMany({
+        skip,
+        take,
+        orderBy: { createdAt: 'desc' },
+      }),
+      this.prisma.merchant.count(),
+    ]);
+
+    return {
+      data: items,
+      total,
+      page: pagination.page ?? 1,
+      limit: take,
+    };
+  }
+
+  async findByExternalId(externalId: string) {
+    const merchant = await this.prisma.merchant.findUnique({
+      where: { externalId },
+    });
+
+    if (!merchant) {
+      throw new NotFoundException(
+        RESOURCE_MESSAGES.NOT_FOUND(RESOURCE_TARGETS.MERCHANT)
+      );
+    }
+
+    return merchant;
   }
 
   async updateStatus(externalId: string, status: string) {

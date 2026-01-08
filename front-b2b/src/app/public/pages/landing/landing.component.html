@@ -9,9 +9,7 @@
     >
       <div class="max-w-7xl mx-auto px-6 md:px-20 w-full">
         <div class="text-center">
-          <h1
-            class="text-[32px] md:text-[74px] leading-tight text-content-on-secondary font-normal mb-6 md:mb-8"
-          >
+          <h1 class="leading-tight text-content-on-secondary mb-6 md:mb-8">
             {{ 'LANDING.HERO.TITLE_1' | translate }}
             <span class="text-primary font-bold">{{
               'LANDING.HERO.TITLE_2' | translate
@@ -20,7 +18,7 @@
           <button
             type="button"
             routerLink="/merchant-signup"
-            class="bg-primary text-content-on-primary text-[18px] md:text-[24px] px-8 md:px-10 py-3 md:py-4 rounded hover:opacity-90 transition"
+            class="bg-primary text-content-on-primary px-8 md:px-10 py-3 md:py-4 hover:bg-primary-hover transition-colors"
           >
             {{ 'LANDING.HERO.BUTTON' | translate }}
           </button>
@@ -34,11 +32,12 @@
     <div class="max-w-7xl mx-auto px-6 md:px-20">
       <!-- Main Text -->
       <div class="text-center mb-12">
-        <p
-          class="text-[28px] md:text-[58px] leading-tight text-text-primary font-bold mb-4"
-        >
+        <h2 class="leading-tight text-text-primary font-bold mb-4">
+          <span class="text-primary font-bold">
+            {{ 'LANDING.HERO.TITLE_2' | translate }}
+          </span>
           {{ 'LANDING.INTRO.SUBTITLE' | translate }}
-        </p>
+        </h2>
       </div>
 
       <!-- Statistics -->
@@ -93,6 +92,9 @@
         }}</span>
         <h2 class="text-[28px] md:text-[48px] font-bold text-text-primary">
           {{ 'LANDING.FEATURES.TITLE' | translate }}
+          <span class="text-primary font-bold"
+            >{{ 'LANDING.HERO.TITLE_2' | translate }}?</span
+          >
         </h2>
       </div>
 
@@ -109,7 +111,7 @@
             <img
               [src]="feature.icon"
               alt=""
-              class="w-full h-full object-cover"
+              class="w-full h-full object-cover transition-transform duration-500 hover:scale-[1.2]"
             />
           </div>
           <h3
@@ -177,8 +179,11 @@
           <span class="block text-primary text-[13px] font-bold mb-2">{{
             'LANDING.NEWS.TAG' | translate
           }}</span>
-          <h2 class="text-[28px] md:text-[48px] font-bold text-text-primary">
+          <h2 class="font-bold text-text-primary">
             {{ 'LANDING.NEWS.TITLE' | translate }}
+            <span class="text-primary">{{
+              'LANDING.HERO.TITLE_2' | translate
+            }}</span>
           </h2>
         </div>
 
@@ -194,7 +199,7 @@
             <div class="h-48 md:aspect-[3/2] overflow-hidden">
               <img
                 [src]="news.image"
-                class="w-full h-full object-cover"
+                class="w-full h-full object-cover transition-transform duration-500 hover:scale-125"
                 alt=""
               />
             </div>
@@ -253,28 +258,26 @@
     style="background-image: url('/assets/images/landing/news-bg.png')"
   >
     <div
-      class="max-w-7xl mx-auto px-6 md:px-20 w-full relative z-10 flex flex-col md:flex-row justify-between items-center gap-8 md:gap-10 text-center md:text-left"
+      class="max-w-7xl mx-auto px-6 md:px-20 w-full relative z-10 grid flex-col md:flex-row justify-between items-center gap-8 md:gap-10 md:text-left"
     >
       <div class="text-content-on-secondary">
-        <h2 class="text-[28px] md:text-[70px] font-normal leading-tight mb-4">
-          {{ 'LANDING.BOTTOM_CTA.TITLE_1' | translate }}
-          {{ 'LANDING.BOTTOM_CTA.TITLE_2' | translate }}
-        </h2>
-        <div
-          class="text-[28px] md:text-[70px] font-bold leading-tight text-primary"
-        >
-          {{ 'LANDING.BOTTOM_CTA.TITLE_3' | translate }}
-        </div>
+        <h1 class="text-content-on-secondary font-normal leading-tight mb-4">
+          {{ 'LANDING.BOTTOM_CTA.TITLE_1' | translate }}<br />
+          {{ 'LANDING.BOTTOM_CTA.TITLE_2' | translate }}<br />
+          <span class="text-primary">
+            {{ 'LANDING.BOTTOM_CTA.TITLE_3' | translate }}
+          </span>
+        </h1>
       </div>
       <div>
         <button
           type="button"
           routerLink="/merchant-signup"
-          class="bg-surface-base text-text-primary whitespace-nowrap text-[18px] md:text-[24px] px-8 md:px-12 py-3 md:py-5 rounded hover:bg-surface-muted transition shadow-lg font-normal flex items-center gap-2 group"
+          class="bg-primary text-color-on-primary whitespace-nowrap px-8 md:px-12 py-3 md:py-5 hover:bg-primary-hover transition-colors shadow-lg font-normal flex items-center gap-2 group"
         >
           {{ 'LANDING.BOTTOM_CTA.BUTTON' | translate }}
           <span
-            class="text-primary group-hover:translate-x-1 transition-transform"
+            class="text-color-on-primary group-hover:translate-x-1 transition-transform"
             >→</span
           >
         </button>
