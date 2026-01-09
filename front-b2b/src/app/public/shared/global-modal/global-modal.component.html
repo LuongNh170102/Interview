@@ -11,13 +11,13 @@
 
   <!-- Modal Panel -->
   <div
-    class="relative w-full max-w-lg transform rounded-2xl bg-white p-6 text-left shadow-2xl transition-all sm:my-8"
+    class="relative w-full max-w-lg transform rounded-2xl bg-surface-base p-6 text-left shadow-2xl transition-all sm:my-8"
     @modalAnimation
   >
     <!-- Close Button -->
     <button
       (click)="onClose()"
-      class="absolute right-4 top-4 rounded-full p-1 text-text-light hover:bg-bg-gray hover:text-text-gray focus:outline-none transition-colors"
+      class="absolute right-4 top-4 rounded-full p-1 text-text-tertiary hover:bg-surface-muted hover:text-text-secondary focus:outline-none transition-colors"
     >
       <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
         <path
@@ -31,7 +31,7 @@
     <div class="sm:flex sm:items-start">
       <!-- Icon -->
       <div
-        class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full sm:mx-0 sm:h-10 sm:w-10"
+        class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full sm:mx-0 sm:h-10 sm:w-10 modal-icon"
         [ngClass]="iconClass"
       >
         <!-- Success Icon -->
@@ -97,11 +97,11 @@
       </div>
 
       <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left w-full">
-        <h3 class="text-lg font-semibold leading-6 text-text-dark">
+        <h3 class="text-lg font-semibold leading-6 text-text-primary">
           {{ title | translate }}
         </h3>
         <div class="mt-2">
-          <p class="text-sm text-text-gray">
+          <p class="text-sm text-text-secondary">
             {{ message | translate }}
           </p>
         </div>
@@ -111,12 +111,12 @@
     <div class="mt-8 sm:flex sm:flex-row-reverse gap-3">
       <button
         type="button"
-        class="inline-flex w-full justify-center rounded-lg px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 sm:w-auto transition-all"
+        class="inline-flex w-full justify-center rounded-lg px-4 py-2.5 text-sm font-semibold text-content-on-secondary shadow-sm hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 sm:w-auto transition-all"
         (click)="onConfirm()"
         [ngClass]="{
           'bg-status-success focus:ring-status-success': type === 'success',
           'bg-status-error focus:ring-status-error': type === 'error',
-          'bg-primary-yellow focus:ring-primary-yellow': type === 'warning',
+          'bg-accent focus:ring-accent': type === 'warning',
           'bg-blue-600 hover:bg-blue-500 focus:ring-blue-500': type === 'info'
         }"
       >
@@ -124,7 +124,7 @@
       </button>
       <button
         type="button"
-        class="mt-3 inline-flex w-full justify-center rounded-lg bg-bg-white px-4 py-2.5 text-sm font-semibold text-text-dark shadow-sm ring-1 ring-inset ring-border hover:bg-bg-gray sm:mt-0 sm:w-auto transition-all"
+        class="mt-3 inline-flex w-full justify-center rounded-lg bg-surface-base px-4 py-2.5 text-sm font-semibold text-text-primary shadow-sm ring-1 ring-inset ring-border-base hover:bg-surface-muted sm:mt-0 sm:w-auto transition-all"
         (click)="onClose()"
       >
         {{ 'MODAL.CLOSE' | translate }}

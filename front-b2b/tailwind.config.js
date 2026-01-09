@@ -10,26 +10,30 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: {
-          red: 'var(--primary-red)',
-          dark: 'var(--primary-dark)',
-          yellow: 'var(--primary-yellow)',
+        primary: 'var(--color-primary)',
+        'primary-hover': 'var(--color-primary-hover)',
+        secondary: 'var(--color-secondary)',
+        accent: 'var(--color-accent)',
+        surface: {
+          base: 'var(--color-surface-base)',
+          muted: 'var(--color-surface-muted)',
+          elevated: 'var(--color-surface-elevated)',
         },
         text: {
-          dark: 'var(--text-dark)',
-          gray: 'var(--text-gray)',
-          light: 'var(--text-light)',
+          primary: 'var(--color-text-primary)',
+          secondary: 'var(--color-text-secondary)',
+          tertiary: 'var(--color-text-tertiary)',
         },
         border: {
-          DEFAULT: 'var(--border-color)',
-        },
-        bg: {
-          gray: 'var(--bg-gray)',
-          white: 'var(--white)',
+          base: 'var(--color-border)',
         },
         status: {
-          error: 'var(--error-red)',
-          success: 'var(--success-green)',
+          error: 'var(--color-status-error)',
+          success: 'var(--color-status-success)',
+        },
+        content: {
+          'on-primary': 'var(--color-on-primary)',
+          'on-secondary': 'var(--color-on-secondary)',
         },
       },
     },

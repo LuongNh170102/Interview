@@ -6,6 +6,8 @@ import {
   Request,
   Patch,
   Param,
+  Get,
+  Query,
 } from '@nestjs/common';
 import { MerchantService } from './merchant.service';
 import { CreateMerchantDto } from './dto/create-merchant.dto';
@@ -14,6 +16,7 @@ import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
 import { UpdateMerchantStatusDto } from './dto/update-merchant-status.dto';
 import { PermissionsGuard } from '../common/guards/permissions.guard';
 import { Permissions } from '../common/decorators/permissions.decorator';
+import { PaginationDto } from '../common/dto/pagination.dto';
 
 @Controller('merchants')
 export class MerchantController {
@@ -27,6 +30,20 @@ export class MerchantController {
   @Post('otp/verify')
   verifyOtp(@Body() dto: VerifyOtpDto) {
     return this.merchantService.verifyOtp(dto);
+  }
+
+  @Get()
+  @UseGuards(JwtAuthGuard, PermissionsGuard)
+  @Permissions('system:manage_users')
+  findAll(@Query() pagination: PaginationDto) {
+    return this.merchantService.findAll(pagination);
+  }
+
+  @Get(':id')
+  @UseGuards(JwtAuthGuard, PermissionsGuard)
+  @Permissions('merchant:read')
+  findOne(@Param('id') externalId: string) {
+    return this.merchantService.findByExternalId(externalId);
   }
 
   @Patch(':id/status')

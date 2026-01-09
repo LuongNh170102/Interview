@@ -1,27 +1,35 @@
 // Colors
-$primary-red: #e31e24;
-$primary-dark: #2c2c2c;
-$primary-yellow: #ffc107;
-$text-dark: #333333;
-$text-gray: #666666;
-$text-light: #999999;
-$border-color: #d7d7d7;
-$bg-gray: #f5f5f5;
-$error-red: #ff0000;
-$success-green: #4caf50;
-$white: #ffffff;
+$color-primary: #f35b2a;
+$color-secondary: #161619;
+$color-accent: #ffc107;
+$color-surface-base: #ffffff;
+$color-surface-muted: #f5f5f5;
+$color-surface-elevated: #ffffff;
+$color-border: #d7d7d7;
+$color-text-primary: #333333;
+$color-text-secondary: #666666;
+$color-text-tertiary: #999999;
+$color-status-error: #ff0000;
+$color-status-success: #4caf50;
+$color-on-primary: #ffffff;
+$color-on-secondary: #ffffff;
+$color-primary-hover: #dd4a22;
 
 // CSS Variables for runtime usage if needed
 :root {
-  --primary-red: #{$primary-red};
-  --primary-dark: #{$primary-dark};
-  --primary-yellow: #{$primary-yellow};
-  --text-dark: #{$text-dark};
-  --text-gray: #{$text-gray};
-  --text-light: #{$text-light};
-  --border-color: #{$border-color};
-  --bg-gray: #{$bg-gray};
-  --error-red: #{$error-red};
-  --success-green: #{$success-green};
-  --white: #{$white};
+  --color-primary: #{$color-primary};
+  --color-primary-hover: #{$color-primary-hover};
+  --color-secondary: #{$color-secondary};
+  --color-accent: #{$color-accent};
+  --color-surface-base: #{$color-surface-base};
+  --color-surface-muted: #{$color-surface-muted};
+  --color-surface-elevated: #{$color-surface-elevated};
+  --color-border: #{$color-border};
+  --color-text-primary: #{$color-text-primary};
+  --color-text-secondary: #{$color-text-secondary};
+  --color-text-tertiary: #{$color-text-tertiary};
+  --color-status-error: #{$color-status-error};
+  --color-status-success: #{$color-status-success};
+  --color-on-primary: #{$color-on-primary};
+  --color-on-secondary: #{$color-on-secondary};
 }

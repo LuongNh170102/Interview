@@ -4,17 +4,20 @@ export interface MenuItem {
   children?: MenuItem[];
 }
 
-export const MENU_CONFIG: MenuItem[] = [
-  {
-    label: 'MENU.VHAN_DELIVERY',
-    children: [
-      { label: 'MENU.SUB_MENU_1', route: '#' },
-      { label: 'MENU.SUB_MENU_2', route: '#' },
-      { label: 'MENU.SUB_MENU_3', route: '#' },
-    ],
-  },
-  {
-    label: 'MENU.MERCHANT_SIGNUP',
-    route: '/merchant-signup',
-  },
-];
+export interface NavItem {
+  readonly labelKey: string;
+  readonly link: string;
+  readonly active?: boolean;
+}
+
+/**
+ * Navigation items for landing page sections
+ * These items will navigate to landing page with fragment anchors
+ */
+export const LANDING_NAV_CONFIG: readonly NavItem[] = [
+  { labelKey: 'HEADER.NAV.PARTNER', link: '/landing#' },
+  { labelKey: 'HEADER.NAV.INTRO', link: '/landing#intro' },
+  { labelKey: 'HEADER.NAV.OFFERS', link: '/landing#offers' },
+  { labelKey: 'HEADER.NAV.PROCESS', link: '/landing#process' },
+  { labelKey: 'HEADER.NAV.NEWS', link: '/landing#news' },
+] as const;
