@@ -24,9 +24,10 @@
       "BUTTON": "Become a partner today"
     },
     "INTRO": {
-      "SUBTITLE": "Connects Korean diners with trusted restaurants across Vietnam.",
-      "DESC_1": "Order, track, and pay in just a few taps with our seamless experience.",
-      "DESC_2": "We help local partners engage Korean customers and drive sustainable revenue growth."
+      "SUBTITLE": "Connecting Korean customers with thousands of trusted stores across Vietnam.",
+      "DESC_1": "We provide a simple ordering experience that makes it easy to choose dishes, place orders, and track deliveries.",
+      "DESC_2": "By connecting international customers with local partners, VHAN Delivery helps stores expand their sales channels",
+      "DESC_3": "reach more Korean customers, and increase revenue effectively."
     },
     "STATS": {
       "REGIONS": "Available in all 63 provinces",

@@ -18,7 +18,7 @@
           </h1>
         </div>
 
-        <div class="space-y-3 text-[16px] md:text-[18px] font-semibold">
+        <div class="space-y-3 font-semibold">
           <a
             href="#"
             class="inline-flex items-center gap-2 text-content-on-secondary hover:text-primary transition-colors"
@@ -47,34 +47,33 @@
       <div class="hidden md:block w-px h-full bg-border-base/60 mx-auto"></div>
 
       <!-- Contact -->
-      <div class="space-y-6">
+      <div class="space-y-6 pl-6">
         <h2
           class="text-content-on-secondary text-[28px] md:text-[32px] font-semibold"
         >
           {{ 'FOOTER.CONTACT_US' | translate }}
         </h2>
 
-        <div
-          class="space-y-5 text-[15px] md:text-[16px] text-content-on-secondary/90"
-        >
-          <div class="flex items-center gap-3">
-            <span class="text-primary text-lg" aria-hidden="true">☎</span>
-            <a>{{ 'FOOTER.PHONE' | translate }}</a>
+        <div class="space-y-5 text-content-on-secondary/90">
+          <div class="flex items-center text-[16px] gap-3">
+            <img src="/assets/images/landing/icon-phone.svg" alt="" />
+
+            <a class="text-[16px]">{{ 'FOOTER.PHONE' | translate }}</a>
           </div>
-          <div class="flex items-center gap-3">
-            <span class="text-primary text-lg" aria-hidden="true">✉</span>
-            <a>{{ 'FOOTER.EMAIL' | translate }}</a>
+          <div class="flex items-center text-[16px] gap-3">
+            <img src="/assets/images/landing/icon-email.svg" alt="" />
+            <a class="text-[16px]">{{ 'FOOTER.EMAIL' | translate }}</a>
           </div>
-          <div class="flex items-center gap-3">
-            <span class="text-primary text-lg" aria-hidden="true">📍</span>
-            <a>{{ 'FOOTER.ADDRESS' | translate }}</a>
+          <div class="flex items-center text-[16px] gap-3">
+            <img src="/assets/images/landing/icon-location.svg" alt="" />
+            <a class="text-[16px]">{{ 'FOOTER.ADDRESS' | translate }}</a>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="mt-14 pt-8 border-t border-border-base/60 text-center">
-      <p class="text-[14px] text-text-tertiary/90">
+    <div class="mt-14 pt-8 border-t border-[#5b5b61] text-center">
+      <p class="text-[14px] text-[#5b5b61]">
         {{ 'FOOTER.COPYRIGHT' | translate }}
       </p>
     </div>
