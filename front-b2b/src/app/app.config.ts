@@ -1,4 +1,5 @@
 import {
+  APP_INITIALIZER,
   ApplicationConfig,
   provideBrowserGlobalErrorListeners,
   provideZoneChangeDetection,
@@ -6,7 +7,17 @@ import {
 import { provideRouter } from '@angular/router';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { appRoutes } from './app.routes';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { authInterceptor, AuthService } from '@vhandelivery/shared-ui';
+import { catchError, of, tap } from 'rxjs';
+
+function initializeApp(auth: AuthService) {
+  return () =>
+    auth.refreshToken().pipe(
+      tap(),
+      catchError(() => of(null))
+    );
+}
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -14,6 +25,12 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(appRoutes),
     provideAnimations(),
-    provideHttpClient(),
+    provideHttpClient(withInterceptors([authInterceptor])),
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializeApp,
+      deps: [AuthService],
+      multi: true,
+    },
   ],
 };

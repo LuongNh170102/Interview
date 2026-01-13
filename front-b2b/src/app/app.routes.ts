@@ -7,6 +7,20 @@ export const appRoutes: Route[] = [
     redirectTo: 'landing',
   },
   {
+    path: 'auth/login',
+    loadComponent: () =>
+      import('./public/pages/auth/login/login.component').then(
+        (m) => m.LoginComponent
+      ),
+  },
+  {
+    path: 'auth/register',
+    loadComponent: () =>
+      import('./public/pages/auth/register/register.component').then(
+        (m) => m.RegisterComponent
+      ),
+  },
+  {
     path: 'landing',
     loadComponent: () =>
       import('./public/pages/landing/landing.component').then(
@@ -16,7 +30,7 @@ export const appRoutes: Route[] = [
   {
     path: '',
     loadComponent: () =>
-      import('./public/layout/layout').then((m) => m.LayoutComponent),
+      import('./public/layout/layout.component').then((m) => m.LayoutComponent),
     children: [
       {
         path: 'merchant-signup',

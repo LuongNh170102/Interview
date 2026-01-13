@@ -1,158 +1,158 @@
 {
-  "HEADER": {
-    "APP": "APP",
-    "LANGUAGE": "Language",
-    "LANGUAGES": {
-      "VI": "Vietnamese",
-      "EN": "English",
-      "KO": "Korean"
+  "header": {
+    "app": "APP",
+    "language": "Language",
+    "languages": {
+      "vi": "Vietnamese",
+      "en": "English",
+      "ko": "Korean"
     },
-    "BRAND_SUFFIX": "Delivery",
-    "NAV": {
-      "LOGIN": "Log in",
-      "INTRO": "Overview",
-      "OFFERS": "Benefits",
-      "PROCESS": "Process",
-      "NEWS": "News",
-      "PARTNER": "Become a Partner"
+    "brandSuffix": "Delivery",
+    "nav": {
+      "login": "Log in",
+      "intro": "Overview",
+      "offers": "Benefits",
+      "process": "Process",
+      "news": "News",
+      "partner": "Become a Partner"
     }
   },
-  "LANDING": {
-    "HERO": {
-      "TITLE_1": "Discover local favorites with fast delivery",
-      "TITLE_2": "VHan Delivery",
-      "BUTTON": "Become a partner today"
+  "landing": {
+    "hero": {
+      "title1": "Discover local favorites with fast delivery",
+      "title2": "VHan Delivery",
+      "button": "Become a partner today"
     },
-    "INTRO": {
-      "SUBTITLE": "Connecting Korean customers with thousands of trusted stores across Vietnam.",
-      "DESC_1": "We provide a simple ordering experience that makes it easy to choose dishes, place orders, and track deliveries.",
-      "DESC_2": "By connecting international customers with local partners, VHAN Delivery helps stores expand their sales channels",
-      "DESC_3": "reach more Korean customers, and increase revenue effectively."
+    "intro": {
+      "subtitle": "Connecting Korean customers with thousands of trusted stores across Vietnam.",
+      "desc1": "We provide a simple ordering experience that makes it easy to choose dishes, place orders, and track deliveries.",
+      "desc2": "By connecting international customers with local partners, VHAN Delivery helps stores expand their sales channels",
+      "desc3": "reach more Korean customers, and increase revenue effectively."
     },
-    "STATS": {
-      "REGIONS": "Available in all 63 provinces",
-      "STORES": "Over 10,000 partner stores"
+    "stats": {
+      "regions": "Available in all 63 provinces",
+      "stores": "Over 10,000 partner stores"
     },
-    "FEATURES": {
-      "TAG": "Key benefits",
-      "TITLE": "Why choose",
-      "COST_CUT": {
-        "TITLE": "Optimize operating costs",
-        "DESC": "Lower fixed expenses with flexible service fees."
+    "features": {
+      "tag": "Key benefits",
+      "title": "Why choose",
+      "costCut": {
+        "title": "Optimize operating costs",
+        "desc": "Lower fixed expenses with flexible service fees."
       },
-      "SETTLEMENT": {
-        "TITLE": "Same-day settlement (T+0)",
-        "DESC": "Receive payouts within the day to keep cash flow healthy."
+      "settlement": {
+        "title": "Same-day settlement (T+0)",
+        "desc": "Receive payouts within the day to keep cash flow healthy."
       },
-      "FAST_DELIVERY": {
-        "TITLE": "Lightning-fast delivery",
-        "DESC": "Orders are dispatched immediately after customers confirm."
+      "fastDelivery": {
+        "title": "Lightning-fast delivery",
+        "desc": "Orders are dispatched immediately after customers confirm."
       },
-      "SUPPORT": {
-        "TITLE": "Dedicated partner support",
-        "DESC": "24/7 assistance with training and operational guidance."
+      "support": {
+        "title": "Dedicated partner support",
+        "desc": "24/7 assistance with training and operational guidance."
       }
     },
-    "PROCESS": {
-      "TAG": "How it works",
-      "TITLE": "Three simple steps to join"
+    "process": {
+      "tag": "How it works",
+      "title": "Three simple steps to join"
     },
-    "STEPS": {
-      "STEP1": {
-        "TITLE": "Register and verify account",
-        "DESC": "Enter your phone number, confirm the OTP, and create a free partner profile."
+    "steps": {
+      "step1": {
+        "title": "Register and verify account",
+        "desc": "Enter your phone number, confirm the OTP, and create a free partner profile."
       },
-      "STEP2": {
-        "TITLE": "Flexible onboarding review",
-        "DESC": "Our specialists verify details and activate your store within 24 hours."
+      "step2": {
+        "title": "Flexible onboarding review",
+        "desc": "Our specialists verify details and activate your store within 24 hours."
       },
-      "STEP3": {
-        "TITLE": "Launch and start delivering",
-        "DESC": "Configure your menu, accept the first order, and scale with VHan."
+      "step3": {
+        "title": "Launch and start delivering",
+        "desc": "Configure your menu, accept the first order, and scale with VHan."
       }
     },
-    "NEWS": {
-      "TAG": "News",
-      "TITLE": "Newsletter",
-      "VIEW_MORE": "See all",
-      "ITEM1": {
-        "TITLE": "Partner enrollment made simple",
-        "DESC": "Step-by-step walkthrough to complete your profile and go live quickly."
+    "news": {
+      "tag": "News",
+      "title": "Newsletter",
+      "viewMore": "See all",
+      "item1": {
+        "title": "Partner enrollment made simple",
+        "desc": "Step-by-step walkthrough to complete your profile and go live quickly."
       },
-      "ITEM2": {
-        "TITLE": "The go-to delivery app",
-        "DESC": "Serving 63 provinces with more than 10,000 trusted local partners."
+      "item2": {
+        "title": "The go-to delivery app",
+        "desc": "Serving 63 provinces with more than 10,000 trusted local partners."
       },
-      "ITEM3": {
-        "TITLE": "New support center grand opening",
-        "DESC": "Expanding resources to assist partners in major cities."
+      "item3": {
+        "title": "New support center grand opening",
+        "desc": "Expanding resources to assist partners in major cities."
       }
     },
-    "BOTTOM_CTA": {
-      "TITLE_1": "Restaurants and brands",
-      "TITLE_2": "A new beginning",
-      "TITLE_3": "With VHan Delivery",
-      "BUTTON": "Start partnering now"
+    "bottomCta": {
+      "title1": "Restaurants and brands",
+      "title2": "A new beginning",
+      "title3": "With VHan Delivery",
+      "button": "Start partnering now"
     }
   },
-  "MERCHANT_SIGNUP": {
-    "HERO_TITLE_1": "Grow faster with a trusted delivery partner",
-    "HERO_TITLE_2": "Register your store on VHan Delivery",
-    "IMAGES": {
-      "HERO_ALT": "Illustration of a VHan Delivery partner storefront"
+  "merchantSignup": {
+    "heroTitle1": "Grow faster with a trusted delivery partner",
+    "heroTitle2": "Register your store on VHan Delivery",
+    "images": {
+      "heroAlt": "Illustration of a VHan Delivery partner storefront"
     },
-    "BENEFITS_TITLE": "Benefits you unlock immediately",
-    "BENEFIT_1_TITLE": "Reach Korean diners",
-    "BENEFIT_1_DESC": "Showcase your dishes to thousands of Korean customers living and working in Vietnam.",
-    "BENEFIT_2_TITLE": "Simple onboarding & payouts",
-    "BENEFIT_2_DESC": "Digital registration, automatic order tracking, and same-day settlement keep operations smooth.",
-    "BENEFIT_3_TITLE": "Dedicated local experts",
-    "BENEFIT_3_DESC": "Our support team helps optimize menus, marketing, and service quality around the clock.",
-    "CTA_TITLE": "Perfect for every business category",
-    "CATEGORIES": {
-      "NOODLES": "Noodle restaurants",
-      "CAFE": "Cafés & desserts",
-      "BREAD": "Bakeries & pastries",
-      "DRINKS": "Beverage shops",
-      "BEST_SELLER": "Top sellers",
-      "RENTAL": "Rental & services",
-      "FLOWERS": "Flower boutiques",
-      "PHARMACY": "Pharmacies & health care"
+    "benefitsTitle": "Benefits you unlock immediately",
+    "benefit1Title": "Reach Korean diners",
+    "benefit1Desc": "Showcase your dishes to thousands of Korean customers living and working in Vietnam.",
+    "benefit2Title": "Simple onboarding & payouts",
+    "benefit2Desc": "Digital registration, automatic order tracking, and same-day settlement keep operations smooth.",
+    "benefit3Title": "Dedicated local experts",
+    "benefit3Desc": "Our support team helps optimize menus, marketing, and service quality around the clock.",
+    "ctaTitle": "Perfect for every business category",
+    "categories": {
+      "noodles": "Noodle restaurants",
+      "cafe": "Cafés & desserts",
+      "bread": "Bakeries & pastries",
+      "drinks": "Beverage shops",
+      "bestSeller": "Top sellers",
+      "rental": "Rental & services",
+      "flowers": "Flower boutiques",
+      "pharmacy": "Pharmacies & health care"
     },
-    "FORM": {
-      "STORE_NAME": "Store name",
-      "STORE_NAME_PLACEHOLDER": "Enter the official or trading name",
-      "STORE_NAME_ERROR": "Please enter the store name.",
-      "CITY": "City / province",
-      "CITY_PLACEHOLDER": "Select your city",
-      "CITY_ERROR": "Please select a city.",
-      "ADDRESS": "Store address",
-      "ADDRESS_PLACEHOLDER": "House number, street, ward, district",
-      "ADDRESS_ERROR": "Please add the full address.",
-      "CATEGORY": "Business category",
-      "CATEGORY_PLACEHOLDER": "Main cuisine or service (e.g. Korean BBQ)",
-      "CATEGORY_ERROR": "Please describe your category.",
-      "CONTACT_NAME": "Contact person",
-      "CONTACT_NAME_PLACEHOLDER": "Owner or primary contact",
-      "CONTACT_NAME_ERROR": "Please enter the contact name.",
-      "PHONE": "Phone number",
-      "PHONE_PLACEHOLDER": "Phone number used for OTP verification",
-      "PHONE_ERROR": "Enter a valid phone number.",
-      "KNOW_REASON": "How did you hear about us?",
-      "KNOW_REASON_PLACEHOLDER": "Referral, social media, event, etc.",
-      "KNOW_REASON_ERROR": "Please share how you heard about VHan Delivery.",
-      "SHOP_TYPE": "Business model",
-      "ONLINE": "Online only",
-      "OFFLINE": "Physical storefront",
-      "LICENSE": "Business license status",
-      "LICENSE_PLACEHOLDER": "Select license status",
-      "LICENSE_NOTE": "Required for payout verification. Choose \"Pending\" if you are applying.",
-      "LICENSE_ERROR": "Please confirm your license status.",
-      "SOCIAL_LINKS": "Social media or website (optional)",
-      "SOCIAL_LINKS_PLACEHOLDER": "Add a Facebook, Instagram, or website link",
-      "NEXT": "Request verification code"
+    "form": {
+      "storeName": "Store name",
+      "storeNamePlaceholder": "Enter the official or trading name",
+      "storeNameError": "Please enter the store name.",
+      "city": "City / province",
+      "cityPlaceholder": "Select your city",
+      "cityError": "Please select a city.",
+      "address": "Store address",
+      "addressPlaceholder": "House number, street, ward, district",
+      "addressError": "Please add the full address.",
+      "category": "Business category",
+      "categoryPlaceholder": "Main cuisine or service (e.g. Korean BBQ)",
+      "categoryError": "Please describe your category.",
+      "contactName": "Contact person",
+      "contactNamePlaceholder": "Owner or primary contact",
+      "contactNameError": "Please enter the contact name.",
+      "phone": "Phone number",
+      "phonePlaceholder": "Phone number used for OTP verification",
+      "phoneError": "Enter a valid phone number.",
+      "knowReason": "How did you hear about us?",
+      "knowReasonPlaceholder": "Referral, social media, event, etc.",
+      "knowReasonError": "Please share how you heard about VHan Delivery.",
+      "shopType": "Business model",
+      "online": "Online only",
+      "offline": "Physical storefront",
+      "license": "Business license status",
+      "licensePlaceholder": "Select license status",
+      "licenseNote": "Required for payout verification. Choose \"Pending\" if you are applying.",
+      "licenseError": "Please confirm your license status.",
+      "socialLinks": "Social media or website (optional)",
+      "socialLinksPlaceholder": "Add a Facebook, Instagram, or website link",
+      "next": "Request verification code"
     },
-    "CITIES": {
+    "cities": {
       "hanoi": "Ha Noi",
       "hcm": "Ho Chi Minh City",
       "danang": "Da Nang",
@@ -186,41 +186,122 @@
       "baclieu": "Bac Lieu",
       "camau": "Ca Mau"
     },
-    "LICENSES": {
-      "HAS_LICENSE": "I have a valid business license",
-      "NO_LICENSE": "I do not have a business license",
-      "PENDING_LICENSE": "I am applying for a license"
+    "licenses": {
+      "hasLicense": "I have a valid business license",
+      "noLicense": "I do not have a business license",
+      "pendingLicense": "I am applying for a license"
     }
   },
-  "FOOTER": {
-    "COPYRIGHT": "© VHan Delivery Co.,Ltd. All rights reserved.",
-    "ADMIN": "Admin",
-    "TERMS": "Terms & Policy",
-    "PRIVACY": "Privacy Notice",
-    "CONTACT_US": "Contact Us",
-    "BRAND": "VHan Delivery",
-    "PHONE": "0778 79 1004 – 0933 51 2838",
-    "EMAIL": "vhanit.business@gmail.com",
-    "ADDRESS": "05 Noi Khu Hung Phuoc 1, Phu My Hung, Tan Hung Ward, HCMC."
+  "footer": {
+    "copyright": "© VHan Delivery Co.,Ltd. All rights reserved.",
+    "admin": "Admin",
+    "terms": "Terms & Policy",
+    "privacy": "Privacy Notice",
+    "contactUs": "Contact Us",
+    "brand": "VHan Delivery",
+    "phone": "0778 79 1004 – 0933 51 2838",
+    "email": "vhanit.business@gmail.com",
+    "address": "05 Noi Khu Hung Phuoc 1, Phu My Hung, Tan Hung Ward, HCMC."
   },
-  "MENU": {
-    "VHAN_DELIVERY": "VHan Delivery",
-    "SUB_MENU_1": "About Us",
-    "SUB_MENU_2": "Services",
-    "SUB_MENU_3": "Contact",
-    "MERCHANT_SIGNUP": "Partner Registration"
+  "menu": {
+    "vhanDelivery": "VHan Delivery",
+    "subMenu1": "About Us",
+    "subMenu2": "Services",
+    "subMenu3": "Contact",
+    "merchantSignup": "Partner Registration"
   },
-  "MODAL": {
-    "ERROR": "Something went wrong",
-    "REGISTRATION_FAILED": "Registration failed",
-    "REGISTRATION_FAILED_DESC": "We could not submit your information. Please try again or contact our support team.",
-    "OTP_INVALID": "The verification code is invalid or has expired. Request a new OTP and try again.",
-    "REGISTRATION_SUCCESS": "Registration submitted",
-    "REGISTRATION_SUCCESS_DESC": "Thanks for registering! Our partner team will review your details and contact you within 24 hours."
+  "modal": {
+    "logoutConfirmTitle": "Confirm Logout",
+    "logoutConfirmMessage": "Are you sure you want to logout?",
+    "error": "Something went wrong",
+    "registrationFailed": "Registration failed",
+    "registrationFailedDesc": "We could not submit your information. Please try again or contact our support team.",
+    "otpInvalid": "The verification code is invalid or has expired. Request a new OTP and try again.",
+    "registrationSuccess": "Registration submitted",
+    "registrationSuccessDesc": "Thanks for registering! Our partner team will review your details and contact you within 24 hours.",
+    "otpTitle": "OTP Verification",
+    "otpDesc": "Please enter the verification code sent to",
+    "confirm": "Verify",
+    "otpNotReceived": "Didn't receive the code?",
+    "otpResendIn": "Resend available in",
+    "otpResend": "Resend Code"
   },
-  "COMMON": {
-    "VIEW_MORE": "View More",
-    "PARTNER_REG": "Partner Registration",
-    "START": "Start"
+  "common": {
+    "viewMore": "View More",
+    "partnerReg": "Partner Registration",
+    "start": "Start"
+  },
+  "auth": {
+    "common": {
+      "brand": "VHanDelivery",
+      "logout": "Logout"
+    },
+    "field": {
+      "email": "Email",
+      "password": "Password",
+      "username": "Display name",
+      "phone": "Phone number",
+      "usernamePlaceholder": "John Doe",
+      "phonePlaceholder": "(+84) 987 654 321"
+    },
+    "error": {
+      "emailInvalid": "Invalid email address.",
+      "passwordMin": "Password must be at least 6 characters.",
+      "usernameRequired": "Display name is required.",
+      "phoneRequired": "Phone number is required.",
+      "loginFailed": "Login failed.",
+      "registerFailed": "Registration failed."
+    },
+    "login": {
+      "hero": {
+        "title": "Comprehensive delivery management platform",
+        "description": "Track orders, manage fleets, and optimize routes in real time for your logistics operation."
+      },
+      "stats": {
+        "uptime": "99.9%",
+        "uptimeLabel": "Uptime",
+        "support": "24/7",
+        "supportLabel": "Technical support"
+      },
+      "welcome": "Welcome back",
+      "subtitle": "Log in to become our partner today.",
+      "emailPlaceholder": "admin@vhandelivery.com",
+      "passwordPlaceholder": "••••••••",
+      "showPassword": "Show password",
+      "hidePassword": "Hide password",
+      "remember": "Remember me",
+      "forgot": "Forgot password?",
+      "submit": "Sign in now",
+      "google": "Sign in with Google",
+      "backHome": "Back to home",
+      "successTitle": "Login Successful",
+      "successMessage": "Welcome back!",
+      "errorTitle": "Login Failed",
+      "noAccount": "Don't have an account?",
+      "registerLink": "Sign up"
+    },
+    "register": {
+      "hero": {
+        "title": "Join the delivery management network",
+        "description": "Create your account to manage orders, fleets, and operations with ease."
+      },
+      "stats": {
+        "fast": "Fast",
+        "fastLabel": "Create an account in minutes",
+        "secure": "Secure",
+        "secureLabel": "Verified and safely stored"
+      },
+      "title": "Create an account",
+      "subtitle": "Fill in your details to get started.",
+      "emailPlaceholder": "you@example.com",
+      "passwordPlaceholder": "••••••••",
+      "submit": "Create account",
+      "hasAccount": "Already have an account?",
+      "loginLink": "Log in",
+      "successTitle": "Registration Successful",
+      "successMessage": "Your account has been created.",
+      "errorTitle": "Registration Failed",
+      "errorMessage": "Unable to create account."
+    }
   }
 }

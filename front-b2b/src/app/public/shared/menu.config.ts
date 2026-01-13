@@ -15,9 +15,9 @@ export interface NavItem {
  * These items will navigate to landing page with fragment anchors
  */
 export const LANDING_NAV_CONFIG: readonly NavItem[] = [
-  { labelKey: 'HEADER.NAV.PARTNER', link: '/landing#' },
-  { labelKey: 'HEADER.NAV.INTRO', link: '/landing#intro' },
-  { labelKey: 'HEADER.NAV.OFFERS', link: '/landing#offers' },
-  { labelKey: 'HEADER.NAV.PROCESS', link: '/landing#process' },
-  { labelKey: 'HEADER.NAV.NEWS', link: '/landing#news' },
+  { labelKey: 'header.nav.partner', link: '/landing#' },
+  { labelKey: 'header.nav.intro', link: '/landing#intro' },
+  { labelKey: 'header.nav.offers', link: '/landing#offers' },
+  { labelKey: 'header.nav.process', link: '/landing#process' },
+  { labelKey: 'header.nav.news', link: '/landing#news' },
 ] as const;

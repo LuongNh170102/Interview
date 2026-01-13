@@ -169,11 +169,7 @@ export class MerchantSignup {
         setTimeout(() => this.otpModal?.startCountdown(), 0);
       },
       error: () => {
-        this.showModal(
-          'error',
-          'MODAL.ERROR',
-          'MODAL.REGISTRATION_FAILED_DESC'
-        );
+        this.showModal('error', 'modal.error', 'modal.registrationFailedDesc');
       },
     });
   }
@@ -189,7 +185,7 @@ export class MerchantSignup {
         this.submitRegistration();
       },
       error: () => {
-        this.showModal('error', 'MODAL.ERROR', 'MODAL.OTP_INVALID');
+        this.showModal('error', 'modal.error', 'modal.otpInvalid');
       },
     });
   }
@@ -214,23 +210,21 @@ export class MerchantSignup {
     };
 
     // Login Authentication Token Temporary Hardcoding
-    const access_token =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsInVzZXJuYW1lIjoiYWRtaW5AZ21haWwuY29tIiwicm9sZXMiOlsiUExBVEZPUk1fQURNSU4iLCJNRVJDSEFOVF9PV05FUiJdLCJpYXQiOjE3NjcwODE5MjIsImV4cCI6MTc2ODM3NzkyMn0.T4wslNqVW4VNH_JnWwDpkeUFU15GRGwPOj8ctlVW4j4';
 
-    this.merchantService.registerMerchant(payload, access_token).subscribe({
+    this.merchantService.registerMerchant(payload).subscribe({
       next: (res) => {
         this.showModal(
           'success',
-          'MODAL.REGISTRATION_SUCCESS',
-          'MODAL.REGISTRATION_SUCCESS_DESC'
+          'modal.registrationSuccess',
+          'modal.registrationSuccessDesc'
         );
       },
       error: (err) => {
         console.error('merchant register failed ..', err);
         this.showModal(
           'error',
-          'MODAL.REGISTRATION_FAILED',
-          'MODAL.REGISTRATION_FAILED_DESC'
+          'modal.registrationFailed',
+          'modal.registrationFailedDesc'
         );
       },
     });

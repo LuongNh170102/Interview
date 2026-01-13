@@ -116,7 +116,7 @@ model Agency {
   email       String?
   logo        String?
   businessLicenseUrl String? @map("business_license_url")
-  status      String   @default("PENDING") // ACTIVE, INACTIVE, PENDING
+  status      ApprovalStatus @default(PENDING)
 
   // Ownership
   ownerId     Int?     @map("owner_id")
@@ -130,6 +130,13 @@ model Agency {
   userRoles   UserRole[]
 
   @@map("agencies")
+}
+
+enum ApprovalStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  SUSPENDED
 }
 
 model Brand {
@@ -230,7 +237,7 @@ model Merchant {
   latitude    Float?
   longitude   Float?
   phone       String?
-  status      String?  // 'active' | 'inactive' | 'suspended'
+  status      ApprovalStatus? // Approval status
   isAcceptingOrders Boolean @default(true) @map("is_accepting_orders") 
   metadata    Json?
   createdAt   DateTime @default(now()) @map("created_at")

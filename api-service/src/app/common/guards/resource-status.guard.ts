@@ -78,7 +78,7 @@ export class ResourceStatusGuard implements CanActivate {
       throw new NotFoundException(RESOURCE_MESSAGES.NOT_FOUND(target));
     }
 
-    if (entity.status !== MERCHANT_STATUS.ACTIVE) {
+    if (entity.status !== MERCHANT_STATUS.APPROVED) {
       throw new ForbiddenException(
         RESOURCE_MESSAGES.OPERATION_DENIED(target, entity.status)
       );

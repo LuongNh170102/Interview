@@ -4,6 +4,8 @@ export * from './lib/interfaces/otp.interface';
 export * from './lib/interfaces/agency.interface';
 export * from './lib/interfaces/merchant.interface';
 export * from './lib/services/translation.service';
+export * from './lib/services/auth.service';
+export * from './lib/interceptors/auth.interceptor';
 export * from './lib/pipes/translate.pipe';
 export * from './lib/interfaces/localized-string.interface';
 export * from './lib/interfaces/brand.interface';

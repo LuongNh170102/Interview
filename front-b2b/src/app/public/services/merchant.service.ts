@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {
@@ -12,9 +12,8 @@ import {
 
 @Injectable({ providedIn: 'root' })
 export class MerchantService {
-  private baseUrl = '/api/merchants';
-
-  constructor(private http: HttpClient) {}
+  private readonly baseUrl = '/api/merchants';
+  private readonly http = inject(HttpClient);
 
   requestOtp(phone: string): Observable<RequestOtpResponse> {
     const payload: RequestOtpRequest = { phone };
@@ -33,17 +32,11 @@ export class MerchantService {
   }
 
   registerMerchant(
-    payload: CreateMerchantRequest,
-    access_token: string
+    payload: CreateMerchantRequest
   ): Observable<MerchantResponse> {
     return this.http.post<MerchantResponse>(
       `${this.baseUrl}/register`,
-      payload,
-      {
-        headers: {
-          Authorization: `Bearer ${access_token}`,
-        },
-      }
+      payload
     );
   }
 }

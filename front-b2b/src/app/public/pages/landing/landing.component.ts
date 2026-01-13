@@ -53,23 +53,23 @@ export class LandingComponent implements OnInit, OnDestroy {
 
   readonly features = [
     {
-      titleKey: 'LANDING.FEATURES.COST_CUT.TITLE',
-      descriptionKey: 'LANDING.FEATURES.COST_CUT.DESC',
+      titleKey: 'landing.features.costCut.title',
+      descriptionKey: 'landing.features.costCut.desc',
       icon: '/assets/images/landing/feature-cost-cut.png',
     },
     {
-      titleKey: 'LANDING.FEATURES.SETTLEMENT.TITLE',
-      descriptionKey: 'LANDING.FEATURES.SETTLEMENT.DESC',
+      titleKey: 'landing.features.settlement.title',
+      descriptionKey: 'landing.features.settlement.desc',
       icon: '/assets/images/landing/feature-payment.png',
     },
     {
-      titleKey: 'LANDING.FEATURES.FAST_DELIVERY.TITLE',
-      descriptionKey: 'LANDING.FEATURES.FAST_DELIVERY.DESC',
+      titleKey: 'landing.features.fastDelivery.title',
+      descriptionKey: 'landing.features.fastDelivery.desc',
       icon: '/assets/images/landing/feature-fast-delivery.png',
     },
     {
-      titleKey: 'LANDING.FEATURES.SUPPORT.TITLE',
-      descriptionKey: 'LANDING.FEATURES.SUPPORT.DESC',
+      titleKey: 'landing.features.support.title',
+      descriptionKey: 'landing.features.support.desc',
       icon: '/assets/images/landing/feature-support.png',
     },
   ];
@@ -77,68 +77,68 @@ export class LandingComponent implements OnInit, OnDestroy {
   readonly steps = [
     {
       step: '1STEP',
-      titleKey: 'LANDING.STEPS.STEP1.TITLE',
-      descriptionKey: 'LANDING.STEPS.STEP1.DESC',
+      titleKey: 'landing.steps.step1.title',
+      descriptionKey: 'landing.steps.step1.desc',
       icon: '/assets/images/landing/process-step-1.svg',
     },
     {
       step: '2STEP',
-      titleKey: 'LANDING.STEPS.STEP2.TITLE',
-      descriptionKey: 'LANDING.STEPS.STEP2.DESC',
+      titleKey: 'landing.steps.step2.title',
+      descriptionKey: 'landing.steps.step2.desc',
       icon: '/assets/images/landing/process-step-2.svg',
     },
     {
       step: '3STEP',
-      titleKey: 'LANDING.STEPS.STEP3.TITLE',
-      descriptionKey: 'LANDING.STEPS.STEP3.DESC',
+      titleKey: 'landing.steps.step3.title',
+      descriptionKey: 'landing.steps.step3.desc',
       icon: '/assets/images/landing/process-step-3.svg',
     },
   ];
 
   readonly newsItems = [
     {
-      titleKey: 'LANDING.NEWS.ITEM1.TITLE',
-      descKey: 'LANDING.NEWS.ITEM1.DESC',
+      titleKey: 'landing.news.item1.title',
+      descKey: 'landing.news.item1.desc',
       image: '/assets/images/landing/news-item-1.png',
     },
     {
-      titleKey: 'LANDING.NEWS.ITEM2.TITLE',
-      descKey: 'LANDING.NEWS.ITEM2.DESC',
+      titleKey: 'landing.news.item2.title',
+      descKey: 'landing.news.item2.desc',
       image: '/assets/images/landing/news-item-2.png',
     },
     {
-      titleKey: 'LANDING.NEWS.ITEM3.TITLE',
-      descKey: 'LANDING.NEWS.ITEM3.DESC',
+      titleKey: 'landing.news.item3.title',
+      descKey: 'landing.news.item3.desc',
       image: '/assets/images/landing/news-item-3.png',
     },
     {
-      titleKey: 'LANDING.NEWS.ITEM1.TITLE',
-      descKey: 'LANDING.NEWS.ITEM1.DESC',
+      titleKey: 'landing.news.item1.title',
+      descKey: 'landing.news.item1.desc',
       image: '/assets/images/landing/news-item-1.png',
     },
     {
-      titleKey: 'LANDING.NEWS.ITEM2.TITLE',
-      descKey: 'LANDING.NEWS.ITEM2.DESC',
+      titleKey: 'landing.news.item2.title',
+      descKey: 'landing.news.item2.desc',
       image: '/assets/images/landing/news-item-2.png',
     },
     {
-      titleKey: 'LANDING.NEWS.ITEM3.TITLE',
-      descKey: 'LANDING.NEWS.ITEM3.DESC',
+      titleKey: 'landing.news.item3.title',
+      descKey: 'landing.news.item3.desc',
       image: '/assets/images/landing/news-item-3.png',
     },
     {
-      titleKey: 'LANDING.NEWS.ITEM1.TITLE',
-      descKey: 'LANDING.NEWS.ITEM1.DESC',
+      titleKey: 'landing.news.item1.title',
+      descKey: 'landing.news.item1.desc',
       image: '/assets/images/landing/news-item-1.png',
     },
     {
-      titleKey: 'LANDING.NEWS.ITEM2.TITLE',
-      descKey: 'LANDING.NEWS.ITEM2.DESC',
+      titleKey: 'landing.news.item2.title',
+      descKey: 'landing.news.item2.desc',
       image: '/assets/images/landing/news-item-2.png',
     },
     {
-      titleKey: 'LANDING.NEWS.ITEM3.TITLE',
-      descKey: 'LANDING.NEWS.ITEM3.DESC',
+      titleKey: 'landing.news.item3.title',
+      descKey: 'landing.news.item3.desc',
       image: '/assets/images/landing/news-item-3.png',
     },
   ];

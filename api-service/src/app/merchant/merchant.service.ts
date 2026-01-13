@@ -19,6 +19,7 @@ import { OtpService } from '../otp/otp.service';
 import { ROLE } from '../common/constants/role.constants';
 import { RESOURCE_TARGETS } from '../common/constants/resource.constant';
 import { PaginationDto } from '../common/dto/pagination.dto';
+import { ApprovalStatus } from '@prisma/client';
 
 @Injectable()
 export class MerchantService {
@@ -71,7 +72,7 @@ export class MerchantService {
     return merchant;
   }
 
-  async updateStatus(externalId: string, status: string) {
+  async updateStatus(externalId: string, status: MERCHANT_STATUS) {
     const merchant = await this.prisma.merchant.findUnique({
       where: { externalId },
     });
@@ -84,11 +85,11 @@ export class MerchantService {
 
     const updatedMerchant = await this.prisma.merchant.update({
       where: { externalId },
-      data: { status },
+      data: { status: status as ApprovalStatus },
     });
 
-    // If status is ACTIVE, assign MERCHANT_OWNER role and link merchantId
-    if (status === MERCHANT_STATUS.ACTIVE) {
+    // If status is APPROVED, assign MERCHANT_OWNER role and link merchantId
+    if (status === MERCHANT_STATUS.APPROVED) {
       const merchantOwnerRole = await this.prisma.role.findUnique({
         where: { name: ROLE.MERCHANT_OWNER },
       });
@@ -180,7 +181,7 @@ export class MerchantService {
         metadata: dto.socialLinks ? { socialLinks: dto.socialLinks } : {},
         phone: dto.phone,
         ownerId: userId,
-        status: MERCHANT_STATUS.PENDING,
+        status: MERCHANT_STATUS.PENDING as ApprovalStatus,
       },
     });
 
