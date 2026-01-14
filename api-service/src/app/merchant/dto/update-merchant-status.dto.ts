@@ -4,5 +4,5 @@ import { MERCHANT_STATUS } from '../../common/constants/merchant.constant';
 export class UpdateMerchantStatusDto {
   @IsNotEmpty()
   @IsEnum(MERCHANT_STATUS)
-  status: string;
+  status: MERCHANT_STATUS;
 }

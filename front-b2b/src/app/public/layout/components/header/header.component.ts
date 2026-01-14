@@ -9,7 +9,12 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
-import { TranslatePipe, TranslationService } from '@vhandelivery/shared-ui';
+import {
+  AuthService,
+  TranslatePipe,
+  TranslationService,
+} from '@vhandelivery/shared-ui';
+import { GlobalModalService } from '../../../shared/global-modal/global-modal.service';
 
 type NavItem = {
   readonly labelKey: string;
@@ -27,6 +32,8 @@ type NavItem = {
 })
 export class HeaderComponent {
   private readonly translationService = inject(TranslationService);
+  protected readonly auth = inject(AuthService);
+  private readonly modalService = inject(GlobalModalService);
   private readonly router = inject(Router);
   private readonly elementRef = inject(ElementRef);
   readonly navItems = input<readonly NavItem[]>([]);
@@ -148,6 +155,18 @@ export class HeaderComponent {
       this.currentLanguage.set(lang);
     }
     this.isLanguageDropdownOpen.set(false);
+  }
+
+  protected logout() {
+    this.modalService.showConfirmation(
+      'modal.logoutConfirmTitle',
+      'modal.logoutConfirmMessage',
+      () => {
+        this.auth.logout().subscribe(() => {
+          this.router.navigate(['/auth/login']);
+        });
+      }
+    );
   }
 
   @HostListener('document:click', ['$event'])

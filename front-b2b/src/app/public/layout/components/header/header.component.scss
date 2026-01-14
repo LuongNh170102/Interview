@@ -1,3 +1,11 @@
+:host {
+  display: block;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  width: 100%;
+}
+
 .header-scroll::-webkit-scrollbar {
   display: none;
 }

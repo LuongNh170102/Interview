@@ -8,8 +8,8 @@ import { FooterComponent } from './components/footer/footer.component';
   selector: 'app-layout',
   standalone: true,
   imports: [RouterOutlet, HeaderComponent, FooterComponent],
-  templateUrl: './layout.html',
-  styleUrl: './layout.scss',
+  templateUrl: './layout.component.html',
+  styleUrl: './layout.component.scss',
 })
 export class LayoutComponent {
   readonly navItems = LANDING_NAV_CONFIG;

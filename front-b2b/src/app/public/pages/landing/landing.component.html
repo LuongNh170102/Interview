@@ -10,17 +10,17 @@
       <div class="max-w-7xl mx-auto px-6 md:px-20 w-full">
         <div class="text-center">
           <h1 class="leading-tight text-content-on-secondary mb-6 md:mb-8">
-            {{ 'LANDING.HERO.TITLE_1' | translate }}
+            {{ 'landing.hero.title1' | translate }}
             <span class="text-primary font-bold block">{{
-              'LANDING.HERO.TITLE_2' | translate
+              'landing.hero.title2' | translate
             }}</span>
           </h1>
           <button
             type="button"
-            routerLink="/merchant-signup"
+            routerLink="/register-type"
             class="bg-primary text-content-on-primary px-8 md:px-10 py-3 md:py-4 hover:bg-primary-hover transition-colors"
           >
-            {{ 'LANDING.HERO.BUTTON' | translate }}
+            {{ 'landing.hero.button' | translate }}
           </button>
         </div>
       </div>
@@ -47,9 +47,9 @@
       <div class="text-center mb-12">
         <h2 class="leading-tight text-text-primary font-bold mb-4">
           <span class="text-primary font-bold">
-            {{ 'LANDING.HERO.TITLE_2' | translate }}
+            {{ 'landing.hero.title2' | translate }}
           </span>
-          {{ 'LANDING.INTRO.SUBTITLE' | translate }}
+          {{ 'landing.intro.subtitle' | translate }}
         </h2>
       </div>
 
@@ -64,17 +64,17 @@
             63+
           </div>
           <div class="text-sm md:text-base text-text-primary mt-5 font-normal">
-            {{ 'LANDING.STATS.REGIONS' | translate }}
+            {{ 'landing.stats.regions' | translate }}
           </div>
         </div>
         <div class="flex flex-col items-center">
           <div
-            class="text-[48px] md:text-[80px] font-bold text-primary leading-none"
+            class="text-[3rem] md:text-[5rem] font-bold text-primary leading-none"
           >
             10,000+
           </div>
           <div class="text-sm md:text-base text-text-primary mt-5 font-normal">
-            {{ 'LANDING.STATS.STORES' | translate }}
+            {{ 'landing.stats.stores' | translate }}
           </div>
         </div>
       </div>
@@ -82,13 +82,13 @@
       <!-- Description Paragraphs -->
       <div class="max-w-5xl mx-auto text-center mb-16 md:mb-24 space-y-2">
         <p class="text-text-secondary leading-relaxed">
-          {{ 'LANDING.INTRO.DESC_1' | translate }}
+          {{ 'landing.intro.desc1' | translate }}
         </p>
         <p class="text-text-secondary leading-relaxed">
-          {{ 'LANDING.INTRO.DESC_2' | translate }}
+          {{ 'landing.intro.desc2' | translate }}
         </p>
         <p class="text-text-secondary leading-relaxed">
-          {{ 'LANDING.INTRO.DESC_3' | translate }}
+          {{ 'landing.intro.desc3' | translate }}
         </p>
 
         <!-- Flags -->
@@ -121,13 +121,13 @@
     <!-- Title for Features -->
     <div class="max-w-7xl mx-auto px-6 md:px-20">
       <div class="text-center mb-10 md:mb-16">
-        <span class="block text-primary text-[13px] font-bold mb-2">{{
-          'LANDING.FEATURES.TAG' | translate
+        <span class="block text-primary font-bold mb-2">{{
+          'landing.features.tag' | translate
         }}</span>
         <h2 class="text-[28px] md:text-[48px] font-bold text-text-primary">
-          {{ 'LANDING.FEATURES.TITLE' | translate }}
+          {{ 'landing.features.title' | translate }}
           <span class="text-primary font-bold"
-            >{{ 'LANDING.HERO.TITLE_2' | translate }}?</span
+            >{{ 'landing.hero.title2' | translate }}?</span
           >
         </h2>
       </div>
@@ -167,11 +167,11 @@
   <section id="process" class="py-16 md:py-24 relative bg-surface-base">
     <div class="max-w-7xl mx-auto px-6 md:px-20">
       <div class="text-center mb-10 md:mb-16">
-        <span class="block text-primary text-[13px] font-bold mb-2">{{
-          'LANDING.PROCESS.TAG' | translate
+        <span class="block text-primary font-bold mb-2">{{
+          'landing.process.tag' | translate
         }}</span>
         <h2 class="text-[28px] md:text-[52px] font-bold text-text-primary">
-          {{ 'LANDING.PROCESS.TITLE' | translate }}
+          {{ 'landing.process.title' | translate }}
         </h2>
       </div>
 
@@ -180,8 +180,8 @@
           class="flex flex-col items-center text-center bg-surface-elevated rounded-[24px] border border-border-base px-6 py-8 md:py-12 shadow-sm"
           *ngFor="let step of steps"
         >
-          <div class="mb-12 rounded-full flex items-center justify-center">
-            <img [src]="step.icon" class="h-10 md:h-16 object-contain" alt="" />
+          <div class="mb-8 rounded-full flex items-center justify-center">
+            <img [src]="step.icon" class="h-10 md:h-12 object-contain" alt="" />
           </div>
           <span
             class="inline-flex items-center justify-center px-5 py-2 mb-6 rounded-full bg-primary text-content-on-primary text-sm font-semibold tracking-[0.08em]"
@@ -208,13 +208,13 @@
     <div class="max-w-7xl mx-auto px-4 md:px-8">
       <div class="px-2 md:px-12">
         <div class="text-center mb-10 md:mb-12">
-          <span class="block text-primary text-[13px] font-bold mb-2">{{
-            'LANDING.NEWS.TAG' | translate
+          <span class="block text-primary font-bold mb-2">{{
+            'landing.news.tag' | translate
           }}</span>
           <h2 class="font-bold text-text-primary">
-            {{ 'LANDING.NEWS.TITLE' | translate }}
+            {{ 'landing.news.title' | translate }}
             <span class="text-primary">{{
-              'LANDING.HERO.TITLE_2' | translate
+              'landing.hero.title2' | translate
             }}</span>
           </h2>
         </div>
@@ -268,7 +268,7 @@
             href="#"
             class="hidden md:inline-flex items-center gap-2 text-[18px] font-semibold text-text-primary hover:text-primary transition-colors"
           >
-            {{ 'LANDING.NEWS.VIEW_MORE' | translate }}
+            {{ 'landing.news.viewMore' | translate }}
             <span class="text-xl text-primary">↗</span>
           </a>
           <!-- Mobile View More Button -->
@@ -276,7 +276,7 @@
             href="#"
             class="md:hidden flex justify-center items-center gap-2 text-[16px] font-semibold text-text-primary hover:text-primary transition-colors mt-4"
           >
-            {{ 'LANDING.NEWS.VIEW_MORE' | translate }}
+            {{ 'landing.news.viewMore' | translate }}
             <span class="text-lg text-primary">↗</span>
           </a>
         </div>
@@ -294,20 +294,20 @@
     >
       <div class="text-content-on-secondary">
         <h1 class="text-content-on-secondary font-normal leading-tight mb-4">
-          {{ 'LANDING.BOTTOM_CTA.TITLE_1' | translate }}<br />
-          {{ 'LANDING.BOTTOM_CTA.TITLE_2' | translate }}<br />
+          {{ 'landing.bottomCta.title1' | translate }}<br />
+          {{ 'landing.bottomCta.title2' | translate }}<br />
           <span class="text-primary">
-            {{ 'LANDING.BOTTOM_CTA.TITLE_3' | translate }}
+            {{ 'landing.bottomCta.title3' | translate }}
           </span>
         </h1>
       </div>
       <div>
         <button
           type="button"
-          routerLink="/merchant-signup"
+          routerLink="/register-type"
           class="bg-primary text-color-on-primary whitespace-nowrap px-8 md:px-12 py-3 md:py-5 hover:bg-primary-hover transition-colors shadow-lg font-normal flex items-center gap-2 group"
         >
-          {{ 'LANDING.BOTTOM_CTA.BUTTON' | translate }}
+          {{ 'landing.bottomCta.button' | translate }}
           <span
             class="text-color-on-primary group-hover:translate-x-1 transition-transform"
             >→</span

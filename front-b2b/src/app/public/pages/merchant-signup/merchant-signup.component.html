@@ -1,11 +1,17 @@
 <!-- Main Content -->
-<div class="register-content">
+<div class="register-content relative">
+  <div class="absolute top-4 left-4 z-10 lg:hidden">
+    <app-back-button></app-back-button>
+  </div>
   <!-- Left Section: Hero -->
-  <aside class="hero-section">
+  <aside class="hero-section relative">
+    <div class="absolute top-6 left-6 z-10 hidden lg:block">
+      <app-back-button></app-back-button>
+    </div>
     <div class="hero-content">
       <h1 class="hero-title">
-        {{ 'MERCHANT_SIGNUP.HERO_TITLE_1' | translate }}<br />
-        <strong>{{ 'MERCHANT_SIGNUP.HERO_TITLE_2' | translate }}</strong>
+        {{ 'merchantSignup.heroTitle1' | translate }}<br />
+        <strong>{{ 'merchantSignup.heroTitle2' | translate }}</strong>
       </h1>
       <div class="hero-image">
         <img
@@ -16,111 +22,111 @@
             margin-bottom: -80px;
             display: block;
           "
-          [attr.alt]="'MERCHANT_SIGNUP.IMAGES.HERO_ALT' | translate"
+          [attr.alt]="'merchantSignup.images.heroAlt' | translate"
         />
       </div>
       <div class="benefits-card">
         <h3 class="benefits-title">
-          {{ 'MERCHANT_SIGNUP.BENEFITS_TITLE' | translate }}
+          {{ 'merchantSignup.benefitsTitle' | translate }}
         </h3>
         <div class="benefits-grid">
           <div class="benefit-item">
             <div class="benefit-icon">
               <img
                 src="assets/images/store-icon1.png"
-                [attr.alt]="'MERCHANT_SIGNUP.BENEFIT_1_TITLE' | translate"
+                [attr.alt]="'merchantSignup.benefit1Title' | translate"
               />
             </div>
             <p class="benefit-text">
-              <b>{{ 'MERCHANT_SIGNUP.BENEFIT_1_TITLE' | translate }}</b
-              ><br />{{ 'MERCHANT_SIGNUP.BENEFIT_1_DESC' | translate }}
+              <b>{{ 'merchantSignup.benefit1Title' | translate }}</b
+              ><br />{{ 'merchantSignup.benefit1Desc' | translate }}
             </p>
           </div>
           <div class="benefit-item">
             <div class="benefit-icon">
               <img
                 src="assets/images/store-icon2.png"
-                [attr.alt]="'MERCHANT_SIGNUP.BENEFIT_2_TITLE' | translate"
+                [attr.alt]="'merchantSignup.benefit2Title' | translate"
               />
             </div>
             <p class="benefit-text">
-              <b>{{ 'MERCHANT_SIGNUP.BENEFIT_2_TITLE' | translate }}</b
-              ><br />{{ 'MERCHANT_SIGNUP.BENEFIT_2_DESC' | translate }}
+              <b>{{ 'merchantSignup.benefit2Title' | translate }}</b
+              ><br />{{ 'merchantSignup.benefit2Desc' | translate }}
             </p>
           </div>
           <div class="benefit-item">
             <div class="benefit-icon">
               <img
                 src="assets/images/store-icon3.png"
-                [attr.alt]="'MERCHANT_SIGNUP.BENEFIT_3_TITLE' | translate"
+                [attr.alt]="'merchantSignup.benefit3Title' | translate"
               />
             </div>
             <p class="benefit-text">
-              <b>{{ 'MERCHANT_SIGNUP.BENEFIT_3_TITLE' | translate }}</b
-              ><br />{{ 'MERCHANT_SIGNUP.BENEFIT_3_DESC' | translate }}
+              <b>{{ 'merchantSignup.benefit3Title' | translate }}</b
+              ><br />{{ 'merchantSignup.benefit3Desc' | translate }}
             </p>
           </div>
         </div>
       </div>
 
       <div class="cta-section desktop-only">
-        <h3 class="cta-title">{{ 'MERCHANT_SIGNUP.CTA_TITLE' | translate }}</h3>
+        <h3 class="cta-title">{{ 'merchantSignup.ctaTitle' | translate }}</h3>
         <div class="category-grid">
           <div class="category-item">
             <img
               src="assets/images/store-img1.png"
-              [attr.alt]="'MERCHANT_SIGNUP.CATEGORIES.NOODLES' | translate"
+              [attr.alt]="'merchantSignup.categories.noodles' | translate"
             />
-            <p>{{ 'MERCHANT_SIGNUP.CATEGORIES.NOODLES' | translate }}</p>
+            <p>{{ 'merchantSignup.categories.noodles' | translate }}</p>
           </div>
           <div class="category-item">
             <img
               src="assets/images/store-img2.png"
-              [attr.alt]="'MERCHANT_SIGNUP.CATEGORIES.CAFE' | translate"
+              [attr.alt]="'merchantSignup.categories.cafe' | translate"
             />
-            <p>{{ 'MERCHANT_SIGNUP.CATEGORIES.CAFE' | translate }}</p>
+            <p>{{ 'merchantSignup.categories.cafe' | translate }}</p>
           </div>
           <div class="category-item">
             <img
               src="assets/images/store-img3.png"
-              [attr.alt]="'MERCHANT_SIGNUP.CATEGORIES.BREAD' | translate"
+              [attr.alt]="'merchantSignup.categories.bread' | translate"
             />
-            <p>{{ 'MERCHANT_SIGNUP.CATEGORIES.BREAD' | translate }}</p>
+            <p>{{ 'merchantSignup.categories.bread' | translate }}</p>
           </div>
           <div class="category-item">
             <img
               src="assets/images/store-img4.png"
-              [attr.alt]="'MERCHANT_SIGNUP.CATEGORIES.DRINKS' | translate"
+              [attr.alt]="'merchantSignup.categories.drinks' | translate"
             />
-            <p>{{ 'MERCHANT_SIGNUP.CATEGORIES.DRINKS' | translate }}</p>
+            <p>{{ 'merchantSignup.categories.drinks' | translate }}</p>
           </div>
           <div class="category-item">
             <img
               src="assets/images/store-img5.png"
-              [attr.alt]="'MERCHANT_SIGNUP.CATEGORIES.BEST_SELLER' | translate"
+              [attr.alt]="'merchantSignup.categories.bestSeller' | translate"
             />
-            <p>{{ 'MERCHANT_SIGNUP.CATEGORIES.BEST_SELLER' | translate }}</p>
+            <p>{{ 'merchantSignup.categories.bestSeller' | translate }}</p>
           </div>
           <div class="category-item">
             <img
               src="assets/images/store-img6.png"
-              [attr.alt]="'MERCHANT_SIGNUP.CATEGORIES.RENTAL' | translate"
+              [attr.alt]="'merchantSignup.categories.rental' | translate"
             />
-            <p>{{ 'MERCHANT_SIGNUP.CATEGORIES.RENTAL' | translate }}</p>
+            <p>{{ 'merchantSignup.categories.rental' | translate }}</p>
           </div>
           <div class="category-item">
             <img
               src="assets/images/store-img7.png"
-              [attr.alt]="'MERCHANT_SIGNUP.CATEGORIES.FLOWERS' | translate"
+              [attr.alt]="'merchantSignup.categories.flowers' | translate"
             />
-            <p>{{ 'MERCHANT_SIGNUP.CATEGORIES.FLOWERS' | translate }}</p>
+            <p>{{ 'merchantSignup.categories.flowers' | translate }}</p>
           </div>
           <div class="category-item">
             <img
               src="assets/images/store-img8.png"
-              [attr.alt]="'MERCHANT_SIGNUP.CATEGORIES.PHARMACY' | translate"
+              [attr.alt]="'merchantSignup.categories.pharmacy' | translate"
             />
-            <p>{{ 'MERCHANT_SIGNUP.CATEGORIES.PHARMACY' | translate }}</p>
+            <p>{{ 'merchantSignup.categories.pharmacy' | translate }}</p>
           </div>
         </div>
       </div>
@@ -132,32 +138,30 @@
     <form class="register-form" (submit)="onSubmit($event)">
       <div class="form-group">
         <label class="form-label required">{{
-          'MERCHANT_SIGNUP.FORM.STORE_NAME' | translate
+          'merchantSignup.form.storeName' | translate
         }}</label>
         <input
           type="text"
           class="form-control"
-          [placeholder]="
-            'MERCHANT_SIGNUP.FORM.STORE_NAME_PLACEHOLDER' | translate
-          "
+          [placeholder]="'merchantSignup.form.storeNamePlaceholder' | translate"
           [(ngModel)]="formData.storeName"
           name="storeName"
           (blur)="onBlur('storeName')"
         />
         <small class="form-hint error" *ngIf="hasError('storeName')">
           <i class="fa-solid fa-circle-exclamation"></i>
-          {{ 'MERCHANT_SIGNUP.FORM.STORE_NAME_ERROR' | translate }}
+          {{ 'merchantSignup.form.storeNameError' | translate }}
         </small>
       </div>
 
       <div class="form-row">
         <div class="form-group">
           <label class="form-label required">{{
-            'MERCHANT_SIGNUP.FORM.CITY' | translate
+            'merchantSignup.form.city' | translate
           }}</label>
           <app-custom-select
             [options]="cities"
-            [placeholder]="'MERCHANT_SIGNUP.FORM.CITY_PLACEHOLDER' | translate"
+            [placeholder]="'merchantSignup.form.cityPlaceholder' | translate"
             [(ngModel)]="formData.city"
             name="city"
             (blur)="onBlur('city')"
@@ -165,59 +169,55 @@
           </app-custom-select>
           <small class="form-hint error" *ngIf="hasError('city')">
             <i class="fa-solid fa-circle-exclamation"></i>
-            {{ 'MERCHANT_SIGNUP.FORM.CITY_ERROR' | translate }}
+            {{ 'merchantSignup.form.cityError' | translate }}
           </small>
         </div>
         <div class="form-group">
           <label class="form-label required">{{
-            'MERCHANT_SIGNUP.FORM.ADDRESS' | translate
+            'merchantSignup.form.address' | translate
           }}</label>
           <input
             type="text"
             class="form-control"
-            [placeholder]="
-              'MERCHANT_SIGNUP.FORM.ADDRESS_PLACEHOLDER' | translate
-            "
+            [placeholder]="'merchantSignup.form.addressPlaceholder' | translate"
             [(ngModel)]="formData.storeAddress"
             name="storeAddress"
             (blur)="onBlur('storeAddress')"
           />
           <small class="form-hint error" *ngIf="hasError('storeAddress')">
             <i class="fa-solid fa-circle-exclamation"></i>
-            {{ 'MERCHANT_SIGNUP.FORM.ADDRESS_ERROR' | translate }}
+            {{ 'merchantSignup.form.addressError' | translate }}
           </small>
         </div>
       </div>
 
       <div class="form-group">
         <label class="form-label required">{{
-          'MERCHANT_SIGNUP.FORM.CATEGORY' | translate
+          'merchantSignup.form.category' | translate
         }}</label>
         <input
           type="text"
           class="form-control"
-          [placeholder]="
-            'MERCHANT_SIGNUP.FORM.CATEGORY_PLACEHOLDER' | translate
-          "
+          [placeholder]="'merchantSignup.form.categoryPlaceholder' | translate"
           [(ngModel)]="formData.businessCategory"
           name="businessCategory"
           (blur)="onBlur('businessCategory')"
         />
         <small class="form-hint error" *ngIf="hasError('businessCategory')">
           <i class="fa-solid fa-circle-exclamation"></i>
-          {{ 'MERCHANT_SIGNUP.FORM.CATEGORY_ERROR' | translate }}
+          {{ 'merchantSignup.form.categoryError' | translate }}
         </small>
       </div>
 
       <div class="form-group">
         <label class="form-label required">{{
-          'MERCHANT_SIGNUP.FORM.CONTACT_NAME' | translate
+          'merchantSignup.form.contactName' | translate
         }}</label>
         <input
           type="text"
           class="form-control"
           [placeholder]="
-            'MERCHANT_SIGNUP.FORM.CONTACT_NAME_PLACEHOLDER' | translate
+            'merchantSignup.form.contactNamePlaceholder' | translate
           "
           [(ngModel)]="formData.contactName"
           name="contactName"
@@ -225,18 +225,18 @@
         />
         <small class="form-hint error" *ngIf="hasError('contactName')">
           <i class="fa-solid fa-circle-exclamation"></i>
-          {{ 'MERCHANT_SIGNUP.FORM.CONTACT_NAME_ERROR' | translate }}
+          {{ 'merchantSignup.form.contactNameError' | translate }}
         </small>
       </div>
 
       <div class="form-group">
         <label class="form-label required">{{
-          'MERCHANT_SIGNUP.FORM.PHONE' | translate
+          'merchantSignup.form.phone' | translate
         }}</label>
         <input
           type="text"
           class="form-control"
-          [placeholder]="'MERCHANT_SIGNUP.FORM.PHONE_PLACEHOLDER' | translate"
+          [placeholder]="'merchantSignup.form.phonePlaceholder' | translate"
           [(ngModel)]="formData.phoneNumber"
           name="phoneNumber"
           (input)="formatPhoneNumber($event)"
@@ -244,19 +244,19 @@
         />
         <small class="form-hint error" *ngIf="hasError('phoneNumber')">
           <i class="fa-solid fa-circle-exclamation"></i>
-          {{ 'MERCHANT_SIGNUP.FORM.PHONE_ERROR' | translate }}
+          {{ 'merchantSignup.form.phoneError' | translate }}
         </small>
       </div>
 
       <div class="form-group">
         <label class="form-label required">{{
-          'MERCHANT_SIGNUP.FORM.KNOW_REASON' | translate
+          'merchantSignup.form.knowReason' | translate
         }}</label>
         <input
           type="text"
           class="form-control"
           [placeholder]="
-            'MERCHANT_SIGNUP.FORM.KNOW_REASON_PLACEHOLDER' | translate
+            'merchantSignup.form.knowReasonPlaceholder' | translate
           "
           [(ngModel)]="formData.knowReason"
           name="knowReason"
@@ -264,13 +264,13 @@
         />
         <small class="form-hint error" *ngIf="hasError('knowReason')">
           <i class="fa-solid fa-circle-exclamation"></i>
-          {{ 'MERCHANT_SIGNUP.FORM.KNOW_REASON_ERROR' | translate }}
+          {{ 'merchantSignup.form.knowReasonError' | translate }}
         </small>
       </div>
 
       <div class="form-group">
         <label class="form-label required">{{
-          'MERCHANT_SIGNUP.FORM.SHOP_TYPE' | translate
+          'merchantSignup.form.shopType' | translate
         }}</label>
         <div class="radio-options">
           <label class="radio-option">
@@ -282,7 +282,7 @@
               (change)="onShopTypeChange('online')"
             />
             <span class="radio-circle"></span>
-            <span>{{ 'MERCHANT_SIGNUP.FORM.ONLINE' | translate }}</span>
+            <span>{{ 'merchantSignup.form.online' | translate }}</span>
           </label>
           <label class="radio-option">
             <input
@@ -293,41 +293,41 @@
               (change)="onShopTypeChange('offline')"
             />
             <span class="radio-circle"></span>
-            <span>{{ 'MERCHANT_SIGNUP.FORM.OFFLINE' | translate }}</span>
+            <span>{{ 'merchantSignup.form.offline' | translate }}</span>
           </label>
         </div>
       </div>
 
       <div class="form-group">
         <label class="form-label required">{{
-          'MERCHANT_SIGNUP.FORM.LICENSE' | translate
+          'merchantSignup.form.license' | translate
         }}</label>
         <app-custom-select
           [options]="businessLicenses"
-          [placeholder]="'MERCHANT_SIGNUP.FORM.LICENSE_PLACEHOLDER' | translate"
+          [placeholder]="'merchantSignup.form.licensePlaceholder' | translate"
           [(ngModel)]="formData.businessLicense"
           name="businessLicense"
           (blur)="onBlur('businessLicense')"
         >
         </app-custom-select>
         <small class="form-note">
-          {{ 'MERCHANT_SIGNUP.FORM.LICENSE_NOTE' | translate }}
+          {{ 'merchantSignup.form.licenseNote' | translate }}
         </small>
         <small class="form-hint error" *ngIf="hasError('businessLicense')">
           <i class="fa-solid fa-circle-exclamation"></i>
-          {{ 'MERCHANT_SIGNUP.FORM.LICENSE_ERROR' | translate }}
+          {{ 'merchantSignup.form.licenseError' | translate }}
         </small>
       </div>
 
       <div class="form-group">
         <label class="form-label">{{
-          'MERCHANT_SIGNUP.FORM.SOCIAL_LINKS' | translate
+          'merchantSignup.form.socialLinks' | translate
         }}</label>
         <input
           type="url"
           class="form-control"
           [placeholder]="
-            'MERCHANT_SIGNUP.FORM.SOCIAL_LINKS_PLACEHOLDER' | translate
+            'merchantSignup.form.socialLinksPlaceholder' | translate
           "
           [(ngModel)]="formData.socialLinks"
           name="socialLinks"
@@ -337,7 +337,7 @@
       <!-- Submit Button -->
       <div class="form-actions">
         <button type="submit" class="btn-submit">
-          {{ 'MERCHANT_SIGNUP.FORM.NEXT' | translate }}
+          {{ 'merchantSignup.form.next' | translate }}
         </button>
       </div>
     </form>

@@ -1,158 +1,158 @@
 {
-  "HEADER": {
-    "APP": "APP",
-    "LANGUAGE": "Ngôn ngữ",
-    "LANGUAGES": {
-      "VI": "Tiếng Việt",
-      "EN": "Tiếng Anh",
-      "KO": "Tiếng Hàn"
+  "header": {
+    "app": "APP",
+    "language": "Ngôn ngữ",
+    "languages": {
+      "vi": "Tiếng Việt",
+      "en": "Tiếng Anh",
+      "ko": "Tiếng Hàn"
     },
-    "BRAND_SUFFIX": "Delivery",
-    "NAV": {
-      "LOGIN": "Đăng nhập",
-      "INTRO": "Giới thiệu",
-      "OFFERS": "Lợi ích",
-      "PROCESS": "Quy trình",
-      "NEWS": "Tin tức",
-      "PARTNER": "Trở thành đối tác"
+    "brandSuffix": "Delivery",
+    "nav": {
+      "login": "Đăng nhập",
+      "intro": "Giới thiệu",
+      "offers": "Lợi ích",
+      "process": "Quy trình",
+      "news": "Tin tức",
+      "partner": "Trở thành đối tác"
     }
   },
-  "LANDING": {
-    "HERO": {
-      "TITLE_1": "Thưởng thức món ngon Việt Nam chuẩn vị Hàn",
-      "TITLE_2": "VHan Delivery",
-      "BUTTON": "Đăng ký đối tác ngay"
+  "landing": {
+    "hero": {
+      "title1": "Thưởng thức món ngon Việt Nam chuẩn vị Hàn",
+      "title2": "VHan Delivery",
+      "button": "Đăng ký đối tác ngay"
     },
-    "INTRO": {
-      "SUBTITLE": "Kết nối khách hàng Hàn Quốc với hàng nghìn cửa hàng uy tín tại Việt Nam.",
-      "DESC_1": "Chúng tôi mang đến trải nghiệm đặt món đơn giản, giúp khách hàng dễ dàng chọn món, đặt hàng và theo dõi đơn.",
-      "DESC_2": "Thông qua việc kết nối khách hàng quốc tế với đối tác địa phương, VHAN Delivery hỗ trợ cửa hàng mở rộng kênh bán hàng,",
-      "DESC_3": "tiếp cận nhiều khách hàng Hàn Quốc hơn và gia tăng doanh thu một cách hiệu quả."
+    "intro": {
+      "subtitle": "Kết nối khách hàng Hàn Quốc với hàng nghìn cửa hàng uy tín tại Việt Nam.",
+      "desc1": "Chúng tôi mang đến trải nghiệm đặt món đơn giản, giúp khách hàng dễ dàng chọn món, đặt hàng và theo dõi đơn.",
+      "desc2": "Thông qua việc kết nối khách hàng quốc tế với đối tác địa phương, VHAN Delivery hỗ trợ cửa hàng mở rộng kênh bán hàng,",
+      "desc3": "tiếp cận nhiều khách hàng Hàn Quốc hơn và gia tăng doanh thu một cách hiệu quả."
     },
-    "STATS": {
-      "REGIONS": "Phủ sóng 63 tỉnh thành",
-      "STORES": "Hơn 10.000 đối tác cửa hàng"
+    "stats": {
+      "regions": "Phủ sóng 63 tỉnh thành",
+      "stores": "Hơn 10.000 đối tác cửa hàng"
     },
-    "FEATURES": {
-      "TAG": "Lợi ích nổi bật",
-      "TITLE": "Vì sao nên chọn",
-      "COST_CUT": {
-        "TITLE": "Tối ưu chi phí vận hành",
-        "DESC": "Giảm các khoản phí cố định và linh hoạt theo nhu cầu kinh doanh."
+    "features": {
+      "tag": "Lợi ích nổi bật",
+      "title": "Vì sao nên chọn",
+      "costCut": {
+        "title": "Tối ưu chi phí vận hành",
+        "desc": "Giảm các khoản phí cố định và linh hoạt theo nhu cầu kinh doanh."
       },
-      "SETTLEMENT": {
-        "TITLE": "Đối soát T+0 nhanh chóng",
-        "DESC": "Thanh toán ngay trong ngày, hỗ trợ dòng tiền ổn định."
+      "settlement": {
+        "title": "Đối soát T+0",
+        "desc": "Thanh toán ngay trong ngày, hỗ trợ dòng tiền ổn định."
       },
-      "FAST_DELIVERY": {
-        "TITLE": "Giao hàng tốc độ cao",
-        "DESC": "Đơn được tiếp nhận và giao ngay sau khi khách đặt."
+      "fastDelivery": {
+        "title": "Giao hàng siêu tốc",
+        "desc": "Đơn được tiếp nhận và giao ngay sau khi khách đặt."
       },
-      "SUPPORT": {
-        "TITLE": "Đội ngũ hỗ trợ tận tâm",
-        "DESC": "Đồng hành 24/7, hướng dẫn chi tiết mọi nghiệp vụ."
+      "support": {
+        "title": "Hỗ trợ tận tình",
+        "desc": "Đội ngũ chuyên viên luôn sẵn sàng hỗ trợ 24/7."
       }
     },
-    "PROCESS": {
-      "TAG": "Quy trình đăng ký",
-      "TITLE": "3 bước đơn giản để hợp tác"
+    "process": {
+      "tag": "Quy trình đăng ký",
+      "title": "3 bước đơn giản để hợp tác"
     },
-    "STEPS": {
-      "STEP1": {
-        "TITLE": "Đăng ký và xác thực tài khoản",
-        "DESC": "Nhập số điện thoại, xác nhận OTP để tạo tài khoản đối tác miễn phí."
+    "steps": {
+      "step1": {
+        "title": "Đăng ký tài khoản",
+        "desc": "Nhập số điện thoại, xác nhận OTP để tạo tài khoản đối tác miễn phí."
       },
-      "STEP2": {
-        "TITLE": "Thẩm định hồ sơ linh hoạt",
-        "DESC": "Chuyên viên VHan Delivery liên hệ, duyệt thông tin và kích hoạt trong 24 giờ."
+      "step2": {
+        "title": "Xét duyệt hồ sơ",
+        "desc": "Chuyên viên VHan Delivery liên hệ, duyệt thông tin và kích hoạt trong 24 giờ."
       },
-      "STEP3": {
-        "TITLE": "Mở cửa hàng và vận hành",
-        "DESC": "Hoàn tất cấu hình menu, nhận đơn đầu tiên và tăng trưởng doanh thu."
+      "step3": {
+        "title": "Kích hoạt và bán hàng",
+        "desc": "Cài đặt menu, nhận đơn đầu tiên và bắt đầu phát triển doanh thu."
       }
     },
-    "NEWS": {
-      "TAG": "Tin tức",
-      "TITLE": "Bản tin",
-      "VIEW_MORE": "Xem thêm",
-      "ITEM1": {
-        "TITLE": "Đăng ký đối tác dễ dàng",
-        "DESC": "Hướng dẫn từng bước để hoàn thiện hồ sơ và kích hoạt tài khoản nhanh chóng."
+    "news": {
+      "tag": "Tin tức",
+      "title": "Bản tin",
+      "viewMore": "Xem thêm",
+      "item1": {
+        "title": "Hướng dẫn đăng ký đối tác",
+        "desc": "Hướng dẫn từng bước để hoàn thiện hồ sơ và kích hoạt tài khoản nhanh chóng."
       },
-      "ITEM2": {
-        "TITLE": "Ứng dụng được tin dùng",
-        "DESC": "Phủ sóng khắp 63 tỉnh thành với hơn 10.000 cửa hàng đối tác."
+      "item2": {
+        "title": "Ứng dụng giao hàng hàng đầu",
+        "desc": "Phủ sóng khắp 63 tỉnh thành với hơn 10.000 cửa hàng đối tác."
       },
-      "ITEM3": {
-        "TITLE": "Khai trương trung tâm hỗ trợ mới",
-        "DESC": "Tăng cường nguồn lực chăm sóc đối tác tại các thành phố lớn."
+      "item3": {
+        "title": "Khai trương trung tâm hỗ trợ",
+        "desc": "Mở rộng quy mô hỗ trợ đối tác tại các thành phố lớn."
       }
     },
-    "BOTTOM_CTA": {
-      "TITLE_1": "Nhà hàng và thương hiệu",
-      "TITLE_2": "Một khởi đầu mới",
-      "TITLE_3": "Với VHan Delivery",
-      "BUTTON": "Bắt đầu hợp tác ngay"
+    "bottomCta": {
+      "title1": "Nhà hàng và thương hiệu",
+      "title2": "Một khởi đầu mới",
+      "title3": "Với VHan Delivery",
+      "button": "Bắt đầu hợp tác ngay"
     }
   },
-  "MERCHANT_SIGNUP": {
-    "HERO_TITLE_1": "Tăng trưởng doanh thu bền vững cùng đội ngũ chuyên gia",
-    "HERO_TITLE_2": "Đăng ký trở thành đối tác của VHan Delivery",
-    "IMAGES": {
-      "HERO_ALT": "Hình minh họa cửa hàng đối tác VHan Delivery"
+  "merchantSignup": {
+    "heroTitle1": "Tăng trưởng doanh thu bền vững cùng đội ngũ chuyên gia",
+    "heroTitle2": "Đăng ký trở thành đối tác của VHan Delivery",
+    "images": {
+      "heroAlt": "Hình minh họa cửa hàng đối tác VHan Delivery"
     },
-    "BENEFITS_TITLE": "Quyền lợi nổi bật dành cho cửa hàng",
-    "BENEFIT_1_TITLE": "Tiếp cận khách Hàn Quốc",
-    "BENEFIT_1_DESC": "Giới thiệu món ăn trực tiếp đến cộng đồng khách Hàn đang sinh sống tại Việt Nam.",
-    "BENEFIT_2_TITLE": "Vận hành đơn giản",
-    "BENEFIT_2_DESC": "Đăng ký online, quản lý đơn tự động và đối soát T+0 minh bạch.",
-    "BENEFIT_3_TITLE": "Đồng hành tận tâm",
-    "BENEFIT_3_DESC": "Chuyên viên bản địa hỗ trợ tối ưu menu, marketing và chất lượng dịch vụ 24/7.",
-    "CTA_TITLE": "Phù hợp với mọi mô hình kinh doanh",
-    "CATEGORIES": {
-      "NOODLES": "Quán phở / bún / mì",
-      "CAFE": "Cà phê & tráng miệng",
-      "BREAD": "Bánh mì & tiệm bánh",
-      "DRINKS": "Đồ uống & trà sữa",
-      "BEST_SELLER": "Quán bán chạy",
-      "RENTAL": "Dịch vụ cho thuê",
-      "FLOWERS": "Tiệm hoa",
-      "PHARMACY": "Nhà thuốc & chăm sóc sức khỏe"
+    "benefitsTitle": "Quyền lợi nổi bật dành cho cửa hàng",
+    "benefit1Title": "Tiếp cận khách Hàn Quốc",
+    "benefit1Desc": "Giới thiệu món ăn trực tiếp đến cộng đồng khách Hàn đang sinh sống tại Việt Nam.",
+    "benefit2Title": "Vận hành đơn giản",
+    "benefit2Desc": "Đăng ký online, quản lý đơn tự động và đối soát T+0 minh bạch.",
+    "benefit3Title": "Đồng hành tận tâm",
+    "benefit3Desc": "Chuyên viên bản địa hỗ trợ tối ưu menu, marketing và chất lượng dịch vụ 24/7.",
+    "ctaTitle": "Phù hợp với mọi mô hình kinh doanh",
+    "categories": {
+      "noodles": "Quán phở / bún / mì",
+      "cafe": "Cà phê & tráng miệng",
+      "bread": "Bánh mì & tiệm bánh",
+      "drinks": "Đồ uống & trà sữa",
+      "bestSeller": "Quán bán chạy",
+      "rental": "Dịch vụ cho thuê",
+      "flowers": "Tiệm hoa",
+      "pharmacy": "Nhà thuốc & chăm sóc sức khỏe"
     },
-    "FORM": {
-      "STORE_NAME": "Tên cửa hàng",
-      "STORE_NAME_PLACEHOLDER": "Nhập tên pháp lý hoặc tên giao dịch",
-      "STORE_NAME_ERROR": "Vui lòng nhập tên cửa hàng.",
-      "CITY": "Tỉnh / thành phố",
-      "CITY_PLACEHOLDER": "Chọn tỉnh thành",
-      "CITY_ERROR": "Vui lòng chọn tỉnh thành.",
-      "ADDRESS": "Địa chỉ cụ thể",
-      "ADDRESS_PLACEHOLDER": "Số nhà, đường, phường, quận/huyện",
-      "ADDRESS_ERROR": "Vui lòng nhập đầy đủ địa chỉ.",
-      "CATEGORY": "Lĩnh vực kinh doanh",
-      "CATEGORY_PLACEHOLDER": "Ví dụ: Lẩu nướng Hàn Quốc",
-      "CATEGORY_ERROR": "Vui lòng mô tả lĩnh vực kinh doanh.",
-      "CONTACT_NAME": "Người liên hệ",
-      "CONTACT_NAME_PLACEHOLDER": "Chủ cửa hàng hoặc đại diện",
-      "CONTACT_NAME_ERROR": "Vui lòng nhập tên người liên hệ.",
-      "PHONE": "Số điện thoại",
-      "PHONE_PLACEHOLDER": "Số dùng để nhận OTP",
-      "PHONE_ERROR": "Vui lòng nhập số điện thoại hợp lệ.",
-      "KNOW_REASON": "Bạn biết đến VHan Delivery qua đâu?",
-      "KNOW_REASON_PLACEHOLDER": "Ví dụ: giới thiệu, mạng xã hội, sự kiện...",
-      "KNOW_REASON_ERROR": "Vui lòng cho biết nguồn thông tin.",
-      "SHOP_TYPE": "Hình thức kinh doanh",
-      "ONLINE": "Chỉ bán online",
-      "OFFLINE": "Có cửa hàng",
-      "LICENSE": "Giấy phép kinh doanh",
-      "LICENSE_PLACEHOLDER": "Chọn trạng thái giấy phép",
-      "LICENSE_NOTE": "Thông tin dùng để xác minh thanh toán. Chọn \"Đang bổ sung\" nếu chưa có.",
-      "LICENSE_ERROR": "Vui lòng chọn trạng thái giấy phép.",
-      "SOCIAL_LINKS": "Link mạng xã hội / website (không bắt buộc)",
-      "SOCIAL_LINKS_PLACEHOLDER": "Thêm link Facebook, Instagram hoặc website",
-      "NEXT": "Yêu cầu mã xác thực"
+    "form": {
+      "storeName": "Tên cửa hàng",
+      "storeNamePlaceholder": "Nhập tên pháp lý hoặc tên giao dịch",
+      "storeNameError": "Vui lòng nhập tên cửa hàng.",
+      "city": "Tỉnh / thành phố",
+      "cityPlaceholder": "Chọn tỉnh thành",
+      "cityError": "Vui lòng chọn tỉnh thành.",
+      "address": "Địa chỉ cụ thể",
+      "addressPlaceholder": "Số nhà, đường, phường, quận/huyện",
+      "addressError": "Vui lòng nhập đầy đủ địa chỉ.",
+      "category": "Lĩnh vực kinh doanh",
+      "categoryPlaceholder": "Ví dụ: Lẩu nướng Hàn Quốc",
+      "categoryError": "Vui lòng mô tả lĩnh vực kinh doanh.",
+      "contactName": "Người liên hệ",
+      "contactNamePlaceholder": "Chủ cửa hàng hoặc đại diện",
+      "contactNameError": "Vui lòng nhập tên người liên hệ.",
+      "phone": "Số điện thoại",
+      "phonePlaceholder": "Số dùng để nhận OTP",
+      "phoneError": "Vui lòng nhập số điện thoại hợp lệ.",
+      "knowReason": "Bạn biết đến VHan Delivery qua đâu?",
+      "knowReasonPlaceholder": "Ví dụ: giới thiệu, mạng xã hội, sự kiện...",
+      "knowReasonError": "Vui lòng cho biết nguồn thông tin.",
+      "shopType": "Hình thức kinh doanh",
+      "online": "Chỉ bán online",
+      "offline": "Có cửa hàng",
+      "license": "Giấy phép kinh doanh",
+      "licensePlaceholder": "Chọn trạng thái giấy phép",
+      "licenseNote": "Thông tin dùng để xác minh thanh toán. Chọn \"Đang bổ sung\" nếu chưa có.",
+      "licenseError": "Vui lòng chọn trạng thái giấy phép.",
+      "socialLinks": "Link mạng xã hội / website (không bắt buộc)",
+      "socialLinksPlaceholder": "Thêm link Facebook, Instagram hoặc website",
+      "next": "Yêu cầu mã xác thực"
     },
-    "CITIES": {
+    "cities": {
       "hanoi": "Hà Nội",
       "hcm": "TP. Hồ Chí Minh",
       "danang": "Đà Nẵng",
@@ -186,41 +186,145 @@
       "baclieu": "Bạc Liêu",
       "camau": "Cà Mau"
     },
-    "LICENSES": {
-      "HAS_LICENSE": "Đã có giấy phép kinh doanh",
-      "NO_LICENSE": "Chưa có giấy phép",
-      "PENDING_LICENSE": "Đang bổ sung / xin cấp"
+    "licenses": {
+      "hasLicense": "Đã có giấy phép kinh doanh",
+      "noLicense": "Chưa có giấy phép kinh doanh",
+      "pendingLicense": "Đang bổ sung giấy phép kinh doanh"
     }
   },
-  "FOOTER": {
-    "COPYRIGHT": "© VHan Delivery Co.,Ltd. All rights reserved.",
-    "ADMIN": "Admin",
-    "TERMS": "Điều khoản chính sách",
-    "PRIVACY": "Thông báo bảo mật",
-    "CONTACT_US": "Contact Us",
-    "BRAND": "VHan Delivery",
-    "PHONE": "0778 79 1004 – 0933 51 2838",
-    "EMAIL": "vhanit.business@gmail.com",
-    "ADDRESS": "05 Nội Khu Hưng Phước 1, Phú Mỹ Hưng, P.Tân Hưng, TPHCM."
+  "footer": {
+    "copyright": "© VHan Delivery Co.,Ltd. All rights reserved.",
+    "admin": "Admin",
+    "terms": "Điều khoản chính sách",
+    "privacy": "Thông báo bảo mật",
+    "contactUs": "Contact Us",
+    "brand": "VHan Delivery",
+    "phone": "0778 79 1004 – 0933 51 2838",
+    "email": "vhanit.business@gmail.com",
+    "address": "05 Nội Khu Hưng Phước 1, Phú Mỹ Hưng, P.Tân Hưng, TPHCM."
   },
-  "MENU": {
-    "VHAN_DELIVERY": "VHan Delivery",
-    "SUB_MENU_1": "Về chúng tôi",
-    "SUB_MENU_2": "Dịch vụ",
-    "SUB_MENU_3": "Liên hệ",
-    "MERCHANT_SIGNUP": "Đăng ký đối tác"
+  "menu": {
+    "vhanDelivery": "VHan Delivery",
+    "subMenu1": "Về chúng tôi",
+    "subMenu2": "Dịch vụ",
+    "subMenu3": "Liên hệ",
+    "merchantSignup": "Đăng ký đối tác"
   },
-  "MODAL": {
-    "ERROR": "Đã có lỗi xảy ra",
-    "REGISTRATION_FAILED": "Gửi yêu cầu không thành công",
-    "REGISTRATION_FAILED_DESC": "Hệ thống chưa ghi nhận thông tin. Vui lòng thử lại hoặc liên hệ bộ phận hỗ trợ.",
-    "OTP_INVALID": "Mã OTP không hợp lệ hoặc đã hết hạn. Vui lòng yêu cầu mã mới và thử lại.",
-    "REGISTRATION_SUCCESS": "Đăng ký thành công",
-    "REGISTRATION_SUCCESS_DESC": "Cảm ơn bạn! Đội ngũ VHan Delivery sẽ liên hệ trong vòng 24 giờ để xác minh thông tin."
+  "modal": {
+    "logoutConfirmTitle": "Xác nhận đăng xuất",
+    "logoutConfirmMessage": "Bạn có chắc chắn muốn đăng xuất không?",
+    "error": "Đã có lỗi xảy ra",
+    "close": "Đóng",
+    "confirm": "Xác nhận",
+    "registrationFailed": "Gửi yêu cầu không thành công",
+    "registrationFailedDesc": "Hệ thống chưa ghi nhận thông tin. Vui lòng thử lại hoặc liên hệ bộ phận hỗ trợ.",
+    "otpInvalid": "Mã OTP không hợp lệ hoặc đã hết hạn. Vui lòng yêu cầu mã mới và thử lại.",
+    "registrationSuccess": "Đăng ký thành công",
+    "registrationSuccessDesc": "Cảm ơn bạn! Đội ngũ VHan Delivery sẽ liên hệ trong vòng 24 giờ để xác minh thông tin."
   },
-  "COMMON": {
-    "VIEW_MORE": "View More",
-    "PARTNER_REG": "Đăng ký đối tác",
-    "START": "Bắt đầu"
+  "common": {
+    "viewMore": "Xem thêm",
+    "partnerReg": "Đăng ký đối tác",
+    "start": "Bắt đầu"
+  },
+  "auth": {
+    "common": {
+      "brand": "VHanDelivery",
+      "logout": "Đăng xuất"
+    },
+    "field": {
+      "email": "Email",
+      "password": "Mật khẩu",
+      "username": "Tên hiển thị",
+      "phone": "Số điện thoại",
+      "usernamePlaceholder": "Nguyễn Văn A",
+      "phonePlaceholder": "0987 654 321"
+    },
+    "error": {
+      "emailInvalid": "Email không hợp lệ.",
+      "passwordMin": "Mật khẩu tối thiểu 6 ký tự.",
+      "usernameRequired": "Vui lòng nhập tên hiển thị.",
+      "phoneRequired": "Vui lòng nhập số điện thoại.",
+      "loginFailed": "Đăng nhập thất bại.",
+      "registerFailed": "Đăng ký thất bại."
+    },
+    "loginRequired": {
+      "title": "Yêu cầu đăng nhập",
+      "message": "Bạn cần đăng nhập để tiếp tục."
+    },
+    "login": {
+      "hero": {
+        "title": "Nền tảng quản lý giao hàng toàn diện",
+        "description": "Theo dõi đơn hàng, quản lý đội xe và tối ưu hóa lộ trình trong thời gian thực cho hoạt động vận chuyển của bạn."
+      },
+      "stats": {
+        "uptime": "99.9%",
+        "uptimeLabel": "Thời gian hoạt động",
+        "support": "24/7",
+        "supportLabel": "Hỗ trợ kỹ thuật"
+      },
+      "welcome": "Chào mừng trở lại",
+      "subtitle": "Đăng nhập để trở thành đối tác của chúng tôi ngay hôm nay.",
+      "emailPlaceholder": "admin@vhandelivery.vn",
+      "passwordPlaceholder": "••••••••",
+      "showPassword": "Hiện mật khẩu",
+      "hidePassword": "Ẩn mật khẩu",
+      "remember": "Ghi nhớ đăng nhập",
+      "forgot": "Quên mật khẩu?",
+      "submit": "Đăng nhập ngay",
+      "google": "Đăng nhập với Google",
+      "backHome": "Quay về trang chủ",
+      "successTitle": "Đăng nhập thành công",
+      "successMessage": "Chào mừng bạn quay trở lại!",
+      "errorTitle": "Đăng nhập thất bại",
+      "noAccount": "Chưa có tài khoản?",
+      "registerLink": "Đăng ký"
+    },
+    "register": {
+      "hero": {
+        "title": "Tham gia mạng lưới quản lý giao hàng",
+        "description": "Tạo tài khoản để quản lý đơn hàng, đội xe và vận hành dễ dàng."
+      },
+      "stats": {
+        "fast": "Nhanh chóng",
+        "fastLabel": "Tạo tài khoản trong vài phút",
+        "secure": "Bảo mật",
+        "secureLabel": "Được xác minh và lưu trữ an toàn"
+      },
+      "title": "Tạo tài khoản",
+      "subtitle": "Điền thông tin để bắt đầu.",
+      "emailPlaceholder": "you@example.com",
+      "passwordPlaceholder": "••••••••",
+      "submit": "Tạo tài khoản",
+      "hasAccount": "Đã có tài khoản?",
+      "loginLink": "Đăng nhập",
+      "successTitle": "Đăng ký thành công",
+      "successMessage": "Tài khoản của bạn đã được tạo.",
+      "errorTitle": "Đăng ký thất bại",
+      "errorMessage": "Không thể tạo tài khoản."
+    },
+    "registerType": {
+      "badge": "Đăng ký đối tác",
+      "title": "Đăng ký tham gia",
+      "subtitle": "Hãy chọn đúng vai trò để chúng tôi hỗ trợ bạn tốt nhất.",
+      "tip": "Bạn có thể đổi vai trò sau này bằng cách liên hệ hỗ trợ.",
+      "continue": "Tiếp theo",
+      "agency": {
+        "badge": "Agency",
+        "title": "Đối tác hợp tác",
+        "desc": "Công nghệ, dịch vụ, hợp tác kinh doanh... Hợp tác với VHanDelivery.",
+        "question": "Bạn đang tìm kiếm sự hợp tác kinh doanh phải không?",
+        "detail": "Công nghệ, dịch vụ, hợp tác kinh doanh... Hợp tác với VHanDelivery.",
+        "note": "Kết nối dịch vụ, tối ưu vận hành, phát triển doanh thu cùng VHan Delivery"
+      },
+      "merchant": {
+        "badge": "Merchant",
+        "title": "Ông chủ cửa hàng",
+        "desc": "Đăng ký cửa hàng tại VHan Delivery và nhận đơn đặt hàng.",
+        "question": "Bạn đang điều hành cửa hàng phải không?",
+        "detail": "Đăng ký cửa hàng tại VHan Delivery và nhận đơn đặt hàng.",
+        "note": "Đăng ký thực đơn, xác nhận đơn đặt hàng, quản lý quyết toán, quản lý đánh giá khách hàng"
+      }
+    }
   }
 }

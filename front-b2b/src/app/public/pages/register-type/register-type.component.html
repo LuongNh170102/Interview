@@ -1,0 +1,63 @@
+<div
+  class="bg-surface-base flex items-center justify-center px-4 py-16 relative"
+>
+  <div class="w-full max-w-7xl space-y-10">
+    <div
+      class="relative flex flex-col justify-center md:flex-row md:items-center"
+    >
+      <app-back-button
+        class="self-start md:absolute md:left-0 md:top-1/2 md:-translate-y-1/2 mb-4 md:mb-0"
+      ></app-back-button>
+      <div class="text-center space-y-3 w-full">
+        <h2 class="text-text-primary font-[400]">VHan Delivery</h2>
+        <h2 class="font-extrabold text-text-primary">
+          {{ 'auth.registerType.title' | translate }}
+        </h2>
+        <p class="text-[1rem] text-text-secondary">
+          {{ 'auth.registerType.subtitle' | translate }}
+        </p>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <article
+        *ngFor="let card of cards"
+        role="button"
+        tabindex="0"
+        (click)="onSelect(card.key)"
+        [attr.aria-pressed]="selected() === card.key"
+        class="rounded-[1rem] border bg-surface-base p-10 flex flex-col items-center text-center gap-4 lg:gap-5 transition-colors duration-200 outline-none hover:border-primary hover:shadow-[0_12px_28px_color-mix(in_srgb,_var(--color-primary)_14%,transparent)] focus:border-primary focus:shadow-[0_12px_28px_color-mix(in_srgb,_var(--color-primary)_14%,transparent)]"
+      >
+        <h3 class="text-[1.5rem] font-semibold text-primary">
+          {{ 'auth.registerType.' + card.key + '.title' | translate }}
+        </h3>
+
+        <div
+          class="w-[4rem] h-[4rem] rounded-2xl flex items-center justify-center bg-[color-mix(in_srgb,_var(--color-primary)_10%,_var(--color-surface-base)_90%)]"
+        >
+          <img
+            class="w-12 h-12 object-contain"
+            [src]="'assets/icons/icon-' + card.key + '.svg'"
+            [alt]="
+              ('auth.registerType.' + card.key + '.badge' | translate) ||
+              'role icon'
+            "
+            loading="lazy"
+          />
+        </div>
+
+        <div class="space-y-2">
+          <p class="text-[1.05rem] font-semibold text-text-primary">
+            {{ 'auth.registerType.' + card.key + '.question' | translate }}
+          </p>
+          <p class="text-[0.98rem] text-text-secondary">
+            {{ 'auth.registerType.' + card.key + '.detail' | translate }}
+          </p>
+          <p class="text-[0.9rem] text-text-tertiary">
+            {{ 'auth.registerType.' + card.key + '.note' | translate }}
+          </p>
+        </div>
+      </article>
+    </div>
+  </div>
+</div>

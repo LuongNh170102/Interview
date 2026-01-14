@@ -124,7 +124,15 @@ export class AuthService {
       const roles = (user as any).userRoles?.map((ur) => ur.role.name) || [];
       const tokens = await this.getTokens(user.id, user.email, roles);
       await this.updateRefreshToken(user.id, tokens.refresh_token);
-      return tokens;
+      return {
+        ...tokens,
+        user: {
+          id: user.id,
+          email: user.email,
+          username: user.username,
+          roles,
+        },
+      };
     } catch (e) {
       console.error(e);
       throw new ForbiddenException(AUTH_MESSAGES.INVALID_REFRESH_TOKEN);
