@@ -1,4 +1,5 @@
 import { Route } from '@angular/router';
+import { authGuard } from './public/shared/guards/auth.guard';
 
 export const appRoutes: Route[] = [
   {
@@ -13,6 +14,7 @@ export const appRoutes: Route[] = [
         (m) => m.LoginComponent
       ),
   },
+
   {
     path: 'auth/register',
     loadComponent: () =>
@@ -34,10 +36,18 @@ export const appRoutes: Route[] = [
     children: [
       {
         path: 'merchant-signup',
+        canActivate: [authGuard],
         loadComponent: () =>
           import(
             './public/pages/merchant-signup/merchant-signup.component'
           ).then((m) => m.MerchantSignup),
+      },
+      {
+        path: 'register-type',
+        loadComponent: () =>
+          import('./public/pages/register-type/register-type.component').then(
+            (m) => m.RegisterTypeComponent
+          ),
       },
     ],
   },

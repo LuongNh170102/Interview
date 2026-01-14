@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, Component, computed, DestroyRef, inject, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  DestroyRef,
+  inject,
+  signal,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
@@ -52,7 +59,12 @@ export class RegisterComponent {
     const { email, password, username, phone } = this.form.getRawValue();
 
     this.auth
-      .register({ email, password, username: username || undefined, phone: phone || undefined })
+      .register({
+        email,
+        password,
+        username: username || undefined,
+        phone: phone || undefined,
+      })
       .pipe(
         catchError((err) => {
           const message =

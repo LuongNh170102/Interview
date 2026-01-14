@@ -248,6 +248,10 @@
       "loginFailed": "Đăng nhập thất bại.",
       "registerFailed": "Đăng ký thất bại."
     },
+    "loginRequired": {
+      "title": "Yêu cầu đăng nhập",
+      "message": "Bạn cần đăng nhập để tiếp tục."
+    },
     "login": {
       "hero": {
         "title": "Nền tảng quản lý giao hàng toàn diện",
@@ -298,6 +302,29 @@
       "successMessage": "Tài khoản của bạn đã được tạo.",
       "errorTitle": "Đăng ký thất bại",
       "errorMessage": "Không thể tạo tài khoản."
+    },
+    "registerType": {
+      "badge": "Đăng ký đối tác",
+      "title": "Đăng ký tham gia",
+      "subtitle": "Hãy chọn đúng vai trò để chúng tôi hỗ trợ bạn tốt nhất.",
+      "tip": "Bạn có thể đổi vai trò sau này bằng cách liên hệ hỗ trợ.",
+      "continue": "Tiếp theo",
+      "agency": {
+        "badge": "Agency",
+        "title": "Đối tác hợp tác",
+        "desc": "Công nghệ, dịch vụ, hợp tác kinh doanh... Hợp tác với VHanDelivery.",
+        "question": "Bạn đang tìm kiếm sự hợp tác kinh doanh phải không?",
+        "detail": "Công nghệ, dịch vụ, hợp tác kinh doanh... Hợp tác với VHanDelivery.",
+        "note": "Kết nối dịch vụ, tối ưu vận hành, phát triển doanh thu cùng VHan Delivery"
+      },
+      "merchant": {
+        "badge": "Merchant",
+        "title": "Ông chủ cửa hàng",
+        "desc": "Đăng ký cửa hàng tại VHan Delivery và nhận đơn đặt hàng.",
+        "question": "Bạn đang điều hành cửa hàng phải không?",
+        "detail": "Đăng ký cửa hàng tại VHan Delivery và nhận đơn đặt hàng.",
+        "note": "Đăng ký thực đơn, xác nhận đơn đặt hàng, quản lý quyết toán, quản lý đánh giá khách hàng"
+      }
     }
   }
 }

@@ -214,6 +214,7 @@
     "logoutConfirmTitle": "Confirm Logout",
     "logoutConfirmMessage": "Are you sure you want to logout?",
     "error": "Something went wrong",
+    "close": "Close",
     "registrationFailed": "Registration failed",
     "registrationFailedDesc": "We could not submit your information. Please try again or contact our support team.",
     "otpInvalid": "The verification code is invalid or has expired. Request a new OTP and try again.",
@@ -251,6 +252,10 @@
       "phoneRequired": "Phone number is required.",
       "loginFailed": "Login failed.",
       "registerFailed": "Registration failed."
+    },
+    "loginRequired": {
+      "title": "Login Required",
+      "message": "You need to login to continue."
     },
     "login": {
       "hero": {
@@ -302,6 +307,29 @@
       "successMessage": "Your account has been created.",
       "errorTitle": "Registration Failed",
       "errorMessage": "Unable to create account."
+    },
+    "registerType": {
+      "badge": "Partner onboarding",
+      "title": "Join VHan Delivery",
+      "subtitle": "Choose the role so we can support you best.",
+      "tip": "You can switch roles later by contacting support.",
+      "continue": "Continue",
+      "agency": {
+        "badge": "Agency",
+        "title": "Business partner",
+        "desc": "Technology, services, and business collaboration—partner with VHan Delivery.",
+        "question": "Looking for a business collaboration?",
+        "detail": "Technology, services, and business collaboration—partner with VHan Delivery.",
+        "note": "Connect services, streamline operations, and grow revenue with VHan Delivery"
+      },
+      "merchant": {
+        "badge": "Merchant",
+        "title": "Store owner",
+        "desc": "Register your store on VHan Delivery and start receiving orders.",
+        "question": "Are you running a store?",
+        "detail": "Register your store on VHan Delivery and receive orders.",
+        "note": "Set up menus, confirm orders, manage settlements, and customer reviews"
+      }
     }
   }
 }
