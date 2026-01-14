@@ -13,6 +13,7 @@ import {
   CITIES,
   BUSINESS_LICENSES,
 } from '../../constants/form-options.constant';
+import { BackButtonComponent } from '../../shared/components/back-button/back-button.component';
 
 @Component({
   selector: 'app-merchant-signup',
@@ -24,6 +25,7 @@ import {
     TranslatePipe,
     GlobalModalComponent,
     OtpModalComponent,
+    BackButtonComponent,
   ],
   templateUrl: './merchant-signup.component.html',
   styleUrls: ['./merchant-signup.component.scss'],

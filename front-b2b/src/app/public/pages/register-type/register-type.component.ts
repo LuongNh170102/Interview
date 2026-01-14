@@ -13,6 +13,7 @@ import {
   TranslationService,
 } from '@vhandelivery/shared-ui';
 import { GlobalModalService } from '../../shared/global-modal/global-modal.service';
+import { BackButtonComponent } from '../../shared/components/back-button/back-button.component';
 
 interface RegisterCard {
   readonly key: 'agency' | 'merchant';
@@ -23,7 +24,7 @@ interface RegisterCard {
   standalone: true,
   selector: 'app-register-type',
   templateUrl: './register-type.component.html',
-  imports: [CommonModule, TranslatePipe],
+  imports: [CommonModule, TranslatePipe, BackButtonComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RegisterTypeComponent {

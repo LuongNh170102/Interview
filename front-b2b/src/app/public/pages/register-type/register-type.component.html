@@ -1,13 +1,22 @@
-<div class="bg-surface-base flex items-center justify-center px-4 py-16">
+<div
+  class="bg-surface-base flex items-center justify-center px-4 py-16 relative"
+>
   <div class="w-full max-w-7xl space-y-10">
-    <div class="text-center space-y-3">
-      <h2 class="text-text-primary font-[400]">VHan Delivery</h2>
-      <h2 class="font-extrabold text-text-primary">
-        {{ 'auth.registerType.title' | translate }}
-      </h2>
-      <p class="text-[1rem] text-text-secondary">
-        {{ 'auth.registerType.subtitle' | translate }}
-      </p>
+    <div
+      class="relative flex flex-col justify-center md:flex-row md:items-center"
+    >
+      <app-back-button
+        class="self-start md:absolute md:left-0 md:top-1/2 md:-translate-y-1/2 mb-4 md:mb-0"
+      ></app-back-button>
+      <div class="text-center space-y-3 w-full">
+        <h2 class="text-text-primary font-[400]">VHan Delivery</h2>
+        <h2 class="font-extrabold text-text-primary">
+          {{ 'auth.registerType.title' | translate }}
+        </h2>
+        <p class="text-[1rem] text-text-secondary">
+          {{ 'auth.registerType.subtitle' | translate }}
+        </p>
+      </div>
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">

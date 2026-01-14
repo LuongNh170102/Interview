@@ -1,7 +1,13 @@
 <!-- Main Content -->
-<div class="register-content">
+<div class="register-content relative">
+  <div class="absolute top-4 left-4 z-10 lg:hidden">
+    <app-back-button></app-back-button>
+  </div>
   <!-- Left Section: Hero -->
-  <aside class="hero-section">
+  <aside class="hero-section relative">
+    <div class="absolute top-6 left-6 z-10 hidden lg:block">
+      <app-back-button></app-back-button>
+    </div>
     <div class="hero-content">
       <h1 class="hero-title">
         {{ 'merchantSignup.heroTitle1' | translate }}<br />
