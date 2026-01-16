@@ -1,0 +1,15 @@
+node_modules
+**/node_modules
+.dist
+.tmp
+coverage
+dist
+.angular
+.git
+.gitignore
+.idea
+.vscode
+npm-debug.log
+yarn-error.log
+pnpm-lock.yaml
+.DS_Store
