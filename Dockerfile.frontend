@@ -1,0 +1,36 @@
+# Multi-stage build for Angular frontends (front-b2b, front-management, front-b2c)
+# Usage: docker build -f Dockerfile.frontend --build-arg APP_NAME=front-b2b .
+
+ARG NODE_VERSION=20-alpine
+FROM node:${NODE_VERSION} AS builder
+WORKDIR /workspace
+
+# Needed for native deps (e.g., bcrypt) during npm install
+RUN apk add --no-cache python3 make g++
+
+# Install deps first for better caching
+COPY package.json package-lock.json nx.json tsconfig.base.json tsconfig.seed.json ./
+RUN npm ci --prefer-offline --no-audit --no-fund
+
+# Copy source
+COPY . .
+
+ARG APP_NAME
+ARG BUILD_CONFIGURATION=production
+ENV NX_DAEMON=false
+ENV NODE_OPTIONS=--max_old_space_size=4096
+
+RUN npx nx build ${APP_NAME} --configuration=${BUILD_CONFIGURATION}
+
+FROM nginx:1.27-alpine AS runner
+WORKDIR /usr/share/nginx/html
+
+# Replace default nginx conf with SPA-friendly config
+COPY nginx/frontend.conf /etc/nginx/conf.d/default.conf
+
+ARG APP_NAME
+COPY --from=builder /workspace/dist/${APP_NAME}/browser .
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]

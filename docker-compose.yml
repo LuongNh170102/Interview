@@ -8,7 +8,7 @@ services:
       POSTGRES_PASSWORD: admin
       POSTGRES_DB: vhandelivery_db
     ports:
-      - "5432:5432"
+      - '5432:5432'
     volumes:
       - postgres_data:/var/lib/postgresql/data
     restart: always
@@ -17,13 +17,13 @@ services:
     image: minio/minio
     container_name: vhandelivery_minio
     ports:
-      - "9000:9000"
-      - "9001:9001"
+      - '9000:9000'
+      - '9001:9001'
     environment:
       MINIO_ROOT_USER: admin
       MINIO_ROOT_PASSWORD: admin123
-      MINIO_STORAGE_CLASS_STANDARD: "EC:0" 
-      MINIO_BROWSER: "on"
+      MINIO_STORAGE_CLASS_STANDARD: 'EC:0'
+      MINIO_BROWSER: 'on'
     volumes:
       - ./minio_data:/data
     command: server /data --console-address ":9001"
@@ -40,6 +40,78 @@ services:
       /usr/bin/mc anonymous set public myminio/vhan-media;
       exit 0;
       "
+
+  api-service:
+    container_name: vhandelivery_api
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    image: vhandelivery/api-service:latest
+    env_file:
+      - .env.${NODE_ENV:-development}
+    depends_on:
+      - postgres
+      - minio
+    ports:
+      - '3000:3000'
+
+  front-b2b:
+    container_name: vhandelivery_front_b2b
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+      args:
+        APP_NAME: front-b2b
+    image: vhandelivery/front-b2b:latest
+    ports:
+      - '4200:80'
+    depends_on:
+      - postgres
+      - minio
+
+  front-management:
+    container_name: vhandelivery_front_management
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+      args:
+        APP_NAME: front-management
+    image: vhandelivery/front-management:latest
+    ports:
+      - '4300:80'
+    depends_on:
+      - postgres
+      - minio
+
+  front-b2c:
+    container_name: vhandelivery_front_b2c
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+      args:
+        APP_NAME: front-b2c
+    image: vhandelivery/front-b2c:latest
+    ports:
+      - '4400:80'
+    depends_on:
+      - postgres
+      - minio
+
+  nginx-proxy:
+    image: nginx:1.27-alpine
+    container_name: vhandelivery_nginx_proxy
+    depends_on:
+      - api-service
+      - front-b2b
+      - front-management
+      - front-b2c
+    ports:
+      - '8080:80'
+    volumes:
+      - ./nginx/proxy.conf:/etc/nginx/templates/default.conf.template:ro
+    env_file:
+      - .env.${NODE_ENV:-development}
+    restart: always
 
 volumes:
   postgres_data:
