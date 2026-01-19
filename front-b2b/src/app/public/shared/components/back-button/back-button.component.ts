@@ -8,7 +8,7 @@ import { CommonModule, Location } from '@angular/common';
   template: `
     <button
       (click)="goBack()"
-      class="flex items-center gap-2 hover:opacity-70 transition-opacity focus:outline-none"
+      class=" items-center gap-2 md:flex hidden hover:opacity-70 transition-opacity focus:outline-none"
       [attr.aria-label]="label || 'Go back'"
     >
       <svg
