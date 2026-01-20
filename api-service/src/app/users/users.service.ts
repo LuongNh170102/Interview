@@ -69,4 +69,51 @@ export class UsersService {
       },
     });
   }
+
+  /**
+   * Get all permissions for a user based on their roles
+   * Returns array of permission strings in format "resource:action"
+   */
+  async getUserPermissions(userId: number): Promise<string[]> {
+    const permissions = await this.prisma.permission.findMany({
+      where: {
+        roles: {
+          some: {
+            role: {
+              userRoles: {
+                some: { userId },
+              },
+            },
+          },
+        },
+      },
+      select: {
+        resource: true,
+        action: true,
+      },
+    });
+
+    return permissions.map((p) => `${p.resource}:${p.action}`);
+  }
+
+  /**
+   * Get user roles with their scopes (merchant, agency, brand)
+   */
+  async getUserRolesWithScopes(userId: number) {
+    return this.prisma.userRole.findMany({
+      where: { userId },
+      include: {
+        role: true,
+        merchant: {
+          select: { id: true, name: true },
+        },
+        agency: {
+          select: { id: true, name: true },
+        },
+        brand: {
+          select: { id: true, name: true },
+        },
+      },
+    });
+  }
 }
