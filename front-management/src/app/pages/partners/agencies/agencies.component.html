@@ -5,7 +5,7 @@
       class="flex md:grid md:grid-cols-4 gap-3 md:gap-[13px] min-w-max md:min-w-0"
     >
       @for (card of statisticCards; track card.label) {
-      <div class="w-[180px] md:w-auto shrink-0 md:shrink">
+      <div class="w-[30%] md:w-auto shrink-0 md:shrink">
         <app-statistic-card [config]="card" />
       </div>
       }
