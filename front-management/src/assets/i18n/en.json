@@ -1,0 +1,220 @@
+{
+  "header": {
+    "language": "Language",
+    "languages": {
+      "vi": "Vietnamese",
+      "en": "English",
+      "ko": "Korean"
+    },
+    "nav": {
+      "login": "Login"
+    }
+  },
+  "menu": {
+    "vhanDelivery": "VHan Delivery"
+  },
+  "modal": {
+    "logoutConfirmTitle": "Confirm Logout",
+    "logoutConfirmMessage": "Are you sure you want to logout?",
+    "error": "Something went wrong",
+    "close": "Close",
+    "registrationFailed": "Registration failed",
+    "registrationFailedDesc": "We could not submit your information. Please try again or contact our support team.",
+    "otpInvalid": "The verification code is invalid or has expired. Request a new OTP and try again.",
+    "registrationSuccess": "Registration submitted",
+    "registrationSuccessDesc": "Thanks for registering! Our partner team will review your details and contact you within 24 hours.",
+    "otpTitle": "OTP Verification",
+    "otpDesc": "Please enter the verification code sent to",
+    "confirm": "Verify",
+    "otpNotReceived": "Didn't receive the code?",
+    "otpResendIn": "Resend available in",
+    "otpResend": "Resend Code"
+  },
+  "common": {
+    "button": {
+      "save": "Save",
+      "cancel": "Cancel",
+      "delete": "Delete",
+      "continue": "Continue",
+      "view": "View details",
+      "edit": "Edit"
+    },
+    "loading": "Loading...",
+    "noData": "No data available",
+    "actions": "Actions",
+    "selectAll": "Select all",
+    "selectRow": "Select row",
+    "pagination": {
+      "showing": "Showing",
+      "of": "of",
+      "label": "Pagination navigation",
+      "previous": "Previous page",
+      "next": "Next page",
+      "items": "partners",
+      "page": "Page",
+      "total": "Total"
+    },
+    "status": {
+      "active": "Active",
+      "inactive": "Inactive",
+      "pending": "Pending",
+      "approved": "Approved",
+      "rejected": "Rejected",
+      "suspended": "Suspended",
+      "locked": "Locked"
+    }
+  },
+  "app": {
+    "title": {
+      "management": "VHan Delivery Management"
+    }
+  },
+  "admin": {
+    "nav": {
+      "dashboard": "Dashboard",
+      "partners": "Partners & Stores",
+      "categories": "Categories",
+      "orders": "Orders",
+      "reports": "Reports",
+      "auditLogs": "Audit Logs"
+    },
+    "header": {
+      "searchPlaceholder": "Search...",
+      "profile": "Profile",
+      "settings": "Settings",
+      "logout": "Logout"
+    },
+    "footer": {
+      "systemOnline": "System Online",
+      "apiConnection": "API Connection",
+      "copyright": "© 2025 VHan Delivery. All rights reserved."
+    },
+    "common": {
+      "search": "Search...",
+      "actions": "Actions",
+      "comingSoon": "Feature coming soon",
+      "filter": "Filter"
+    },
+    "partners": {
+      "tabs": {
+        "agencies": "Agencies",
+        "merchants": "Merchants"
+      },
+      "stats": {
+        "totalAgencies": "Total Agencies",
+        "totalMerchants": "Total Merchants",
+        "pendingApproval": "Pending Approval",
+        "pendingMerchants": "Pending Merchants",
+        "activeAgencies": "Active Agencies",
+        "activeMerchants": "Active Merchants",
+        "revenueFromAgencies": "Revenue from Agencies",
+        "revenueFromMerchants": "Revenue from Merchants",
+        "comparedToLastMonth": "compared to last month",
+        "needsProcessing": "Requires immediate processing",
+        "currentMonthEstimate": "Current month estimate"
+      },
+      "pagination": {
+        "page": "Page",
+        "total": "Total",
+        "agencies": "agencies",
+        "merchants": "merchants"
+      },
+      "filter": {
+        "location": "Location"
+      },
+      "column": "Column",
+      "agencies": {
+        "title": "Agencies",
+        "addNew": "Add New Agency",
+        "searchPlaceholder": "Search agencies...."
+      },
+      "merchants": {
+        "title": "Merchant List",
+        "addNew": "Add Merchant"
+      },
+      "table": {
+        "agencyName": "AGENCY NAME",
+        "merchantName": "Merchant Name",
+        "agency": "Agency",
+        "owner": "Owner",
+        "phone": "Phone",
+        "merchantCount": "Merchants",
+        "productCount": "Products",
+        "status": "STATUS",
+        "createdAt": "Created At",
+        "location": "LOCATION",
+        "totalMerchants": "TOTAL MERCHANTS",
+        "joinDate": "JOIN DATE"
+      },
+      "actions": {
+        "modify": "Modify",
+        "activation": "Activation",
+        "deactivation": "Deactivation",
+        "delete": "Delete"
+      }
+    },
+    "categories": {
+      "subtitle": "Manage product categories"
+    },
+    "orders": {
+      "subtitle": "Order management"
+    },
+    "reports": {
+      "subtitle": "Reports and statistics"
+    },
+    "auditLogs": {
+      "subtitle": "System activity logs"
+    }
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "subtitle": "Overview",
+    "welcome": "A quick look at today's operations",
+    "cards": {
+      "pending": "Pending deliveries",
+      "pendingHelper": "Awaiting assignment",
+      "inTransit": "In transit",
+      "inTransitHelper": "Drivers on the road",
+      "delivered": "Delivered today",
+      "deliveredHelper": "Completed drop-offs"
+    },
+    "actions": {
+      "nextSteps": "Next steps",
+      "description": "Use this sample page as the landing destination after login.",
+      "viewAuth": "Back to login"
+    }
+  },
+  "auth": {
+    "common": {
+      "logout": "Logout"
+    },
+    "login": {
+      "title": "Login",
+      "hero": {
+        "subtitle": "Easier delivery calling"
+      },
+      "subtitle": "Management Portal",
+      "welcome": "Hello! Welcome back",
+      "notMember": "Not a member yet?",
+      "joinMember": "Join member",
+      "emailPlaceholder": "vhandelivery@vhanit.com",
+      "passwordPlaceholder": "Enter your password",
+      "submit": "Continue",
+      "google": "Sign in with Google",
+      "hidePassword": "Hide password",
+      "showPassword": "Show password",
+      "errorTitle": "Login failed",
+      "successTitle": "Login successful",
+      "successMessage": "Welcome back!"
+    },
+    "field": {
+      "email": "E-Mail",
+      "password": "Password"
+    },
+    "error": {
+      "emailInvalid": "Invalid email address",
+      "passwordMin": "Password must be at least 6 characters",
+      "loginFailed": "Invalid email or password"
+    }
+  }
+}

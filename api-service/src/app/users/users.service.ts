@@ -41,7 +41,10 @@ export class UsersService {
     });
   }
 
-  async create(data: Prisma.UserCreateInput, roleName = ROLE.CUSTOMER): Promise<User> {
+  async create(
+    data: Prisma.UserCreateInput,
+    roleName = ROLE.CUSTOMER
+  ): Promise<User> {
     const salt = await bcrypt.genSalt();
     const passwordHash = await bcrypt.hash(data.passwordHash, salt);
 

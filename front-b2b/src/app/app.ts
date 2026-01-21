@@ -1,8 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { NxWelcome } from './nx-welcome';
-import { GlobalModalComponent } from './shared/global-modal/global-modal.component';
-import { GlobalModalService } from './shared/global-modal/global-modal.service';
+import { GlobalModalComponent } from './shared/components/global-modal/global-modal.component';
+import { GlobalModalService } from './shared/components/global-modal/global-modal.service';
 
 @Component({
   standalone: true,

@@ -1,0 +1,26 @@
+@use 'variables' as *;
+
+:host {
+  display: block;
+}
+
+.modal-icon {
+  color: $color-text-primary;
+
+  &--success {
+    color: $color-status-success;
+  }
+
+  &--error {
+    color: $color-status-error;
+  }
+
+  &--warning {
+    color: $color-accent;
+  }
+
+  &--info {
+    background: rgba($color-secondary, 0.12);
+    color: $color-secondary;
+  }
+}

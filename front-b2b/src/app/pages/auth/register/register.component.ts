@@ -13,7 +13,7 @@ import { AuthService, TranslationService } from '@vhandelivery/shared-ui';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { catchError, EMPTY, finalize } from 'rxjs';
 import { TranslatePipe } from '@vhandelivery/shared-ui';
-import { GlobalModalService } from '../../../shared/global-modal/global-modal.service';
+import { GlobalModalService } from '../../../shared/components/global-modal/global-modal.service';
 
 @Component({
   standalone: true,

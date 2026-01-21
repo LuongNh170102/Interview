@@ -42,11 +42,11 @@ export class ProductOwnershipGuard implements CanActivate {
     }
 
     // Check Merchant Status
-    if (product.merchant.status !== MERCHANT_STATUS.APPROVED) {
+    if (product.merchant.approvalStatus !== MERCHANT_STATUS.APPROVED) {
       throw new ForbiddenException(
         RESOURCE_MESSAGES.OPERATION_DENIED(
           RESOURCE_TARGETS.MERCHANT,
-          product.merchant.status
+          product.merchant.approvalStatus
         )
       );
     }

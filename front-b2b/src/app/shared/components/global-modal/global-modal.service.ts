@@ -1,14 +1,6 @@
 import { Injectable, signal } from '@angular/core';
-
-export type ModalType = 'success' | 'error' | 'warning' | 'info';
-
-export interface ModalState {
-  isOpen: boolean;
-  type: ModalType;
-  title: string;
-  message: string;
-  onConfirm?: () => void;
-}
+import { ModalState } from '../../interfaces/modal-state.interface';
+import { ModalType } from '../../types/modal-type.type';
 
 @Injectable({
   providedIn: 'root',
@@ -22,7 +14,12 @@ export class GlobalModalService {
     onConfirm: undefined,
   });
 
-  show(type: ModalType, title: string, message: string, onConfirm?: () => void) {
+  show(
+    type: ModalType,
+    title: string,
+    message: string,
+    onConfirm?: () => void
+  ) {
     this.state.set({
       isOpen: true,
       type,

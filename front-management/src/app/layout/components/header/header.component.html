@@ -1,0 +1,319 @@
+<header
+  class="bg-[var(--color-surface-elevated)] border-b border-[var(--color-border)]"
+>
+  <!-- Top Header Bar -->
+  <div class="h-14 md:h-20 flex items-center px-4 md:px-10">
+    <!-- Logo -->
+    <a
+      routerLink="/dashboard"
+      class="flex items-center gap-2 no-underline shrink-0"
+      aria-label="VHan Delivery Admin"
+    >
+      <span
+        class="text-xl md:text-[1.875rem] font-bold text-[var(--color-primary)]"
+      >
+        VHan Delivery
+      </span>
+    </a>
+
+    <!-- Search Bar - Hidden on mobile -->
+    <div class="hidden md:flex flex-1 justify-center px-8">
+      <div class="relative w-full max-w-[30rem]">
+        <div
+          class="flex items-center gap-3 bg-[var(--color-surface-muted)] border border-[var(--color-border)] rounded-full px-4 py-2.5"
+        >
+          <img
+            src="assets/icons/icon-search.svg"
+            alt="Search"
+            aria-hidden="true"
+            class="text-[var(--color-primary)] w-5 h-5"
+          />
+          <input
+            type="text"
+            [placeholder]="'admin.header.searchPlaceholder' | translate"
+            class="flex-1 bg-transparent border-none outline-none text-[0.875rem] text-[var(--color-text-primary)] placeholder:text-[var(--color-text-tertiary)]"
+            [value]="searchQuery()"
+            (input)="onSearchChange($event)"
+            (keydown.enter)="onSearchSubmit()"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- Spacer for mobile -->
+    <div class="flex-1 md:hidden"></div>
+
+    <!-- Right Side Actions -->
+    <div class="flex items-center gap-2 md:gap-4 shrink-0">
+      <!-- Mobile Search Button -->
+      <button
+        type="button"
+        class="md:hidden p-2 text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] transition-colors"
+        [attr.aria-label]="'admin.header.search' | translate"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+      </button>
+      <!-- Notifications - Hidden on mobile -->
+      <button
+        type="button"
+        class="hidden md:block relative p-2 text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] transition-colors"
+        [attr.aria-label]="'admin.header.notifications' | translate"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="22"
+          height="22"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path>
+          <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path>
+        </svg>
+        <span
+          class="absolute top-1 right-1 w-2 h-2 bg-[var(--color-primary)] rounded-full"
+        ></span>
+      </button>
+
+      <!-- Language Selector - Hidden on mobile -->
+      <div class="relative hidden md:block">
+        <button
+          type="button"
+          class="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-[var(--color-surface-muted)] transition-colors"
+          [attr.aria-expanded]="isLanguageDropdownOpen()"
+          aria-haspopup="listbox"
+          (click)="toggleLanguageDropdown()"
+        >
+          <img
+            [src]="currentLanguageOption?.flag"
+            [alt]="currentLanguageOption?.label"
+            class="w-5 h-3.5 object-cover rounded-[2px] shadow-sm"
+          />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            class="text-[var(--color-text-secondary)] transition-transform duration-200"
+            [class.rotate-180]="isLanguageDropdownOpen()"
+          >
+            <path d="m6 9 6 6 6-6" />
+          </svg>
+        </button>
+
+        @if (isLanguageDropdownOpen()) {
+        <div
+          class="absolute top-full right-0 mt-2 w-44 bg-[var(--color-surface-elevated)] border border-[var(--color-border)] rounded-lg shadow-xl py-1 z-50"
+          role="listbox"
+        >
+          @for (lang of languageOptions; track lang.value) {
+          <button
+            type="button"
+            class="w-full flex items-center gap-3 px-4 py-2.5 hover:bg-[var(--color-surface-muted)] transition-colors"
+            [attr.aria-selected]="currentLanguage() === lang.value"
+            role="option"
+            (click)="selectLanguage(lang.value)"
+          >
+            <img
+              [src]="lang.flag"
+              [alt]="lang.label"
+              class="w-5 h-3.5 object-cover rounded-[2px] shadow-sm"
+            />
+            <span
+              class="text-[0.875rem]"
+              [class.text-[var(--color-primary)]]="
+                currentLanguage() === lang.value
+              "
+              [class.font-medium]="currentLanguage() === lang.value"
+              [class.text-[var(--color-text-primary)]]="
+                currentLanguage() !== lang.value
+              "
+            >
+              {{ lang.label }}
+            </span>
+          </button>
+          }
+        </div>
+        }
+      </div>
+
+      <!-- Separator - Hidden on mobile -->
+      <div class="hidden md:block w-px h-8 bg-[var(--color-border)]"></div>
+
+      <!-- User Menu -->
+      @if (auth.currentUser(); as user) {
+      <div class="relative">
+        <button
+          type="button"
+          class="flex items-center gap-2 md:gap-3 p-1 md:px-3 md:py-2 rounded-lg hover:bg-[var(--color-surface-muted)] transition-colors"
+          (click)="toggleUserDropdown()"
+        >
+          <div
+            class="w-9 h-9 md:w-10 md:h-10 rounded-full bg-[var(--color-surface-muted)] flex items-center justify-center overflow-hidden"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              class="text-[var(--color-text-secondary)] md:w-6 md:h-6"
+            >
+              <circle cx="12" cy="8" r="4" />
+              <path d="M6 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2" />
+            </svg>
+          </div>
+          <div class="hidden md:block text-left">
+            <p
+              class="text-[0.875rem] font-bold text-[var(--color-text-primary)]"
+            >
+              {{ user.username || 'User Name' }}
+            </p>
+            <p class="text-[0.75rem] text-[var(--color-primary)]">
+              Super Admin
+            </p>
+          </div>
+        </button>
+
+        @if (isUserDropdownOpen()) {
+        <div
+          class="absolute top-full right-0 mt-2 w-56 bg-[var(--color-surface-elevated)] border border-[var(--color-border)] rounded-lg shadow-xl py-2 z-50"
+        >
+          <div class="px-4 py-3 border-b border-[var(--color-border)]">
+            <p
+              class="text-[0.875rem] font-medium text-[var(--color-text-primary)]"
+            >
+              {{ user.username || 'User' }}
+            </p>
+            <p class="text-[0.75rem] text-[var(--color-text-secondary)]">
+              {{ user.email }}
+            </p>
+          </div>
+          <button
+            type="button"
+            class="w-full flex items-center gap-3 px-4 py-2.5 text-[0.875rem] text-[var(--color-text-primary)] hover:bg-[var(--color-surface-muted)] transition-colors"
+            routerLink="/profile"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              class="text-[var(--color-text-secondary)]"
+            >
+              <circle cx="12" cy="8" r="4" />
+              <path d="M6 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2" />
+            </svg>
+            {{ 'admin.header.profile' | translate }}
+          </button>
+          <button
+            type="button"
+            class="w-full flex items-center gap-3 px-4 py-2.5 text-[0.875rem] text-[var(--color-text-primary)] hover:bg-[var(--color-surface-muted)] transition-colors"
+            routerLink="/settings"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              class="text-[var(--color-text-secondary)]"
+            >
+              <path
+                d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"
+              />
+              <circle cx="12" cy="12" r="3" />
+            </svg>
+            {{ 'admin.header.settings' | translate }}
+          </button>
+          <div class="border-t border-[var(--color-border)] mt-1 pt-1">
+            <button
+              type="button"
+              class="w-full flex items-center gap-3 px-4 py-2.5 text-[0.875rem] text-[var(--color-status-error)] hover:bg-[var(--color-surface-muted)] transition-colors"
+              (click)="logout()"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                <polyline points="16 17 21 12 16 7" />
+                <line x1="21" y1="12" x2="9" y2="12" />
+              </svg>
+              {{ 'auth.common.logout' | translate }}
+            </button>
+          </div>
+        </div>
+        }
+      </div>
+      } @else {
+      <a
+        routerLink="/login"
+        class="px-4 py-2 text-[0.875rem] font-medium text-[var(--color-on-primary)] bg-[var(--color-primary)] rounded-lg hover:bg-[var(--color-primary-hover)] transition-colors"
+      >
+        {{ 'auth.common.login' | translate }}
+      </a>
+      }
+    </div>
+  </div>
+
+  <!-- Navigation Bar -->
+  <nav
+    class="border-t border-[var(--color-border)] bg-[var(--color-surface-base)] overflow-x-auto scrollbar-hide"
+  >
+    <div class="px-4 md:px-10">
+      <ul class="flex items-center gap-4 md:gap-8 list-none m-0 p-0 min-w-max">
+        @for (item of activeNavItems(); track item.link) {
+        <li class="relative">
+          <a
+            [routerLink]="item.link"
+            class="block py-3 md:py-4 text-[0.875rem] md:text-[1rem] transition-colors whitespace-nowrap"
+            [class.text-[var(--color-primary)]]="item.active"
+            [class.font-bold]="item.active"
+            [class.text-[var(--color-text-tertiary)]]="!item.active"
+            [class.hover:text-[var(--color-text-primary)]]="!item.active"
+          >
+            {{ item.labelKey | translate }}
+          </a>
+          @if (item.active) {
+          <div
+            class="absolute bottom-0 left-0 right-0 h-[3px] bg-[var(--color-primary)] rounded-t-full"
+          ></div>
+          }
+        </li>
+        }
+      </ul>
+    </div>
+  </nav>
+</header>

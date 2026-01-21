@@ -1,19 +1,17 @@
 import { Component, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { CustomSelectComponent } from '../../shared/custom-select/custom-select.component';
-import {
-  GlobalModalComponent,
-  ModalType,
-} from '../../shared/global-modal/global-modal.component';
-import { OtpModalComponent } from '../../shared/otp-modal/otp-modal.component';
+import { CustomSelectComponent } from '../../shared/components/custom-select/custom-select.component';
+import { GlobalModalComponent } from '../../shared/components/global-modal/global-modal.component';
+import { OtpModalComponent } from '../../shared/components/otp-modal/otp-modal.component';
 import { MerchantService } from '../../services/merchant.service';
 import { TranslatePipe, CreateMerchantRequest } from '@vhandelivery/shared-ui';
 import {
   CITIES,
   BUSINESS_LICENSES,
-} from '../../constants/form-options.constant';
+} from '../../shared/constants/form-options.constant';
 import { BackButtonComponent } from '../../shared/components/back-button/back-button.component';
+import { ModalType } from '../../shared/types/modal-type.type';
 
 @Component({
   selector: 'app-merchant-signup',

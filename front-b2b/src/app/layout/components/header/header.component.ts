@@ -14,7 +14,7 @@ import {
   TranslatePipe,
   TranslationService,
 } from '@vhandelivery/shared-ui';
-import { GlobalModalService } from '../../../shared/global-modal/global-modal.service';
+import { GlobalModalService } from '../../../shared/components/global-modal/global-modal.service';
 
 type NavItem = {
   readonly labelKey: string;

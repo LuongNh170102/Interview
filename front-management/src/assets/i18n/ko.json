@@ -1,0 +1,234 @@
+{
+  "header": {
+    "language": "언어",
+    "languages": {
+      "vi": "베트남어",
+      "en": "영어",
+      "ko": "한국어"
+    },
+    "nav": {
+      "login": "로그인"
+    }
+  },
+  "menu": {
+    "vhanDelivery": "VHan Delivery"
+  },
+  "modal": {
+    "logoutConfirmTitle": "로그아웃 확인",
+    "logoutConfirmMessage": "로그아웃 하시겠습니까?",
+    "error": "문제가 발생했습니다",
+    "close": "닫기",
+    "registrationFailed": "등록 실패",
+    "registrationFailedDesc": "정보를 제출할 수 없습니다. 다시 시도하거나 지원팀에 문의하세요.",
+    "otpInvalid": "인증 코드가 유효하지 않거나 만료되었습니다. 새 OTP를 요청하고 다시 시도하세요.",
+    "registrationSuccess": "등록 제출 완료",
+    "registrationSuccessDesc": "등록해 주셔서 감사합니다! 파트너 팀이 귀하의 세부 정보를 검토하고 24시간 이내에 연락할 것입니다.",
+    "otpTitle": "OTP 인증",
+    "otpDesc": "전송된 인증 코드를 입력하세요",
+    "confirm": "확인",
+    "otpNotReceived": "코드를 받지 못하셨나요?",
+    "otpResendIn": "재전송 가능 시간",
+    "otpResend": "코드 재전송"
+  },
+  "common": {
+    "button": {
+      "save": "저장",
+      "cancel": "취소",
+      "delete": "삭제",
+      "continue": "계속",
+      "view": "상세 보기",
+      "edit": "수정"
+    },
+    "loading": "로딩 중...",
+    "noData": "데이터가 없습니다",
+    "actions": "작업",
+    "selectAll": "전체 선택",
+    "selectRow": "행 선택",
+    "pagination": {
+      "showing": "표시",
+      "of": "/",
+      "label": "페이지 이동",
+      "previous": "이전 페이지",
+      "next": "다음 페이지",
+      "items": "파트너",
+      "page": "페이지",
+      "total": "총"
+    },
+    "status": {
+      "active": "활성",
+      "inactive": "비활성",
+      "pending": "대기 중",
+      "approved": "승인됨",
+      "rejected": "거부됨",
+      "suspended": "정지됨",
+      "locked": "잠김"
+    },
+    "toggle": "켜기/끄기"
+  },
+  "app": {
+    "title": {
+      "management": "VHan Delivery 관리"
+    }
+  },
+  "dashboard": {
+    "title": "대시보드",
+    "subtitle": "요약",
+    "welcome": "오늘 운영 현황을 빠르게 확인하세요",
+    "cards": {
+      "pending": "배차 대기",
+      "pendingHelper": "할당 대기 중",
+      "inTransit": "배송 중",
+      "inTransitHelper": "이동 중인 기사",
+      "delivered": "오늘 완료",
+      "deliveredHelper": "완료된 배송"
+    },
+    "actions": {
+      "nextSteps": "다음 단계",
+      "description": "로그인 후 이동할 샘플 페이지입니다.",
+      "viewAuth": "로그인으로 돌아가기"
+    }
+  },
+  "auth": {
+    "common": {
+      "logout": "로그아웃"
+    },
+    "login": {
+      "title": "로그인",
+      "hero": {
+        "subtitle": "더 쉽게 배달을 요청하세요"
+      },
+      "subtitle": "관리 포털",
+      "welcome": "안녕하세요! 환영합니다",
+      "notMember": "아직 회원이 아니신가요?",
+      "joinMember": "회원 가입",
+      "emailPlaceholder": "vhandelivery@vhanit.com",
+      "passwordPlaceholder": "비밀번호를 입력하세요",
+      "submit": "계속",
+      "google": "Google로 로그인",
+      "hidePassword": "비밀번호 숨기기",
+      "showPassword": "비밀번호 보기",
+      "errorTitle": "로그인 실패",
+      "successTitle": "로그인 성공",
+      "successMessage": "다시 오신 것을 환영합니다!"
+    },
+    "field": {
+      "email": "이메일",
+      "password": "비밀번호"
+    },
+    "error": {
+      "emailInvalid": "유효하지 않은 이메일입니다",
+      "passwordMin": "비밀번호는 최소 6자 이상이어야 합니다",
+      "loginFailed": "이메일 또는 비밀번호가 올바르지 않습니다"
+    }
+  },
+  "admin": {
+    "nav": {
+      "dashboard": "대시보드",
+      "partners": "파트너 & 매장",
+      "categories": "카테고리",
+      "orders": "주문",
+      "reports": "리포트",
+      "auditLogs": "감사 로그"
+    },
+    "header": {
+      "searchPlaceholder": "검색...",
+      "profile": "프로필",
+      "settings": "설정",
+      "logout": "로그아웃"
+    },
+    "footer": {
+      "systemOnline": "시스템 온라인",
+      "apiConnection": "API 연결",
+      "copyright": "© 2025 VHan Delivery. All rights reserved."
+    },
+    "common": {
+      "search": "검색...",
+      "actions": "작업",
+      "comingSoon": "개발 중인 기능",
+      "filter": "필터"
+    },
+    "partners": {
+      "tabs": {
+        "agencies": "파트너",
+        "merchants": "매장"
+      },
+      "stats": {
+        "totalAgencies": "총 파트너 수",
+        "totalMerchants": "총 매장 수",
+        "totalStores": "총 매장 수",
+        "pendingApproval": "승인 대기",
+        "pendingMerchants": "매장 승인 대기",
+        "activeAgencies": "활성 파트너",
+        "activeMerchants": "활성 매장",
+        "activeStores": "활성 매장",
+        "revenueFromAgencies": "파트너 수익",
+        "revenueFromMerchants": "매장 수익",
+        "storeRevenue": "매장 수익",
+        "comparedToLastMonth": "지난달 대비",
+        "needsProcessing": "즉시 처리 필요",
+        "currentMonthEstimate": "이번 달 예상"
+      },
+      "pagination": {
+        "page": "페이지",
+        "total": "총",
+        "agencies": "파트너",
+        "merchants": "매장",
+        "showing": "표시",
+        "of": "/"
+      },
+      "filter": {
+        "location": "위치"
+      },
+      "column": "Column",
+      "agencies": {
+        "title": "파트너",
+        "addNew": "새 파트너 추가",
+        "searchPlaceholder": "파트너 검색....",
+        "allLocations": "모든 지역"
+      },
+      "merchants": {
+        "title": "매장 목록",
+        "addNew": "매장 추가"
+      },
+      "stores": {
+        "listTitle": "매장 목록",
+        "addNew": "매장 추가",
+        "searchPlaceholder": "검색..."
+      },
+      "table": {
+        "agencyName": "파트너 이름",
+        "merchantName": "매장 이름",
+        "storeName": "매장 이름",
+        "agency": "파트너",
+        "owner": "소유자",
+        "phone": "전화번호",
+        "merchantCount": "매장 수",
+        "productCount": "상품 수",
+        "status": "상태",
+        "createdAt": "생성일",
+        "createdDate": "생성일",
+        "location": "위치",
+        "totalMerchants": "총 매장 수",
+        "joinDate": "가입일"
+      },
+      "actions": {
+        "modify": "수정",
+        "activation": "활성화",
+        "deactivation": "비활성화",
+        "delete": "삭제"
+      }
+    },
+    "categories": {
+      "subtitle": "상품 카테고리 관리"
+    },
+    "orders": {
+      "subtitle": "주문 관리"
+    },
+    "reports": {
+      "subtitle": "리포트 및 통계"
+    },
+    "auditLogs": {
+      "subtitle": "시스템 활동 로그"
+    }
+  }
+}

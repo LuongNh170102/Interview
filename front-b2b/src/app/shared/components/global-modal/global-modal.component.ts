@@ -8,8 +8,7 @@ import {
   animate,
   state,
 } from '@angular/animations';
-
-export type ModalType = 'success' | 'error' | 'warning' | 'info';
+import { ModalType } from '../../types/modal-type.type';
 
 @Component({
   selector: 'app-global-modal',
