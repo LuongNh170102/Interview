@@ -1,0 +1,1873 @@
+{
+  "name": "VHanDelivery",
+  "nodes": [
+    {
+      "id": "730:611",
+      "name": "Admin_Partner_Mobile 1",
+      "type": "FRAME",
+      "layout": "layout_I51CWH",
+      "fills": "fill_T9NVKC",
+      "children": [
+        {
+          "id": "730:612",
+          "name": "Vector",
+          "type": "IMAGE-SVG",
+          "layout": "layout_GPLWCA",
+          "fills": "fill_FRWBHG"
+        },
+        {
+          "id": "730:613",
+          "name": "Vector",
+          "type": "IMAGE-SVG",
+          "layout": "layout_AIX3VS",
+          "strokes": "stroke_HQMUQW"
+        },
+        {
+          "id": "730:614",
+          "name": "Vector",
+          "type": "IMAGE-SVG",
+          "layout": "layout_DQL2FD",
+          "strokes": "stroke_HQMUQW"
+        },
+        {
+          "id": "730:619",
+          "name": "Clip path group",
+          "type": "IMAGE-SVG",
+          "layout": "layout_2HYSSS"
+        },
+        {
+          "id": "730:620",
+          "name": "VHan Delivery",
+          "type": "TEXT",
+          "layout": "layout_NHMZG3",
+          "text": "VHan Delivery",
+          "textStyle": "style_ZHAJJS",
+          "fills": "fill_HTO3A2"
+        },
+        {
+          "id": "730:621",
+          "name": "Group",
+          "type": "GROUP",
+          "layout": "layout_4IU1O5",
+          "children": [
+            {
+              "id": "730:622",
+              "name": "Dashboard",
+              "type": "TEXT",
+              "layout": "layout_7TPN8P",
+              "text": "Dashboard",
+              "textStyle": "style_FVV7TP",
+              "fills": "fill_IF2H6F"
+            },
+            {
+              "id": "730:623",
+              "name": "Đối tác & Cửa hàng",
+              "type": "TEXT",
+              "layout": "layout_2ZUJAJ",
+              "text": "Đối tác & Cửa hàng",
+              "textStyle": "style_F2CJKW",
+              "fills": "fill_HTO3A2"
+            },
+            {
+              "id": "730:624",
+              "name": "Danh mục",
+              "type": "TEXT",
+              "layout": "layout_EIMLMK",
+              "text": "Danh mục",
+              "textStyle": "style_FVV7TP",
+              "fills": "fill_IF2H6F"
+            },
+            {
+              "id": "730:625",
+              "name": "Đơn hàng",
+              "type": "TEXT",
+              "layout": "layout_5JIA01",
+              "text": "Đơn hàng",
+              "textStyle": "style_FVV7TP",
+              "fills": "fill_IF2H6F"
+            },
+            {
+              "id": "730:626",
+              "name": "Vector",
+              "type": "IMAGE-SVG",
+              "layout": "layout_IZDJZT",
+              "fills": "fill_HTO3A2"
+            }
+          ]
+        },
+        {
+          "id": "730:627",
+          "name": "Vector",
+          "type": "IMAGE-SVG",
+          "layout": "layout_3MCLAR",
+          "fills": "fill_T9NVKC",
+          "strokes": "stroke_U876RD"
+        },
+        {
+          "id": "730:628",
+          "name": "Đối tác (Agencies)",
+          "type": "TEXT",
+          "layout": "layout_HVHFOY",
+          "text": "Đối tác (Agencies)",
+          "textStyle": "style_FVV7TP",
+          "fills": "fill_HTO3A2"
+        },
+        {
+          "id": "730:629",
+          "name": "Vector",
+          "type": "IMAGE-SVG",
+          "layout": "layout_RBAEVS",
+          "fills": "fill_T9NVKC",
+          "strokes": "stroke_81W70L"
+        },
+        {
+          "id": "730:630",
+          "name": "Cửa hàng (Merchants)",
+          "type": "TEXT",
+          "layout": "layout_KO78WV",
+          "text": "Cửa hàng (Merchants)",
+          "textStyle": "style_FVV7TP",
+          "fills": "fill_IF2H6F"
+        },
+        {
+          "id": "730:631",
+          "name": "Vector",
+          "type": "IMAGE-SVG",
+          "layout": "layout_CMRSNW",
+          "fills": "fill_T9NVKC",
+          "strokes": "stroke_81W70L"
+        },
+        {
+          "id": "730:632",
+          "name": "so với tháng trước",
+          "type": "TEXT",
+          "layout": "layout_DXR5TZ",
+          "text": "so với tháng trước",
+          "textStyle": "style_SXFCXN",
+          "fills": "fill_WELNLS"
+        },
+        {
+          "id": "730:633",
+          "name": "Vector",
+          "type": "IMAGE-SVG",
+          "layout": "layout_3WRISS",
+          "fills": "fill_MHBT3U"
+        },
+        {
+          "id": "730:634",
+          "name": "TỔNG SỐ CỬA HÀNG",
+          "type": "TEXT",
+          "layout": "layout_W1PZPP",
+          "text": "TỔNG SỐ CỬA HÀNG",
+          "textStyle": "style_SXFCXN",
+          "fills": "fill_IF2H6F"
+        },
+        {
+          "id": "730:635",
+          "name": "+12.5%",
+          "type": "TEXT",
+          "layout": "layout_C7TAOY",
+          "text": "+12.5%",
+          "textStyle": "style_7O4L61",
+          "fills": "fill_WELNLS"
+        },
+        {
+          "id": "730:636",
+          "name": "8,542",
+          "type": "TEXT",
+          "layout": "layout_ULZEPY",
+          "text": "8,542",
+          "textStyle": "style_VXH6PN",
+          "fills": "fill_XRZUX1"
+        },
+        {
+          "id": "730:637",
+          "name": "Group",
+          "type": "IMAGE-SVG",
+          "layout": "layout_2VKXHZ"
+        },
+        {
+          "id": "730:641",
+          "name": "Vector",
+          "type": "IMAGE-SVG",
+          "layout": "layout_IC5KU7",
+          "fills": "fill_T9NVKC",
+          "strokes": "stroke_81W70L"
+        },
+        {
+          "id": "730:642",
+          "name": "Yêu cầu cần xử lý ngay",
+          "type": "TEXT",
+          "layout": "layout_WNJ2KL",
+          "text": "Yêu cầu cần xử lý ngay",
+          "textStyle": "style_SXFCXN",
+          "fills": "fill_HTO3A2"
+        },
+        {
+          "id": "730:643",
+          "name": "CỬA HÀNG CHỞ DUYỆT",
+          "type": "TEXT",
+          "layout": "layout_20FLJJ",
+          "text": "CỬA HÀNG CHỞ DUYỆT",
+          "textStyle": "style_SXFCXN",
+          "fills": "fill_IF2H6F"
+        },
+        {
+          "id": "730:644",
+          "name": "128",
+          "type": "TEXT",
+          "layout": "layout_9FWWGX",
+          "text": "128",
+          "textStyle": "style_VXH6PN",
+          "fills": "fill_XRZUX1"
+        },
+        {
+          "id": "730:645",
+          "name": "Group",
+          "type": "IMAGE-SVG",
+          "layout": "layout_HJU0BT"
+        },
+        {
+          "id": "730:649",
+          "name": "Vector",
+          "type": "IMAGE-SVG",
+          "layout": "layout_7P3D1U",
+          "fills": "fill_T9NVKC",
+          "strokes": "stroke_81W70L"
+        },
+        {
+          "id": "730:650",
+          "name": "CỬA HÀNG CHỞ DUYỆT",
+          "type": "TEXT",
+          "layout": "layout_IPIAL7",
+          "text": "CỬA HÀNG CHỞ DUYỆT",
+          "textStyle": "style_SXFCXN",
+          "fills": "fill_IF2H6F"
+        },
+        {
+          "id": "730:651",
+          "name": "Đối tác",
+          "type": "TEXT",
+          "layout": "layout_RXN1DH",
+          "text": "Đối tác",
+          "textStyle": "style_ZHAJJS",
+          "fills": "fill_XRZUX1"
+        },
+        {
+          "id": "730:652",
+          "name": "999",
+          "type": "TEXT",
+          "layout": "layout_JN6L73",
+          "text": "999",
+          "textStyle": "style_SXFCXN",
+          "fills": "fill_IF2H6F"
+        },
+        {
+          "id": "730:653",
+          "name": "Group",
+          "type": "IMAGE-SVG",
+          "layout": "layout_K3N08K"
+        },
+        {
+          "id": "730:656",
+          "name": "Group",
+          "type": "IMAGE-SVG",
+          "layout": "layout_JIALJC"
+        },
+        {
+          "id": "730:659",
+          "name": "Vector",
+          "type": "IMAGE-SVG",
+          "layout": "layout_9B3KIB",
+          "fills": "fill_NNJ8OF"
+        },
+        {
+          "id": "730:660",
+          "name": "Group",
+          "type": "GROUP",
+          "layout": "layout_ZW97HX",
+          "children": [
+            {
+              "id": "730:661",
+              "name": "Vector",
+              "type": "IMAGE-SVG",
+              "layout": "layout_C4UUIQ",
+              "fills": "fill_HTO3A2",
+              "effects": "effect_0C3UQU"
+            },
+            {
+              "id": "730:662",
+              "name": "Group",
+              "type": "GROUP",
+              "layout": "layout_4UQN8K",
+              "children": [
+                {
+                  "id": "730:663",
+                  "name": "Thêm Đối tác Mới",
+                  "type": "TEXT",
+                  "layout": "layout_774X37",
+                  "text": "Thêm Đối tác Mới",
+                  "textStyle": "style_SXFCXN",
+                  "fills": "fill_T9NVKC"
+                },
+                {
+                  "id": "730:664",
+                  "name": "Group",
+                  "type": "IMAGE-SVG",
+                  "layout": "layout_IMP0PI"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "730:667",
+          "name": "Vector",
+          "type": "IMAGE-SVG",
+          "layout": "layout_2YWX9V",
+          "fills": "fill_T9NVKC",
+          "strokes": "stroke_81W70L"
+        },
+        {
+          "id": "730:668",
+          "name": "MCH-98122",
+          "type": "TEXT",
+          "layout": "layout_NBKTG8",
+          "text": "MCH-98122",
+          "textStyle": "style_SXFCXN",
+          "fills": "fill_IF2H6F"
+        },
+        {
+          "id": "730:669",
+          "name": "Glboal Logistics VN",
+          "type": "TEXT",
+          "layout": "layout_60LCMV",
+          "text": "Glboal Logistics VN",
+          "textStyle": "style_8LK44F",
+          "fills": "fill_XRZUX1"
+        },
+        {
+          "id": "730:670",
+          "name": "Vector",
+          "type": "IMAGE-SVG",
+          "layout": "layout_J6QM1S",
+          "fills": "fill_MHBT3U"
+        },
+        {
+          "id": "730:671",
+          "name": "GL",
+          "type": "TEXT",
+          "layout": "layout_09G252",
+          "text": "GL",
+          "textStyle": "style_ZHAJJS",
+          "fills": "fill_WELNLS"
+        },
+        {
+          "id": "730:672",
+          "name": "ĐỊA ĐIỂM",
+          "type": "TEXT",
+          "layout": "layout_QCM1CJ",
+          "text": "ĐỊA ĐIỂM",
+          "textStyle": "style_AX0P19",
+          "fills": "fill_IF2H6F"
+        },
+        {
+          "id": "730:673",
+          "name": "Quận 1, TP. Hồ Chí Minh",
+          "type": "TEXT",
+          "layout": "layout_1LCKU6",
+          "text": "Quận 1, TP. Hồ Chí Minh",
+          "textStyle": "style_7O4L61",
+          "fills": "fill_XRZUX1"
+        },
+        {
+          "id": "730:674",
+          "name": "TỔNG CỬA HÀNG",
+          "type": "TEXT",
+          "layout": "layout_909LC6",
+          "text": "TỔNG CỬA HÀNG",
+          "textStyle": "style_AX0P19",
+          "fills": "fill_IF2H6F"
+        },
+        {
+          "id": "730:675",
+          "name": "NGÀY THAM GIA",
+          "type": "TEXT",
+          "layout": "layout_NV0F8T",
+          "text": "NGÀY THAM GIA",
+          "textStyle": "style_AX0P19",
+          "fills": "fill_IF2H6F"
+        },
+        {
+          "id": "730:676",
+          "name": "1,248",
+          "type": "TEXT",
+          "layout": "layout_GBJ8Q4",
+          "text": "1,248",
+          "textStyle": "style_7O4L61",
+          "fills": "fill_XRZUX1"
+        },
+        {
+          "id": "730:677",
+          "name": "Vector",
+          "type": "IMAGE-SVG",
+          "layout": "layout_E0CFDV",
+          "fills": "fill_EICQPW"
+        },
+        {
+          "id": "730:678",
+          "name": "Group",
+          "type": "GROUP",
+          "layout": "layout_DMSIKJ",
+          "children": [
+            {
+              "id": "730:679",
+              "name": "Hoạt động",
+              "type": "TEXT",
+              "layout": "layout_O6OMKM",
+              "text": "Hoạt động",
+              "textStyle": "style_7O4L61",
+              "fills": "fill_NNJ8OF"
+            },
+            {
+              "id": "730:680",
+              "name": "Vector",
+              "type": "IMAGE-SVG",
+              "layout": "layout_UL4DU0",
+              "fills": "fill_NNJ8OF"
+            }
+          ]
+        },
+        {
+          "id": "730:681",
+          "name": "2023/12/13",
+          "type": "TEXT",
+          "layout": "layout_E2I1EJ",
+          "text": "2023/12/13",
+          "textStyle": "style_7O4L61",
+          "fills": "fill_XRZUX1"
+        },
+        {
+          "id": "730:682",
+          "name": "Vector",
+          "type": "IMAGE-SVG",
+          "layout": "layout_TY4NV1",
+          "strokes": "stroke_HQMUQW"
+        },
+        {
+          "id": "730:683",
+          "name": "MCH-98122",
+          "type": "TEXT",
+          "layout": "layout_9M2PIG",
+          "text": "MCH-98122",
+          "textStyle": "style_SXFCXN",
+          "fills": "fill_IF2H6F"
+        },
+        {
+          "id": "730:684",
+          "name": "Nexus Delivery",
+          "type": "TEXT",
+          "layout": "layout_WOIBFD",
+          "text": "Nexus Delivery",
+          "textStyle": "style_8LK44F",
+          "fills": "fill_XRZUX1"
+        },
+        {
+          "id": "730:685",
+          "name": "Vector",
+          "type": "IMAGE-SVG",
+          "layout": "layout_C62U18",
+          "fills": "fill_AM281J"
+        },
+        {
+          "id": "730:686",
+          "name": "NX",
+          "type": "TEXT",
+          "layout": "layout_RBN98P",
+          "text": "NX",
+          "textStyle": "style_ZHAJJS",
+          "fills": "fill_HTO3A2"
+        },
+        {
+          "id": "730:687",
+          "name": "ĐỊA ĐIỂM",
+          "type": "TEXT",
+          "layout": "layout_GEYY7N",
+          "text": "ĐỊA ĐIỂM",
+          "textStyle": "style_AX0P19",
+          "fills": "fill_IF2H6F"
+        },
+        {
+          "id": "730:688",
+          "name": "Cầu Giấy, Hà Nội",
+          "type": "TEXT",
+          "layout": "layout_Z7MKN2",
+          "text": "Cầu Giấy, Hà Nội",
+          "textStyle": "style_7O4L61",
+          "fills": "fill_XRZUX1"
+        },
+        {
+          "id": "730:689",
+          "name": "TỔNG CỬA HÀNG",
+          "type": "TEXT",
+          "layout": "layout_AMP1DU",
+          "text": "TỔNG CỬA HÀNG",
+          "textStyle": "style_AX0P19",
+          "fills": "fill_IF2H6F"
+        },
+        {
+          "id": "730:690",
+          "name": "NGÀY THAM GIA",
+          "type": "TEXT",
+          "layout": "layout_1EU2QN",
+          "text": "NGÀY THAM GIA",
+          "textStyle": "style_AX0P19",
+          "fills": "fill_IF2H6F"
+        },
+        {
+          "id": "730:691",
+          "name": "892",
+          "type": "TEXT",
+          "layout": "layout_TY7YSC",
+          "text": "892",
+          "textStyle": "style_7O4L61",
+          "fills": "fill_XRZUX1"
+        },
+        {
+          "id": "730:692",
+          "name": "Vector",
+          "type": "IMAGE-SVG",
+          "layout": "layout_W6JD7D",
+          "fills": "fill_BIN352"
+        },
+        {
+          "id": "730:693",
+          "name": "Group",
+          "type": "GROUP",
+          "layout": "layout_R5ITS8",
+          "children": [
+            {
+              "id": "730:694",
+              "name": "Chờ duyệt",
+              "type": "TEXT",
+              "layout": "layout_L068J6",
+              "text": "Chờ duyệt",
+              "textStyle": "style_7O4L61",
+              "fills": "fill_YM2ICT"
+            },
+            {
+              "id": "730:695",
+              "name": "Vector",
+              "type": "IMAGE-SVG",
+              "layout": "layout_UL4DU0",
+              "fills": "fill_YM2ICT"
+            }
+          ]
+        },
+        {
+          "id": "730:696",
+          "name": "2023/12/13",
+          "type": "TEXT",
+          "layout": "layout_VWQ6H2",
+          "text": "2023/12/13",
+          "textStyle": "style_7O4L61",
+          "fills": "fill_XRZUX1"
+        },
+        {
+          "id": "730:697",
+          "name": "Vector",
+          "type": "IMAGE-SVG",
+          "layout": "layout_W85X12",
+          "fills": "fill_T9NVKC",
+          "strokes": "stroke_U876RD"
+        },
+        {
+          "id": "730:698",
+          "name": "Group",
+          "type": "GROUP",
+          "layout": "layout_X604U8",
+          "children": [
+            {
+              "id": "730:699",
+              "name": "Column",
+              "type": "TEXT",
+              "layout": "layout_68KN71",
+              "text": "Column",
+              "textStyle": "style_SXFCXN",
+              "fills": "fill_HTO3A2"
+            },
+            {
+              "id": "730:700",
+              "name": "Vector",
+              "type": "IMAGE-SVG",
+              "layout": "layout_KPLZNQ",
+              "fills": "fill_HTO3A2"
+            }
+          ]
+        },
+        {
+          "id": "730:701",
+          "name": "Group",
+          "type": "IMAGE-SVG",
+          "layout": "layout_CJHRYE"
+        },
+        {
+          "id": "730:705",
+          "name": "Group",
+          "type": "IMAGE-SVG",
+          "layout": "layout_XYQWEV"
+        }
+      ]
+    }
+  ],
+  "components": {},
+  "componentSets": {},
+  "globalVars": {
+    "styles": {
+      "layout_I51CWH": {
+        "mode": "none",
+        "sizing": {},
+        "dimensions": {
+          "width": 430,
+          "height": 1003.98
+        }
+      },
+      "fill_T9NVKC": [
+        "#FFFFFF"
+      ],
+      "layout_GPLWCA": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 0,
+          "y": 110
+        },
+        "dimensions": {
+          "width": 430,
+          "height": 895.15
+        }
+      },
+      "fill_FRWBHG": [
+        "#F4F4F4"
+      ],
+      "layout_AIX3VS": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 0,
+          "y": 60
+        },
+        "dimensions": {
+          "width": 430,
+          "height": 0
+        }
+      },
+      "stroke_HQMUQW": {
+        "colors": [
+          "#E4E8EF"
+        ],
+        "strokeWeight": "1px"
+      },
+      "layout_DQL2FD": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 0,
+          "y": 110
+        },
+        "dimensions": {
+          "width": 430,
+          "height": 0
+        }
+      },
+      "layout_2HYSSS": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 369.89,
+          "y": 10
+        },
+        "dimensions": {
+          "width": 40,
+          "height": 40
+        }
+      },
+      "layout_2436DI": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 0,
+          "y": 0
+        },
+        "dimensions": {
+          "width": 40,
+          "height": 40
+        }
+      },
+      "fill_1I2SF0": [
+        "#000000"
+      ],
+      "layout_7GXJOC": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 0,
+          "y": 0
+        },
+        "dimensions": {
+          "width": 40,
+          "height": 60
+        }
+      },
+      "fill_IFAVT0": [
+        {
+          "type": "IMAGE",
+          "imageRef": "c86a20896f06439a4a12b6703ea3dc1a63c6898c",
+          "scaleMode": "STRETCH",
+          "objectFit": "fill",
+          "isBackground": false,
+          "imageDownloadArguments": {
+            "needsCropping": true,
+            "requiresImageDimensions": false,
+            "cropTransform": [
+              [
+                1,
+                0,
+                0
+              ],
+              [
+                0,
+                1,
+                0
+              ]
+            ],
+            "filenameSuffix": "56586a"
+          }
+        }
+      ],
+      "layout_NHMZG3": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 19.89,
+          "y": 13.71
+        },
+        "dimensions": {
+          "width": 161,
+          "height": 29
+        }
+      },
+      "style_ZHAJJS": {
+        "fontFamily": "Pretendard",
+        "fontWeight": 700,
+        "fontSize": 24,
+        "lineHeight": "1.193359375em",
+        "textAlignHorizontal": "LEFT",
+        "textAlignVertical": "TOP"
+      },
+      "fill_HTO3A2": [
+        "#F35B2A"
+      ],
+      "layout_4IU1O5": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 19.89,
+          "y": 75.87
+        },
+        "dimensions": {
+          "width": 414.55,
+          "height": 34.13
+        }
+      },
+      "layout_7TPN8P": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 0,
+          "y": 0
+        },
+        "dimensions": {
+          "width": 74,
+          "height": 18
+        }
+      },
+      "style_FVV7TP": {
+        "fontFamily": "Pretendard",
+        "fontWeight": 400,
+        "fontSize": 15,
+        "lineHeight": "1.193359375em",
+        "textAlignHorizontal": "LEFT",
+        "textAlignVertical": "TOP"
+      },
+      "fill_IF2H6F": [
+        "#9B9B9B"
+      ],
+      "layout_2ZUJAJ": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 98.51,
+          "y": 0
+        },
+        "dimensions": {
+          "width": 135,
+          "height": 18
+        }
+      },
+      "style_F2CJKW": {
+        "fontFamily": "Pretendard",
+        "fontWeight": 700,
+        "fontSize": 15,
+        "lineHeight": "1.193359375em",
+        "textAlignHorizontal": "LEFT",
+        "textAlignVertical": "TOP"
+      },
+      "layout_EIMLMK": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 257,
+          "y": 0
+        },
+        "dimensions": {
+          "width": 68,
+          "height": 18
+        }
+      },
+      "layout_5JIA01": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 349.55,
+          "y": 0
+        },
+        "dimensions": {
+          "width": 65,
+          "height": 18
+        }
+      },
+      "layout_IZDJZT": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 90.22,
+          "y": 31.13
+        },
+        "dimensions": {
+          "width": 150,
+          "height": 3
+        }
+      },
+      "layout_3MCLAR": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 19.81,
+          "y": 126.87
+        },
+        "dimensions": {
+          "width": 155,
+          "height": 38
+        }
+      },
+      "stroke_U876RD": {
+        "colors": [
+          "#F35B2A"
+        ],
+        "strokeWeight": "1px"
+      },
+      "layout_HVHFOY": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 36.13,
+          "y": 135.09
+        },
+        "dimensions": {
+          "width": 123,
+          "height": 18
+        }
+      },
+      "layout_RBAEVS": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 182.81,
+          "y": 126.87
+        },
+        "dimensions": {
+          "width": 180,
+          "height": 38
+        }
+      },
+      "stroke_81W70L": {
+        "colors": [
+          "#E0E0E0"
+        ],
+        "strokeWeight": "1px"
+      },
+      "layout_KO78WV": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 197.92,
+          "y": 135.09
+        },
+        "dimensions": {
+          "width": 150,
+          "height": 18
+        }
+      },
+      "layout_CMRSNW": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 20,
+          "y": 190.78
+        },
+        "dimensions": {
+          "width": 180,
+          "height": 199.58
+        }
+      },
+      "layout_DXR5TZ": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 40,
+          "y": 354.48
+        },
+        "dimensions": {
+          "width": 114,
+          "height": 17
+        }
+      },
+      "style_SXFCXN": {
+        "fontFamily": "Pretendard",
+        "fontWeight": 400,
+        "fontSize": 14,
+        "lineHeight": "1.193359375em",
+        "textAlignHorizontal": "LEFT",
+        "textAlignVertical": "TOP"
+      },
+      "fill_WELNLS": [
+        "#27A4C1"
+      ],
+      "layout_3WRISS": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 40,
+          "y": 320.37
+        },
+        "dimensions": {
+          "width": 75.67,
+          "height": 27.26
+        }
+      },
+      "fill_MHBT3U": [
+        "#D9F3F4"
+      ],
+      "layout_W1PZPP": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 40,
+          "y": 240.78
+        },
+        "dimensions": {
+          "width": 136,
+          "height": 17
+        }
+      },
+      "layout_C7TAOY": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 51.02,
+          "y": 322.5
+        },
+        "dimensions": {
+          "width": 54,
+          "height": 19
+        }
+      },
+      "style_7O4L61": {
+        "fontFamily": "Pretendard",
+        "fontWeight": 400,
+        "fontSize": 16,
+        "lineHeight": "1.193359375em",
+        "textAlignHorizontal": "LEFT",
+        "textAlignVertical": "TOP"
+      },
+      "layout_ULZEPY": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 40.55,
+          "y": 271.77
+        },
+        "dimensions": {
+          "width": 84,
+          "height": 36
+        }
+      },
+      "style_VXH6PN": {
+        "fontFamily": "Pretendard",
+        "fontWeight": 700,
+        "fontSize": 30,
+        "lineHeight": "1.193359375em",
+        "textAlignHorizontal": "LEFT",
+        "textAlignVertical": "TOP"
+      },
+      "fill_XRZUX1": [
+        "#212428"
+      ],
+      "layout_2VKXHZ": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 40,
+          "y": 210.66
+        },
+        "dimensions": {
+          "width": 22,
+          "height": 20.58
+        }
+      },
+      "layout_W1FUWF": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 0,
+          "y": 0
+        },
+        "dimensions": {
+          "width": 22,
+          "height": 11.02
+        }
+      },
+      "fill_PZ2TO3": [
+        "#70DCF0"
+      ],
+      "layout_6L2Y96": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 2.16,
+          "y": 11.74
+        },
+        "dimensions": {
+          "width": 17.64,
+          "height": 8.84
+        }
+      },
+      "layout_QUT6MN": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 9.51,
+          "y": 15.43
+        },
+        "dimensions": {
+          "width": 2.94,
+          "height": 5.14
+        }
+      },
+      "layout_IC5KU7": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 209.94,
+          "y": 190.78
+        },
+        "dimensions": {
+          "width": 190,
+          "height": 167.6
+        }
+      },
+      "layout_WNJ2KL": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 229.94,
+          "y": 320.08
+        },
+        "dimensions": {
+          "width": 143,
+          "height": 17
+        }
+      },
+      "layout_20FLJJ": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 229.94,
+          "y": 240.78
+        },
+        "dimensions": {
+          "width": 154,
+          "height": 17
+        }
+      },
+      "layout_9FWWGX": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 230.49,
+          "y": 271.77
+        },
+        "dimensions": {
+          "width": 52,
+          "height": 36
+        }
+      },
+      "layout_HJU0BT": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 230.81,
+          "y": 209.95
+        },
+        "dimensions": {
+          "width": 18.97,
+          "height": 22
+        }
+      },
+      "layout_UF6NPR": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 5.72,
+          "y": 20.48
+        },
+        "dimensions": {
+          "width": 5.26,
+          "height": 1.52
+        }
+      },
+      "fill_EE1QBU": [
+        "#C1300A"
+      ],
+      "layout_EY772N": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 0,
+          "y": 0.76
+        },
+        "dimensions": {
+          "width": 16.69,
+          "height": 18.21
+        }
+      },
+      "layout_2MD895": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 14.41,
+          "y": 0
+        },
+        "dimensions": {
+          "width": 4.55,
+          "height": 4.55
+        }
+      },
+      "layout_7P3D1U": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 409.89,
+          "y": 190.78
+        },
+        "dimensions": {
+          "width": 190,
+          "height": 167.6
+        }
+      },
+      "layout_IPIAL7": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 429.89,
+          "y": 240.78
+        },
+        "dimensions": {
+          "width": 154,
+          "height": 17
+        }
+      },
+      "layout_RXN1DH": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 21.01,
+          "y": 426.24
+        },
+        "dimensions": {
+          "width": 79,
+          "height": 29
+        }
+      },
+      "layout_JN6L73": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 111.28,
+          "y": 436.57
+        },
+        "dimensions": {
+          "width": 26,
+          "height": 17
+        }
+      },
+      "layout_K3N08K": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 156.81,
+          "y": 434.28
+        },
+        "dimensions": {
+          "width": 18,
+          "height": 18
+        }
+      },
+      "layout_G6X6NA": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 13.66,
+          "y": 13.66
+        },
+        "dimensions": {
+          "width": 4.34,
+          "height": 4.34
+        }
+      },
+      "stroke_S8JR42": {
+        "colors": [
+          "#F35B2A"
+        ],
+        "strokeWeight": "2px"
+      },
+      "layout_JXFRFH": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 0,
+          "y": 0
+        },
+        "dimensions": {
+          "width": 16,
+          "height": 16
+        }
+      },
+      "layout_JIALJC": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 195.94,
+          "y": 21
+        },
+        "dimensions": {
+          "width": 18,
+          "height": 18
+        }
+      },
+      "layout_9B3KIB": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 429.89,
+          "y": 209.95
+        },
+        "dimensions": {
+          "width": 22,
+          "height": 22
+        }
+      },
+      "fill_NNJ8OF": [
+        "#22BC72"
+      ],
+      "layout_ZW97HX": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 20,
+          "y": 474.09
+        },
+        "dimensions": {
+          "width": 180,
+          "height": 48
+        }
+      },
+      "layout_C4UUIQ": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 0,
+          "y": 0
+        },
+        "dimensions": {
+          "width": 180,
+          "height": 48
+        }
+      },
+      "effect_0C3UQU": {
+        "boxShadow": "0px 0px 20px 0px rgba(243, 91, 42, 0.3)"
+      },
+      "layout_4UQN8K": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 25.22,
+          "y": 13.94
+        },
+        "dimensions": {
+          "width": 130,
+          "height": 17
+        }
+      },
+      "layout_774X37": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 20,
+          "y": 0
+        },
+        "dimensions": {
+          "width": 110,
+          "height": 17
+        }
+      },
+      "layout_IMP0PI": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 0,
+          "y": 4.06
+        },
+        "dimensions": {
+          "width": 12,
+          "height": 12
+        }
+      },
+      "layout_RDFLCT": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 0,
+          "y": 6
+        },
+        "dimensions": {
+          "width": 12,
+          "height": 0
+        }
+      },
+      "stroke_P2JD2V": {
+        "colors": [
+          "#FFFFFF"
+        ],
+        "strokeWeight": "1px"
+      },
+      "layout_JU48I4": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 6,
+          "y": 0
+        },
+        "dimensions": {
+          "width": 0,
+          "height": 12
+        }
+      },
+      "layout_2YWX9V": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 20.41,
+          "y": 543.9
+        },
+        "dimensions": {
+          "width": 391.14,
+          "height": 613.33
+        }
+      },
+      "layout_NBKTG8": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 113.44,
+          "y": 602.86
+        },
+        "dimensions": {
+          "width": 78,
+          "height": 17
+        }
+      },
+      "layout_60LCMV": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 113.44,
+          "y": 568.53
+        },
+        "dimensions": {
+          "width": 184,
+          "height": 24
+        }
+      },
+      "style_8LK44F": {
+        "fontFamily": "Pretendard",
+        "fontWeight": 700,
+        "fontSize": 20,
+        "lineHeight": "1.193359375em",
+        "textAlignHorizontal": "LEFT",
+        "textAlignVertical": "TOP"
+      },
+      "layout_J6QM1S": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 40,
+          "y": 568.69
+        },
+        "dimensions": {
+          "width": 55,
+          "height": 55
+        }
+      },
+      "layout_09G252": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 52.16,
+          "y": 579.89
+        },
+        "dimensions": {
+          "width": 31,
+          "height": 29
+        }
+      },
+      "layout_QCM1CJ": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 40.2,
+          "y": 647.52
+        },
+        "dimensions": {
+          "width": 55,
+          "height": 16
+        }
+      },
+      "style_AX0P19": {
+        "fontFamily": "Pretendard",
+        "fontWeight": 400,
+        "fontSize": 13,
+        "lineHeight": "1.193359375em",
+        "textAlignHorizontal": "LEFT",
+        "textAlignVertical": "TOP"
+      },
+      "layout_1LCKU6": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 101.47,
+          "y": 644.44
+        },
+        "dimensions": {
+          "width": 171,
+          "height": 19
+        }
+      },
+      "layout_909LC6": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 39.8,
+          "y": 676.75
+        },
+        "dimensions": {
+          "width": 106,
+          "height": 16
+        }
+      },
+      "layout_NV0F8T": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 39.8,
+          "y": 703.51
+        },
+        "dimensions": {
+          "width": 98,
+          "height": 16
+        }
+      },
+      "layout_GBJ8Q4": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 152.57,
+          "y": 673.67
+        },
+        "dimensions": {
+          "width": 40,
+          "height": 19
+        }
+      },
+      "layout_E0CFDV": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 39.79,
+          "y": 738.91
+        },
+        "dimensions": {
+          "width": 108,
+          "height": 30
+        }
+      },
+      "fill_EICQPW": [
+        "#E7F7EC"
+      ],
+      "layout_DMSIKJ": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 51.87,
+          "y": 742.41
+        },
+        "dimensions": {
+          "width": 84.75,
+          "height": 19
+        }
+      },
+      "layout_O6OMKM": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 8.75,
+          "y": 0
+        },
+        "dimensions": {
+          "width": 76,
+          "height": 19
+        }
+      },
+      "layout_UL4DU0": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 0,
+          "y": 9.06
+        },
+        "dimensions": {
+          "width": 6,
+          "height": 6
+        }
+      },
+      "layout_E2I1EJ": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 145.44,
+          "y": 700.82
+        },
+        "dimensions": {
+          "width": 83,
+          "height": 19
+        }
+      },
+      "layout_TY4NV1": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 18.8,
+          "y": 792.78
+        },
+        "dimensions": {
+          "width": 392.41,
+          "height": 0
+        }
+      },
+      "layout_9M2PIG": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 113.44,
+          "y": 850.83
+        },
+        "dimensions": {
+          "width": 78,
+          "height": 17
+        }
+      },
+      "layout_WOIBFD": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 113.44,
+          "y": 816.5
+        },
+        "dimensions": {
+          "width": 142,
+          "height": 24
+        }
+      },
+      "layout_C62U18": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 40,
+          "y": 816.66
+        },
+        "dimensions": {
+          "width": 55,
+          "height": 55
+        }
+      },
+      "fill_AM281J": [
+        "#FFE3DC"
+      ],
+      "layout_RBN98P": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 50.77,
+          "y": 827.86
+        },
+        "dimensions": {
+          "width": 34,
+          "height": 29
+        }
+      },
+      "layout_GEYY7N": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 40.2,
+          "y": 895.49
+        },
+        "dimensions": {
+          "width": 55,
+          "height": 16
+        }
+      },
+      "layout_Z7MKN2": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 103,
+          "y": 892.41
+        },
+        "dimensions": {
+          "width": 121,
+          "height": 19
+        }
+      },
+      "layout_AMP1DU": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 39.8,
+          "y": 924.72
+        },
+        "dimensions": {
+          "width": 106,
+          "height": 16
+        }
+      },
+      "layout_1EU2QN": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 39.8,
+          "y": 951.49
+        },
+        "dimensions": {
+          "width": 98,
+          "height": 16
+        }
+      },
+      "layout_TY7YSC": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 152.38,
+          "y": 921.65
+        },
+        "dimensions": {
+          "width": 29,
+          "height": 19
+        }
+      },
+      "layout_W6JD7D": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 40,
+          "y": 986.88
+        },
+        "dimensions": {
+          "width": 108,
+          "height": 30
+        }
+      },
+      "fill_BIN352": [
+        "#FFF7D7"
+      ],
+      "layout_R5ITS8": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 52.04,
+          "y": 990.38
+        },
+        "dimensions": {
+          "width": 84,
+          "height": 19
+        }
+      },
+      "layout_L068J6": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 10,
+          "y": 0
+        },
+        "dimensions": {
+          "width": 74,
+          "height": 19
+        }
+      },
+      "fill_YM2ICT": [
+        "#EDAD4F"
+      ],
+      "layout_VWQ6H2": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 145.44,
+          "y": 948.79
+        },
+        "dimensions": {
+          "width": 83,
+          "height": 19
+        }
+      },
+      "layout_W85X12": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 304.94,
+          "y": 474.09
+        },
+        "dimensions": {
+          "width": 106.37,
+          "height": 48
+        }
+      },
+      "layout_X604U8": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 321.18,
+          "y": 488.03
+        },
+        "dimensions": {
+          "width": 74,
+          "height": 17
+        }
+      },
+      "layout_68KN71": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 26,
+          "y": 0
+        },
+        "dimensions": {
+          "width": 48,
+          "height": 17
+        }
+      },
+      "layout_KPLZNQ": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 0,
+          "y": 3.76
+        },
+        "dimensions": {
+          "width": 20,
+          "height": 12.6
+        }
+      },
+      "layout_CJHRYE": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 376.44,
+          "y": 752.91
+        },
+        "dimensions": {
+          "width": 16,
+          "height": 2
+        }
+      },
+      "layout_LC1TLH": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 7,
+          "y": 0
+        },
+        "dimensions": {
+          "width": 2,
+          "height": 2
+        }
+      },
+      "layout_O4S3HR": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 14,
+          "y": 0
+        },
+        "dimensions": {
+          "width": 2,
+          "height": 2
+        }
+      },
+      "layout_8FZCFC": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 0,
+          "y": 0
+        },
+        "dimensions": {
+          "width": 2,
+          "height": 2
+        }
+      },
+      "layout_XYQWEV": {
+        "mode": "none",
+        "sizing": {},
+        "locationRelativeToParent": {
+          "x": 376.44,
+          "y": 1000.88
+        },
+        "dimensions": {
+          "width": 16,
+          "height": 2
+        }
+      }
+    }
+  }
+}
