@@ -2,10 +2,19 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
+  DestroyRef,
+  inject,
+  OnInit,
   signal,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TranslatePipe } from '@vhandelivery/shared-ui';
+import {
+  TranslatePipe,
+  AgencyService,
+  AgencyResponse,
+  AgencyListResponse,
+} from '@vhandelivery/shared-ui';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   DataTableComponent,
   TableCellDirective,
@@ -22,7 +31,13 @@ import {
   TableHeaderFilterEvent,
 } from '../../../shared/interfaces/table.interface';
 
-import { Agency } from '../../../shared/interfaces/agency.interface';
+import {
+  Agency,
+  generateInitials,
+  generateInitialsColor,
+  mapOperationalStatusToUI,
+  mapApprovalStatusToUI,
+} from '../../../shared/interfaces/agency.interface';
 import { StatisticCardComponent } from '../../../shared/components/statistic-card';
 import { StatisticCardConfig } from '../../../shared/interfaces/statistic-card-config.interface';
 
@@ -40,104 +55,72 @@ import { StatisticCardConfig } from '../../../shared/interfaces/statistic-card-c
   styleUrl: './agencies.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AgenciesComponent {
-  // Statistics cards configuration matching Figma design
-  readonly statisticCards: StatisticCardConfig[] = [
-    {
-      value: '8,542',
-      label: 'TỔNG SỐ CỬA HÀNG',
-      icon: 'assets/icons/icon-stat-store.svg',
-      variant: 'primary',
-      trend: { value: '+12.5%', direction: 'up', label: 'so với tháng trước' },
-    },
-    {
-      value: '128',
-      label: 'CỬA HÀNG CHỜ DUYỆT',
-      icon: 'assets/icons/icon-stat-bell.svg',
-      variant: 'error',
-      subtitle: 'Yêu cầu cần xử lý ngay',
-    },
-    {
-      value: '7,215',
-      label: 'CỬA HÀNG HOẠT ĐỘNG',
-      icon: 'assets/icons/icon-stat-check.svg',
-      variant: 'success',
-      progress: { current: 7215, total: 8542 },
-    },
-    {
-      value: '1.24 tỷ ₫',
-      label: 'DOANH THU TỪ ĐỐI TÁC',
-      icon: 'assets/icons/icon-stat-coin.svg',
-      variant: 'warning',
-      subtitle: 'Tháng hiện tại Ước tính',
-    },
-  ];
+export class AgenciesComponent implements OnInit {
+  private readonly agencyService = inject(AgencyService);
+  private readonly destroyRef = inject(DestroyRef);
 
-  // Sample data matching Figma design
-  readonly agencies = signal<Agency[]>([
-    {
-      id: '1',
-      code: 'MCH-98122',
-      name: 'Global Logistics VN',
-      initials: 'GL',
-      initialsColor: '#D9F3F4',
-      location: 'Quận 1, TP. Hồ Chí Minh',
-      phone: '0912 345 678',
-      totalMerchants: 1248,
-      joinDate: '2023-12-13',
-      status: 'active',
-    },
-    {
-      id: '2',
-      code: 'MCH-98122',
-      name: 'Nexus Delivery',
-      initials: 'NX',
-      initialsColor: '#FFE3DC',
-      location: 'Cầu Giấy, Hà Nội',
-      phone: '0923 456 789',
-      totalMerchants: 892,
-      joinDate: '2023-12-13',
-      status: 'inactive',
-    },
-    {
-      id: '3',
-      code: 'MCH-98122',
-      name: 'Swift Dispatch',
-      initials: 'SD',
-      initialsColor: '#FFF7D7',
-      location: 'Sơn Trà, Đà Nẵng',
-      phone: '0934 567 890',
-      totalMerchants: 2051,
-      joinDate: '2023-12-13',
-      status: 'suspended',
-    },
-    {
-      id: '4',
-      code: 'MCH-98122',
-      name: 'Viet Trans Corp',
-      initials: 'VT',
-      initialsColor: '#E7F7EC',
-      location: 'Bình Thủy, Cần Thơ',
-      phone: '0945 678 901',
-      totalMerchants: 654,
-      joinDate: '2023-12-13',
-      status: 'locked',
-    },
-    {
-      id: '5',
-      code: 'MCH-98122',
-      name: 'Viet Trans Corp',
-      initials: 'VT',
-      initialsColor: '#E7F7EC',
-      location: 'Bình Thủy, Cần Thơ',
-      phone: '0956 789 012',
-      totalMerchants: 654,
-      joinDate: '2023-12-13',
-      status: 'locked',
-    },
-  ]);
+  // Loading state
+  readonly isLoading = signal(false);
 
-  // Table configuration matching Figma columns for agencies
+  // Statistics data from API
+  readonly statisticsData = signal<{
+    totalApproved: number;
+    totalPending: number;
+    totalActive: number;
+  }>({
+    totalApproved: 0,
+    totalPending: 0,
+    totalActive: 0,
+  });
+
+  // Statistics cards configuration - computed from API data
+  readonly statisticCards = computed<StatisticCardConfig[]>(() => {
+    const stats = this.statisticsData();
+    const total = this.pagination().total;
+
+    return [
+      {
+        value: this.formatNumber(stats.totalApproved),
+        label: 'TỔNG SỐ ĐẠI LÝ',
+        icon: 'assets/icons/icon-stat-store.svg',
+        variant: 'primary',
+        trend: {
+          value: '+12.5%',
+          direction: 'up',
+          label: 'so với tháng trước',
+        },
+      },
+      {
+        value: this.formatNumber(stats.totalPending),
+        label: 'ĐẠI LÝ CHỜ DUYỆT',
+        icon: 'assets/icons/icon-stat-bell.svg',
+        variant: 'error',
+        subtitle: 'Yêu cầu cần xử lý ngay',
+      },
+      {
+        value: this.formatNumber(stats.totalActive),
+        label: 'ĐẠI LÝ HOẠT ĐỘNG',
+        icon: 'assets/icons/icon-stat-check.svg',
+        variant: 'success',
+        progress:
+          stats.totalApproved > 0
+            ? { current: stats.totalActive, total: stats.totalApproved }
+            : undefined,
+      },
+      {
+        value: '1.24 tỷ ₫',
+        label: 'DOANH THU TỪ ĐỐI TÁC',
+        icon: 'assets/icons/icon-stat-coin.svg',
+        variant: 'warning',
+        subtitle: 'Tháng hiện tại Ước tính',
+      },
+    ];
+  });
+
+  // Agencies data from API
+  readonly agencies = signal<Agency[]>([]);
+
+  // Table configuration matching API response fields
   readonly tableConfig: TableConfig<Agency> = {
     id: 'agencies-table',
     columns: [
@@ -149,34 +132,47 @@ export class AgenciesComponent {
         width: '250px',
       },
       {
-        key: 'location',
-        labelKey: 'admin.partners.table.location',
+        key: 'phone',
+        labelKey: 'admin.partners.table.phone',
         type: 'text',
       },
       {
-        key: 'totalMerchants',
-        labelKey: 'admin.partners.table.totalMerchants',
-        type: 'number',
-        align: 'center',
-        sortable: true,
+        key: 'email',
+        labelKey: 'admin.partners.table.email',
+        type: 'text',
       },
       {
-        key: 'joinDate',
-        labelKey: 'admin.partners.table.joinDate',
-        type: 'date',
-        dateFormat: 'yyyy/MM/dd',
-        sortable: true,
+        key: 'address',
+        labelKey: 'admin.partners.table.address',
+        type: 'text',
       },
       {
-        key: 'status',
-        labelKey: 'admin.partners.table.status',
+        key: 'approvalStatus',
+        labelKey: 'admin.partners.table.approvalStatus',
+        type: 'status',
+        statusConfig: {
+          pending: { labelKey: 'common.status.pending', variant: 'warning' },
+          approved: { labelKey: 'common.status.approved', variant: 'success' },
+          rejected: { labelKey: 'common.status.rejected', variant: 'error' },
+        },
+      },
+      {
+        key: 'operationalStatus',
+        labelKey: 'admin.partners.table.operationalStatus',
         type: 'status',
         statusConfig: {
           active: { labelKey: 'common.status.active', variant: 'success' },
-          pending: { labelKey: 'common.status.pending', variant: 'warning' },
+          inactive: { labelKey: 'common.status.inactive', variant: 'default' },
           suspended: { labelKey: 'common.status.suspended', variant: 'info' },
           locked: { labelKey: 'common.status.locked', variant: 'error' },
         },
+      },
+      {
+        key: 'createdAt',
+        labelKey: 'admin.partners.table.createdAt',
+        type: 'date',
+        dateFormat: 'yyyy/MM/dd',
+        sortable: true,
       },
     ],
     actions: [
@@ -236,7 +232,7 @@ export class AgenciesComponent {
   readonly pagination = signal<TablePagination>({
     page: 1,
     pageSize: 10,
-    total: 148,
+    total: 0,
     pageSizeOptions: [10, 20, 50],
   });
 
@@ -279,6 +275,78 @@ export class AgenciesComponent {
     return pages;
   });
 
+  ngOnInit(): void {
+    this.loadAgencies();
+  }
+
+  /**
+   * Load agencies from API with statistics
+   */
+  private loadAgencies(): void {
+    this.isLoading.set(true);
+    const pag = this.pagination();
+
+    this.agencyService
+      .findAll({
+        page: pag.page,
+        limit: pag.pageSize,
+        include: 'statistics',
+      })
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (response: AgencyListResponse) => {
+          // Map API response to UI format
+          const mappedAgencies = response.data.map((agency) =>
+            this.mapAgencyToUI(agency)
+          );
+          this.agencies.set(mappedAgencies);
+
+          // Update pagination
+          this.pagination.update((prev) => ({
+            ...prev,
+            total: response.total,
+          }));
+
+          // Update statistics if available
+          if (response.statistics) {
+            this.statisticsData.set(response.statistics);
+          }
+
+          this.isLoading.set(false);
+        },
+        error: (error: unknown) => {
+          console.error('Failed to load agencies:', error);
+          this.isLoading.set(false);
+        },
+      });
+  }
+
+  /**
+   * Map API response to UI display format
+   */
+  private mapAgencyToUI(agency: AgencyResponse): Agency {
+    return {
+      id: agency.externalId,
+      code: `AGC-${agency.externalId.substring(0, 5).toUpperCase()}`,
+      name: agency.name,
+      initials: generateInitials(agency.name),
+      initialsColor: generateInitialsColor(agency.name),
+      phone: agency.phone ?? 'Chưa cập nhật',
+      email: agency.email ?? 'Chưa cập nhật',
+      address: agency.address ?? 'Chưa cập nhật',
+      approvalStatus: mapApprovalStatusToUI(agency.approvalStatus),
+      operationalStatus: mapOperationalStatusToUI(agency.operationalStatus),
+      createdAt: new Date(agency.createdAt).toISOString().split('T')[0],
+    };
+  }
+
+  /**
+   * Format number with thousand separators
+   */
+  private formatNumber(value: number): string {
+    return value.toLocaleString('vi-VN');
+  }
+
   // Event handlers
   onActionClick(event: TableActionEvent<Agency>): void {
     if (event.actionId === 'menu') {
@@ -306,6 +374,7 @@ export class AgenciesComponent {
       ...prev,
       page: event.page,
     }));
+    this.loadAgencies();
   }
 
   onSortChange(event: TableSortEvent): void {

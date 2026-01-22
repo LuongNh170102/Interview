@@ -4,7 +4,7 @@
     <div
       class="flex md:grid md:grid-cols-4 gap-3 md:gap-[13px] min-w-max md:min-w-0"
     >
-      @for (card of statisticCards; track card.label) {
+      @for (card of statisticCards(); track card.label) {
       <div class="w-[30%] md:w-auto shrink-0 md:shrink">
         <app-statistic-card [config]="card" />
       </div>
@@ -95,38 +95,36 @@
 
       <!-- Agency Details - Row format matching Figma -->
       <div class="flex flex-col gap-2 text-sm ml-[71px]">
-        <!-- Location row -->
+        <!-- Phone row -->
         <div class="flex items-center gap-2">
           <span
             class="text-[13px] text-content-tertiary uppercase w-[100px] shrink-0"
           >
-            {{ 'admin.partners.table.location' | translate }}
+            {{ 'admin.partners.table.phone' | translate }}
           </span>
-          <span class="text-content-primary">{{ agency.location }}</span>
+          <span class="text-content-primary">{{ agency.phone }}</span>
         </div>
-        <!-- Total Merchants row -->
+        <!-- Email row -->
         <div class="flex items-center gap-2">
           <span
             class="text-[13px] text-content-tertiary uppercase w-[100px] shrink-0"
           >
-            {{ 'admin.partners.table.totalMerchants' | translate }}
+            {{ 'admin.partners.table.email' | translate }}
           </span>
-          <span class="text-content-primary">{{
-            agency.totalMerchants | number
-          }}</span>
+          <span class="text-content-primary">{{ agency.email }}</span>
         </div>
-        <!-- Join Date row -->
+        <!-- Address row -->
         <div class="flex items-center gap-2">
           <span
             class="text-[13px] text-content-tertiary uppercase w-[100px] shrink-0"
           >
-            {{ 'admin.partners.table.joinDate' | translate }}
+            {{ 'admin.partners.table.address' | translate }}
           </span>
-          <span class="text-content-primary">{{ agency.joinDate }}</span>
+          <span class="text-content-primary">{{ agency.address }}</span>
         </div>
         <!-- Status row -->
         <div class="flex items-center gap-2 mt-2">
-          @switch (agency.status) { @case ('active') {
+          @switch (agency.operationalStatus) { @case ('active') {
           <span
             class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm bg-[#E7F7EC] text-[#22BC72]"
           >
@@ -330,7 +328,7 @@
         {{ 'admin.partners.actions.modify' | translate }}
       </button>
       <div class="border-t border-border"></div>
-      @if (agency.status === 'active') {
+      @if (agency.operationalStatus === 'active') {
       <button
         (click)="onMenuAction('deactivate', agency)"
         class="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-content-primary hover:bg-background-muted transition-colors"

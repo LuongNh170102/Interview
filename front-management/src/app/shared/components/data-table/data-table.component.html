@@ -158,10 +158,10 @@
       }
     </div>
   }
-  <div class="w-full bg-[var(--color-surface-base)]">
+  <div class="w-full bg-[var(--color-surface-base)] overflow-x-auto rounded-lg">
   <!-- Table Container -->
   <div
-    class=" rounded-lg shadow-sm overflow-hidden"
+    class="rounded-lg shadow-sm overflow-hidden min-w-max"
     [class.max-h-[var(--table-max-height)]]="config().maxHeight"
     [style.--table-max-height]="config().maxHeight"
   >
@@ -181,7 +181,7 @@
     <!-- Table -->
     <div class="overflow-x-auto" [class.overflow-y-auto]="config().maxHeight">
       <table
-        class="w-full border-collapse"
+        class="w-full border-collapse "
         role="grid"
         [attr.aria-busy]="loading()"
         [attr.aria-rowcount]="data().length"
@@ -243,7 +243,7 @@
 
             <!-- Actions Column -->
             @if (config().actions?.length) {
-              <th class="p-4 text-left text-xs font-semibold text-[var(--color-text-secondary)] uppercase tracking-wider border-b border-[var(--color-border)]">
+              <th class=" text-[var(--color-text-secondary)] uppercase">
                 {{ 'common.actions' | translate }}
               </th>
             }
