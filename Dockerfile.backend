@@ -32,8 +32,9 @@ ENV NODE_ENV=production
 ENV PORT=3000
 
 COPY --from=builder /workspace/dist/api-service .
-# Copy Prisma schema and migrations for runtime migrate
+# Copy Prisma schema, migrations and config for runtime migrate
 COPY --from=builder /workspace/prisma ./prisma
+COPY --from=builder /workspace/prisma.config.ts ./prisma.config.ts
 
 EXPOSE 3000
 CMD ["node", "main.js"]
