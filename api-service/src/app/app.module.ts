@@ -11,6 +11,7 @@ import { ProductModule } from './product/product.module';
 import { CategoryModule } from './category/category.module';
 import { BrandModule } from './brand/brand.module';
 import { CommonModule } from './common/common.module';
+import { HealthModule } from './health/health.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { CommonModule } from './common/common.module';
           ? '.env.production'
           : '.env.development',
     }),
+    HealthModule,
     CommonModule,
     AuthModule,
     UsersModule,

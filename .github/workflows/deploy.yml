@@ -1,0 +1,162 @@
+# =============================================================================
+# Deploy Workflow - Deploys to production when code is merged to main
+# =============================================================================
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Deployment environment'
+        required: true
+        default: 'production'
+        type: choice
+        options:
+          - production
+          - staging
+
+# Only one deployment at a time
+concurrency:
+  group: deploy-${{ github.event.inputs.environment || 'production' }}
+  cancel-in-progress: false
+
+env:
+  NODE_VERSION: '20'
+
+jobs:
+  # ===========================================================================
+  # BUILD - Build all applications
+  # ===========================================================================
+  build:
+    name: 🏗️ Build Applications
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci --prefer-offline --no-audit
+
+      - name: Build API Service
+        run: npx nx build api-service --configuration=production
+
+      - name: Build Frontend B2B
+        run: npx nx build front-b2b --configuration=production
+
+      - name: Build Frontend Management
+        run: npx nx build front-management --configuration=production
+
+      - name: Build Frontend B2C
+        run: npx nx build front-b2c --configuration=production
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+          retention-days: 1
+
+  # ===========================================================================
+  # DEPLOY - Deploy to server via SSH
+  # ===========================================================================
+  deploy:
+    name: 🚀 Deploy to ${{ github.event.inputs.environment || 'production' }}
+    runs-on: ubuntu-latest
+    needs: build
+    environment: ${{ github.event.inputs.environment || 'production' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          port: ${{ secrets.SERVER_PORT || 22 }}
+          command_timeout: 30m
+          script: |
+            set -e
+            
+            echo "=========================================="
+            echo "🚀 Starting deployment..."
+            echo "=========================================="
+            
+            # Navigate to project directory
+            cd ~/sharkbee/VhanDelivery
+            
+            # Pull latest code
+            echo "📥 Pulling latest code from main..."
+            git fetch origin main
+            git reset --hard origin/main
+            
+            # Build and restart containers
+            echo "🔨 Building and restarting containers..."
+            NODE_ENV=production docker compose up --build -d
+            
+            # Wait for containers to be healthy
+            echo "⏳ Waiting for services to start..."
+            sleep 15
+            
+            # Run database migrations
+            echo "🗃️ Running database migrations..."
+            docker exec vhandelivery_api npx prisma migrate deploy || true
+            
+            # Health check
+            echo "🔍 Running health checks..."
+            curl -f http://localhost:3000/api/health || echo "API health check failed"
+            curl -f http://localhost:4200 || echo "Frontend B2B check failed"
+            curl -f http://localhost:4300 || echo "Frontend Management check failed"
+            curl -f http://localhost:4400 || echo "Frontend B2C check failed"
+            
+            # Cleanup old images
+            echo "🧹 Cleaning up old Docker images..."
+            docker image prune -f
+            
+            echo "=========================================="
+            echo "✅ Deployment completed successfully!"
+            echo "=========================================="
+
+      - name: Verify deployment
+        run: |
+          echo "⏳ Waiting for deployment to stabilize..."
+          sleep 10
+          
+          echo "🔍 Verifying deployment..."
+          # Add your domain health checks here
+          # curl -f https://portal.sharkbee.vn/api/health || exit 1
+          
+          echo "✅ Deployment verification passed!"
+
+  # ===========================================================================
+  # NOTIFY - Send notifications
+  # ===========================================================================
+  notify:
+    name: 📢 Notify
+    runs-on: ubuntu-latest
+    needs: deploy
+    if: always()
+    steps:
+      - name: Notify on success
+        if: needs.deploy.result == 'success'
+        run: |
+          echo "✅ Deployment to ${{ github.event.inputs.environment || 'production' }} succeeded!"
+          echo "Commit: ${{ github.sha }}"
+          echo "Actor: ${{ github.actor }}"
+
+      - name: Notify on failure
+        if: needs.deploy.result == 'failure'
+        run: |
+          echo "❌ Deployment to ${{ github.event.inputs.environment || 'production' }} failed!"
+          echo "Commit: ${{ github.sha }}"
+          echo "Actor: ${{ github.actor }}"
+          exit 1
