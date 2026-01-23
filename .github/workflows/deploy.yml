@@ -86,42 +86,46 @@ jobs:
           command_timeout: 30m
           script: |
             set -e
-            
+
             echo "=========================================="
             echo "🚀 Starting deployment..."
             echo "=========================================="
-            
+
             # Navigate to project directory
             cd ~/sharkbee/VhanDelivery
-            
+
             # Pull latest code
             echo "📥 Pulling latest code from main..."
             git fetch origin main
             git reset --hard origin/main
-            
+
             # Build and restart containers
             echo "🔨 Building and restarting containers..."
             NODE_ENV=production docker compose up --build -d
-            
+
             # Wait for containers to be healthy
             echo "⏳ Waiting for services to start..."
             sleep 15
-            
+
             # Run database migrations
             echo "🗃️ Running database migrations..."
-            docker exec vhandelivery_api npx prisma migrate deploy || true
-            
+            if ! docker exec vhandelivery_api npx prisma migrate deploy; then
+              echo "❌ Migration failed! Check the logs above."
+              exit 1
+            fi
+            echo "✅ Migrations applied successfully"
+
             # Health check
             echo "🔍 Running health checks..."
             curl -f http://localhost:3000/api/health || echo "API health check failed"
             curl -f http://localhost:4200 || echo "Frontend B2B check failed"
             curl -f http://localhost:4300 || echo "Frontend Management check failed"
             curl -f http://localhost:4400 || echo "Frontend B2C check failed"
-            
+
             # Cleanup old images
             echo "🧹 Cleaning up old Docker images..."
             docker image prune -f
-            
+
             echo "=========================================="
             echo "✅ Deployment completed successfully!"
             echo "=========================================="
@@ -130,11 +134,11 @@ jobs:
         run: |
           echo "⏳ Waiting for deployment to stabilize..."
           sleep 10
-          
+
           echo "🔍 Verifying deployment..."
           # Add your domain health checks here
           # curl -f https://portal.sharkbee.vn/api/health || exit 1
-          
+
           echo "✅ Deployment verification passed!"
 
   # ===========================================================================
