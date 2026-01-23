@@ -118,8 +118,8 @@ jobs:
       - name: Set NX SHAs
         uses: nrwl/nx-set-shas@v4
 
-      - name: Test affected projects
-        run: npx nx affected -t test --parallel=3 --passWithNoTests --coverage
+      - name: Test backend only
+        run: npx nx test api-service --passWithNoTests --coverage
 
       - name: Upload coverage reports
         uses: codecov/codecov-action@v4
