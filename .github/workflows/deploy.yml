@@ -24,6 +24,8 @@ concurrency:
 
 env:
   NODE_VERSION: '20'
+  # Dummy DATABASE_URL for Prisma generate (not used for actual DB connection)
+  DATABASE_URL: 'postgresql://user:pass@localhost:5432/db'
 
 jobs:
   # ===========================================================================
@@ -44,6 +46,9 @@ jobs:
 
       - name: Install dependencies
         run: npm ci --prefer-offline --no-audit
+
+      - name: Generate Prisma Client
+        run: npx prisma generate
 
       - name: Build API Service
         run: npx nx build api-service --configuration=production
