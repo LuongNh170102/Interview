@@ -1,12 +1,9 @@
-version: '3.8'
 services:
   postgres:
     image: postgres:16-alpine
     container_name: vhandelivery_postgres
-    environment:
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: admin
-      POSTGRES_DB: vhandelivery_db
+    env_file:
+      - .env.${NODE_ENV:-development}
     ports:
       - '5432:5432'
     volumes:
@@ -16,12 +13,12 @@ services:
   minio:
     image: minio/minio
     container_name: vhandelivery_minio
+    env_file:
+      - .env.${NODE_ENV:-development}
     ports:
       - '9000:9000'
       - '9001:9001'
     environment:
-      MINIO_ROOT_USER: admin
-      MINIO_ROOT_PASSWORD: admin123
       MINIO_STORAGE_CLASS_STANDARD: 'EC:0'
       MINIO_BROWSER: 'on'
     volumes:
@@ -33,11 +30,13 @@ services:
     image: minio/mc
     depends_on:
       - minio
+    env_file:
+      - .env.${NODE_ENV:-development}
     entrypoint: >
       /bin/sh -c "
-      /usr/bin/mc alias set myminio http://minio:9000 admin admin123;
-      /usr/bin/mc mb myminio/vhan-media;
-      /usr/bin/mc anonymous set public myminio/vhan-media;
+      /usr/bin/mc alias set myminio http://minio:9000 $${AWS_ACCESS_KEY_ID} $${AWS_SECRET_ACCESS_KEY};
+      /usr/bin/mc mb myminio/$${AWS_BUCKET_NAME};
+      /usr/bin/mc anonymous set public myminio/$${AWS_BUCKET_NAME};
       exit 0;
       "
 
@@ -51,7 +50,6 @@ services:
       - .env.${NODE_ENV:-development}
     depends_on:
       - postgres
-      - minio
     ports:
       - '3000:3000'
 
@@ -67,7 +65,6 @@ services:
       - '4200:80'
     depends_on:
       - postgres
-      - minio
 
   front-management:
     container_name: vhandelivery_front_management
@@ -81,7 +78,6 @@ services:
       - '4300:80'
     depends_on:
       - postgres
-      - minio
 
   front-b2c:
     container_name: vhandelivery_front_b2c
@@ -95,24 +91,6 @@ services:
       - '4400:80'
     depends_on:
       - postgres
-      - minio
-
-  nginx-proxy:
-    image: nginx:1.27-alpine
-    container_name: vhandelivery_nginx_proxy
-    depends_on:
-      - api-service
-      - front-b2b
-      - front-management
-      - front-b2c
-    ports:
-      - '8080:80'
-    volumes:
-      - ./nginx/proxy.conf:/etc/nginx/templates/default.conf.template:ro
-    env_file:
-      - .env.${NODE_ENV:-development}
-    restart: always
 
 volumes:
   postgres_data:
-  minio_data:
