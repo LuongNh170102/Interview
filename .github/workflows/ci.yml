@@ -41,14 +41,17 @@ jobs:
         id: cache-modules
         uses: actions/cache@v4
         with:
-          path: node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
+          path: |
+            node_modules
+            node_modules/.prisma
+          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json', 'prisma/schema.prisma') }}
 
       - name: Install dependencies
         if: steps.cache-modules.outputs.cache-hit != 'true'
         run: npm ci --prefer-offline --no-audit
 
       - name: Generate Prisma Client
+        if: steps.cache-modules.outputs.cache-hit != 'true'
         run: npx prisma generate
 
   # ===========================================================================
@@ -74,11 +77,10 @@ jobs:
       - name: Restore node_modules
         uses: actions/cache@v4
         with:
-          path: node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
-
-      - name: Generate Prisma Client
-        run: npx prisma generate
+          path: |
+            node_modules
+            node_modules/.prisma
+          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json', 'prisma/schema.prisma') }}
 
       - name: Set NX SHAs
         uses: nrwl/nx-set-shas@v4
@@ -108,11 +110,10 @@ jobs:
       - name: Restore node_modules
         uses: actions/cache@v4
         with:
-          path: node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
-
-      - name: Generate Prisma Client
-        run: npx prisma generate
+          path: |
+            node_modules
+            node_modules/.prisma
+          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json', 'prisma/schema.prisma') }}
 
       - name: Set NX SHAs
         uses: nrwl/nx-set-shas@v4
@@ -151,11 +152,10 @@ jobs:
       - name: Restore node_modules
         uses: actions/cache@v4
         with:
-          path: node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
-
-      - name: Generate Prisma Client
-        run: npx prisma generate
+          path: |
+            node_modules
+            node_modules/.prisma
+          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json', 'prisma/schema.prisma') }}
 
       - name: Set NX SHAs
         uses: nrwl/nx-set-shas@v4
@@ -193,11 +193,10 @@ jobs:
       - name: Restore node_modules
         uses: actions/cache@v4
         with:
-          path: node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
-
-      - name: Generate Prisma Client
-        run: npx prisma generate
+          path: |
+            node_modules
+            node_modules/.prisma
+          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json', 'prisma/schema.prisma') }}
 
       - name: Install Playwright browsers
         run: npx playwright install --with-deps chromium
