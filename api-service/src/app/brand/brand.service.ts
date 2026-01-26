@@ -64,7 +64,7 @@ export class BrandService {
         brandId: brand.id,
         agencyId: brand.agencyId,
         ownerId: brand.agency.ownerId,
-        status: MERCHANT_STATUS.APPROVED,
+        approvalStatus: MERCHANT_STATUS.APPROVED,
 
         categories: {
           create: internalCategoryIds.map((catId) => ({

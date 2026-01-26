@@ -3,8 +3,12 @@
  * This is only a minimal backend to get started.
  */
 
-import { Logger, ValidationPipe } from '@nestjs/common';
-import { NestFactory } from '@nestjs/core';
+import {
+  ClassSerializerInterceptor,
+  Logger,
+  ValidationPipe,
+} from '@nestjs/common';
+import { NestFactory, Reflector } from '@nestjs/core';
 import { AppModule } from './app/app.module';
 import cookieParser from 'cookie-parser';
 import { AllExceptionsFilter } from './app/common/filters/http-exception.filter';
@@ -29,6 +33,9 @@ async function bootstrap() {
 
   // Global Exception Filter
   app.useGlobalFilters(new AllExceptionsFilter());
+
+  // Global Serializer Interceptor - transforms entities and applies @Exclude()
+  app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
 
   const port = process.env.PORT || 3000;
   await app.listen(port, '0.0.0.0');

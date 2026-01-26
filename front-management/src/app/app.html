@@ -1,2 +1,10 @@
-<app-nx-welcome></app-nx-welcome>
 <router-outlet></router-outlet>
+
+<app-global-modal
+  [isOpen]="modalService.state().isOpen"
+  [type]="modalService.state().type"
+  [title]="modalService.state().title"
+  [message]="modalService.state().message"
+  (close)="modalService.close()"
+  (confirm)="modalService.confirm()"
+></app-global-modal>

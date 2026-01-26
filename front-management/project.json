@@ -26,11 +26,21 @@
           {
             "glob": "**/*",
             "input": "front-management/public"
+          },
+          {
+            "glob": "**/*",
+            "input": "front-management/src/assets",
+            "output": "assets"
           }
         ],
         "styles": [
           "front-management/src/styles.scss"
-        ]
+        ],
+        "stylePreprocessorOptions": {
+          "includePaths": [
+            "front-management/src/styles"
+          ]
+        }
       },
       "configurations": {
         "production": {
@@ -61,10 +71,12 @@
       "executor": "@angular/build:dev-server",
       "configurations": {
         "production": {
-          "buildTarget": "front-management:build:production"
+          "buildTarget": "front-management:build:production",
+          "proxyConfig": "front-management/proxy.conf.json"
         },
         "development": {
-          "buildTarget": "front-management:build:development"
+          "buildTarget": "front-management:build:development",
+          "proxyConfig": "front-management/proxy.conf.json"
         }
       },
       "defaultConfiguration": "development"

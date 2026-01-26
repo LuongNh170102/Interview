@@ -1,0 +1,77 @@
+<div
+  class="flex flex-col px-5 py-5 md:px-[1.5625rem] md:py-[1.875rem] bg-[var(--color-surface-base)] rounded-xl border border-[var(--color-border-light)] min-h-[160px] md:min-h-[11.25rem] h-full"
+>
+  <!-- Mobile: Icon on top -->
+  <img
+    [src]="config().icon"
+    [alt]="config().labelKey | translate"
+    class="w-[22px] h-[22px] object-contain mb-2 md:hidden"
+  />
+
+  <!-- Desktop: Label and Icon in row -->
+  <div class="hidden md:flex mb-2 items-center justify-between">
+    <span
+      class="text-[1rem] text-[var(--color-text-tertiary)] uppercase tracking-wide leading-[1.2]"
+    >
+      {{ config().labelKey | translate }}
+    </span>
+    <img
+      [src]="config().icon"
+      [alt]="config().labelKey | translate"
+      class="w-[22px] h-[22px] object-contain"
+    />
+  </div>
+
+  <!-- Mobile: Label below icon -->
+  <span
+    class="md:hidden text-sm text-[var(--color-text-tertiary)] uppercase tracking-wide leading-[1.2] mb-2"
+  >
+    {{ config().labelKey | translate }}
+  </span>
+
+  <!-- Value -->
+  <span
+    class="text-[1.875rem] md:text-[2.5rem] font-bold text-[var(--color-text-primary)] mt-2 leading-[1.2]"
+  >
+    {{ config().value }}
+  </span>
+
+  <!-- Trend or Subtitle (at bottom) -->
+  @if (config().trend) {
+  <div class="flex gap-1 mt-auto pt-3">
+    <span
+      class="inline-block w-fit text-sm md:text-[1rem] font-normal rounded-[0.25rem]"
+      [ngClass]="trendBgClass()"
+    >
+      {{ config().trend?.value }}
+    </span>
+    <span class="text-sm md:text-[1rem] text-[var(--color-status-info)]">
+      {{
+        config().trend?.labelKey ?? 'admin.partners.stats.comparedToLastMonth'
+          | translate
+      }}
+    </span>
+  </div>
+  } @if (config().subtitleKey && !config().trend && !config().progress) {
+  <span
+    class="text-sm md:text-[1rem] mt-auto pt-3"
+    [ngClass]="subtitleColorClass()"
+  >
+    {{ config().subtitleKey! | translate }}
+  </span>
+  }
+
+  <!-- Progress Bar (optional) -->
+  @if (config().progress) {
+  <div class="mt-auto pt-3 w-full">
+    <div
+      class="h-[0.25rem] bg-[var(--color-background-muted)] rounded-full overflow-hidden"
+    >
+      <div
+        class="h-full bg-[var(--color-status-success)] rounded-full transition-all duration-300"
+        [style.width.%]="progressPercentage()"
+      ></div>
+    </div>
+  </div>
+  }
+</div>

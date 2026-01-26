@@ -20,4 +20,5 @@ export interface UserProfile {
 export interface AuthResponse {
   access_token: string;
   user: UserProfile;
+  permissions: string[];
 }

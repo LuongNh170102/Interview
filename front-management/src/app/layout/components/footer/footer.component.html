@@ -1,0 +1,67 @@
+<footer
+  class="h-auto md:h-10 flex flex-col md:flex-row items-center justify-between px-4 md:px-10 py-2 md:py-0 gap-2 md:gap-0 bg-[var(--color-footer-background)] border-t border-[var(--color-border)]"
+>
+  <!-- Left: System Status -->
+  <div class="hidden md:flex items-center gap-6">
+    <div class="flex items-center gap-2">
+      @switch (systemStatus()) { @case ('online') {
+      <span
+        class="w-2 h-2 rounded-full bg-[var(--color-status-success)]"
+      ></span>
+      <span class="text-[0.875rem] text-[var(--color-text-tertiary)]">
+        {{ 'admin.footer.systemOnline' | translate }}
+      </span>
+      } @case ('offline') {
+      <span class="w-2 h-2 rounded-full bg-[var(--color-status-error)]"></span>
+      <span class="text-[0.875rem] text-[var(--color-text-tertiary)]">
+        {{ 'admin.footer.systemOffline' | translate }}
+      </span>
+      } @case ('maintenance') {
+      <span class="w-2 h-2 rounded-full bg-[var(--color-accent)]"></span>
+      <span class="text-[0.875rem] text-[var(--color-text-tertiary)]">
+        {{ 'admin.footer.systemMaintenance' | translate }}
+      </span>
+      } }
+    </div>
+
+    <div class="flex items-center gap-2">
+      <span class="w-2 h-2 rounded-full bg-[var(--color-primary)]"></span>
+      <span class="text-[0.875rem] text-[var(--color-text-tertiary)]">
+        {{ 'admin.footer.apiConnection' | translate }}
+        {{ apiConnectionPercentage() }}%
+      </span>
+    </div>
+  </div>
+
+  <!-- Mobile: Simplified footer -->
+  <div class="flex md:hidden items-center gap-4 w-full justify-center">
+    <div class="flex items-center gap-2">
+      @switch (systemStatus()) { @case ('online') {
+      <span
+        class="w-2 h-2 rounded-full bg-[var(--color-status-success)]"
+      ></span>
+      } @case ('offline') {
+      <span class="w-2 h-2 rounded-full bg-[var(--color-status-error)]"></span>
+      } @case ('maintenance') {
+      <span class="w-2 h-2 rounded-full bg-[var(--color-accent)]"></span>
+      } }
+      <span class="text-xs text-[var(--color-text-tertiary)]">
+        (C) {{ currentYear }} VHan Delivery
+      </span>
+    </div>
+  </div>
+
+  <!-- Center: Copyright - Desktop only -->
+  <div
+    class="hidden md:block text-[0.875rem] text-[var(--color-text-tertiary)]"
+  >
+    (C) {{ currentYear }} VHan Delivery
+  </div>
+
+  <!-- Right: Version & Links - Desktop only -->
+  <div class="hidden md:flex items-center gap-4">
+    <span class="text-[0.875rem] text-[var(--color-text-tertiary)]"
+      >v1.0.0</span
+    >
+  </div>
+</footer>

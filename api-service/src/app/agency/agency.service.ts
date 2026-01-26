@@ -5,17 +5,24 @@ import {
 } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
 import { CreateAgencyDto } from './dto/create-agency.dto';
+import {
+  AgencyQueryDto,
+  AgencyStatistics,
+  AgencyListResponse,
+} from './dto/agency-query.dto';
 import { RequestOtpDto, VerifyOtpDto } from '../otp/dto/otp.dto';
 import { JwtService } from '@nestjs/jwt';
 import {
   AGENCY_STATUS,
   AGENCY_REGISTRATION_OTP,
+  AGENCY_OPERATIONAL_STATUS,
 } from '../common/constants/agency.constant';
 import { AUTH_MESSAGES } from '../common/constants/messages.constant';
 import { OtpService } from '../otp/otp.service';
-import { PaginationDto } from '../common/dto/pagination.dto';
 import { RESOURCE_MESSAGES } from '../common/constants/messages.constant';
 import { RESOURCE_TARGETS } from '../common/constants/resource.constant';
+import { Agency } from '@prisma/client';
+import { AgencyEntity } from './entities/agency.entity';
 
 @Injectable()
 export class AgencyService {
@@ -33,9 +40,11 @@ export class AgencyService {
     return this.otpService.verifyOtp(dto, AGENCY_REGISTRATION_OTP);
   }
 
-  async findAll(pagination: PaginationDto) {
-    const take = pagination.limit ?? 10;
-    const skip = pagination.skip;
+  async findAll(
+    query: AgencyQueryDto
+  ): Promise<AgencyListResponse<AgencyEntity>> {
+    const take = query.limit ?? 10;
+    const skip = query.skip;
 
     const [items, total] = await this.prisma.$transaction([
       this.prisma.agency.findMany({
@@ -46,15 +55,41 @@ export class AgencyService {
       this.prisma.agency.count(),
     ]);
 
-    return {
-      data: items,
+    const response: AgencyListResponse<AgencyEntity> = {
+      data: items.map((item) => new AgencyEntity(item)),
       total,
-      page: pagination.page ?? 1,
+      page: query.page ?? 1,
       limit: take,
     };
+
+    if (query.shouldIncludeStatistics) {
+      response.statistics = await this.getStatistics();
+    }
+
+    return response;
   }
 
-  async findByExternalId(externalId: string) {
+  private async getStatistics(): Promise<AgencyStatistics> {
+    const [totalApproved, totalPending, totalActive] =
+      await this.prisma.$transaction([
+        this.prisma.agency.count({
+          where: { approvalStatus: AGENCY_STATUS.APPROVED },
+        }),
+        this.prisma.agency.count({
+          where: { approvalStatus: AGENCY_STATUS.PENDING },
+        }),
+        this.prisma.agency.count({
+          where: {
+            approvalStatus: AGENCY_STATUS.APPROVED,
+            operationalStatus: AGENCY_OPERATIONAL_STATUS.ACTIVE,
+          },
+        }),
+      ]);
+
+    return { totalApproved, totalPending, totalActive };
+  }
+
+  async findByExternalId(externalId: string): Promise<AgencyEntity> {
     const agency = await this.prisma.agency.findUnique({
       where: { externalId },
     });
@@ -65,10 +100,10 @@ export class AgencyService {
       );
     }
 
-    return agency;
+    return new AgencyEntity(agency);
   }
 
-  async create(userId: number, dto: CreateAgencyDto) {
+  async create(userId: number, dto: CreateAgencyDto): Promise<AgencyEntity> {
     let payload;
     try {
       payload = this.jwtService.verify(dto.verificationToken);
@@ -97,10 +132,10 @@ export class AgencyService {
         logo: dto.logo,
         businessLicenseUrl: dto.businessLicenseUrl,
         ownerId: userId,
-        status: AGENCY_STATUS.PENDING,
+        approvalStatus: AGENCY_STATUS.PENDING,
       },
     });
 
-    return agency;
+    return new AgencyEntity(agency);
   }
 }

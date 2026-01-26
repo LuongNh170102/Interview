@@ -1,0 +1,59 @@
+// Colors
+$color-primary: #f35b2a;
+$color-secondary: #161619;
+$color-accent: #ffc107;
+$color-surface-base: #ffffff;
+$color-surface-muted: #f8f9fa;
+$color-surface-elevated: #ffffff;
+$color-border: #e4e7ed;
+$color-border-light: #e0e0e0;
+$color-text-primary: #212428;
+$color-text-secondary: #666666;
+$color-text-tertiary: #9b9b9b;
+$color-status-error: #e53935;
+$color-status-error-bg: #fdeaea;
+$color-status-success: #22bc72;
+$color-status-success-bg: #e7f7ec;
+$color-status-warning: #edad4f;
+$color-status-warning-bg: #fff7d7;
+$color-status-info: #4a90d9;
+$color-status-info-bg: #e8f4fc;
+$color-status-default: #9e9e9e;
+$color-status-default-bg: #f5f5f5;
+$color-on-primary: #ffffff;
+$color-on-secondary: #ffffff;
+$color-primary-hover: #dd4a22;
+$color-primary-light: #ffeee9;
+$color-background-muted: #f4f4f4;
+$color-footer-background: #e8e8e8;
+
+// CSS Variables for runtime usage if needed
+:root {
+  --color-primary: #{$color-primary};
+  --color-primary-hover: #{$color-primary-hover};
+  --color-primary-light: #{$color-primary-light};
+  --color-secondary: #{$color-secondary};
+  --color-accent: #{$color-accent};
+  --color-surface-base: #{$color-surface-base};
+  --color-surface-muted: #{$color-surface-muted};
+  --color-surface-elevated: #{$color-surface-elevated};
+  --color-border: #{$color-border};
+  --color-border-light: #{$color-border-light};
+  --color-text-primary: #{$color-text-primary};
+  --color-text-secondary: #{$color-text-secondary};
+  --color-text-tertiary: #{$color-text-tertiary};
+  --color-status-error: #{$color-status-error};
+  --color-status-error-bg: #{$color-status-error-bg};
+  --color-status-success: #{$color-status-success};
+  --color-status-success-bg: #{$color-status-success-bg};
+  --color-status-warning: #{$color-status-warning};
+  --color-status-warning-bg: #{$color-status-warning-bg};
+  --color-status-info: #{$color-status-info};
+  --color-status-info-bg: #{$color-status-info-bg};
+  --color-status-default: #{$color-status-default};
+  --color-status-default-bg: #{$color-status-default-bg};
+  --color-on-primary: #{$color-on-primary};
+  --color-on-secondary: #{$color-on-secondary};
+  --color-background-muted: #{$color-background-muted};
+  --color-footer-background: #{$color-footer-background};
+}

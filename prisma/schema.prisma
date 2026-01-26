@@ -116,7 +116,20 @@ model Agency {
   email       String?
   logo        String?
   businessLicenseUrl String? @map("business_license_url")
-  status      ApprovalStatus @default(PENDING)
+  
+  // Approval Status (one-time, for registration process)
+  approvalStatus    ApprovalStatus    @default(PENDING) @map("approval_status")
+  approvedAt        DateTime?         @map("approved_at")
+  approvedBy        Int?              @map("approved_by")
+  rejectedAt        DateTime?         @map("rejected_at")
+  rejectedBy        Int?              @map("rejected_by")
+  rejectionReason   String?           @map("rejection_reason") @db.Text
+  
+  // Operational Status (ongoing, can change multiple times)
+  operationalStatus OperationalStatus @default(ACTIVE) @map("operational_status")
+  statusChangedAt   DateTime?         @map("status_changed_at")
+  statusChangedBy   Int?              @map("status_changed_by")
+  statusReason      String?           @map("status_reason") @db.Text
 
   // Ownership
   ownerId     Int?     @map("owner_id")
@@ -136,7 +149,13 @@ enum ApprovalStatus {
   PENDING
   APPROVED
   REJECTED
-  SUSPENDED
+}
+
+enum OperationalStatus {
+  ACTIVE      
+  INACTIVE    
+  SUSPENDED   
+  LOCKED      
 }
 
 model Brand {
@@ -237,7 +256,21 @@ model Merchant {
   latitude    Float?
   longitude   Float?
   phone       String?
-  status      ApprovalStatus? // Approval status
+  
+  // Approval Status (one-time, for registration process)
+  approvalStatus    ApprovalStatus    @default(PENDING) @map("approval_status")
+  approvedAt        DateTime?         @map("approved_at")
+  approvedBy        Int?              @map("approved_by")
+  rejectedAt        DateTime?         @map("rejected_at")
+  rejectedBy        Int?              @map("rejected_by")
+  rejectionReason   String?           @map("rejection_reason") @db.Text
+  
+  // Operational Status (ongoing, can change multiple times)
+  operationalStatus OperationalStatus @default(ACTIVE) @map("operational_status")
+  statusChangedAt   DateTime?         @map("status_changed_at")
+  statusChangedBy   Int?              @map("status_changed_by")
+  statusReason      String?           @map("status_reason") @db.Text
+  
   isAcceptingOrders Boolean @default(true) @map("is_accepting_orders") 
   metadata    Json?
   createdAt   DateTime @default(now()) @map("created_at")

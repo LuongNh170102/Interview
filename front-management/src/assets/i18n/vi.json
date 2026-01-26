@@ -1,0 +1,250 @@
+{
+  "header": {
+    "language": "Ngôn ngữ",
+    "languages": {
+      "vi": "Tiếng Việt",
+      "en": "Tiếng Anh",
+      "ko": "Tiếng Hàn"
+    },
+    "nav": {
+      "login": "Đăng nhập"
+    }
+  },
+  "menu": {
+    "vhanDelivery": "VHan Delivery"
+  },
+  "modal": {
+    "logoutConfirmTitle": "Xác nhận đăng xuất",
+    "logoutConfirmMessage": "Bạn có chắc chắn muốn đăng xuất không?",
+    "error": "Đã xảy ra lỗi",
+    "close": "Đóng",
+    "registrationFailed": "Đăng ký thất bại",
+    "registrationFailedDesc": "Chúng tôi không thể gửi thông tin của bạn. Vui lòng thử lại hoặc liên hệ với đội hỗ trợ của chúng tôi.",
+    "otpInvalid": "Mã xác thực không hợp lệ hoặc đã hết hạn. Vui lòng yêu cầu mã OTP mới và thử lại.",
+    "registrationSuccess": "Đăng ký thành công",
+    "registrationSuccessDesc": "Cảm ơn bạn đã đăng ký! Đội ngũ đối tác của chúng tôi sẽ xem xét thông tin của bạn và liên hệ trong vòng 24 giờ.",
+    "otpTitle": "Xác thực OTP",
+    "otpDesc": "Vui lòng nhập mã xác thực đã gửi đến",
+    "confirm": "Xác nhận",
+    "otpNotReceived": "Chưa nhận được mã?",
+    "otpResendIn": "Gửi lại sau",
+    "otpResend": "Gửi lại mã"
+  },
+  "common": {
+    "button": {
+      "save": "Lưu",
+      "cancel": "Hủy",
+      "delete": "Xóa",
+      "continue": "Tiếp tục",
+      "view": "Xem chi tiết",
+      "edit": "Chỉnh sửa"
+    },
+    "loading": "Đang tải...",
+    "noData": "Không có dữ liệu",
+    "actions": "Thao tác",
+    "selectAll": "Chọn tất cả",
+    "selectRow": "Chọn dòng",
+    "pagination": {
+      "showing": "Hiển thị",
+      "of": "của",
+      "label": "Điều hướng phân trang",
+      "previous": "Trang trước",
+      "next": "Trang sau",
+      "items": "đối tác",
+      "page": "Trang",
+      "total": "Tổng"
+    },
+    "status": {
+      "active": "Hoạt động",
+      "inactive": "Ngừng hoạt động",
+      "pending": "Chờ duyệt",
+      "approved": "Đã duyệt",
+      "rejected": "Từ chối",
+      "suspended": "Tạm nghỉ",
+      "locked": "Đã khóa"
+    },
+    "toggle": "Bật/Tắt",
+    "column": {
+      "title": "Cột",
+      "showAll": "Hiện tất cả",
+      "hideAll": "Ẩn tất cả",
+      "reset": "Đặt lại",
+      "of": "/",
+      "visible": "cột hiển thị"
+    }
+  },
+  "app": {
+    "title": {
+      "management": "VHan Delivery Management"
+    }
+  },
+  "admin": {
+    "nav": {
+      "dashboard": "Dashboard",
+      "partners": "Đối tác & Cửa hàng",
+      "categories": "Danh mục",
+      "orders": "Đơn hàng",
+      "reports": "Báo cáo",
+      "auditLogs": "Audit Logs"
+    },
+    "header": {
+      "searchPlaceholder": "Tìm kiếm...",
+      "profile": "Hồ sơ",
+      "settings": "Cài đặt",
+      "logout": "Đăng xuất",
+      "language": "Ngôn ngữ"
+    },
+    "footer": {
+      "systemOnline": "Hệ thống đang hoạt động",
+      "apiConnection": "Kết nối API",
+      "copyright": "© 2025 VHan Delivery. All rights reserved."
+    },
+    "common": {
+      "search": "Tìm kiếm...",
+      "actions": "Thao tác",
+      "comingSoon": "Tính năng đang phát triển",
+      "filter": "Lọc"
+    },
+    "partners": {
+      "tabs": {
+        "agencies": "Đối tác",
+        "merchants": "Cửa hàng"
+      },
+      "stats": {
+        "totalAgencies": "Tổng số đối tác",
+        "totalMerchants": "Tổng số cửa hàng",
+        "totalStores": "Tổng số cửa hàng",
+        "pendingApproval": "Chờ duyệt",
+        "pendingMerchants": "Cửa hàng chờ duyệt",
+        "activeAgencies": "Đối tác hoạt động",
+        "activeMerchants": "Cửa hàng hoạt động",
+        "activeStores": "Cửa hàng hoạt động",
+        "revenueFromAgencies": "Doanh thu từ đối tác",
+        "revenueFromMerchants": "Doanh thu từ cửa hàng",
+        "storeRevenue": "Doanh thu từ cửa hàng",
+        "comparedToLastMonth": "so với tháng trước",
+        "needsProcessing": "Yêu cầu cần xử lý ngay",
+        "currentMonthEstimate": "Tháng hiện tại ước tính"
+      },
+      "pagination": {
+        "page": "Trang",
+        "total": "Tổng",
+        "agencies": "đối tác",
+        "merchants": "cửa hàng",
+        "showing": "Hiển thị",
+        "of": "của"
+      },
+      "filter": {
+        "location": "Lọc"
+      },
+      "column": "Column",
+      "agencies": {
+        "title": "Đối tác",
+        "addNew": "Thêm Đối tác",
+        "searchPlaceholder": "Tìm kiếm đối tác....",
+        "allLocations": "Tất cả địa điểm"
+      },
+      "merchants": {
+        "title": "Danh sách cửa hàng",
+        "subtitle": "Quản lý thông tin cửa hàng trong hệ thống",
+        "addNew": "Thêm cửa hàng"
+      },
+      "stores": {
+        "listTitle": "Danh sách cửa hàng",
+        "addNew": "Thêm cửa hàng",
+        "searchPlaceholder": "Tìm kiếm..."
+      },
+      "table": {
+        "agencyName": "TÊN ĐỐI TÁC",
+        "merchantName": "Tên cửa hàng",
+        "storeName": "Tên cửa hàng",
+        "agency": "Đối tác",
+        "owner": "Chủ sở hữu",
+        "phone": "SỐ ĐIỆN THOẠI",
+        "email": "EMAIL",
+        "address": "ĐỊA CHỈ",
+        "merchantCount": "Số cửa hàng",
+        "productCount": "Số sản phẩm",
+        "status": "STATUS",
+        "approvalStatus": "TRẠNG THÁI DUYỆT",
+        "operationalStatus": "TRẠNG THÁI HOẠT ĐỘNG",
+        "createdAt": "NGÀY TẠO",
+        "createdDate": "Ngày tạo",
+        "location": "ĐỊA ĐIỂM",
+        "totalMerchants": "TỔNG CỬA HÀNG",
+        "totalStores": "TỔNG CỬA HÀNG",
+        "joinDate": "NGÀY THAM GIA"
+      },
+      "actions": {
+        "viewDetail": "Xem chi tiết",
+        "modify": "Chỉnh sửa",
+        "activation": "Kích hoạt",
+        "deactivation": "Tạm ngừng",
+        "delete": "Xóa"
+      }
+    },
+    "categories": {
+      "subtitle": "Quản lý danh mục sản phẩm"
+    },
+    "orders": {
+      "subtitle": "Quản lý đơn hàng"
+    },
+    "reports": {
+      "subtitle": "Báo cáo và thống kê"
+    },
+    "auditLogs": {
+      "subtitle": "Nhật ký hoạt động hệ thống"
+    }
+  },
+  "dashboard": {
+    "title": "Bảng điều khiển",
+    "subtitle": "Tổng quan",
+    "welcome": "Ảnh chụp nhanh tình hình hôm nay",
+    "cards": {
+      "pending": "Chuyến cần xử lý",
+      "pendingHelper": "Đang chờ phân công",
+      "inTransit": "Đang giao",
+      "inTransitHelper": "Tài xế đang di chuyển",
+      "delivered": "Đã giao hôm nay",
+      "deliveredHelper": "Đơn đã hoàn thành"
+    },
+    "actions": {
+      "nextSteps": "Bước tiếp theo",
+      "description": "Trang mẫu làm điểm đến sau khi đăng nhập.",
+      "viewAuth": "Quay lại đăng nhập"
+    }
+  },
+  "auth": {
+    "common": {
+      "logout": "Đăng xuất"
+    },
+    "login": {
+      "title": "Login",
+      "hero": {
+        "subtitle": "Gọi giao hàng dễ dàng hơn"
+      },
+      "subtitle": "Cổng quản lý",
+      "welcome": "Xin chào ! Chào mừng các bạn",
+      "notMember": "Vẫn chưa là hội viên à?",
+      "joinMember": "gia nhập hội viên",
+      "emailPlaceholder": "vhandelivery@vhanit.com",
+      "passwordPlaceholder": "Hãy nhập mật khẩu của bạn",
+      "submit": "Tiếp tục",
+      "google": "Đăng nhập với Google",
+      "hidePassword": "Ẩn mật khẩu",
+      "showPassword": "Hiện mật khẩu",
+      "errorTitle": "Đăng nhập thất bại",
+      "successTitle": "Đăng nhập thành công",
+      "successMessage": "Chào mừng trở lại!"
+    },
+    "field": {
+      "email": "E-Mail",
+      "password": "Password"
+    },
+    "error": {
+      "emailInvalid": "Email không hợp lệ",
+      "passwordMin": "Mật khẩu cần ít nhất 6 ký tự",
+      "loginFailed": "Email hoặc mật khẩu không đúng"
+    }
+  }
+}

@@ -85,6 +85,7 @@ export class AuthService {
     }
 
     const roles = user.userRoles?.map((ur) => ur.role.name) || [];
+    const permissions = await this.usersService.getUserPermissions(user.id);
     const tokens = await this.getTokens(user.id, user.email, roles);
     await this.updateRefreshToken(user.id, tokens.refresh_token);
 
@@ -96,6 +97,7 @@ export class AuthService {
         username: user.username,
         roles,
       },
+      permissions,
     };
   }
 
@@ -122,6 +124,7 @@ export class AuthService {
         throw new ForbiddenException(AUTH_MESSAGES.ACCESS_DENIED);
 
       const roles = (user as any).userRoles?.map((ur) => ur.role.name) || [];
+      const permissions = await this.usersService.getUserPermissions(user.id);
       const tokens = await this.getTokens(user.id, user.email, roles);
       await this.updateRefreshToken(user.id, tokens.refresh_token);
       return {
@@ -132,6 +135,7 @@ export class AuthService {
           username: user.username,
           roles,
         },
+        permissions,
       };
     } catch (e) {
       console.error(e);
@@ -163,5 +167,12 @@ export class AuthService {
     });
 
     return this.login({ email: newUser.email, password: password });
+  }
+
+  /**
+   * Get user permissions - can be called from controller
+   */
+  async getUserPermissions(userId: number): Promise<string[]> {
+    return this.usersService.getUserPermissions(userId);
   }
 }

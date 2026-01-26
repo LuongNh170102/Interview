@@ -1,0 +1,82 @@
+<div class="relative">
+  <!-- Toggle Button -->
+  <button
+    type="button"
+    [class]="buttonClasses()"
+    [attr.aria-expanded]="isOpen()"
+    aria-haspopup="true"
+    (click)="toggle($event)"
+  >
+    <img
+      src="assets/icons/icon-column.svg"
+      alt=""
+      aria-hidden="true"
+      class="w-5 h-[0.8125rem]"
+    />
+    <span>{{ buttonLabel() | translate }}</span>
+  </button>
+
+  <!-- Dropdown Panel -->
+  @if (isOpen()) {
+  <div
+    [class]="dropdownClasses()"
+    (click)="$event.stopPropagation()"
+    role="menu"
+  >
+    <!-- Header with count -->
+    <div class="flex items-center justify-between mb-3">
+      <span class="text-sm font-medium text-content-primary">
+        {{ 'common.column.title' | translate }}
+      </span>
+      <span class="text-xs text-content-tertiary">
+        {{ visibleCount() }}{{ 'common.column.of' | translate
+        }}{{ totalCount() }} {{ 'common.column.visible' | translate }}
+      </span>
+    </div>
+
+    <!-- Column List -->
+    <div class="space-y-1 max-h-48 overflow-y-auto">
+      @for (column of displayColumns(); track column.key) {
+      <label
+        class="flex items-center gap-2 cursor-pointer py-1.5 hover:bg-surface-muted rounded px-2 -mx-2"
+      >
+        <input
+          type="checkbox"
+          [checked]="column.visible"
+          (change)="onToggleColumn(column.key)"
+          class="w-4 h-4 rounded border-border text-primary focus:ring-primary cursor-pointer accent-primary"
+        />
+        <span class="text-sm text-content-primary select-none">
+          {{ column.labelKey | translate }}
+        </span>
+      </label>
+      }
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="flex gap-2 mt-3 pt-3 border-t border-border">
+      <button
+        type="button"
+        (click)="onShowAll()"
+        class="flex-1 px-3 py-1.5 text-xs text-primary hover:bg-primary-light rounded transition-colors"
+      >
+        {{ 'common.column.showAll' | translate }}
+      </button>
+      <button
+        type="button"
+        (click)="onHideAll()"
+        class="flex-1 px-3 py-1.5 text-xs text-content-secondary hover:bg-surface-muted rounded transition-colors"
+      >
+        {{ 'common.column.hideAll' | translate }}
+      </button>
+      <button
+        type="button"
+        (click)="onReset()"
+        class="flex-1 px-3 py-1.5 text-xs text-content-secondary hover:bg-surface-muted rounded transition-colors"
+      >
+        {{ 'common.column.reset' | translate }}
+      </button>
+    </div>
+  </div>
+  }
+</div>

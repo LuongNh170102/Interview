@@ -1,4 +1,4 @@
-import { inject, Injectable, signal } from '@angular/core';
+import { computed, inject, Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { tap, finalize } from 'rxjs/operators';
 import {
@@ -15,11 +15,42 @@ export class AuthService {
   // Session persistence is handled via HTTP-only cookies (Refresh Token).
   readonly accessToken = signal<string | null>(null);
   readonly currentUser = signal<UserProfile | null>(null);
+  readonly permissions = signal<string[]>([]);
+
+  /** Check if user has a specific permission (format: 'resource:action') */
+  readonly hasPermission = (permission: string): boolean => {
+    return this.permissions().includes(permission);
+  };
+
+  /** Check if user has any of the given permissions */
+  readonly hasAnyPermission = (...permissions: string[]): boolean => {
+    const userPermissions = this.permissions();
+    return permissions.some((p) => userPermissions.includes(p));
+  };
+
+  /** Check if user has all of the given permissions */
+  readonly hasAllPermissions = (...permissions: string[]): boolean => {
+    const userPermissions = this.permissions();
+    return permissions.every((p) => userPermissions.includes(p));
+  };
+
+  /** Check if user can access a resource (has any action on that resource) */
+  readonly canAccessResource = (resource: string): boolean => {
+    const userPermissions = this.permissions();
+    return userPermissions.some((p) => p.startsWith(`${resource}:`));
+  };
+
+  /** Computed: Is the user authenticated */
+  readonly isAuthenticated = computed(
+    () => this.accessToken() !== null && this.currentUser() !== null
+  );
 
   login(payload: LoginRequest) {
     return this.http
       .post<AuthResponse>('/api/auth/login', payload, { withCredentials: true })
-      .pipe(tap((res) => this.persist(res.access_token, res.user)));
+      .pipe(
+        tap((res) => this.persist(res.access_token, res.user, res.permissions))
+      );
   }
 
   register(payload: RegisterRequest) {
@@ -27,13 +58,17 @@ export class AuthService {
       .post<AuthResponse>('/api/auth/register', payload, {
         withCredentials: true,
       })
-      .pipe(tap((res) => this.persist(res.access_token, res.user)));
+      .pipe(
+        tap((res) => this.persist(res.access_token, res.user, res.permissions))
+      );
   }
 
   refreshToken() {
     return this.http
       .post<AuthResponse>('/api/auth/refresh', {}, { withCredentials: true })
-      .pipe(tap((res) => this.persist(res.access_token, res.user)));
+      .pipe(
+        tap((res) => this.persist(res.access_token, res.user, res.permissions))
+      );
   }
 
   logout() {
@@ -43,12 +78,14 @@ export class AuthService {
         finalize(() => {
           this.accessToken.set(null);
           this.currentUser.set(null);
+          this.permissions.set([]);
         })
       );
   }
 
-  private persist(token: string, user: UserProfile) {
+  private persist(token: string, user: UserProfile, permissions: string[]) {
     this.accessToken.set(token);
     this.currentUser.set(user);
+    this.permissions.set(permissions ?? []);
   }
 }

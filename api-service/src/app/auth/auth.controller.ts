@@ -89,4 +89,13 @@ export class AuthController {
   getProfile(@Request() req: any) {
     return req.user;
   }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('permissions')
+  async getPermissions(@Request() req: any) {
+    const permissions = await this.authService.getUserPermissions(
+      req.user.userId
+    );
+    return { permissions };
+  }
 }

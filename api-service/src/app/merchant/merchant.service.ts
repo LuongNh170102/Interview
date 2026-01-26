@@ -85,7 +85,7 @@ export class MerchantService {
 
     const updatedMerchant = await this.prisma.merchant.update({
       where: { externalId },
-      data: { status: status as ApprovalStatus },
+      data: { approvalStatus: status as ApprovalStatus },
     });
 
     // If status is APPROVED, assign MERCHANT_OWNER role and link merchantId
@@ -181,7 +181,7 @@ export class MerchantService {
         metadata: dto.socialLinks ? { socialLinks: dto.socialLinks } : {},
         phone: dto.phone,
         ownerId: userId,
-        status: MERCHANT_STATUS.PENDING as ApprovalStatus,
+        approvalStatus: MERCHANT_STATUS.PENDING as ApprovalStatus,
       },
     });
 

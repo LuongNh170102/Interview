@@ -12,7 +12,7 @@ import { AgencyService } from './agency.service';
 import { CreateAgencyDto } from './dto/create-agency.dto';
 import { RequestOtpDto, VerifyOtpDto } from '../otp/dto/otp.dto';
 import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
-import { PaginationDto } from '../common/dto/pagination.dto';
+import { AgencyQueryDto } from './dto/agency-query.dto';
 import { PermissionsGuard } from '../common/guards/permissions.guard';
 import { Permissions } from '../common/decorators/permissions.decorator';
 
@@ -33,8 +33,8 @@ export class AgencyController {
   @Get()
   @UseGuards(JwtAuthGuard, PermissionsGuard)
   @Permissions('system:manage_users')
-  findAll(@Query() pagination: PaginationDto) {
-    return this.agencyService.findAll(pagination);
+  findAll(@Query() query: AgencyQueryDto) {
+    return this.agencyService.findAll(query);
   }
 
   @Get(':id')

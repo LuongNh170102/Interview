@@ -65,12 +65,12 @@ export class ResourceStatusGuard implements CanActivate {
     if (target === RESOURCE_TARGETS.MERCHANT) {
       entity = await this.prisma.merchant.findUnique({
         where: isIdUUID ? { externalId: String(id) } : { id: idNumber },
-        select: { status: true },
+        select: { approvalStatus: true },
       });
     } else if (target === RESOURCE_TARGETS.AGENCY) {
       entity = await this.prisma.agency.findUnique({
         where: isIdUUID ? { externalId: String(id) } : { id: idNumber },
-        select: { status: true },
+        select: { approvalStatus: true },
       });
     }
 
@@ -78,9 +78,9 @@ export class ResourceStatusGuard implements CanActivate {
       throw new NotFoundException(RESOURCE_MESSAGES.NOT_FOUND(target));
     }
 
-    if (entity.status !== MERCHANT_STATUS.APPROVED) {
+    if (entity.approvalStatus !== MERCHANT_STATUS.APPROVED) {
       throw new ForbiddenException(
-        RESOURCE_MESSAGES.OPERATION_DENIED(target, entity.status)
+        RESOURCE_MESSAGES.OPERATION_DENIED(target, entity.approvalStatus)
       );
     }
   }
