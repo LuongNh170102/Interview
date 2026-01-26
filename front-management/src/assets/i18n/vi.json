@@ -63,7 +63,15 @@
       "suspended": "Tạm nghỉ",
       "locked": "Đã khóa"
     },
-    "toggle": "Bật/Tắt"
+    "toggle": "Bật/Tắt",
+    "column": {
+      "title": "Cột",
+      "showAll": "Hiện tất cả",
+      "hideAll": "Ẩn tất cả",
+      "reset": "Đặt lại",
+      "of": "/",
+      "visible": "cột hiển thị"
+    }
   },
   "app": {
     "title": {
@@ -83,7 +91,8 @@
       "searchPlaceholder": "Tìm kiếm...",
       "profile": "Hồ sơ",
       "settings": "Cài đặt",
-      "logout": "Đăng xuất"
+      "logout": "Đăng xuất",
+      "language": "Ngôn ngữ"
     },
     "footer": {
       "systemOnline": "Hệ thống đang hoạt động",
@@ -131,12 +140,13 @@
       "column": "Column",
       "agencies": {
         "title": "Đối tác",
-        "addNew": "Thêm Đối tác Mới",
+        "addNew": "Thêm Đối tác",
         "searchPlaceholder": "Tìm kiếm đối tác....",
         "allLocations": "Tất cả địa điểm"
       },
       "merchants": {
         "title": "Danh sách cửa hàng",
+        "subtitle": "Quản lý thông tin cửa hàng trong hệ thống",
         "addNew": "Thêm cửa hàng"
       },
       "stores": {
@@ -162,13 +172,15 @@
         "createdDate": "Ngày tạo",
         "location": "ĐỊA ĐIỂM",
         "totalMerchants": "TỔNG CỬA HÀNG",
+        "totalStores": "TỔNG CỬA HÀNG",
         "joinDate": "NGÀY THAM GIA"
       },
       "actions": {
-        "modify": "Modify",
-        "activation": "Activation",
-        "deactivation": "Deactivation",
-        "delete": "Delete"
+        "viewDetail": "Xem chi tiết",
+        "modify": "Chỉnh sửa",
+        "activation": "Kích hoạt",
+        "deactivation": "Tạm ngừng",
+        "delete": "Xóa"
       }
     },
     "categories": {

@@ -49,9 +49,15 @@ module.exports = {
         // Status colors
         status: {
           error: 'var(--color-status-error)',
+          'error-bg': 'var(--color-status-error-bg)',
           success: 'var(--color-status-success)',
+          'success-bg': 'var(--color-status-success-bg)',
           warning: 'var(--color-status-warning)',
+          'warning-bg': 'var(--color-status-warning-bg)',
           info: 'var(--color-status-info)',
+          'info-bg': 'var(--color-status-info-bg)',
+          default: 'var(--color-status-default)',
+          'default-bg': 'var(--color-status-default-bg)',
         },
       },
       // Text color aliases for easier usage

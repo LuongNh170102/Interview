@@ -1,10 +1,51 @@
 <div class="flex flex-col gap-4 md:gap-6">
+  <!-- Reusable Templates -->
+  <!-- Status Badge Template -->
+  <ng-template #statusBadge let-agency>
+    @if (agency.approvalStatus === 'pending') {
+    <span
+      class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm bg-status-warning-bg text-status-warning"
+    >
+      <span class="w-1.5 h-1.5 rounded-full bg-status-warning"></span>
+      {{ 'common.status.pending' | translate }}
+    </span>
+    } @else { @switch (agency.operationalStatus) { @case ('active') {
+    <span
+      class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm bg-status-success-bg text-status-success"
+    >
+      <span class="w-1.5 h-1.5 rounded-full bg-status-success"></span>
+      {{ 'common.status.active' | translate }}
+    </span>
+    } @case ('inactive') {
+    <span
+      class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm bg-status-default-bg text-status-default"
+    >
+      <span class="w-1.5 h-1.5 rounded-full bg-status-default"></span>
+      {{ 'common.status.inactive' | translate }}
+    </span>
+    } @case ('suspended') {
+    <span
+      class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm bg-status-info-bg text-status-info"
+    >
+      <span class="w-1.5 h-1.5 rounded-full bg-status-info"></span>
+      {{ 'common.status.suspended' | translate }}
+    </span>
+    } @case ('locked') {
+    <span
+      class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm bg-status-error-bg text-status-error"
+    >
+      <span class="w-1.5 h-1.5 rounded-full bg-status-error"></span>
+      {{ 'common.status.locked' | translate }}
+    </span>
+    } } }
+  </ng-template>
+
   <!-- Statistics Cards - Horizontal scroll on mobile, grid on desktop -->
   <section class="-mx-4 px-4 md:mx-0 md:px-0 overflow-x-auto scrollbar-hide">
     <div
-      class="flex md:grid md:grid-cols-4 gap-3 md:gap-[13px] min-w-max md:min-w-0"
+      class="mt-8 md:mt-0 flex md:grid md:grid-cols-4 gap-3 md:gap-[13px] min-w-max md:min-w-0"
     >
-      @for (card of statisticCards(); track card.label) {
+      @for (card of statisticCards(); track card.labelKey) {
       <div class="w-[30%] md:w-auto shrink-0 md:shrink">
         <app-statistic-card [config]="card" />
       </div>
@@ -12,278 +53,76 @@
     </div>
   </section>
 
-  <!-- Mobile Cards Layout -->
-  <div class="md:hidden flex flex-col gap-0">
-    <!-- Mobile Header Section (using same pattern as DataTable header) -->
-    <div class="flex flex-col gap-3 mb-4">
-      <!-- Title with count and filter -->
-      <div class="flex items-center justify-between w-full">
-        <div class="flex items-center gap-2">
-          <h2 class="text-xl font-bold text-content-primary">
-            {{ 'admin.partners.agencies.title' | translate }}
-          </h2>
-          <span class="text-xs text-content-tertiary">{{
-            pagination().total
-          }}</span>
-        </div>
-        <!-- Mobile filter icon -->
-        <button class="p-2">
-          <img
-            width="18"
-            height="18"
-            src="assets/icons/icon-search.svg"
-            alt="Search"
-            class="w-4 h-4"
-          />
-        </button>
-      </div>
-
-      <!-- Action buttons row -->
-      <div class="flex items-center gap-2 w-full">
-        <!-- Add New Button -->
-        <button
-          (click)="onAddAgency()"
-          class="flex items-center justify-center gap-2 px-5 py-3 bg-primary text-content-on-primary rounded-lg text-sm font-normal shadow-[0_0_20px_rgba(243,91,42,0.3)] flex-1"
-        >
-          <img
-            src="assets/icons/icon-plus.svg"
-            alt=""
-            aria-hidden="true"
-            class="w-3 h-3"
-            style="filter: invert(1)"
-          />
-          {{ 'admin.partners.agencies.addNew' | translate }}
-        </button>
-        <!-- Column Button -->
-        <button
-          class="flex items-center gap-2 px-4 py-3 border border-primary rounded-lg text-sm text-primary"
-        >
-          <img
-            src="assets/icons/icon-column.svg"
-            alt=""
-            aria-hidden="true"
-            class="w-5 h-3"
-          />
-          {{ 'admin.partners.column' | translate }}
-        </button>
-      </div>
-    </div>
-
-    @for (agency of agencies(); track agency.id; let isLast = $last) {
-    <div
-      class="bg-surface py-5 px-5"
-      [class.border-b]="!isLast"
-      [class.border-border]="!isLast"
-    >
-      <!-- Agency Header - Avatar + Name/Code -->
-      <div class="flex items-start gap-4 mb-4">
-        <div
-          class="w-[55px] h-[55px] rounded-full flex items-center justify-center text-xl font-bold shrink-0"
-          [style.backgroundColor]="agency.initialsColor"
-        >
-          <span>{{ agency.initials }}</span>
-        </div>
-        <div class="flex flex-col flex-1 min-w-0 pt-1">
-          <span class="text-xl font-bold text-content-primary truncate">{{
-            agency.name
-          }}</span>
-          <span class="text-sm text-content-tertiary mt-1">{{
-            agency.code
-          }}</span>
-        </div>
-      </div>
-
-      <!-- Agency Details - Row format matching Figma -->
-      <div class="flex flex-col gap-2 text-sm ml-[71px]">
-        <!-- Phone row -->
-        <div class="flex items-center gap-2">
-          <span
-            class="text-[13px] text-content-tertiary uppercase w-[100px] shrink-0"
-          >
-            {{ 'admin.partners.table.phone' | translate }}
-          </span>
-          <span class="text-content-primary">{{ agency.phone }}</span>
-        </div>
-        <!-- Email row -->
-        <div class="flex items-center gap-2">
-          <span
-            class="text-[13px] text-content-tertiary uppercase w-[100px] shrink-0"
-          >
-            {{ 'admin.partners.table.email' | translate }}
-          </span>
-          <span class="text-content-primary">{{ agency.email }}</span>
-        </div>
-        <!-- Address row -->
-        <div class="flex items-center gap-2">
-          <span
-            class="text-[13px] text-content-tertiary uppercase w-[100px] shrink-0"
-          >
-            {{ 'admin.partners.table.address' | translate }}
-          </span>
-          <span class="text-content-primary">{{ agency.address }}</span>
-        </div>
-        <!-- Status row -->
-        <div class="flex items-center gap-2 mt-2">
-          @switch (agency.operationalStatus) { @case ('active') {
-          <span
-            class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm bg-[#E7F7EC] text-[#22BC72]"
-          >
-            <span class="w-1.5 h-1.5 rounded-full bg-[#22BC72]"></span>
-            {{ 'common.status.active' | translate }}
-          </span>
-          } @case ('inactive') {
-          <span
-            class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm bg-[#FFF7D7] text-[#EDAD4F]"
-          >
-            <span class="w-1.5 h-1.5 rounded-full bg-[#EDAD4F]"></span>
-            {{ 'common.status.inactive' | translate }}
-          </span>
-          } @case ('suspended') {
-          <span
-            class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm bg-[#E8F4FC] text-[#4A90D9]"
-          >
-            <span class="w-1.5 h-1.5 rounded-full bg-[#4A90D9]"></span>
-            {{ 'common.status.suspended' | translate }}
-          </span>
-          } @case ('locked') {
-          <span
-            class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm bg-[#FDEAEA] text-[#E53935]"
-          >
-            <span class="w-1.5 h-1.5 rounded-full bg-[#E53935]"></span>
-            {{ 'common.status.locked' | translate }}
-          </span>
-          } }
-          <!-- More actions button -->
-          <button class="ml-auto p-1">
-            <svg
-              width="16"
-              height="2"
-              viewBox="0 0 16 2"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <circle cx="1" cy="1" r="1" fill="#9B9B9B" />
-              <circle cx="8" cy="1" r="1" fill="#9B9B9B" />
-              <circle cx="15" cy="1" r="1" fill="#9B9B9B" />
-            </svg>
-          </button>
-        </div>
-      </div>
-    </div>
-    }
-
-    <!-- Mobile Pagination -->
-    @if (pagination(); as pag) {
-    <div
-      class="flex flex-col items-center gap-3 py-4 px-4 bg-surface border-t border-border"
-    >
-      <!-- Page info -->
-      <span class="text-xs text-content-tertiary">
-        {{ 'common.pagination.page' | translate }} {{ pag.page }}/{{
-          totalPages()
-        }}
-        - {{ 'common.pagination.total' | translate }} {{ pag.total }}
-        {{ 'common.pagination.items' | translate }}
-      </span>
-      <!-- Pagination controls -->
-      <div class="flex items-center gap-1">
-        <!-- Previous Button -->
-        <button
-          type="button"
-          [disabled]="pag.page <= 1"
-          (click)="
-            onPageChange({
-              page: pag.page - 1,
-              pageSize: pag.pageSize,
-              previousPage: pag.page
-            })
-          "
-          class="w-8 h-8 flex items-center justify-center rounded bg-surface-muted text-content-primary disabled:opacity-50 disabled:cursor-not-allowed"
-          [attr.aria-label]="'common.pagination.previous' | translate"
-        >
-          <img
-            src="assets/icons/icon-chevron-left.svg"
-            alt=""
-            aria-hidden="true"
-            class="w-3 h-3"
-          />
-        </button>
-
-        <!-- Page Numbers - Same as desktop -->
-        @for (pageNum of pageNumbers(); track pageNum) { @if (pageNum ===
-        'ellipsis') {
-        <span class="px-1 text-content-tertiary text-sm">...</span>
-        } @else {
-        <button
-          type="button"
-          (click)="
-            onPageChange({
-              page: +pageNum,
-              pageSize: pag.pageSize,
-              previousPage: pag.page
-            })
-          "
-          class="w-8 h-8 flex items-center justify-center rounded text-sm transition-colors"
-          [class.bg-primary]="pag.page === pageNum"
-          [class.text-content-on-primary]="pag.page === pageNum"
-          [class.bg-surface-muted]="pag.page !== pageNum"
-          [class.text-content-primary]="pag.page !== pageNum"
-        >
-          {{ pageNum }}
-        </button>
-        } }
-
-        <!-- Next Button -->
-        <button
-          type="button"
-          [disabled]="pag.page >= totalPages()"
-          (click)="
-            onPageChange({
-              page: pag.page + 1,
-              pageSize: pag.pageSize,
-              previousPage: pag.page
-            })
-          "
-          class="w-8 h-8 flex items-center justify-center rounded bg-surface-muted text-content-primary disabled:opacity-50 disabled:cursor-not-allowed"
-          [attr.aria-label]="'common.pagination.next' | translate"
-        >
-          <img
-            src="assets/icons/icon-chevron-right.svg"
-            alt=""
-            aria-hidden="true"
-            class="w-3 h-3"
-          />
-        </button>
-      </div>
-    </div>
-    }
-  </div>
-
-  <!-- Desktop Data Table with Action Menu -->
-  <div class="relative hidden md:block">
+  <!-- Data Table - Handles both mobile cards and desktop table -->
+  <div class="relative mt-4 md:mt-14">
     <app-data-table
       [config]="tableConfig"
       [data]="agencies()"
       [pagination]="pagination()"
       [headerConfig]="tableHeaderConfig"
       [itemCount]="pagination().total"
-      (actionClick)="onActionClick($event)"
       (pageChange)="onPageChange($event)"
       (sortChange)="onSortChange($event)"
       (headerSearch)="onHeaderSearch($event)"
       (headerFilter)="onHeaderFilter($event)"
       (headerAction)="onHeaderAction($event)"
     >
-      <!-- Custom template for agency info column (icon + name + code) -->
+      <!-- Action Menu Template (Desktop) -->
+      <ng-template appActionMenu let-agency let-closeMenu="closeMenu">
+        <button
+          (click)="onMenuAction('view', agency); closeMenu()"
+          class="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-content-primary hover:bg-surface-muted transition-colors"
+        >
+          <img src="assets/icons/icon-detail.svg" alt="" class="w-4 h-4" />
+          {{ 'admin.partners.actions.viewDetail' | translate }}
+        </button>
+        <button
+          (click)="onMenuAction('edit', agency); closeMenu()"
+          class="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-content-primary hover:bg-surface-muted transition-colors"
+        >
+          <img src="assets/icons/icon-modify.svg" alt="" class="w-4 h-4" />
+          {{ 'admin.partners.actions.modify' | translate }}
+        </button>
+        <div class="border-t border-border my-1"></div>
+        @if (agency.operationalStatus === 'active') {
+        <button
+          (click)="onMenuAction('deactivate', agency); closeMenu()"
+          class="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-content-primary hover:bg-surface-muted transition-colors"
+        >
+          <img
+            src="assets/icons/icon-deactivation.svg"
+            alt=""
+            class="w-4 h-4 opacity-60"
+          />
+          {{ 'admin.partners.actions.deactivation' | translate }}
+        </button>
+        } @else {
+        <button
+          (click)="onMenuAction('activate', agency); closeMenu()"
+          class="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-content-primary hover:bg-surface-muted transition-colors"
+        >
+          <img src="assets/icons/icon-activation.svg" alt="" class="w-4 h-4" />
+          {{ 'admin.partners.actions.activation' | translate }}
+        </button>
+        }
+        <div class="border-t border-border my-1"></div>
+        <button
+          (click)="onMenuAction('delete', agency); closeMenu()"
+          class="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-status-error hover:bg-surface-muted transition-colors"
+        >
+          <img src="assets/icons/icon-delete.svg" alt="" class="w-4 h-4" />
+          {{ 'admin.partners.actions.delete' | translate }}
+        </button>
+      </ng-template>
+
+      <!-- Custom template for agency info column (icon + name + code) - Desktop -->
       <ng-template appTableCell="storeInfo" let-row>
         <div class="flex items-center gap-3">
           <div
             class="w-[3.4375rem] h-[3.4375rem] rounded-full flex items-center justify-center text-2xl font-bold"
             [style.backgroundColor]="row.initialsColor"
           >
-            <span>
-              {{ row.initials }}
-            </span>
+            <span>{{ row.initials }}</span>
           </div>
           <div class="flex flex-col">
             <span class="text-lg font-bold text-content-primary">{{
@@ -293,87 +132,177 @@
           </div>
         </div>
       </ng-template>
-    </app-data-table>
 
-    <!-- Action Dropdown Menus (rendered outside table for proper positioning) -->
-    @for (agency of agencies(); track agency.id) { @if (activeMenuId() ===
-    agency.id) {
-    <!-- Backdrop to close menu -->
-    <div
-      class="fixed inset-0 z-40"
-      (click)="closeMenu()"
-      (keydown.escape)="closeMenu()"
-      tabindex="0"
-      role="button"
-      aria-label="Close menu"
-    ></div>
-    <!-- Dropdown Menu -->
-    <div
-      class="absolute right-4 z-50 w-36 bg-surface rounded-lg shadow-lg border border-border py-1"
-      [style.top.px]="120 + $index * 90"
-    >
-      <button
-        (click)="onMenuAction('modify', agency)"
-        class="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-content-primary hover:bg-background-muted transition-colors"
+      <!-- Mobile Card Template -->
+      <ng-template
+        appMobileCard
+        let-agency
+        let-isLast="isLast"
+        let-isColumnVisible="isColumnVisible"
       >
-        <img
-          src="assets/icons/icon-modify.svg"
-          alt="Modify"
-          class="w-4 h-4"
-          style="
-            filter: invert(36%) sepia(85%) saturate(1352%) hue-rotate(345deg)
-              brightness(94%) contrast(95%);
-          "
-        />
-        {{ 'admin.partners.actions.modify' | translate }}
-      </button>
-      <div class="border-t border-border"></div>
-      @if (agency.operationalStatus === 'active') {
-      <button
-        (click)="onMenuAction('deactivate', agency)"
-        class="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-content-primary hover:bg-background-muted transition-colors"
-      >
-        <img
-          src="assets/icons/icon-deactivation.svg"
-          alt="Deactivation"
-          class="w-4 h-4 opacity-60"
-        />
-        {{ 'admin.partners.actions.deactivation' | translate }}
-      </button>
-      } @else {
-      <button
-        (click)="onMenuAction('activate', agency)"
-        class="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-content-primary hover:bg-background-muted transition-colors"
-      >
-        <img
-          src="assets/icons/icon-activation.svg"
-          alt="Activation"
-          class="w-4 h-4"
-          style="
-            filter: invert(60%) sepia(65%) saturate(471%) hue-rotate(101deg)
-              brightness(93%) contrast(91%);
-          "
-        />
-        {{ 'admin.partners.actions.activation' | translate }}
-      </button>
-      }
-      <div class="border-t border-border"></div>
-      <button
-        (click)="onMenuAction('delete', agency)"
-        class="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-content-primary hover:bg-background-muted transition-colors"
-      >
-        <img
-          src="assets/icons/icon-delete.svg"
-          alt="Delete"
-          class="w-4 h-4"
-          style="
-            filter: invert(36%) sepia(85%) saturate(1352%) hue-rotate(345deg)
-              brightness(94%) contrast(95%);
-          "
-        />
-        {{ 'admin.partners.actions.delete' | translate }}
-      </button>
-    </div>
-    } }
+        <div
+          class="bg-surface py-5 px-5"
+          [class.border-b]="!isLast"
+          [class.border-border]="!isLast"
+        >
+          <!-- Agency Header - Avatar + Name/Code -->
+          <div class="flex items-start gap-4 mb-4">
+            <div
+              class="w-[55px] h-[55px] rounded-full flex items-center justify-center text-xl font-bold shrink-0"
+              [style.backgroundColor]="agency.initialsColor"
+            >
+              <span>{{ agency.initials }}</span>
+            </div>
+            <div class="flex flex-col flex-1 min-w-0 pt-1">
+              <span class="text-xl font-bold text-content-primary truncate">{{
+                agency.name
+              }}</span>
+              <span class="text-sm text-content-tertiary mt-1">{{
+                agency.code
+              }}</span>
+            </div>
+          </div>
+
+          <!-- Agency Details - Row format matching Figma -->
+          <div class="flex flex-col gap-2 text-sm ml-[71px]">
+            <!-- Location row -->
+            @if (isColumnVisible('address')) {
+            <div class="flex items-center gap-2">
+              <span
+                class="text-[13px] text-content-tertiary uppercase w-[100px] shrink-0"
+              >
+                {{ 'admin.partners.table.location' | translate }}
+              </span>
+              <span class="text-content-primary truncate">{{
+                agency.address
+              }}</span>
+            </div>
+            }
+            <!-- Total Stores row -->
+            @if (isColumnVisible('storeCount')) {
+            <div class="flex items-center gap-2 min-w-0">
+              <span
+                class="text-[13px] text-content-tertiary uppercase w-[100px] shrink-0"
+              >
+                {{ 'admin.partners.table.totalStores' | translate }}
+              </span>
+              <span class="text-content-primary">{{
+                agency.storeCount | number
+              }}</span>
+            </div>
+            }
+            <!-- Join Date row -->
+            @if (isColumnVisible('createdAt')) {
+            <div class="flex items-center gap-2 min-w-0">
+              <span
+                class="text-[13px] text-content-tertiary uppercase w-[100px] shrink-0"
+              >
+                {{ 'admin.partners.table.joinDate' | translate }}
+              </span>
+              <span class="text-content-primary">{{
+                agency.createdAt | date : 'yyyy/MM/dd'
+              }}</span>
+            </div>
+            }
+            <!-- Status row -->
+            <div class="flex items-center gap-2 mt-2">
+              @if (isColumnVisible('operationalStatus')) {
+              <ng-container
+                *ngTemplateOutlet="statusBadge; context: { $implicit: agency }"
+              ></ng-container>
+              }
+
+              <!-- More actions button with dropdown -->
+              <div class="relative ml-auto">
+                <button
+                  class="p-1"
+                  (click)="toggleMobileMenu($event, agency.id)"
+                  [attr.aria-expanded]="activeMobileMenuId() === agency.id"
+                >
+                  <svg
+                    width="16"
+                    height="2"
+                    viewBox="0 0 16 2"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <circle cx="1" cy="1" r="1" fill="#9B9B9B" />
+                    <circle cx="8" cy="1" r="1" fill="#9B9B9B" />
+                    <circle cx="15" cy="1" r="1" fill="#9B9B9B" />
+                  </svg>
+                </button>
+                @if (activeMobileMenuId() === agency.id) {
+                <div
+                  class="absolute right-0 top-full mt-1 w-48 bg-surface border border-border rounded-lg shadow-lg z-50 py-1"
+                  (click)="$event.stopPropagation()"
+                >
+                  <button
+                    (click)="onMenuAction('view', agency)"
+                    class="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-content-primary hover:bg-surface-muted transition-colors"
+                  >
+                    <img
+                      src="assets/icons/icon-detail.svg"
+                      alt=""
+                      class="w-4 h-4"
+                    />
+                    {{ 'admin.partners.actions.viewDetail' | translate }}
+                  </button>
+                  <button
+                    (click)="onMenuAction('edit', agency)"
+                    class="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-content-primary hover:bg-surface-muted transition-colors"
+                  >
+                    <img
+                      src="assets/icons/icon-modify.svg"
+                      alt=""
+                      class="w-4 h-4"
+                    />
+                    {{ 'admin.partners.actions.modify' | translate }}
+                  </button>
+                  <div class="border-t border-border my-1"></div>
+                  @if (agency.operationalStatus === 'active') {
+                  <button
+                    (click)="onMenuAction('deactivate', agency)"
+                    class="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-content-primary hover:bg-surface-muted transition-colors"
+                  >
+                    <img
+                      src="assets/icons/icon-deactivation.svg"
+                      alt=""
+                      class="w-4 h-4 opacity-60"
+                    />
+                    {{ 'admin.partners.actions.deactivation' | translate }}
+                  </button>
+                  } @else {
+                  <button
+                    (click)="onMenuAction('activate', agency)"
+                    class="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-content-primary hover:bg-surface-muted transition-colors"
+                  >
+                    <img
+                      src="assets/icons/icon-activation.svg"
+                      alt=""
+                      class="w-4 h-4"
+                    />
+                    {{ 'admin.partners.actions.activation' | translate }}
+                  </button>
+                  }
+                  <div class="border-t border-border my-1"></div>
+                  <button
+                    (click)="onMenuAction('delete', agency)"
+                    class="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-status-error hover:bg-surface-muted transition-colors"
+                  >
+                    <img
+                      src="assets/icons/icon-delete.svg"
+                      alt=""
+                      class="w-4 h-4"
+                    />
+                    {{ 'admin.partners.actions.delete' | translate }}
+                  </button>
+                </div>
+                }
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </app-data-table>
   </div>
 </div>

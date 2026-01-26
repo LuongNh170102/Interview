@@ -62,6 +62,14 @@
       "rejected": "Rejected",
       "suspended": "Suspended",
       "locked": "Locked"
+    },
+    "column": {
+      "title": "Column",
+      "showAll": "Show all",
+      "hideAll": "Hide all",
+      "reset": "Reset",
+      "of": "of",
+      "visible": "columns visible"
     }
   },
   "app": {
@@ -82,7 +90,8 @@
       "searchPlaceholder": "Search...",
       "profile": "Profile",
       "settings": "Settings",
-      "logout": "Logout"
+      "logout": "Logout",
+      "language": "Language"
     },
     "footer": {
       "systemOnline": "System Online",
@@ -130,6 +139,7 @@
       },
       "merchants": {
         "title": "Merchant List",
+        "subtitle": "Manage merchant information in the system",
         "addNew": "Add Merchant"
       },
       "table": {
@@ -137,11 +147,16 @@
         "merchantName": "Merchant Name",
         "agency": "Agency",
         "owner": "Owner",
-        "phone": "Phone",
+        "phone": "PHONE",
+        "email": "EMAIL",
+        "address": "ADDRESS",
         "merchantCount": "Merchants",
         "productCount": "Products",
         "status": "STATUS",
-        "createdAt": "Created At",
+        "approvalStatus": "APPROVAL STATUS",
+        "operationalStatus": "OPERATIONAL STATUS",
+        "createdAt": "CREATED AT",
+        "createdDate": "Created Date",
         "location": "LOCATION",
         "totalMerchants": "TOTAL MERCHANTS",
         "joinDate": "JOIN DATE"

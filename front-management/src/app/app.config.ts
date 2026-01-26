@@ -1,6 +1,7 @@
 import {
   APP_INITIALIZER,
   ApplicationConfig,
+  LOCALE_ID,
   provideBrowserGlobalErrorListeners,
   provideZoneChangeDetection,
 } from '@angular/core';
@@ -10,6 +11,13 @@ import { appRoutes } from './app.routes';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { authInterceptor, AuthService } from '@vhandelivery/shared-ui';
 import { catchError, of, tap } from 'rxjs';
+import { registerLocaleData } from '@angular/common';
+import localeVi from '@angular/common/locales/vi';
+import localeKo from '@angular/common/locales/ko';
+
+// Register locales for date formatting
+registerLocaleData(localeVi, 'vi-VN');
+registerLocaleData(localeKo, 'ko-KR');
 
 function initializeApp(auth: AuthService) {
   return () =>
@@ -38,5 +46,6 @@ export const appConfig: ApplicationConfig = {
       deps: [AuthService],
       multi: true,
     },
+    { provide: LOCALE_ID, useValue: 'vi-VN' },
   ],
 };

@@ -14,6 +14,8 @@ import {
   AuthService,
   TranslatePipe,
   TranslationService,
+  SupportedLanguage,
+  SUPPORTED_LANGUAGES,
 } from '@vhandelivery/shared-ui';
 import { filter } from 'rxjs/operators';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
@@ -38,16 +40,28 @@ export class HeaderComponent {
   readonly navItems = input<readonly NavItem[]>([]);
 
   protected readonly languageOptions: ReadonlyArray<{
-    value: string;
+    value: SupportedLanguage;
     label: string;
     flag: string;
   }> = [
-    { value: 'vi', label: 'Tiếng Việt', flag: 'assets/images/flags/vi.svg' },
-    { value: 'en', label: 'English', flag: 'assets/images/flags/en.svg' },
-    { value: 'ko', label: '한국어', flag: 'assets/images/flags/ko.svg' },
+    {
+      value: SUPPORTED_LANGUAGES[0],
+      label: 'Tiếng Việt',
+      flag: 'assets/images/flags/vi.svg',
+    },
+    {
+      value: SUPPORTED_LANGUAGES[1],
+      label: 'English',
+      flag: 'assets/images/flags/en.svg',
+    },
+    {
+      value: SUPPORTED_LANGUAGES[2],
+      label: '한국어',
+      flag: 'assets/images/flags/ko.svg',
+    },
   ];
 
-  protected readonly currentLanguage = signal(
+  protected readonly currentLanguage = signal<SupportedLanguage>(
     this.translationService.getLanguage()
   );
   protected readonly isLanguageDropdownOpen = signal(false);
@@ -111,8 +125,8 @@ export class HeaderComponent {
     this.isLanguageDropdownOpen.set(false);
   }
 
-  protected selectLanguage(langValue: string): void {
-    this.translationService.setLanguage(langValue as 'vi' | 'en' | 'ko');
+  protected selectLanguage(langValue: SupportedLanguage): void {
+    this.translationService.setLanguage(langValue);
     this.currentLanguage.set(langValue);
     this.isLanguageDropdownOpen.set(false);
   }

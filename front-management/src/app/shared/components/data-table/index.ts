@@ -1,2 +1,7 @@
-// Export DataTable component and directive
-export { DataTableComponent, TableCellDirective } from './data-table.component';
+// Export DataTable component and directives
+export {
+  DataTableComponent,
+  TableCellDirective,
+  MobileCardDirective,
+  ActionMenuDirective,
+} from './data-table.component';

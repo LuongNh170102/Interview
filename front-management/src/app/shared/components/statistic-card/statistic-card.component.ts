@@ -5,13 +5,14 @@ import {
   input,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { TranslatePipe } from '@vhandelivery/shared-ui';
 import { StatisticCardConfig } from '../../interfaces/statistic-card-config.interface';
 import { StatisticCardVariant } from '../../types/statistic-card-variant.type';
 
 @Component({
   selector: 'app-statistic-card',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TranslatePipe],
   templateUrl: './statistic-card.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

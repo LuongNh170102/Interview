@@ -210,6 +210,55 @@
               {{ user.email }}
             </p>
           </div>
+
+          <!-- Language Selector for Mobile -->
+          <div class="md:hidden border-b border-[var(--color-border)] py-2">
+            <p
+              class="px-4 py-1 text-[0.75rem] text-[var(--color-text-secondary)] uppercase tracking-wider"
+            >
+              {{ 'admin.header.language' | translate }}
+            </p>
+            @for (lang of languageOptions; track lang.value) {
+            <button
+              type="button"
+              class="w-full flex items-center gap-3 px-4 py-2 hover:bg-[var(--color-surface-muted)] transition-colors"
+              (click)="selectLanguage(lang.value)"
+            >
+              <img
+                [src]="lang.flag"
+                [alt]="lang.label"
+                class="w-5 h-3.5 object-cover rounded-[2px] shadow-sm"
+              />
+              <span
+                class="text-[0.875rem]"
+                [class.text-[var(--color-primary)]]="
+                  currentLanguage() === lang.value
+                "
+                [class.font-medium]="currentLanguage() === lang.value"
+                [class.text-[var(--color-text-primary)]]="
+                  currentLanguage() !== lang.value
+                "
+              >
+                {{ lang.label }}
+              </span>
+              @if (currentLanguage() === lang.value) {
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                class="ml-auto text-[var(--color-primary)]"
+              >
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+              }
+            </button>
+            }
+          </div>
+
           <button
             type="button"
             class="w-full flex items-center gap-3 px-4 py-2.5 text-[0.875rem] text-[var(--color-text-primary)] hover:bg-[var(--color-surface-muted)] transition-colors"

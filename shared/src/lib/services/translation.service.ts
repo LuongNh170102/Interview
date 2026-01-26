@@ -1,31 +1,78 @@
-import { Injectable, signal } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { catchError, map, of } from 'rxjs';
+import { catchError, of } from 'rxjs';
 import { LocalizedString } from '../interfaces/localized-string.interface';
+import {
+  getFromStorage,
+  saveToStorage,
+  STORAGE_KEYS,
+} from '../utils/storage.util';
+import {
+  DEFAULT_LANGUAGE,
+  SUPPORTED_LANGUAGES,
+} from '../constants/language.constant';
+import { SupportedLanguage } from '../types/language.type';
+
+/**
+ * Type guard for SupportedLanguage
+ */
+function isSupportedLanguage(value: unknown): value is SupportedLanguage {
+  return (
+    typeof value === 'string' &&
+    SUPPORTED_LANGUAGES.includes(value as SupportedLanguage)
+  );
+}
 
 @Injectable({
   providedIn: 'root',
 })
 export class TranslationService {
-  private currentLang = signal<string>('vi');
-  private translations = signal<Record<string, any>>({});
+  private readonly http = inject(HttpClient);
+  private readonly currentLang = signal<SupportedLanguage>(
+    this.getStoredLanguage()
+  );
+  private readonly translations = signal<Record<string, unknown>>({});
 
-  constructor(private http: HttpClient) {
+  constructor() {
     this.loadTranslations(this.currentLang());
   }
 
-  setLanguage(lang: string) {
-    this.currentLang.set(lang);
-    this.loadTranslations(lang);
+  /**
+   * Get stored language from localStorage, with validation
+   */
+  private getStoredLanguage(): SupportedLanguage {
+    return getFromStorage<SupportedLanguage>(STORAGE_KEYS.LANGUAGE, {
+      defaultValue: DEFAULT_LANGUAGE,
+      validator: isSupportedLanguage,
+    });
   }
 
-  getLanguage() {
+  /**
+   * Save language to localStorage
+   */
+  private saveLanguage(lang: SupportedLanguage): void {
+    saveToStorage(STORAGE_KEYS.LANGUAGE, lang);
+  }
+
+  setLanguage(lang: string): void {
+    // Validate language
+    if (!isSupportedLanguage(lang)) {
+      lang = DEFAULT_LANGUAGE;
+    }
+
+    const validLang = lang as SupportedLanguage;
+    this.currentLang.set(validLang);
+    this.saveLanguage(validLang);
+    this.loadTranslations(validLang);
+  }
+
+  getLanguage(): SupportedLanguage {
     return this.currentLang();
   }
 
-  private loadTranslations(lang: string) {
+  private loadTranslations(lang: string): void {
     this.http
-      .get<Record<string, any>>(`assets/i18n/${lang}.json`)
+      .get<Record<string, unknown>>(`assets/i18n/${lang}.json`)
       .pipe(
         catchError((err) => {
           console.error(`Could not load translations for ${lang}`, err);
@@ -39,11 +86,11 @@ export class TranslationService {
 
   translate(key: string): string {
     const keys = key.split('.');
-    let value: any = this.translations();
+    let value: unknown = this.translations();
 
     for (const k of keys) {
       if (value && typeof value === 'object' && k in value) {
-        value = value[k];
+        value = (value as Record<string, unknown>)[k];
       } else {
         return key; // Return key if not found
       }

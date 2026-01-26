@@ -13,6 +13,8 @@ import {
   AuthService,
   TranslatePipe,
   TranslationService,
+  SupportedLanguage,
+  SUPPORTED_LANGUAGES,
 } from '@vhandelivery/shared-ui';
 import { GlobalModalService } from '../../../shared/components/global-modal/global-modal.service';
 
@@ -39,13 +41,25 @@ export class HeaderComponent {
   readonly navItems = input<readonly NavItem[]>([]);
 
   protected readonly languageOptions: ReadonlyArray<{
-    value: string;
+    value: SupportedLanguage;
     label: string;
     flag: string;
   }> = [
-    { value: 'vi', label: 'Tiếng Việt', flag: 'assets/images/flags/vi.svg' },
-    { value: 'en', label: 'English', flag: 'assets/images/flags/en.svg' },
-    { value: 'ko', label: '한국어', flag: 'assets/images/flags/ko.svg' },
+    {
+      value: SUPPORTED_LANGUAGES[0],
+      label: 'Tiếng Việt',
+      flag: 'assets/images/flags/vi.svg',
+    },
+    {
+      value: SUPPORTED_LANGUAGES[1],
+      label: 'English',
+      flag: 'assets/images/flags/en.svg',
+    },
+    {
+      value: SUPPORTED_LANGUAGES[2],
+      label: '한국어',
+      flag: 'assets/images/flags/ko.svg',
+    },
   ];
 
   protected readonly currentLanguage = signal(
@@ -149,7 +163,7 @@ export class HeaderComponent {
     this.isLanguageDropdownOpen.update((prev) => !prev);
   }
 
-  protected selectLanguage(lang: string): void {
+  protected selectLanguage(lang: SupportedLanguage): void {
     if (lang !== this.currentLanguage()) {
       this.translationService.setLanguage(lang);
       this.currentLanguage.set(lang);

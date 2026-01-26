@@ -63,7 +63,15 @@
       "suspended": "정지됨",
       "locked": "잠김"
     },
-    "toggle": "켜기/끄기"
+    "toggle": "켜기/끄기",
+    "column": {
+      "title": "열",
+      "showAll": "모두 표시",
+      "hideAll": "모두 숨기기",
+      "reset": "초기화",
+      "of": "/",
+      "visible": "열 표시됨"
+    }
   },
   "app": {
     "title": {
@@ -134,7 +142,8 @@
       "searchPlaceholder": "검색...",
       "profile": "프로필",
       "settings": "설정",
-      "logout": "로그아웃"
+      "logout": "로그아웃",
+      "language": "언어"
     },
     "footer": {
       "systemOnline": "시스템 온라인",
@@ -188,6 +197,7 @@
       },
       "merchants": {
         "title": "매장 목록",
+        "subtitle": "시스템의 매장 정보를 관리합니다",
         "addNew": "매장 추가"
       },
       "stores": {
@@ -202,9 +212,13 @@
         "agency": "파트너",
         "owner": "소유자",
         "phone": "전화번호",
+        "email": "이메일",
+        "address": "주소",
         "merchantCount": "매장 수",
         "productCount": "상품 수",
         "status": "상태",
+        "approvalStatus": "승인 상태",
+        "operationalStatus": "운영 상태",
         "createdAt": "생성일",
         "createdDate": "생성일",
         "location": "위치",

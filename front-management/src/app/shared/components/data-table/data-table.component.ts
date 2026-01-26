@@ -7,10 +7,22 @@ import {
   signal,
   TemplateRef,
   ContentChildren,
+  ContentChild,
   QueryList,
+  effect,
+  untracked,
 } from '@angular/core';
-import { CommonModule, DatePipe } from '@angular/common';
-import { TranslatePipe } from '@vhandelivery/shared-ui';
+import { CommonModule } from '@angular/common';
+import {
+  TranslatePipe,
+  getFromStorage,
+  STORAGE_KEYS,
+  LocalizedDatePipe,
+} from '@vhandelivery/shared-ui';
+import {
+  ColumnVisibilityDropdownComponent,
+  ColumnVisibilityItem,
+} from '../column-visibility-dropdown';
 
 /**
  * Directive to define custom cell templates
@@ -38,6 +50,38 @@ import {
 })
 export class TableCellDirective {
   @Input('appTableCell') columnKey!: string;
+  readonly templateRef = inject(TemplateRef<unknown>);
+}
+
+/**
+ * Directive to define mobile card template
+ * Usage:
+ * <ng-template appMobileCard let-row let-isColumnVisible="isColumnVisible">
+ *   <div>{{ row.name }}</div>
+ *   @if (isColumnVisible('location')) { <div>{{ row.location }}</div> }
+ * </ng-template>
+ */
+@Directive({
+  selector: '[appMobileCard]',
+  standalone: true,
+})
+export class MobileCardDirective {
+  readonly templateRef = inject(TemplateRef<unknown>);
+}
+
+/**
+ * Directive to define action menu template for row actions
+ * Usage:
+ * <ng-template appActionMenu let-row let-closeMenu="closeMenu">
+ *   <button (click)="onView(row); closeMenu()">View</button>
+ *   <button (click)="onEdit(row); closeMenu()">Edit</button>
+ * </ng-template>
+ */
+@Directive({
+  selector: '[appActionMenu]',
+  standalone: true,
+})
+export class ActionMenuDirective {
   readonly templateRef = inject(TemplateRef<unknown>);
 }
 
@@ -70,12 +114,28 @@ export class TableCellDirective {
  * </app-data-table>
  * ```
  */
+/** Validator for hidden column keys array */
+const isStringArray = (value: unknown): value is string[] =>
+  Array.isArray(value) && value.every((item) => typeof item === 'string');
+
 @Component({
   selector: 'app-data-table',
   standalone: true,
-  imports: [CommonModule, TranslatePipe, DatePipe, TableCellDirective],
+  imports: [
+    CommonModule,
+    TranslatePipe,
+    LocalizedDatePipe,
+    TableCellDirective,
+    MobileCardDirective,
+    ActionMenuDirective,
+    ColumnVisibilityDropdownComponent,
+  ],
   templateUrl: './data-table.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    '(document:click)': 'onDocumentClick($event)',
+    '(document:keydown.escape)': 'closeActionMenu()',
+  },
 })
 export class DataTableComponent<
   T extends Record<string, unknown> = Record<string, unknown>
@@ -107,15 +167,115 @@ export class DataTableComponent<
   @ContentChildren(TableCellDirective)
   cellTemplates!: QueryList<TableCellDirective>;
 
+  // Content child for mobile card template
+  @ContentChild(MobileCardDirective)
+  mobileCardTemplate?: MobileCardDirective;
+
+  // Content child for action menu template
+  @ContentChild(ActionMenuDirective)
+  actionMenuTemplate?: ActionMenuDirective;
+
   // Internal state
   private readonly internalSelectedIds = signal<Set<string>>(new Set());
   private readonly internalSort = signal<TableSort | null>(null);
 
+  // Action menu state
+  private readonly activeActionMenuId = signal<string | null>(null);
+
+  // Computed: Active action menu data for dropdown positioning
+  readonly activeMenuData = computed(() => {
+    const menuId = this.activeActionMenuId();
+    if (!menuId) return null;
+
+    const dataList = this.data();
+    const rowIdKey = this.config().rowIdKey ?? 'id';
+    const index = dataList.findIndex((row) => String(row[rowIdKey]) === menuId);
+    if (index === -1) return null;
+
+    return {
+      row: dataList[index],
+      index,
+      // Header height (~120px) + row height (~90px) * index
+      topPosition: 120 + index * 90,
+    };
+  });
+
+  // Column visibility state
+  private readonly hiddenColumnKeys = signal<Set<string>>(new Set());
+  private isInitialized = false;
+
+  constructor() {
+    // Load saved column visibility from localStorage on init
+    this.initColumnVisibilityFromStorage();
+  }
+
+  /**
+   * Check if a column is visible (for use in mobile card templates)
+   */
+  isColumnVisible = (columnKey: string): boolean => {
+    return !this.hiddenColumnKeys().has(columnKey);
+  };
+
+  /**
+   * Initialize column visibility from localStorage
+   * Called once when component is constructed
+   */
+  private initColumnVisibilityFromStorage(): void {
+    // Use effect to react to config changes and load stored preferences
+    effect(() => {
+      const tableId = this.config().id;
+      if (!tableId) return;
+
+      untracked(() => {
+        const storageKey = this.getColumnVisibilityStorageKey();
+        const savedKeys = getFromStorage<string[]>(storageKey, {
+          defaultValue: [],
+          validator: isStringArray,
+        });
+
+        if (savedKeys.length > 0) {
+          // Validate that saved keys still exist in current columns
+          const validColumnKeys = new Set(
+            this.config().columns.map((col) => col.key)
+          );
+          const validHiddenKeys = savedKeys.filter((key) =>
+            validColumnKeys.has(key)
+          );
+          this.hiddenColumnKeys.set(new Set(validHiddenKeys));
+        }
+
+        this.isInitialized = true;
+      });
+    });
+  }
+
   // Computed values
   readonly visibleColumns = computed(() => {
     const cols = this.config().columns;
+    const hiddenKeys = this.hiddenColumnKeys();
+    return cols.filter(
+      (col) => col.visible !== false && !hiddenKeys.has(col.key)
+    );
+  });
+
+  readonly allColumns = computed(() => {
+    const cols = this.config().columns;
     return cols.filter((col) => col.visible !== false);
   });
+
+  /** Columns mapped to ColumnVisibilityItem[] for dropdown component */
+  readonly columnsForDropdown = computed<ColumnVisibilityItem[]>(() => {
+    const hiddenKeys = this.hiddenColumnKeys();
+    return this.allColumns().map((col) => ({
+      key: col.key,
+      labelKey: col.labelKey,
+      visible: !hiddenKeys.has(col.key),
+    }));
+  });
+
+  readonly visibleColumnCount = computed(() => this.visibleColumns().length);
+
+  readonly totalColumnCount = computed(() => this.allColumns().length);
 
   readonly sortState = computed(
     () => this.currentSort() ?? this.internalSort()
@@ -478,5 +638,55 @@ export class DataTableComponent<
 
   onHeaderActionClick(actionId: string): void {
     this.headerAction.emit({ actionId });
+  }
+
+  /**
+   * Handler when column visibility changes from dropdown component
+   */
+  onColumnsChange(columns: ColumnVisibilityItem[]): void {
+    const hiddenKeys = new Set(
+      columns.filter((c) => !c.visible).map((c) => c.key)
+    );
+    this.hiddenColumnKeys.set(hiddenKeys);
+  }
+
+  /**
+   * Get the storage key for this table's column visibility
+   */
+  getColumnVisibilityStorageKey(): string {
+    return `${STORAGE_KEYS.TABLE_COLUMN_VISIBILITY_PREFIX}${this.config().id}`;
+  }
+
+  /**
+   * Toggle action menu for a specific row
+   */
+  toggleActionMenu(rowId: string): void {
+    this.activeActionMenuId.update((current) =>
+      current === rowId ? null : rowId
+    );
+  }
+
+  /**
+   * Close action menu
+   */
+  closeActionMenu = (): void => {
+    this.activeActionMenuId.set(null);
+  };
+
+  /**
+   * Handle document click to close action menu
+   */
+  onDocumentClick(event: Event): void {
+    // Close menu if clicking outside
+    if (this.activeActionMenuId()) {
+      const target = event.target as HTMLElement;
+      // Don't close if clicking on the menu itself or the trigger button
+      if (
+        !target.closest('.action-menu-dropdown') &&
+        !target.closest('.action-menu-trigger')
+      ) {
+        this.closeActionMenu();
+      }
+    }
   }
 }
