@@ -47,17 +47,17 @@ export class HeaderComponent {
     {
       value: SUPPORTED_LANGUAGES[0],
       label: 'Tiếng Việt',
-      flag: 'assets/images/flags/vi.svg',
+      flag: 'assets/icons/flags/vi.svg',
     },
     {
       value: SUPPORTED_LANGUAGES[1],
       label: 'English',
-      flag: 'assets/images/flags/en.svg',
+      flag: 'assets/icons/flags/en.svg',
     },
     {
       value: SUPPORTED_LANGUAGES[2],
       label: '한국어',
-      flag: 'assets/images/flags/ko.svg',
+      flag: 'assets/icons/flags/ko.svg',
     },
   ];
 
