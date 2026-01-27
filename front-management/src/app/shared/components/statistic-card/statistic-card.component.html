@@ -5,7 +5,7 @@
   <img
     [src]="config().icon"
     [alt]="config().labelKey | translate"
-    class="w-[22px] h-[22px] object-contain mb-2 md:hidden"
+    class="w-6 h-6 object-contain mb-2 md:hidden"
   />
 
   <!-- Desktop: Label and Icon in row -->
@@ -18,7 +18,7 @@
     <img
       [src]="config().icon"
       [alt]="config().labelKey | translate"
-      class="w-[22px] h-[22px] object-contain"
+      class="w-8 h-8 object-contain"
     />
   </div>
 
@@ -45,7 +45,9 @@
     >
       {{ config().trend?.value }}
     </span>
-    <span class="text-sm md:text-[1rem] text-[var(--color-status-info)]">
+    <span
+      class="text-sm md:text-[1rem] text-[var(--color-status-info)] flex items-center justify-center"
+    >
       {{
         config().trend?.labelKey ?? 'admin.partners.stats.comparedToLastMonth'
           | translate

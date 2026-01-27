@@ -1,4 +1,4 @@
-<div class="flex flex-col gap-4 md:gap-6 px-4 md:px-0">
+<div class="flex flex-col md:gap-4 px-4 md:px-0">
   <!-- Tab Navigation - Pill style on mobile-->
   <nav
     class="flex gap-2 md:gap-6 overflow-x-auto scrollbar-hide -mx-4 px-4 md:mx-0 md:px-0"
@@ -8,9 +8,8 @@
       [routerLink]="tab.link"
       routerLinkActive="active-tab"
       #rla="routerLinkActive"
-      class="shrink-0 md:shrink pb-2 text-sm md:text-base font-normal transition-all duration-200 px-4 py-2 rounded-xl border"
+      class="shrink-0 md:shrink pb-2 text-sm md:text-base font-normal transition-all duration-200 px-4 py-2 rounded-full bg-background border"
       [class.border-primary]="rla.isActive"
-      [class.bg-transparent]="rla.isActive"
       [class.text-[var(--color-primary)]]="rla.isActive"
       [class.md:border-primary]="rla.isActive"
       [class.border-border]="!rla.isActive"

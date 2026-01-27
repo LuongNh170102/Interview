@@ -273,6 +273,12 @@ model Merchant {
   
   isAcceptingOrders Boolean @default(true) @map("is_accepting_orders") 
   metadata    Json?
+  
+  // Denormalized rating stats (updated via service when reviews change)
+  averageRating   Float     @default(0) @map("average_rating")
+  totalReviews    Int       @default(0) @map("total_reviews")
+  ratingBreakdown Json?     @map("rating_breakdown") // {"5": 100, "4": 50, "3": 20, "2": 5, "1": 2}
+  
   createdAt   DateTime @default(now()) @map("created_at")
   updatedAt   DateTime? @updatedAt @map("updated_at")
 
@@ -371,6 +377,11 @@ model Product {
   stock       Int?
   isActive    Boolean? @default(true) @map("is_active")
   metadata    Json?
+  
+  // Denormalized rating stats (updated via service when reviews change)
+  averageRating   Float     @default(0) @map("average_rating")
+  totalReviews    Int       @default(0) @map("total_reviews")
+  
   createdAt   DateTime @default(now()) @map("created_at")
   updatedAt   DateTime? @updatedAt @map("updated_at")
 

@@ -21,7 +21,6 @@ import { AUTH_MESSAGES } from '../common/constants/messages.constant';
 import { OtpService } from '../otp/otp.service';
 import { RESOURCE_MESSAGES } from '../common/constants/messages.constant';
 import { RESOURCE_TARGETS } from '../common/constants/resource.constant';
-import { Agency } from '@prisma/client';
 import { AgencyEntity } from './entities/agency.entity';
 
 @Injectable()

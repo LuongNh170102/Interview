@@ -198,7 +198,27 @@
       "merchants": {
         "title": "매장 목록",
         "subtitle": "시스템의 매장 정보를 관리합니다",
-        "addNew": "매장 추가"
+        "addNew": "매장 추가",
+        "searchPlaceholder": "매장 검색...",
+        "stats": {
+          "totalStores": "총 매장 수",
+          "pendingApproval": "승인 대기",
+          "activeStores": "활성 매장",
+          "revenueFromStores": "매장 수익"
+        },
+        "table": {
+          "storeName": "매장",
+          "address": "주소",
+          "phone": "전화번호",
+          "agency": "에이전시",
+          "brand": "브랜드",
+          "owner": "소유자",
+          "businessType": "업종",
+          "products": "상품",
+          "orders": "주문",
+          "status": "상태",
+          "rating": "평점"
+        }
       },
       "stores": {
         "listTitle": "매장 목록",

@@ -5,11 +5,17 @@ import {
 } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
 import { CreateMerchantDto } from './dto/create-merchant.dto';
+import {
+  MerchantQueryDto,
+  MerchantStatistics,
+  MerchantListResponse,
+} from './dto/merchant-query.dto';
 import { RequestOtpDto, VerifyOtpDto } from '../otp/dto/otp.dto';
 import { JwtService } from '@nestjs/jwt';
 import {
   MERCHANT_REGISTRATION_OTP,
   MERCHANT_STATUS,
+  MERCHANT_OPERATIONAL_STATUS,
 } from '../common/constants/merchant.constant';
 import {
   AUTH_MESSAGES,
@@ -18,8 +24,8 @@ import {
 import { OtpService } from '../otp/otp.service';
 import { ROLE } from '../common/constants/role.constants';
 import { RESOURCE_TARGETS } from '../common/constants/resource.constant';
-import { PaginationDto } from '../common/dto/pagination.dto';
 import { ApprovalStatus } from '@prisma/client';
+import { MerchantEntity } from './entities/merchant.entity';
 
 @Injectable()
 export class MerchantService {
@@ -37,25 +43,96 @@ export class MerchantService {
     return this.otpService.verifyOtp(dto, MERCHANT_REGISTRATION_OTP);
   }
 
-  async findAll(pagination: PaginationDto) {
-    const take = pagination.limit ?? 10;
-    const skip = pagination.skip;
+  async findAll(
+    query: MerchantQueryDto
+  ): Promise<MerchantListResponse<MerchantEntity>> {
+    const take = query.limit ?? 10;
+    const skip = query.skip;
 
     const [items, total] = await this.prisma.$transaction([
       this.prisma.merchant.findMany({
         skip,
         take,
         orderBy: { createdAt: 'desc' },
+        include: {
+          agency: {
+            select: {
+              name: true,
+              externalId: true,
+              phone: true,
+            },
+          },
+          brand: {
+            select: {
+              name: true,
+              externalId: true,
+              slug: true,
+            },
+          },
+          owner: {
+            select: {
+              email: true,
+              phone: true,
+              username: true,
+            },
+          },
+          tags: {
+            include: {
+              tag: true,
+            },
+          },
+          _count: {
+            select: {
+              products: true,
+              orders: true,
+            },
+          },
+        },
       }),
       this.prisma.merchant.count(),
     ]);
 
-    return {
-      data: items,
+    const response: MerchantListResponse<MerchantEntity> = {
+      data: items.map(
+        (item) =>
+          new MerchantEntity(item, {
+            agency: item.agency,
+            brand: item.brand,
+            owner: item.owner,
+            tags: item.tags,
+            _count: item._count,
+          })
+      ),
       total,
-      page: pagination.page ?? 1,
+      page: query.page ?? 1,
       limit: take,
     };
+
+    if (query.shouldIncludeStatistics) {
+      response.statistics = await this.getStatistics();
+    }
+
+    return response;
+  }
+
+  private async getStatistics(): Promise<MerchantStatistics> {
+    const [totalApproved, totalPending, totalActive] =
+      await this.prisma.$transaction([
+        this.prisma.merchant.count({
+          where: { approvalStatus: MERCHANT_STATUS.APPROVED as ApprovalStatus },
+        }),
+        this.prisma.merchant.count({
+          where: { approvalStatus: MERCHANT_STATUS.PENDING as ApprovalStatus },
+        }),
+        this.prisma.merchant.count({
+          where: {
+            approvalStatus: MERCHANT_STATUS.APPROVED as ApprovalStatus,
+            operationalStatus: MERCHANT_OPERATIONAL_STATUS.ACTIVE,
+          },
+        }),
+      ]);
+
+    return { totalApproved, totalPending, totalActive };
   }
 
   async findByExternalId(externalId: string) {
@@ -154,7 +231,7 @@ export class MerchantService {
     let payload;
     try {
       payload = this.jwtService.verify(dto.verificationToken);
-    } catch (e) {
+    } catch {
       throw new UnauthorizedException(
         AUTH_MESSAGES.INVALID_OR_EXPIRED_VERIFICATION_TOKEN
       );

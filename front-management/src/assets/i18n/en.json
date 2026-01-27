@@ -138,9 +138,29 @@
         "searchPlaceholder": "Search agencies...."
       },
       "merchants": {
-        "title": "Merchant List",
+        "title": "Merchants",
         "subtitle": "Manage merchant information in the system",
-        "addNew": "Add Merchant"
+        "addNew": "Add Merchant",
+        "searchPlaceholder": "Search merchants...",
+        "stats": {
+          "totalStores": "Total Stores",
+          "pendingApproval": "Pending Approval",
+          "activeStores": "Active Stores",
+          "revenueFromStores": "Revenue from Stores"
+        },
+        "table": {
+          "storeName": "STORE",
+          "address": "ADDRESS",
+          "phone": "PHONE",
+          "agency": "AGENCY",
+          "brand": "BRAND",
+          "owner": "OWNER",
+          "businessType": "TYPE",
+          "products": "PRODUCTS",
+          "orders": "ORDERS",
+          "status": "STATUS",
+          "rating": "RATING"
+        }
       },
       "table": {
         "agencyName": "AGENCY NAME",
