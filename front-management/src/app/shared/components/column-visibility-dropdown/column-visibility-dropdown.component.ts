@@ -142,9 +142,14 @@ export class ColumnVisibilityDropdownComponent {
 
   readonly dropdownClasses = computed(() => {
     const base =
-      'absolute top-full mt-2 w-64 bg-surface border border-border rounded-lg shadow-lg z-50 p-4';
+      'absolute top-full mt-2 w-[18rem] bg-surface border border-border rounded-lg shadow-lg z-50 p-4 overflow-x-hidden';
     return this.position() === 'left' ? `${base} left-0` : `${base} right-0`;
   });
+
+  @HostListener('window:scroll')
+  onWindowScroll(): void {
+    this.isOpen.set(false);
+  }
 
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: Event): void {

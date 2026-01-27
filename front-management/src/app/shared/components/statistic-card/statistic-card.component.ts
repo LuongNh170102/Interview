@@ -60,7 +60,7 @@ export class StatisticCardComponent {
     const direction = this.config().trend?.direction;
     if (!direction) return '';
     return direction === 'up'
-      ? 'bg-[var(--color-avatar-cyan-bg)] text-[var(--color-status-info)]'
+      ? 'bg-[#d9f3f4] py-[0.4rem] px-[0.6rem] rounded-full text-[var(--color-status-info)]'
       : 'bg-[var(--color-avatar-orange-bg)] text-[var(--color-status-error)]';
   });
 
@@ -71,7 +71,7 @@ export class StatisticCardComponent {
       info: 'text-[var(--color-status-info)]',
       warning: 'text-[var(--color-status-warning)]',
       success: 'text-[var(--color-text-tertiary)]',
-      error: 'text-[var(--color-status-error)]',
+      error: 'text-[var(--color-primary)]',
     };
     return colorClasses[variant];
   });

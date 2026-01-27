@@ -75,7 +75,7 @@ module.exports = {
   },
   plugins: [
     // Plugin to hide scrollbar while keeping scroll functionality
-    function({ addUtilities }) {
+    function ({ addUtilities }) {
       addUtilities({
         '.scrollbar-hide': {
           /* IE and Edge */

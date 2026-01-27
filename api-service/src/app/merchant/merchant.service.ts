@@ -93,14 +93,15 @@ export class MerchantService {
     ]);
 
     const response: MerchantListResponse<MerchantEntity> = {
-      data: items.map((item) =>
-        new MerchantEntity(item, {
-          agency: item.agency,
-          brand: item.brand,
-          owner: item.owner,
-          tags: item.tags,
-          _count: item._count,
-        })
+      data: items.map(
+        (item) =>
+          new MerchantEntity(item, {
+            agency: item.agency,
+            brand: item.brand,
+            owner: item.owner,
+            tags: item.tags,
+            _count: item._count,
+          })
       ),
       total,
       page: query.page ?? 1,

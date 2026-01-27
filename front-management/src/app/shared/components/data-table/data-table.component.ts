@@ -402,7 +402,7 @@ export class DataTableComponent<
 
   getStatusClasses(variant: StatusConfig['variant']): string {
     const baseClasses =
-      'inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium';
+      'inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[0.8rem] py-2 px-4 font-medium';
     const variantClasses: Record<StatusConfig['variant'], string> = {
       success:
         'bg-[var(--color-avatar-green-bg)] text-[var(--color-status-success)]',
