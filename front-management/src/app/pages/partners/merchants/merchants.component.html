@@ -1,15 +1,15 @@
 <div class="flex flex-col gap-4 md:gap-6">
   <!-- Reusable Templates -->
   <!-- Status Badge Template -->
-  <ng-template #statusBadge let-agency>
-    @if (agency.approvalStatus === 'pending') {
+  <ng-template #statusBadge let-merchant>
+    @if (merchant.approvalStatus === 'pending') {
     <span
       class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm bg-status-warning-bg text-status-warning"
     >
       <span class="w-1.5 h-1.5 rounded-full bg-status-warning"></span>
       {{ 'common.status.pending' | translate }}
     </span>
-    } @else { @switch (agency.operationalStatus) { @case ('active') {
+    } @else { @switch (merchant.operationalStatus) { @case ('active') {
     <span
       class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm bg-status-success-bg text-status-success"
     >
@@ -25,9 +25,9 @@
     </span>
     } @case ('suspended') {
     <span
-      class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm bg-status-info-bg text-status-info"
+      class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm bg-status-warning-bg text-status-warning"
     >
-      <span class="w-1.5 h-1.5 rounded-full bg-status-info"></span>
+      <span class="w-1.5 h-1.5 rounded-full bg-status-warning"></span>
       {{ 'common.status.suspended' | translate }}
     </span>
     } @case ('locked') {
@@ -57,7 +57,7 @@
   <div class="relative mt-4 md:mt-14">
     <app-data-table
       [config]="tableConfig"
-      [data]="agencies()"
+      [data]="merchants()"
       [pagination]="pagination()"
       [headerConfig]="tableHeaderConfig"
       [itemCount]="pagination().total"
@@ -68,25 +68,25 @@
       (headerAction)="onHeaderAction($event)"
     >
       <!-- Action Menu Template (Desktop) -->
-      <ng-template appActionMenu let-agency let-closeMenu="closeMenu">
+      <ng-template appActionMenu let-merchant let-closeMenu="closeMenu">
         <button
-          (click)="onMenuAction('view', agency); closeMenu()"
+          (click)="onMenuAction('view', merchant); closeMenu()"
           class="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-content-primary hover:bg-surface-muted transition-colors"
         >
           <img src="assets/icons/icon-detail.svg" alt="" class="w-4 h-4" />
           {{ 'admin.partners.actions.viewDetail' | translate }}
         </button>
         <button
-          (click)="onMenuAction('edit', agency); closeMenu()"
+          (click)="onMenuAction('edit', merchant); closeMenu()"
           class="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-content-primary hover:bg-surface-muted transition-colors"
         >
           <img src="assets/icons/icon-modify.svg" alt="" class="w-4 h-4" />
           {{ 'admin.partners.actions.modify' | translate }}
         </button>
         <div class="border-t border-border my-1"></div>
-        @if (agency.operationalStatus === 'active') {
+        @if (merchant.operationalStatus === 'active') {
         <button
-          (click)="onMenuAction('deactivate', agency); closeMenu()"
+          (click)="onMenuAction('deactivate', merchant); closeMenu()"
           class="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-content-primary hover:bg-surface-muted transition-colors"
         >
           <img
@@ -98,7 +98,7 @@
         </button>
         } @else {
         <button
-          (click)="onMenuAction('activate', agency); closeMenu()"
+          (click)="onMenuAction('activate', merchant); closeMenu()"
           class="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-content-primary hover:bg-surface-muted transition-colors"
         >
           <img src="assets/icons/icon-activation.svg" alt="" class="w-4 h-4" />
@@ -107,7 +107,7 @@
         }
         <div class="border-t border-border my-1"></div>
         <button
-          (click)="onMenuAction('delete', agency); closeMenu()"
+          (click)="onMenuAction('delete', merchant); closeMenu()"
           class="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-status-error hover:bg-surface-muted transition-colors"
         >
           <img src="assets/icons/icon-delete.svg" alt="" class="w-4 h-4" />
@@ -115,7 +115,7 @@
         </button>
       </ng-template>
 
-      <!-- Custom template for agency info column (icon + name + code) - Desktop -->
+      <!-- Custom template for merchant info column (icon + name + code) - Desktop -->
       <ng-template appTableCell="storeInfo" let-row>
         <div class="flex items-center gap-3">
           <div
@@ -133,10 +133,67 @@
         </div>
       </ng-template>
 
+      <!-- Custom template for rating column - Desktop -->
+      <ng-template appTableCell="rating" let-row>
+        <div class="flex items-center gap-1">
+          @if (row.averageRating > 0) {
+          <span class="text-xl font-bold text-content-primary">{{
+            row.averageRating
+          }}</span>
+          <img
+            src="assets/icons/icon-star.svg"
+            alt="star"
+            class="w-[17px] h-[16px]"
+          />
+          } @else {
+          <span class="text-xl font-bold text-content-tertiary">--</span>
+          <img
+            src="assets/icons/icon-star.svg"
+            alt="star"
+            class="w-[17px] h-[16px] opacity-50"
+          />
+          }
+        </div>
+      </ng-template>
+
+      <!-- Custom template for brand column - Desktop -->
+      <ng-template appTableCell="brandInfo" let-row>
+        <div class="flex flex-col">
+          @if (row.brandName) {
+          <span class="text-content-primary font-medium">{{
+            row.brandName
+          }}</span>
+          @if (row.brandSlug) {
+          <span class="text-xs text-content-tertiary">{{ row.brandSlug }}</span>
+          } } @else {
+          <span class="text-content-tertiary">--</span>
+          }
+        </div>
+      </ng-template>
+
+      <!-- Custom template for owner column - Desktop -->
+      <ng-template appTableCell="ownerInfo" let-row>
+        <div class="flex flex-col">
+          @if (row.ownerName) {
+          <span class="text-content-primary">{{ row.ownerName }}</span>
+          @if (row.ownerEmail) {
+          <span class="text-xs text-content-tertiary truncate max-w-[180px]">{{
+            row.ownerEmail
+          }}</span>
+          } } @else if (row.ownerEmail) {
+          <span class="text-content-primary truncate max-w-[180px]">{{
+            row.ownerEmail
+          }}</span>
+          } @else {
+          <span class="text-content-tertiary">--</span>
+          }
+        </div>
+      </ng-template>
+
       <!-- Mobile Card Template -->
       <ng-template
         appMobileCard
-        let-agency
+        let-merchant
         let-isLast="isLast"
         let-isColumnVisible="isColumnVisible"
       >
@@ -145,79 +202,170 @@
           [class.border-b]="!isLast"
           [class.border-border]="!isLast"
         >
-          <!-- Agency Header - Avatar + Name/Code -->
+          <!-- Merchant Header - Avatar + Name/Code -->
           <div class="flex items-start gap-4 mb-4">
             <div
               class="w-14 h-14 rounded-full flex items-center justify-center text-xl font-bold shrink-0"
-              [style.backgroundColor]="agency.initialsColor"
+              [style.backgroundColor]="merchant.initialsColor"
             >
-              <span>{{ agency.initials }}</span>
+              <span>{{ merchant.initials }}</span>
             </div>
             <div class="flex flex-col flex-1 min-w-0 pt-1">
               <span class="text-xl font-bold text-content-primary truncate">{{
-                agency.name
+                merchant.name
               }}</span>
               <span class="text-sm text-content-tertiary mt-1">{{
-                agency.code
+                merchant.code
               }}</span>
             </div>
           </div>
 
-          <!-- Agency Details - Row format matching Figma -->
+          <!-- Merchant Details - Row format matching Figma -->
           <div class="flex flex-col gap-2 text-sm ml-[4.5rem]">
-            <!-- Location row -->
+            <!-- Address row -->
             @if (isColumnVisible('address')) {
             <div class="flex items-center gap-2">
               <span
                 class="text-[0.8125rem] text-content-tertiary uppercase w-[6.25rem] shrink-0"
               >
-                {{ 'admin.partners.table.location' | translate }}
+                {{ 'admin.partners.merchants.table.address' | translate }}
               </span>
               <span class="text-content-primary truncate">{{
-                agency.address
+                merchant.address || '--'
               }}</span>
             </div>
             }
-            <!-- Total Stores row -->
-            @if (isColumnVisible('storeCount')) {
+            <!-- Phone row -->
+            @if (isColumnVisible('phone')) {
+            <div class="flex items-center gap-2">
+              <span
+                class="text-[0.8125rem] text-content-tertiary uppercase w-[6.25rem] shrink-0"
+              >
+                {{ 'admin.partners.merchants.table.phone' | translate }}
+              </span>
+              <span class="text-content-primary">{{
+                merchant.phone || '--'
+              }}</span>
+            </div>
+            }
+            <!-- Agency row -->
+            @if (isColumnVisible('agencyName')) {
+            <div class="flex items-center gap-2">
+              <span
+                class="text-[0.8125rem] text-content-tertiary uppercase w-[6.25rem] shrink-0"
+              >
+                {{ 'admin.partners.merchants.table.agency' | translate }}
+              </span>
+              <span class="text-content-primary truncate">{{
+                merchant.agencyName || '--'
+              }}</span>
+            </div>
+            }
+            <!-- Brand row -->
+            @if (isColumnVisible('brandName')) {
+            <div class="flex items-center gap-2">
+              <span
+                class="text-[0.8125rem] text-content-tertiary uppercase w-[6.25rem] shrink-0"
+              >
+                {{ 'admin.partners.merchants.table.brand' | translate }}
+              </span>
+              <span class="text-content-primary truncate">{{
+                merchant.brandName || '--'
+              }}</span>
+            </div>
+            }
+            <!-- Owner row -->
+            @if (isColumnVisible('ownerName')) {
+            <div class="flex items-center gap-2">
+              <span
+                class="text-[0.8125rem] text-content-tertiary uppercase w-[6.25rem] shrink-0"
+              >
+                {{ 'admin.partners.merchants.table.owner' | translate }}
+              </span>
+              <span class="text-content-primary truncate">{{
+                merchant.ownerName || merchant.ownerEmail || '--'
+              }}</span>
+            </div>
+            }
+            <!-- Business Type row -->
+            @if (isColumnVisible('businessCategory')) {
             <div class="flex items-center gap-2 min-w-0">
               <span
                 class="text-[0.8125rem] text-content-tertiary uppercase w-[6.25rem] shrink-0"
               >
-                {{ 'admin.partners.table.totalStores' | translate }}
+                {{ 'admin.partners.merchants.table.businessType' | translate }}
               </span>
               <span class="text-content-primary">{{
-                agency.storeCount | number
+                merchant.businessCategory
               }}</span>
             </div>
             }
-            <!-- Join Date row -->
-            @if (isColumnVisible('createdAt')) {
+            <!-- Products row -->
+            @if (isColumnVisible('productCount')) {
             <div class="flex items-center gap-2 min-w-0">
               <span
                 class="text-[0.8125rem] text-content-tertiary uppercase w-[6.25rem] shrink-0"
               >
-                {{ 'admin.partners.table.joinDate' | translate }}
+                {{ 'admin.partners.merchants.table.products' | translate }}
               </span>
-              <span class="text-content-primary">{{
-                agency.createdAt | date : 'yyyy/MM/dd'
+              <span class="text-content-primary font-medium">{{
+                merchant.productCount
               }}</span>
+            </div>
+            }
+            <!-- Orders row -->
+            @if (isColumnVisible('orderCount')) {
+            <div class="flex items-center gap-2 min-w-0">
+              <span
+                class="text-[0.8125rem] text-content-tertiary uppercase w-[6.25rem] shrink-0"
+              >
+                {{ 'admin.partners.merchants.table.orders' | translate }}
+              </span>
+              <span class="text-content-primary font-medium">{{
+                merchant.orderCount
+              }}</span>
+            </div>
+            }
+            <!-- Rating row -->
+            @if (isColumnVisible('averageRating')) {
+            <div class="flex items-center gap-2 min-w-0">
+              <span
+                class="text-[0.8125rem] text-content-tertiary uppercase w-[6.25rem] shrink-0"
+              >
+                {{ 'admin.partners.merchants.table.rating' | translate }}
+              </span>
+              <div class="flex items-center gap-1">
+                @if (merchant.averageRating > 0) {
+                <span class="text-content-primary font-bold">{{
+                  merchant.averageRating
+                }}</span>
+                <img
+                  src="assets/icons/icon-star.svg"
+                  alt="star"
+                  class="w-4 h-4"
+                />
+                } @else {
+                <span class="text-content-tertiary">--</span>
+                }
+              </div>
             </div>
             }
             <!-- Status row -->
             <div class="flex items-center gap-2 mt-2">
               @if (isColumnVisible('operationalStatus')) {
               <ng-container
-                *ngTemplateOutlet="statusBadge; context: { $implicit: agency }"
+                *ngTemplateOutlet="
+                  statusBadge;
+                  context: { $implicit: merchant }
+                "
               ></ng-container>
               }
 
-              <!-- More actions button with dropdown -->
               <div class="relative ml-auto">
                 <button
                   class="p-1"
-                  (click)="toggleMobileMenu($event, agency.id)"
-                  [attr.aria-expanded]="activeMobileMenuId() === agency.id"
+                  (click)="toggleMobileMenu($event, merchant.id)"
+                  [attr.aria-expanded]="activeMobileMenuId() === merchant.id"
                 >
                   <svg
                     width="16"
@@ -232,13 +380,13 @@
                     <circle cx="15" cy="1" r="1" />
                   </svg>
                 </button>
-                @if (activeMobileMenuId() === agency.id) {
+                @if (activeMobileMenuId() === merchant.id) {
                 <div
                   class="absolute right-0 top-full mt-1 w-48 bg-surface border border-border rounded-lg shadow-lg z-50 py-1"
-                  (click)="$event.stopPropagation()"
+                  role="menu"
                 >
                   <button
-                    (click)="onMenuAction('view', agency)"
+                    (click)="onMenuAction('view', merchant)"
                     class="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-content-primary hover:bg-surface-muted transition-colors"
                   >
                     <img
@@ -249,7 +397,7 @@
                     {{ 'admin.partners.actions.viewDetail' | translate }}
                   </button>
                   <button
-                    (click)="onMenuAction('edit', agency)"
+                    (click)="onMenuAction('edit', merchant)"
                     class="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-content-primary hover:bg-surface-muted transition-colors"
                   >
                     <img
@@ -260,9 +408,9 @@
                     {{ 'admin.partners.actions.modify' | translate }}
                   </button>
                   <div class="border-t border-border my-1"></div>
-                  @if (agency.operationalStatus === 'active') {
+                  @if (merchant.operationalStatus === 'active') {
                   <button
-                    (click)="onMenuAction('deactivate', agency)"
+                    (click)="onMenuAction('deactivate', merchant)"
                     class="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-content-primary hover:bg-surface-muted transition-colors"
                   >
                     <img
@@ -274,7 +422,7 @@
                   </button>
                   } @else {
                   <button
-                    (click)="onMenuAction('activate', agency)"
+                    (click)="onMenuAction('activate', merchant)"
                     class="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-content-primary hover:bg-surface-muted transition-colors"
                   >
                     <img
@@ -287,7 +435,7 @@
                   }
                   <div class="border-t border-border my-1"></div>
                   <button
-                    (click)="onMenuAction('delete', agency)"
+                    (click)="onMenuAction('delete', merchant)"
                     class="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-status-error hover:bg-surface-muted transition-colors"
                   >
                     <img

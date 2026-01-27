@@ -137,7 +137,7 @@
       "filter": {
         "location": "Lọc"
       },
-      "column": "Column",
+      "column": "Cột",
       "agencies": {
         "title": "Đối tác",
         "addNew": "Thêm Đối tác",
@@ -145,9 +145,34 @@
         "allLocations": "Tất cả địa điểm"
       },
       "merchants": {
-        "title": "Danh sách cửa hàng",
+        "title": "Cửa hàng",
         "subtitle": "Quản lý thông tin cửa hàng trong hệ thống",
-        "addNew": "Thêm cửa hàng"
+        "addNew": "Thêm cửa hàng",
+        "searchPlaceholder": "Tìm kiếm cửa hàng...",
+        "stats": {
+          "totalStores": "Tổng số cửa hàng",
+          "pendingApproval": "Cửa hàng chờ duyệt",
+          "activeStores": "Cửa hàng hoạt động",
+          "revenueFromStores": "Doanh thu từ cửa hàng"
+        },
+        "table": {
+          "storeName": "CỬA HÀNG",
+          "address": "ĐỊA CHỈ",
+          "phone": "ĐIỆN THOẠI",
+          "agency": "THUỘC AGENCY",
+          "brand": "THƯƠNG HIỆU",
+          "owner": "CHỦ SỞ HỮU",
+          "businessType": "LOẠI HÌNH",
+          "products": "SẢN PHẨM",
+          "orders": "ĐƠN HÀNG",
+          "status": "TRẠNG THÁI",
+          "rating": "XẾP HẠNG"
+        }
+      },
+      "filter": {
+        "location": "Khu vực",
+        "status": "Trạng thái",
+        "agency": "Thuộc Agency"
       },
       "stores": {
         "listTitle": "Danh sách cửa hàng",

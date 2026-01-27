@@ -16,7 +16,7 @@ import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
 import { UpdateMerchantStatusDto } from './dto/update-merchant-status.dto';
 import { PermissionsGuard } from '../common/guards/permissions.guard';
 import { Permissions } from '../common/decorators/permissions.decorator';
-import { PaginationDto } from '../common/dto/pagination.dto';
+import { MerchantQueryDto } from './dto/merchant-query.dto';
 
 @Controller('merchants')
 export class MerchantController {
@@ -35,8 +35,8 @@ export class MerchantController {
   @Get()
   @UseGuards(JwtAuthGuard, PermissionsGuard)
   @Permissions('system:manage_users')
-  findAll(@Query() pagination: PaginationDto) {
-    return this.merchantService.findAll(pagination);
+  findAll(@Query() query: MerchantQueryDto) {
+    return this.merchantService.findAll(query);
   }
 
   @Get(':id')

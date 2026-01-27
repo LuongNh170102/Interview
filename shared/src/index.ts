@@ -7,6 +7,7 @@ export * from './lib/interfaces/date-format.interface';
 export * from './lib/services/translation.service';
 export * from './lib/services/auth.service';
 export * from './lib/services/agency.service';
+export * from './lib/services/merchant.service';
 export * from './lib/interceptors/auth.interceptor';
 export * from './lib/pipes/translate.pipe';
 export * from './lib/pipes/localized-date.pipe';

@@ -16,11 +16,17 @@ export interface TableColumn<T = unknown> {
   /** Column width (e.g., '200px', '20%', 'auto') */
   width?: string;
 
+  /** Minimum column width (e.g., '100px') */
+  minWidth?: string;
+
   /** Whether this column is sortable */
   sortable?: boolean;
 
   /** Text alignment */
   align?: 'left' | 'center' | 'right';
+
+  /** Whether to prevent text wrapping in header and cells */
+  nowrap?: boolean;
 
   /** Column type for special rendering */
   type?: 'text' | 'number' | 'date' | 'status' | 'avatar' | 'custom';
