@@ -4,7 +4,7 @@
   <ng-template #statusBadge let-merchant>
     @switch (merchant.operationalStatus) { @case ('active') {
     <span
-      class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm bg-status-success-bg text-status-success"
+      class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-status-success-bg text-status-success"
     >
       <span class="w-1.5 h-1.5 rounded-full bg-status-success"></span>
       {{ 'common.status.active' | translate }}
@@ -33,13 +33,13 @@
     } }
   </ng-template>
 
-  <!-- Statistics Cards - Horizontal scroll on mobile, grid on desktop -->
-  <section class="-mx-4 px-4 md:mx-0 md:px-0 overflow-x-auto scrollbar-hide">
+  <!-- Statistics Cards - Horizontal scroll on mobile/tablet, grid on desktop -->
+  <section class="-mx-4 px-4 xl:mx-0 xl:px-0 overflow-x-auto scrollbar-hide">
     <div
-      class="mt-8 md:mt-0 flex md:grid md:grid-cols-4 gap-3 md:gap-[13px] min-w-max md:min-w-0"
+      class="mt-8 xl:mt-0 flex xl:grid xl:grid-cols-4 gap-3 xl:gap-[13px] min-w-max xl:min-w-0"
     >
       @for (card of statisticCards(); track card.labelKey) {
-      <div class="w-[30%] md:w-auto shrink-0 md:shrink">
+      <div class="w-fit xl:w-auto shrink-0 xl:shrink">
         <app-statistic-card [config]="card" />
       </div>
       }
@@ -123,7 +123,7 @@
             }}</span>
             <div class="relative group">
               <span
-                class="text-sm text-content-tertiary truncate max-w-[8rem] cursor-default block"
+                class="text-content-tertiary truncate max-w-[8rem] cursor-default block"
               >
                 {{ row.code }}
               </span>
@@ -234,12 +234,12 @@
           </div>
 
           <!-- Merchant Details - Row format matching Figma -->
-          <div class="px-2 flex flex-col gap-2 text-sm">
+          <div class="px-2 flex flex-col gap-2 text-sm whitespace-nowrap">
             <!-- Address row -->
             @if (isColumnVisible('address')) {
             <div class="flex items-center gap-2">
               <span
-                class="text-[0.8125rem] text-content-tertiary uppercase w-[6.25rem] shrink-0"
+                class="text-content-tertiary uppercase w-[6.25rem] shrink-0"
               >
                 {{ 'admin.partners.merchants.table.address' | translate }}
               </span>
@@ -252,7 +252,7 @@
             @if (isColumnVisible('phone')) {
             <div class="flex items-center gap-2">
               <span
-                class="text-[0.8125rem] text-content-tertiary uppercase w-[6.25rem] shrink-0"
+                class="text-content-tertiary uppercase w-[6.25rem] shrink-0"
               >
                 {{ 'admin.partners.merchants.table.phone' | translate }}
               </span>
@@ -265,7 +265,7 @@
             @if (isColumnVisible('agencyName')) {
             <div class="flex items-center gap-2">
               <span
-                class="text-[0.8125rem] text-content-tertiary uppercase w-[6.25rem] shrink-0"
+                class="text-content-tertiary uppercase w-[6.25rem] shrink-0"
               >
                 {{ 'admin.partners.merchants.table.agency' | translate }}
               </span>
@@ -278,7 +278,7 @@
             @if (isColumnVisible('brandName')) {
             <div class="flex items-center gap-2">
               <span
-                class="text-[0.8125rem] text-content-tertiary uppercase w-[6.25rem] shrink-0"
+                class="text-content-tertiary uppercase w-[6.25rem] shrink-0"
               >
                 {{ 'admin.partners.merchants.table.brand' | translate }}
               </span>
@@ -291,7 +291,7 @@
             @if (isColumnVisible('ownerName')) {
             <div class="flex items-center gap-2">
               <span
-                class="text-[0.8125rem] text-content-tertiary uppercase w-[6.25rem] shrink-0"
+                class="text-content-tertiary uppercase w-[6.25rem] shrink-0"
               >
                 {{ 'admin.partners.merchants.table.owner' | translate }}
               </span>
@@ -304,7 +304,7 @@
             @if (isColumnVisible('businessCategory')) {
             <div class="flex items-center gap-2 min-w-0">
               <span
-                class="text-[0.8125rem] text-content-tertiary uppercase w-[6.25rem] shrink-0"
+                class="text-content-tertiary uppercase w-[6.25rem] shrink-0"
               >
                 {{ 'admin.partners.merchants.table.businessType' | translate }}
               </span>
@@ -317,7 +317,7 @@
             @if (isColumnVisible('productCount')) {
             <div class="flex items-center gap-2 min-w-0">
               <span
-                class="text-[0.8125rem] text-content-tertiary uppercase w-[6.25rem] shrink-0"
+                class="text-content-tertiary uppercase w-[6.25rem] shrink-0"
               >
                 {{ 'admin.partners.merchants.table.products' | translate }}
               </span>
@@ -330,7 +330,7 @@
             @if (isColumnVisible('orderCount')) {
             <div class="flex items-center gap-2 min-w-0">
               <span
-                class="text-[0.8125rem] text-content-tertiary uppercase w-[6.25rem] shrink-0"
+                class="text-content-tertiary uppercase w-[6.25rem] shrink-0"
               >
                 {{ 'admin.partners.merchants.table.orders' | translate }}
               </span>
@@ -343,7 +343,7 @@
             @if (isColumnVisible('averageRating')) {
             <div class="flex items-center gap-2 min-w-0">
               <span
-                class="text-[0.8125rem] text-content-tertiary uppercase w-[6.25rem] shrink-0"
+                class="text-content-tertiary uppercase w-[6.25rem] shrink-0"
               >
                 {{ 'admin.partners.merchants.table.rating' | translate }}
               </span>

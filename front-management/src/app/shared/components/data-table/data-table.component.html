@@ -4,30 +4,30 @@
   
     <!-- Optional Header Section -->
   @if (headerConfig()?.show) {
-    <div class="relative flex flex-col md:flex-row justify-between items-start md:items-center gap-3 md:gap-4 mb-4 md:mb-6">
-      <!-- Mobile: Title with count -->
-      <div class="flex items-center justify-between w-full md:w-auto">
+    <div class="relative flex flex-col xl:flex-row justify-between items-start xl:items-center gap-3 xl:gap-4 mb-4 xl:mb-6">
+      <!-- Mobile/Tablet: Title with count -->
+      <div class="flex items-center justify-between w-full xl:w-auto">
         @if (headerConfig()?.title) {
           <div class="flex items-center gap-2">
-            <h2 class="text-xl md:text-[1.875rem] font-bold text-content-primary">
+            <h2 class="font-bold text-content-primary">
               {{ headerConfig()!.title!.labelKey | translate }}
             </h2>
             @if (headerConfig()!.title!.showCount && itemCount() !== null) {
-              <span class="text-xs md:text-[0.875rem] text-content-tertiary">{{ itemCount() }}</span>
+              <span class="text-xs xl:text-[0.875rem] text-content-tertiary">{{ itemCount() }}</span>
             }
           </div>
         }
       </div>
 
-      <!-- Mobile: Action buttons row -->
+      <!-- Mobile/Tablet: Action buttons row -->
       @if (headerConfig()?.actions?.length) {
-        <div class="flex md:hidden items-center gap-2 w-full">
+        <div class="flex xl:hidden items-center gap-2 w-full">
           @for (action of headerConfig()!.actions; track action.id) {
             @if (action.showOnMobile !== false) {
               @if (action.variant === 'primary') {
                 <button
                   (click)="onHeaderActionClick(action.id)"
-                  class="flex items-center justify-center gap-2 px-5 py-3 bg-primary text-content-on-primary rounded-lg text-sm font-normal shadow-[0_0_20px_rgba(243,91,42,0.3)]"
+                  class="flex items-center justify-center gap-2 px-5 py-3 bg-primary text-content-on-primary rounded-lg font-normal shadow-[0_0_20px_rgba(243,91,42,0.3)] whitespace-nowrap"
                   [class.flex-1]="action.mobileFlexGrow"
                 >
                   @if (action.icon) {
@@ -57,9 +57,9 @@
         </div>
       }
 
-      <!-- Mobile: Search and Filter - Horizontal scroll -->
-      <div class="flex md:hidden items-center gap-2 w-full overflow-x-auto scrollbar-hide -mx-4 px-4">
-        <!-- Mobile Search Input -->
+      <!-- Mobile/Tablet: Search and Filter - Horizontal scroll -->
+      <div class="flex xl:hidden items-center gap-2 w-full overflow-x-auto scrollbar-hide ">
+        <!-- Mobile/Tablet Search Input -->
         @if (headerConfig()?.search?.enabled) {
           <div
             class="flex items-center gap-2 px-3 py-2 bg-surface border border-border rounded-3xl shrink-0"
@@ -74,16 +74,16 @@
               type="text"
               [placeholder]="headerConfig()!.search!.placeholderKey | translate"
               (input)="onHeaderSearch($event)"
-              class="border-none bg-transparent outline-none text-sm text-content-primary w-[120px] placeholder:text-content-tertiary"
+              class="border-none bg-transparent outline-none text-content-primary w-[120px] md:w-[200px] lg:w-[280px] placeholder:text-content-tertiary"
             />
           </div>
         }
-        <!-- Mobile Filter Buttons -->
+        <!-- Mobile/Tablet Filter Buttons -->
         @if (headerConfig()?.filters?.length) {
           @for (filter of headerConfig()!.filters; track filter.id) {
             <button
               (click)="onHeaderFilterClick(filter.id)"
-              class="flex items-center gap-2 px-3 py-2 bg-surface border border-border rounded-3xl text-sm text-content-secondary hover:bg-surface-muted transition-colors whitespace-nowrap shrink-0"
+              class="flex items-center gap-2 px-3 py-2 bg-surface border border-border rounded-3xl text-content-secondary hover:bg-surface-muted transition-colors whitespace-nowrap shrink-0"
             >
               {{ filter.labelKey | translate }}
               <svg
@@ -108,7 +108,7 @@
       </div>
 
       <!-- Desktop: Middle: Search and Filter -->
-      <div class="hidden md:flex items-center gap-3">
+      <div class="hidden xl:flex items-center gap-3">
         <!-- Search Input -->
         @if (headerConfig()?.search?.enabled) {
           <div
@@ -134,7 +134,7 @@
           @for (filter of headerConfig()!.filters; track filter.id) {
             <button
               (click)="onHeaderFilterClick(filter.id)"
-              class="flex items-center gap-2 px-4 py-2.5 bg-surface border border-border rounded-3xl text-base text-content-secondary hover:bg-surface-muted transition-colors"
+              class="flex items-center gap-2 px-4 py-2.5 bg-surface border border-border rounded-3xl text-base text-content-secondary hover:bg-surface-muted transition-colors whitespace-nowrap"
             >
               {{ filter.labelKey | translate }}
               <svg
@@ -160,7 +160,7 @@
 
       <!-- Desktop: Right side: Action buttons -->
       @if (headerConfig()?.actions?.length) {
-        <div class="hidden md:flex items-center gap-3">
+        <div class="hidden xl:flex items-center gap-3">
           <!-- Column Visibility Dropdown Component -->
           <div class="flex gap-4">
             <app-column-visibility-dropdown
@@ -176,7 +176,7 @@
               @if (action.variant === 'primary') {
                 <button
                   (click)="onHeaderActionClick(action.id)"
-                  class="flex items-center gap-2 px-[1.5625rem] py-3 bg-primary text-content-on-primary rounded-lg text-[0.875rem] font-normal hover:bg-primary-hover transition-colors shadow-[0_0_20px_rgba(243,91,42,0.3)]"
+                  class="flex items-center gap-2 px-[1.5625rem] py-3 bg-primary text-content-on-primary rounded-lg text-[0.875rem] font-normal hover:bg-primary-hover transition-colors shadow-[0_0_20px_rgba(243,91,42,0.3)] whitespace-nowrap"
                 >
                   @if (action.icon) {
                     <img
@@ -286,7 +286,7 @@
                 role="columnheader"
               >
                 <div class="flex items-center gap-1" [class.justify-center]="column.align === 'center'" [class.justify-end]="column.align === 'right'">
-                  <span class="text-[var(--color-text-secondary)] text-[0.85rem]">{{ column.labelKey | translate }}</span>
+                  <span class="text-[var(--color-text-secondary)] ">{{ column.labelKey | translate }}</span>
                   @if (column.sortable) {
                     <span class="w-4 h-4 text-[var(--color-text-tertiary)]">
                       @if (sortState()?.key === column.key) {

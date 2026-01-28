@@ -1,5 +1,5 @@
 <header
-  class="fixed md:sticky top-0 left-0 right-0 z-50 bg-[var(--color-surface-elevated)] border-b border-[var(--color-border)]"
+  class="fixed md:sticky top-0 left-0 right-0 z-50 bg-[var(--color-surface-elevated)] border-b border-[var(--color-border)] w-[100vw]"
 >
   <!-- Top Header Bar -->
   <div class="h-14 md:h-20 flex items-center px-4 md:px-10">
@@ -9,15 +9,13 @@
       class="flex items-center gap-2 no-underline shrink-0"
       aria-label="VHan Delivery Admin"
     >
-      <span
-        class="text-xl md:text-[1.875rem] font-bold text-[var(--color-primary)]"
-      >
+      <h2 class="font-bold text-[var(--color-primary)] whitespace-nowrap">
         VHan Delivery
-      </span>
+      </h2>
     </a>
 
-    <!-- Search Bar - Hidden on mobile -->
-    <div class="hidden md:flex flex-1 justify-center px-8">
+    <!-- Search Bar - Hidden on mobile/tablet -->
+    <div class="hidden xl:flex flex-1 justify-center px-8">
       <div class="relative w-full max-w-[30rem]">
         <div
           class="flex items-center gap-3 bg-[var(--color-surface-muted)] border border-[var(--color-border)] rounded-full px-4 py-2.5"
@@ -40,15 +38,15 @@
       </div>
     </div>
 
-    <!-- Spacer for mobile -->
-    <div class="flex-1 md:hidden"></div>
+    <!-- Spacer for mobile/tablet -->
+    <div class="flex-1 xl:hidden"></div>
 
     <!-- Right Side Actions -->
-    <div class="flex items-center gap-2 md:gap-4 shrink-0">
-      <!-- Mobile Search Button -->
+    <div class="flex items-center gap-2 xl:gap-4 shrink-0">
+      <!-- Mobile/Tablet Search Button -->
       <button
         type="button"
-        class="md:hidden p-2 text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] transition-colors"
+        class="xl:hidden p-2 text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] transition-colors"
         [attr.aria-label]="'admin.header.search' | translate"
       >
         <svg
@@ -66,10 +64,10 @@
           <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
         </svg>
       </button>
-      <!-- Notifications - Hidden on mobile -->
+      <!-- Notifications - Hidden on mobile/tablet -->
       <button
         type="button"
-        class="hidden md:block relative p-2 text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] transition-colors"
+        class="hidden xl:block relative p-2 text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] transition-colors"
         [attr.aria-label]="'admin.header.notifications' | translate"
       >
         <svg
@@ -91,8 +89,8 @@
         ></span>
       </button>
 
-      <!-- Language Selector - Hidden on mobile -->
-      <div class="relative hidden md:block">
+      <!-- Language Selector - Hidden on mobile/tablet -->
+      <div class="relative hidden xl:block">
         <button
           type="button"
           class="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-[var(--color-surface-muted)] transition-colors"
@@ -156,19 +154,19 @@
         }
       </div>
 
-      <!-- Separator - Hidden on mobile -->
-      <div class="hidden md:block w-px h-8 bg-[var(--color-border)]"></div>
+      <!-- Separator - Hidden on mobile/tablet -->
+      <div class="hidden xl:block w-px h-8 bg-[var(--color-border)]"></div>
 
       <!-- User Menu -->
       @if (auth.currentUser(); as user) {
       <div class="relative">
         <button
           type="button"
-          class="flex items-center gap-2 md:gap-3 p-1 md:px-3 md:py-2 rounded-lg hover:bg-[var(--color-surface-muted)] transition-colors"
+          class="flex items-center gap-2 xl:gap-3 p-1 xl:px-3 xl:py-2 rounded-lg hover:bg-[var(--color-surface-muted)] transition-colors"
           (click)="toggleUserDropdown()"
         >
           <div
-            class="w-9 h-9 md:w-10 md:h-10 rounded-full bg-[var(--color-surface-muted)] flex items-center justify-center overflow-hidden"
+            class="w-9 h-9 xl:w-10 xl:h-10 rounded-full bg-[var(--color-surface-muted)] flex items-center justify-center overflow-hidden"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -178,21 +176,17 @@
               fill="none"
               stroke="currentColor"
               stroke-width="1.5"
-              class="text-[var(--color-text-secondary)] md:w-6 md:h-6"
+              class="text-[var(--color-text-secondary)] xl:w-6 xl:h-6"
             >
               <circle cx="12" cy="8" r="4" />
               <path d="M6 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2" />
             </svg>
           </div>
-          <div class="hidden md:block text-left">
-            <p
-              class="text-[0.875rem] font-bold text-[var(--color-text-primary)]"
-            >
+          <div class="hidden xl:block text-left">
+            <p class="font-bold text-[var(--color-text-primary)]">
               {{ user.username || 'User Name' }}
             </p>
-            <p class="text-[0.75rem] text-[var(--color-primary)]">
-              Super Admin
-            </p>
+            <span class="text-[var(--color-primary)]"> Super Admin </span>
           </div>
         </button>
 
@@ -201,23 +195,21 @@
           class="absolute top-full right-0 mt-2 w-56 bg-[var(--color-surface-elevated)] border border-[var(--color-border)] rounded-lg shadow-xl py-2 z-50"
         >
           <div class="px-4 py-3 border-b border-[var(--color-border)]">
-            <p
-              class="text-[0.875rem] font-medium text-[var(--color-text-primary)]"
-            >
+            <p class="font-medium text-[var(--color-text-primary)]">
               {{ user.username || 'User' }}
             </p>
-            <p class="text-[0.75rem] text-[var(--color-text-secondary)]">
+            <span class="text-[var(--color-text-secondary)]">
               {{ user.email }}
-            </p>
+            </span>
           </div>
 
-          <!-- Language Selector for Mobile -->
-          <div class="md:hidden border-b border-[var(--color-border)] py-2">
-            <p
-              class="px-4 py-1 text-[0.75rem] text-[var(--color-text-secondary)] uppercase tracking-wider"
+          <!-- Language Selector for Mobile/Tablet -->
+          <div class="xl:hidden border-b border-[var(--color-border)] py-2">
+            <span
+              class="px-4 py-1 text-[var(--color-text-secondary)] uppercase tracking-wider"
             >
               {{ 'admin.header.language' | translate }}
-            </p>
+            </span>
             @for (lang of languageOptions; track lang.value) {
             <button
               type="button"
@@ -230,7 +222,6 @@
                 class="w-5 h-3.5 object-cover rounded-[2px] shadow-sm"
               />
               <span
-                class="text-[0.875rem]"
                 [class.text-[var(--color-primary)]]="
                   currentLanguage() === lang.value
                 "
@@ -261,7 +252,7 @@
 
           <button
             type="button"
-            class="w-full flex items-center gap-3 px-4 py-2.5 text-[0.875rem] text-[var(--color-text-primary)] hover:bg-[var(--color-surface-muted)] transition-colors"
+            class="w-full flex items-center gap-3 px-4 py-2.5 text-[var(--color-text-primary)] hover:bg-[var(--color-surface-muted)] transition-colors"
             routerLink="/profile"
           >
             <svg
@@ -281,7 +272,7 @@
           </button>
           <button
             type="button"
-            class="w-full flex items-center gap-3 px-4 py-2.5 text-[0.875rem] text-[var(--color-text-primary)] hover:bg-[var(--color-surface-muted)] transition-colors"
+            class="w-full flex items-center gap-3 px-4 py-2.5 text-[var(--color-text-primary)] hover:bg-[var(--color-surface-muted)] transition-colors"
             routerLink="/settings"
           >
             <svg
@@ -304,7 +295,7 @@
           <div class="border-t border-[var(--color-border)] mt-1 pt-1">
             <button
               type="button"
-              class="w-full flex items-center gap-3 px-4 py-2.5 text-[0.875rem] text-[var(--color-status-error)] hover:bg-[var(--color-surface-muted)] transition-colors"
+              class="w-full flex items-center gap-3 px-4 py-2.5 text-[var(--color-status-error)] hover:bg-[var(--color-surface-muted)] transition-colors"
               (click)="logout()"
             >
               <svg
@@ -329,7 +320,7 @@
       } @else {
       <a
         routerLink="/login"
-        class="px-4 py-2 text-[0.875rem] font-medium text-content-on-primary bg-primary rounded-lg hover:bg-[var(--color-primary-hover)] transition-colors"
+        class="px-4 py-2 font-medium text-content-on-primary bg-primary rounded-lg hover:bg-[var(--color-primary-hover)] transition-colors"
       >
         {{ 'auth.common.login' | translate }}
       </a>
@@ -339,15 +330,17 @@
 
   <!-- Navigation Bar -->
   <nav
-    class="border-t border-[var(--color-border)] bg-[var(--color-surface-base)] overflow-x-auto scrollbar-hide"
+    class="border-t border-[var(--color-border)] bg-[var(--color-surface-base)]"
   >
-    <div class="px-4 md:px-10 w-fit">
-      <ul class="flex items-center gap-4 md:gap-8 list-none m-0 p-0 min-w-max">
+    <div class="overflow-x-auto scrollbar-hide">
+      <ul
+        class="flex items-center gap-4 xl:gap-8 list-none m-0 p-0 px-4 xl:px-10 w-max min-w-full"
+      >
         @for (item of activeNavItems(); track item.link) {
-        <li class="relative">
+        <li class="relative shrink-0">
           <a
             [routerLink]="item.link"
-            class="block py-3 md:py-4 text-[0.875rem] md:text-[1rem] transition-colors whitespace-nowrap"
+            class="block py-3 xl:py-4 text-sm xl:text-base transition-colors whitespace-nowrap"
             [class.text-[var(--color-primary)]]="item.active"
             [class.font-bold]="item.active"
             [class.text-[var(--color-text-tertiary)]]="!item.active"
