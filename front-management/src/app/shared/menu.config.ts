@@ -17,11 +17,7 @@ export const ADMIN_NAV_CONFIG: readonly NavItem[] = [
   {
     labelKey: 'admin.nav.partners',
     link: '/partners',
-    // Visible if user can read agencies OR merchants
-    anyPermissions: [
-      { resource: 'agency', action: 'read' },
-      { resource: 'merchant', action: 'read' },
-    ],
+    permission: { resource: 'system', action: 'manage_users' },
   },
   {
     labelKey: 'admin.nav.categories',
@@ -52,11 +48,11 @@ export const PARTNERS_TAB_CONFIG: readonly NavItem[] = [
   {
     labelKey: 'admin.partners.tabs.agencies',
     link: '/partners/agencies',
-    permission: { resource: 'agency', action: 'read' },
+    permission: { resource: 'system', action: 'manage_users' },
   },
   {
     labelKey: 'admin.partners.tabs.merchants',
     link: '/partners/merchants',
-    permission: { resource: 'merchant', action: 'read' },
+    permission: { resource: 'system', action: 'manage_users' },
   },
 ] as const;
