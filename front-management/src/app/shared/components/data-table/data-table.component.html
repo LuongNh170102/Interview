@@ -227,7 +227,7 @@
   >
     <!-- Loading Overlay -->
     @if (loading()) {
-      <div class="absolute inset-0 bg-[var(--color-surface-base)]/80 flex items-center justify-center z-10">
+      <div class="absolute whitespace-nowrap inset-0 bg-[var(--color-surface-base)]/80 flex items-center justify-center z-10">
         <div class="flex items-center gap-2 text-[var(--color-text-secondary)]">
           <svg class="animate-spin w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
@@ -268,7 +268,7 @@
             <!-- Data Columns -->
             @for (column of visibleColumns(); track trackByColumn($index, column)) {
               <th
-                class="p-4 text-xs font-semibold uppercase tracking-wider border-b border-[var(--color-border)]"
+                class="p-4 text-xs font-semibold uppercase whitespace-nowrap tracking-wider border-b border-[var(--color-border)]"
                 [class.text-left]="column.align !== 'center' && column.align !== 'right'"
                 [class.text-center]="column.align === 'center'"
                 [class.text-right]="column.align === 'right'"
