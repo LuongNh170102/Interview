@@ -58,21 +58,21 @@
       <button
         type="button"
         (click)="onShowAll()"
-        class="flex-1 p-2 text-xs text-primary hover:bg-primary-light rounded-lg whitespace-nowrap transition-colors"
+        class="flex-1 p-2 text-xs text-content-on-primary bg-primary hover:bg-primary-hover rounded-lg whitespace-nowrap transition-colors"
       >
         {{ 'common.column.showAll' | translate }}
       </button>
       <button
         type="button"
         (click)="onHideAll()"
-        class="flex-1 px-3 py-1.5 text-xs text-content-secondary hover:bg-surface-muted rounded transition-colors"
+        class="flex-1 px-3 py-1.5 text-xs text-content-secondary border border-[var(--color-border-light)] hover:bg-surface-muted rounded-lg transition-colors"
       >
         {{ 'common.column.hideAll' | translate }}
       </button>
       <button
         type="button"
         (click)="onReset()"
-        class="flex-1 px-3 py-1.5 text-xs text-content-secondary hover:bg-surface-muted rounded transition-colors"
+        class="flex-1 px-3 py-1.5 text-xs text-content-secondary border border-[var(--color-border-light)] hover:bg-surface-muted rounded-lg transition-colors"
       >
         {{ 'common.column.reset' | translate }}
       </button>
