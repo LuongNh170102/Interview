@@ -24,7 +24,7 @@
 
   <!-- Mobile: Label below icon -->
   <span
-    class="md:hidden text-sm text-[var(--color-text-tertiary)] uppercase tracking-wide leading-[1.2] mb-2"
+    class="md:hidden text-[var(--color-text-tertiary)] uppercase tracking-wide leading-[1.2] mb-2"
   >
     {{ config().labelKey | translate }}
   </span>
@@ -38,21 +38,21 @@
 
   <!-- Trend or Subtitle (at bottom) -->
   @if (config().trend) {
-  <div class="flex gap-1 mt-auto pt-3">
+  <div class="flex flex-wrap gap-1 mt-auto pt-3">
     <span
-      class="inline-block w-fit text-sm md:text-[1rem] font-normal rounded-[0.25rem]"
+      class="inline-block w-fit font-normal rounded-[0.25rem] text-xs md:text-sm shrink-0"
       [ngClass]="trendBgClass()"
     >
       {{ config().trend?.value }}
     </span>
-    <span
-      class="text-sm md:text-[1rem] text-[var(--color-status-info)] flex items-center justify-center"
+    <p
+      class="text-[var(--color-status-info)] flex items-center text-xs md:text-sm leading-tight"
     >
       {{
         config().trend?.labelKey ?? 'admin.partners.stats.comparedToLastMonth'
           | translate
       }}
-    </span>
+    </p>
   </div>
   } @if (config().subtitleKey && !config().trend && !config().progress) {
   <span
