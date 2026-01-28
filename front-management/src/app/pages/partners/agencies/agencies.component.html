@@ -2,14 +2,7 @@
   <!-- Reusable Templates -->
   <!-- Status Badge Template -->
   <ng-template #statusBadge let-agency>
-    @if (agency.approvalStatus === 'pending') {
-    <span
-      class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm bg-status-warning-bg text-status-warning"
-    >
-      <span class="w-1.5 h-1.5 rounded-full bg-status-warning"></span>
-      {{ 'common.status.pending' | translate }}
-    </span>
-    } @else { @switch (agency.operationalStatus) { @case ('active') {
+    @switch (agency.operationalStatus) { @case ('active') {
     <span
       class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm bg-status-success-bg text-status-success"
     >
@@ -37,7 +30,7 @@
       <span class="w-1.5 h-1.5 rounded-full bg-status-error"></span>
       {{ 'common.status.locked' | translate }}
     </span>
-    } } }
+    } }
   </ng-template>
 
   <!-- Statistics Cards - Horizontal scroll on mobile, grid on desktop -->
@@ -119,16 +112,27 @@
       <ng-template appTableCell="storeInfo" let-row>
         <div class="flex items-center gap-3">
           <div
-            class="w-[3.4375rem] h-[3.4375rem] bg-[#d9f3f4] text-[var(--color-status-info)] rounded-full flex items-center justify-center text-[1.4rem] font-bold"
+            class="w-[3.4375rem] h-[3.4375rem] aspect-square bg-avatar-info text-status-info rounded-full flex items-center justify-center text-[1.4rem] font-bold overflow-hidden shrink-0"
             [style.backgroundColor]="row.initialsColor"
           >
-            <span class="text-[1.4rem]">{{ row.initials }}</span>
+            <span>{{ row.initials }}</span>
           </div>
           <div class="flex flex-col">
             <span class="text-lg font-bold text-content-primary">{{
               row.name
             }}</span>
-            <span class="text-sm text-content-tertiary">{{ row.code }}</span>
+            <div class="relative group">
+              <span
+                class="text-sm text-content-tertiary truncate max-w-[8rem] cursor-default block"
+              >
+                {{ row.code }}
+              </span>
+              <span
+                class="invisible group-hover:visible absolute left-0 top-full mt-1 px-2 py-1 bg-content-primary text-white text-xs rounded shadow-lg whitespace-nowrap z-50"
+              >
+                {{ row.code }}
+              </span>
+            </div>
           </div>
         </div>
       </ng-template>
@@ -148,7 +152,7 @@
           <!-- Agency Header - Avatar + Name/Code -->
           <div class="flex items-start gap-4 mb-4">
             <div
-              class="w-14 h-14 rounded-full flex items-center justify-center text-xl font-bold shrink-0"
+              class="w-14 h-14 aspect-square rounded-full flex items-center justify-center text-xl font-bold shrink-0 bg-avatar-info text-status-info overflow-hidden"
               [style.backgroundColor]="agency.initialsColor"
             >
               <span>{{ agency.initials }}</span>
@@ -157,9 +161,18 @@
               <span class="text-xl font-bold text-content-primary truncate">{{
                 agency.name
               }}</span>
-              <span class="text-sm text-content-tertiary mt-1">{{
-                agency.code
-              }}</span>
+              <div class="relative group mt-1">
+                <span
+                  class="text-sm text-content-tertiary truncate max-w-[8rem] cursor-default block"
+                >
+                  {{ agency.code }}
+                </span>
+                <span
+                  class="invisible group-hover:visible absolute left-0 top-full mt-1 px-2 py-1 bg-content-primary text-white text-xs rounded shadow-lg whitespace-nowrap z-50"
+                >
+                  {{ agency.code }}
+                </span>
+              </div>
             </div>
           </div>
 

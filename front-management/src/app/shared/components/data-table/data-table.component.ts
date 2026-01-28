@@ -405,12 +405,12 @@ export class DataTableComponent<
       'inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[0.8rem] py-2 px-4 font-medium';
     const variantClasses: Record<StatusConfig['variant'], string> = {
       success:
-        'bg-[var(--color-avatar-green-bg)] text-[var(--color-status-success)]',
+        'bg-[var(--color-avatar-success-bg)] text-[var(--color-status-success)]',
       warning:
-        'bg-[var(--color-avatar-yellow-bg)] text-[var(--color-status-warning)]',
+        'bg-[var(--color-avatar-warning-bg)] text-[var(--color-status-warning)]',
       error:
-        'bg-[var(--color-avatar-orange-bg)] text-[var(--color-status-error)]',
-      info: 'bg-[var(--color-avatar-cyan-bg)] text-[var(--color-status-info)]',
+        'bg-[var(--color-avatar-error-bg)] text-[var(--color-status-error)]',
+      info: 'bg-[var(--color-avatar-info-bg)] text-[var(--color-status-info)]',
       default:
         'bg-[var(--color-surface-muted)] text-[var(--color-text-secondary)]',
     };

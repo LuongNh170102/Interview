@@ -26,6 +26,7 @@ import { ROLE } from '../common/constants/role.constants';
 import { RESOURCE_TARGETS } from '../common/constants/resource.constant';
 import { ApprovalStatus } from '@prisma/client';
 import { MerchantEntity } from './entities/merchant.entity';
+import { MerchantQueryBuilder } from './builders/merchant-query.builder';
 
 @Injectable()
 export class MerchantService {
@@ -49,8 +50,18 @@ export class MerchantService {
     const take = query.limit ?? 10;
     const skip = query.skip;
 
+    // Build where clause using Query Builder pattern
+    const where = new MerchantQueryBuilder()
+      .withApprovalStatus(query.approvalStatus)
+      .withOperationalStatus(query.operationalStatus)
+      .withSearch(query.search)
+      .withAgencyId(query.agencyId)
+      .withBusinessCategory(query.businessCategory)
+      .build();
+
     const [items, total] = await this.prisma.$transaction([
       this.prisma.merchant.findMany({
+        where,
         skip,
         take,
         orderBy: { createdAt: 'desc' },
@@ -89,7 +100,7 @@ export class MerchantService {
           },
         },
       }),
-      this.prisma.merchant.count(),
+      this.prisma.merchant.count({ where }),
     ]);
 
     const response: MerchantListResponse<MerchantEntity> = {

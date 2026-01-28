@@ -22,6 +22,7 @@ import { OtpService } from '../otp/otp.service';
 import { RESOURCE_MESSAGES } from '../common/constants/messages.constant';
 import { RESOURCE_TARGETS } from '../common/constants/resource.constant';
 import { AgencyEntity } from './entities/agency.entity';
+import { AgencyQueryBuilder } from './builders/agency-query.builder';
 
 @Injectable()
 export class AgencyService {
@@ -45,13 +46,20 @@ export class AgencyService {
     const take = query.limit ?? 10;
     const skip = query.skip;
 
+    const where = new AgencyQueryBuilder()
+      .withApprovalStatus(query.approvalStatus)
+      .withOperationalStatus(query.operationalStatus)
+      .withSearch(query.search)
+      .build();
+
     const [items, total] = await this.prisma.$transaction([
       this.prisma.agency.findMany({
+        where,
         skip,
         take,
         orderBy: { createdAt: 'desc' },
       }),
-      this.prisma.agency.count(),
+      this.prisma.agency.count({ where }),
     ]);
 
     const response: AgencyListResponse<AgencyEntity> = {

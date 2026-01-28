@@ -59,6 +59,13 @@ module.exports = {
           default: 'var(--color-status-default)',
           'default-bg': 'var(--color-status-default-bg)',
         },
+        // Avatar background colors
+        avatar: {
+          info: 'var(--color-avatar-info-bg)',
+          success: 'var(--color-avatar-success-bg)',
+          warning: 'var(--color-avatar-warning-bg)',
+          error: 'var(--color-avatar-error-bg)',
+        },
       },
       // Text color aliases for easier usage
       textColor: {

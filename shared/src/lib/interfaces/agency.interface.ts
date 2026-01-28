@@ -52,5 +52,5 @@ export interface AgencyQueryParams {
   page?: number;
   limit?: number;
   include?: string;
+  approvalStatus?: ApprovalStatus;
 }
-

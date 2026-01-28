@@ -169,19 +169,16 @@ export const MERCHANTS_TABLE_HEADER_CONFIG: TableHeaderConfig = {
     {
       id: 'location',
       labelKey: 'admin.partners.filter.location',
-      icon: 'assets/icons/icon-location-pin.svg',
       type: 'button',
     },
     {
       id: 'status',
       labelKey: 'admin.partners.filter.status',
-      icon: 'assets/icons/icon-filter.svg',
       type: 'button',
     },
     {
       id: 'agency',
       labelKey: 'admin.partners.filter.agency',
-      icon: 'assets/icons/icon-filter.svg',
       type: 'button',
     },
   ],

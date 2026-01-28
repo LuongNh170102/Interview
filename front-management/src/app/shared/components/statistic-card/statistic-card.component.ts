@@ -22,11 +22,11 @@ export class StatisticCardComponent {
   protected readonly iconBgClass = computed(() => {
     const variant = this.config().variant ?? 'primary';
     const bgClasses: Record<StatisticCardVariant, string> = {
-      primary: 'bg-[var(--color-avatar-cyan-bg)]',
-      info: 'bg-[var(--color-avatar-cyan-bg)]',
-      warning: 'bg-[var(--color-avatar-yellow-bg)]',
-      success: 'bg-[var(--color-avatar-green-bg)]',
-      error: 'bg-[var(--color-avatar-orange-bg)]',
+      primary: 'bg-[var(--color-avatar-info-bg)]',
+      info: 'bg-[var(--color-avatar-info-bg)]',
+      warning: 'bg-[var(--color-avatar-warning-bg)]',
+      success: 'bg-[var(--color-avatar-success-bg)]',
+      error: 'bg-[var(--color-avatar-error-bg)]',
     };
     return bgClasses[variant];
   });
@@ -60,8 +60,8 @@ export class StatisticCardComponent {
     const direction = this.config().trend?.direction;
     if (!direction) return '';
     return direction === 'up'
-      ? 'bg-[#d9f3f4] py-[0.4rem] px-[0.6rem] rounded-full text-[var(--color-status-info)]'
-      : 'bg-[var(--color-avatar-orange-bg)] text-[var(--color-status-error)]';
+      ? 'bg-[var(--color-avatar-info-bg)] py-[0.4rem] px-[0.6rem] rounded-full text-[var(--color-status-info)]'
+      : 'bg-[var(--color-avatar-error-bg)] text-[var(--color-status-error)]';
   });
 
   protected readonly subtitleColorClass = computed(() => {

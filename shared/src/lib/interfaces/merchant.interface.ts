@@ -131,4 +131,5 @@ export interface MerchantQueryParams {
   page?: number;
   limit?: number;
   include?: string;
+  approvalStatus?: 'PENDING' | 'APPROVED' | 'REJECTED';
 }
