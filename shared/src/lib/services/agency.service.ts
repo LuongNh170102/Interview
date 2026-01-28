@@ -28,6 +28,9 @@ export class AgencyService {
     if (params.include) {
       httpParams = httpParams.set('include', params.include);
     }
+    if (params.approvalStatus) {
+      httpParams = httpParams.set('approvalStatus', params.approvalStatus);
+    }
 
     return this.http.get<AgencyListResponse>(this.baseUrl, {
       params: httpParams,

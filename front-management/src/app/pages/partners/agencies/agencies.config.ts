@@ -89,16 +89,6 @@ export const AGENCIES_TABLE_CONFIG: TableConfig<Agency> = {
       type: 'text',
     },
     {
-      key: 'approvalStatus',
-      labelKey: 'admin.partners.table.approvalStatus',
-      type: 'status',
-      statusConfig: {
-        pending: { labelKey: 'common.status.pending', variant: 'warning' },
-        approved: { labelKey: 'common.status.approved', variant: 'success' },
-        rejected: { labelKey: 'common.status.rejected', variant: 'error' },
-      },
-    },
-    {
       key: 'operationalStatus',
       labelKey: 'admin.partners.table.operationalStatus',
       type: 'status',
@@ -147,7 +137,6 @@ export const AGENCIES_TABLE_HEADER_CONFIG: TableHeaderConfig = {
     {
       id: 'location',
       labelKey: 'admin.partners.filter.location',
-      icon: 'assets/icons/icon-location-pin.svg',
       type: 'button',
     },
   ],

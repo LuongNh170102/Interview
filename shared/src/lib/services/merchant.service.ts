@@ -27,6 +27,9 @@ export class MerchantService {
     if (params.include) {
       httpParams = httpParams.set('include', params.include);
     }
+    if (params.approvalStatus) {
+      httpParams = httpParams.set('approvalStatus', params.approvalStatus);
+    }
 
     return this.http.get<MerchantListResponse>(this.baseUrl, {
       params: httpParams,

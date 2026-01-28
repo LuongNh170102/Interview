@@ -131,6 +131,7 @@ export class AgenciesComponent implements OnInit {
         page: pag.page,
         limit: pag.pageSize,
         include: 'statistics',
+        approvalStatus: 'APPROVED',
       })
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
@@ -167,7 +168,7 @@ export class AgenciesComponent implements OnInit {
   private mapAgencyToUI(agency: AgencyResponse): Agency {
     return {
       id: agency.externalId,
-      code: `${agency.externalId.substring(0, 5).toUpperCase()}`,
+      code: agency.externalId.toUpperCase(),
       name: agency.name,
       initials: generateInitials(agency.name),
       initialsColor: generateInitialsColor(agency.name),

@@ -135,6 +135,7 @@ export class MerchantsComponent implements OnInit {
         page,
         limit: pageSize,
         include: 'statistics',
+        approvalStatus: 'APPROVED',
       })
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
@@ -168,7 +169,7 @@ export class MerchantsComponent implements OnInit {
   private mapApiResponseToMerchant(item: MerchantApiResponse): Merchant {
     return {
       id: item.externalId,
-      code: `${item.externalId.substring(0, 6).toUpperCase()}`,
+      code: item.externalId.toUpperCase(),
       name: item.name,
       initials: generateMerchantInitials(item.name),
       initialsColor: generateMerchantInitialsColor(item.name),
