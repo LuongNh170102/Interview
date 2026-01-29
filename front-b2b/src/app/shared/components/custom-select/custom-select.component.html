@@ -1,16 +1,53 @@
-<div class="custom-select" [class.open]="isOpen" [class.disabled]="disabled">
-  <div class="select-trigger" (click)="toggle()">
-    <span class="select-value" [class.placeholder]="!selectedOption">
-      {{ (selectedOption?.label || placeholder) | translate }}
+<div class="relative w-full">
+  <!-- Trigger Button -->
+  <button
+    type="button"
+    class="w-full h-10 lg:h-12 px-4 pr-10 border rounded-lg text-sm bg-surface-base text-left transition-colors duration-200 flex items-center justify-between"
+    [class.border-border-base]="!isOpen"
+    [class.border-primary]="isOpen"
+    [class.bg-surface-muted]="disabled"
+    [class.cursor-not-allowed]="disabled"
+    [class.opacity-60]="disabled"
+    [class.cursor-pointer]="!disabled"
+    [disabled]="disabled"
+    (click)="toggle()"
+  >
+    <span
+      class="flex-1 truncate"
+      [class.text-text-primary]="selectedOption"
+      [class.text-text-tertiary]="!selectedOption"
+    >
+      {{ selectedOption?.label || placeholder | translate }}
     </span>
-    <span class="select-arrow" [class.rotate]="isOpen">▼</span>
-  </div>
-  
-  <div class="select-dropdown" *ngIf="isOpen">
-    <div class="select-option" 
-         *ngFor="let option of options" 
-         [class.selected]="option.value === value"
-         (click)="selectOption(option)">
+    <svg
+      class="w-4 h-4 text-text-secondary absolute right-4 top-1/2 -translate-y-1/2 transition-transform duration-200"
+      [class.rotate-180]="isOpen"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <polyline points="6 9 12 15 18 9"></polyline>
+    </svg>
+  </button>
+
+  <!-- Dropdown -->
+  <div
+    *ngIf="isOpen"
+    class="scrollbar-primary absolute top-full left-0 right-0 mt-1 bg-surface-base border border-border-base rounded-lg shadow-lg max-h-60 overflow-y-auto z-50 animate-fadeIn"
+  >
+    <div
+      *ngFor="let option of options"
+      class="px-4 py-3 text-sm cursor-pointer transition-colors duration-150 hover:bg-surface-muted"
+      [class.bg-surface-muted]="option.value === value"
+      [class.text-primary]="option.value === value"
+      [class.font-medium]="option.value === value"
+      [class.text-text-primary]="option.value !== value"
+      (click)="selectOption(option)"
+    >
       {{ option.label | translate }}
     </div>
   </div>

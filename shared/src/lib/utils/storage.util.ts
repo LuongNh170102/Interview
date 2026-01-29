@@ -184,6 +184,7 @@ export function createStorageAccessor<T>(
 export const STORAGE_KEYS = {
   LANGUAGE: 'vhandelivery_language',
   TABLE_COLUMN_VISIBILITY_PREFIX: 'vhandelivery_table_columns_',
+  REGISTRATION_COMPLETED: 'vhandelivery_registration_completed',
 } as const;
 
 export type StorageKey = (typeof STORAGE_KEYS)[keyof typeof STORAGE_KEYS];

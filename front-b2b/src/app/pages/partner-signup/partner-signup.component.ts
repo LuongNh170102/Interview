@@ -7,21 +7,22 @@ import { GlobalModalComponent } from '../../shared/components/global-modal/globa
 import { OtpModalComponent } from '../../shared/components/otp-modal/otp-modal.component';
 import {
   TranslatePipe,
-  CreateMerchantRequest,
-  MerchantService,
+  VerifyOtpResponse,
+  AgencyService,
+  CreateAgencyRequest,
+  isValidEmail,
+  isImageFile,
+  isValidFileSize,
   formatPhoneVN,
   cleanPhoneNumber,
 } from '@vhandelivery/shared-ui';
-import {
-  CITIES,
-  BUSINESS_LICENSES,
-} from '../../shared/constants/form-options.constant';
+import { CITIES } from '../../shared/constants/form-options.constant';
 import { BackButtonComponent } from '../../shared/components/back-button/back-button.component';
 import { ModalType } from '../../shared/types/modal-type.type';
 import { RegistrationStateService } from '../../shared/services/registration-state.service';
 
 @Component({
-  selector: 'app-merchant-signup',
+  selector: 'app-partner-signup',
   standalone: true,
   imports: [
     CommonModule,
@@ -32,10 +33,10 @@ import { RegistrationStateService } from '../../shared/services/registration-sta
     OtpModalComponent,
     BackButtonComponent,
   ],
-  templateUrl: './merchant-signup.component.html',
-  styleUrls: ['./merchant-signup.component.scss'],
+  templateUrl: './partner-signup.component.html',
+  styleUrls: ['./partner-signup.component.scss'],
 })
-export class MerchantSignup {
+export class PartnerSignupComponent {
   // Modal states
   showOtpModal = false;
 
@@ -51,65 +52,69 @@ export class MerchantSignup {
 
   // Form data
   formData = {
-    storeName: '',
-    city: '',
-    storeAddress: '',
-    businessCategory: '',
-    contactName: '',
+    companyName: '',
+    responsiblePerson: '',
     phoneNumber: '',
-    knowReason: '',
-    shopType: 'online',
-    businessLicense: '',
-    socialLinks: '',
+    email: '',
+    businessRegistrationNumber: '',
+    businessRegistrationNumber2: '',
+    storeAddress: '',
+    city: '',
+    businessLicenseImage: null as File | null,
   };
+
+  // Image preview
+  imagePreview: string | null = null;
 
   // Touched fields
   touched = {
-    storeName: false,
-    city: false,
-    storeAddress: false,
-    businessCategory: false,
-    contactName: false,
+    companyName: false,
+    responsiblePerson: false,
     phoneNumber: false,
-    knowReason: false,
-    businessLicense: false,
+    email: false,
+    businessRegistrationNumber: false,
+    storeAddress: false,
+    city: false,
+    businessLicenseImage: false,
   };
 
   // Cities
   cities = CITIES;
 
-  businessLicenses = BUSINESS_LICENSES;
-
   @ViewChild(OtpModalComponent) otpModal!: OtpModalComponent;
 
-  private readonly merchantService = inject(MerchantService);
+  private readonly agencyService = inject(AgencyService);
   private readonly router = inject(Router);
   private readonly registrationState = inject(RegistrationStateService);
 
   /**
-   * field error check
+   * Field error check
    */
   hasError(fieldName: keyof typeof this.formData): boolean {
     const field = fieldName as keyof typeof this.touched;
-    return this.touched[field] && !this.formData[fieldName];
+    if (!this.touched[field]) return false;
+
+    if (fieldName === 'email') {
+      return !this.formData.email || !isValidEmail(this.formData.email);
+    }
+
+    if (fieldName === 'businessLicenseImage') {
+      return !this.formData.businessLicenseImage;
+    }
+
+    const value = this.formData[fieldName];
+    return !value || (typeof value === 'string' && value.trim() === '');
   }
 
   /**
-   * field blur events (when lose focus)
+   * Field blur events (when lose focus)
    */
   onBlur(fieldName: keyof typeof this.touched): void {
     this.touched[fieldName] = true;
   }
 
   /**
-   * chane shop type
-   */
-  onShopTypeChange(type: 'online' | 'offline'): void {
-    this.formData.shopType = type;
-  }
-
-  /**
-   * phone format
+   * Phone format
    */
   formatPhoneNumber(event: Event): void {
     const input = event.target as HTMLInputElement;
@@ -117,30 +122,96 @@ export class MerchantSignup {
   }
 
   /**
+   * Handle image upload
+   */
+  onImageSelect(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files[0]) {
+      const file = input.files[0];
+
+      // Validate file type
+      if (!isImageFile(file)) {
+        this.showModal(
+          'error',
+          'modal.error',
+          'partnerSignup.form.invalidImageType'
+        );
+        return;
+      }
+
+      // Validate file size (max 5MB)
+      if (!isValidFileSize(file, 5)) {
+        this.showModal(
+          'error',
+          'modal.error',
+          'partnerSignup.form.imageTooLarge'
+        );
+        return;
+      }
+
+      this.formData.businessLicenseImage = file;
+      this.touched.businessLicenseImage = true;
+
+      // Create preview
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        this.imagePreview = e.target?.result as string;
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  /**
+   * Remove uploaded image
+   */
+  removeImage(): void {
+    this.formData.businessLicenseImage = null;
+    this.imagePreview = null;
+  }
+
+  /**
+   * Trigger file input click
+   */
+  triggerFileInput(): void {
+    const fileInput = document.getElementById(
+      'businessLicenseImage'
+    ) as HTMLInputElement;
+    fileInput?.click();
+  }
+
+  /**
    * Form validation
    */
   validateForm(): boolean {
-    // all field touched
+    // Mark all fields as touched
     Object.keys(this.touched).forEach((key) => {
       this.touched[key as keyof typeof this.touched] = true;
     });
 
-    // check must field
+    // Check required fields
     const requiredFields: (keyof typeof this.formData)[] = [
-      'storeName',
-      'city',
-      'storeAddress',
-      'businessCategory',
-      'contactName',
+      'companyName',
+      'responsiblePerson',
       'phoneNumber',
-      'knowReason',
-      'businessLicense',
+      'email',
+      'businessRegistrationNumber',
+      'storeAddress',
+      'city',
+      'businessLicenseImage',
     ];
 
-    return requiredFields.every((field) => {
+    const isValid = requiredFields.every((field) => {
+      if (field === 'businessLicenseImage') {
+        return !!this.formData.businessLicenseImage;
+      }
+      if (field === 'email') {
+        return this.formData.email && isValidEmail(this.formData.email);
+      }
       const value = this.formData[field];
-      return value && value.toString().trim() !== '';
+      return value && (typeof value === 'string' ? value.trim() !== '' : true);
     });
+
+    return isValid;
   }
 
   showModal(type: ModalType, title: string, message: string) {
@@ -159,7 +230,7 @@ export class MerchantSignup {
   requestOtp() {
     const phone = cleanPhoneNumber(this.formData.phoneNumber);
 
-    this.merchantService.requestOtp(phone).subscribe({
+    this.agencyService.requestOtp(phone).subscribe({
       next: () => {
         this.showOtpModal = true;
         // Start countdown in modal
@@ -174,8 +245,8 @@ export class MerchantSignup {
   onOtpVerify(code: string) {
     const phone = cleanPhoneNumber(this.formData.phoneNumber);
 
-    this.merchantService.verifyOtp(phone, code).subscribe({
-      next: (res) => {
+    this.agencyService.verifyOtp(phone, code).subscribe({
+      next: (res: VerifyOtpResponse) => {
         this.otpVerified = true;
         this.verificationToken = res.verificationToken;
         this.showOtpModal = false;
@@ -194,29 +265,22 @@ export class MerchantSignup {
   }
 
   submitRegistration() {
-    const payload: CreateMerchantRequest = {
-      name: this.formData.storeName,
-      address: this.formData.storeAddress,
-      city: this.formData.city,
-      contactName: this.formData.contactName,
-      businessType: this.formData.shopType,
-      businessCategory: this.formData.businessCategory,
-      referralSource: this.formData.knowReason,
-      hasBusinessLicense: this.formData.businessLicense === 'HAS_LICENSE',
+    const createAgencyRequest: CreateAgencyRequest = {
+      name: this.formData.companyName,
       phone: cleanPhoneNumber(this.formData.phoneNumber),
-      verificationToken: this.verificationToken!,
-      socialLinks: this.formData.socialLinks || null,
+      verificationToken: this.verificationToken ?? '',
+      taxCode: this.formData.businessRegistrationNumber,
+      email: this.formData.email,
+      address: `${this.formData.storeAddress}, ${this.formData.city}`,
     };
 
-    // Login Authentication Token Temporary Hardcoding
-
-    this.merchantService.register(payload).subscribe({
+    this.agencyService.create(createAgencyRequest).subscribe({
       next: () => {
-        this.registrationState.markAsCompleted('merchant');
+        this.registrationState.markAsCompleted('partner');
         this.router.navigate(['/registration-success']);
       },
-      error: (err) => {
-        console.error('merchant register failed ..', err);
+      error: (err: unknown) => {
+        console.error('Partner register failed..', err);
         this.showModal(
           'error',
           'modal.registrationFailed',
@@ -234,7 +298,7 @@ export class MerchantSignup {
 
     if (!this.validateForm()) {
       console.error('Form validation failed');
-      // go scroll to first err
+      // Scroll to first error
       const firstError = document.querySelector('.form-hint.error');
       if (firstError) {
         firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -248,7 +312,6 @@ export class MerchantSignup {
       return;
     }
 
-    // If already verified (rare case if they closed modal but somehow verified), submit directly
     this.submitRegistration();
   }
 }

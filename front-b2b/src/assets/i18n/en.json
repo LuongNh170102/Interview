@@ -227,6 +227,15 @@
     "otpResendIn": "Resend available in",
     "otpResend": "Resend Code"
   },
+  "registrationSuccess": {
+    "title": "Registration Successful!",
+    "subtitle": "Thank you for registering to become a VHan Delivery partner. We will review your information and contact you as soon as possible.",
+    "activationNotice": "Account activation within 24 hours.",
+    "goToHome": "Go to Home",
+    "downloadApp": "Download App",
+    "helpText": "Need more help?",
+    "learnMore": "Learn More"
+  },
   "common": {
     "viewMore": "View More",
     "partnerReg": "Partner Registration",
@@ -329,7 +338,61 @@
         "question": "Are you running a store?",
         "detail": "Register your store on VHan Delivery and receive orders.",
         "note": "Set up menus, confirm orders, manage settlements, and customer reviews"
+      },
+      "partner": {
+        "badge": "Partner",
+        "title": "Business Partner",
+        "desc": "Register as a service provider partner with VHan Delivery.",
+        "question": "Looking to partner with us?",
+        "detail": "Register your company, provide transportation, logistics and business solutions.",
+        "note": "Manage contracts, track performance, receive timely payments"
       }
+    }
+  },
+  "partnerSignup": {
+    "heroTitle1": "Expand your business network with",
+    "heroTitle2": "VHan Delivery",
+    "images": {
+      "heroAlt": "VHan Delivery partner illustration"
+    },
+    "formTitle": "Partner Registration",
+    "benefitsTitle": "Partner Benefits",
+    "benefit1Title": "Sustainable Partnership",
+    "benefit1Desc": "Build long-term partnerships with VHan Delivery.",
+    "benefit2Title": "Fast Delivery",
+    "benefit2Desc": "Modern logistics system with door-to-door delivery.",
+    "benefit3Title": "Revenue Growth",
+    "benefit3Desc": "Reach thousands of potential customers every day.",
+    "form": {
+      "companyName": "Company Name",
+      "companyNamePlaceholder": "Enter your company name",
+      "companyNameError": "Please enter company name.",
+      "responsiblePerson": "Responsible Person",
+      "responsiblePersonPlaceholder": "Enter full name",
+      "responsiblePersonError": "Please enter responsible person name.",
+      "phone": "Mobile Phone",
+      "phonePlaceholder": "Phone number for OTP",
+      "phoneError": "Please enter a valid phone number.",
+      "email": "Email",
+      "emailPlaceholder": "company@email.com",
+      "emailError": "Please enter a valid email.",
+      "businessRegistrationNumber": "Business Registration Number",
+      "businessRegistrationNumberPlaceholder": "Enter business registration number",
+      "businessRegistrationNumberError": "Please enter business registration number.",
+      "city": "City",
+      "cityPlaceholder": "Please select a city",
+      "cityError": "Please select a city.",
+      "storeAddress": "Store Address",
+      "storeAddressPlaceholder": "Street, ward, district",
+      "storeAddressError": "Please enter store address.",
+      "businessLicenseImage": "Business License Image",
+      "businessLicenseImageError": "Please upload business license image.",
+      "addImage": "Add image",
+      "reupload": "Reupload",
+      "delete": "Delete",
+      "submit": "Submit",
+      "invalidImageType": "Please select a valid image file.",
+      "imageTooLarge": "Image too large. Please select a file smaller than 5MB."
     }
   }
 }
