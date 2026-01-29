@@ -30,8 +30,7 @@ export class RegisterTypeComponent {
   private readonly translationService = inject(TranslationService);
 
   readonly cards: RegisterCard[] = [
-    { key: 'agency', route: '/auth/register' },
-
+    { key: 'agency', route: '/partner-signup' },
     { key: 'merchant', route: '/merchant-signup' },
   ];
 

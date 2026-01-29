@@ -1,5 +1,6 @@
 import { Route } from '@angular/router';
 import { authGuard } from './shared/guards/auth.guard';
+import { registrationSuccessGuard } from './shared/guards/registration-success.guard';
 
 export const appRoutes: Route[] = [
   {
@@ -43,11 +44,27 @@ export const appRoutes: Route[] = [
           ),
       },
       {
+        path: 'partner-signup',
+        canActivate: [authGuard],
+        loadComponent: () =>
+          import('./pages/partner-signup/partner-signup.component').then(
+            (m) => m.PartnerSignupComponent
+          ),
+      },
+      {
         path: 'register-type',
         loadComponent: () =>
           import('./pages/register-type/register-type.component').then(
             (m) => m.RegisterTypeComponent
           ),
+      },
+      {
+        path: 'registration-success',
+        canActivate: [registrationSuccessGuard],
+        loadComponent: () =>
+          import(
+            './pages/registration-success/registration-success.component'
+          ).then((m) => m.RegistrationSuccessComponent),
       },
     ],
   },

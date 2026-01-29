@@ -27,6 +27,7 @@ export class OtpModalComponent implements AfterViewInit {
 
   otpCode = '';
   countdown = 0;
+  isVerifying = false;
 
   @ViewChild('otpInput') otpInput!: ElementRef;
 
@@ -43,12 +44,21 @@ export class OtpModalComponent implements AfterViewInit {
   onClose() {
     this.close.emit();
     this.otpCode = '';
+    this.isVerifying = false;
   }
 
   onVerify() {
-    if (this.otpCode.length === 6) {
+    if (this.otpCode.length === 6 && !this.isVerifying) {
+      this.isVerifying = true;
       this.verify.emit(this.otpCode);
     }
+  }
+
+  /**
+   * Reset loading state (call from parent after API response)
+   */
+  resetVerifying() {
+    this.isVerifying = false;
   }
 
   onResend() {
@@ -70,14 +80,10 @@ export class OtpModalComponent implements AfterViewInit {
     }, 1000);
   }
 
-  onInput(event: any) {
-    const input = event.target;
+  onInput(event: Event) {
+    const input = event.target as HTMLInputElement;
     input.value = input.value.replace(/[^0-9]/g, '');
     this.otpCode = input.value;
-
-    if (this.otpCode.length === 6) {
-      this.onVerify();
-    }
   }
 
   get maskedPhone(): string {

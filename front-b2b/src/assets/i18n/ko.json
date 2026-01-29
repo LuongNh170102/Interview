@@ -227,6 +227,15 @@
     "otpResendIn": "재전송 가능 시간",
     "otpResend": "코드 재전송"
   },
+  "registrationSuccess": {
+    "title": "가입 완료!",
+    "subtitle": "VHan Delivery 파트너로 등록해 주셔서 감사합니다. 정보를 검토한 후 빠른 시일 내에 연락드리겠습니다.",
+    "activationNotice": "24시간 이내 계정 활성화.",
+    "goToHome": "홈으로 이동",
+    "downloadApp": "앱 다운로드",
+    "helpText": "추가 도움이 필요하신가요?",
+    "learnMore": "자세히 보기"
+  },
   "common": {
     "viewMore": "더 보기",
     "partnerReg": "파트너 등록",
@@ -329,7 +338,61 @@
         "question": "비즈니스 협업을 찾고 계신가요?",
         "detail": "기술, 서비스, 비즈니스 협업까지 VHan Delivery와 함께하세요.",
         "note": "서비스 연계, 운영 최적화, 매출 성장을 VHan Delivery와 함께"
+      },
+      "partner": {
+        "badge": "Partner",
+        "title": "사업 파트너",
+        "desc": "VHan Delivery와 서비스 제공 파트너로 등록하세요.",
+        "question": "저희와 파트너십을 원하시나요?",
+        "detail": "회사를 등록하고 운송, 물류 및 비즈니스 솔루션을 제공하세요.",
+        "note": "계약 관리, 성과 추적, 정시 지급 받기"
       }
+    }
+  },
+  "partnerSignup": {
+    "heroTitle1": "비즈니스 네트워크 확장",
+    "heroTitle2": "VHan Delivery와 함께",
+    "images": {
+      "heroAlt": "VHan Delivery 파트너 일러스트"
+    },
+    "formTitle": "파트너 등록",
+    "benefitsTitle": "파트너 혜택",
+    "benefit1Title": "지속 가능한 파트너십",
+    "benefit1Desc": "VHan Delivery와 장기적인 파트너십을 구축하세요.",
+    "benefit2Title": "빠른 배송",
+    "benefit2Desc": "현대적인 물류 시스템으로 문전 배송 서비스.",
+    "benefit3Title": "매출 성장",
+    "benefit3Desc": "매일 수천 명의 잠재 고객에게 도달하세요.",
+    "form": {
+      "companyName": "회사명",
+      "companyNamePlaceholder": "회사명을 입력하세요",
+      "companyNameError": "회사명을 입력해주세요.",
+      "responsiblePerson": "책임자 이름",
+      "responsiblePersonPlaceholder": "성명을 입력하세요",
+      "responsiblePersonError": "책임자 이름을 입력해주세요.",
+      "phone": "휴대폰 번호",
+      "phonePlaceholder": "OTP 수신용 전화번호",
+      "phoneError": "올바른 전화번호를 입력해주세요.",
+      "email": "이메일",
+      "emailPlaceholder": "company@email.com",
+      "emailError": "올바른 이메일을 입력해주세요.",
+      "businessRegistrationNumber": "사업자등록번호",
+      "businessRegistrationNumberPlaceholder": "사업자등록번호를 입력하세요",
+      "businessRegistrationNumberError": "사업자등록번호를 입력해주세요.",
+      "city": "도시",
+      "cityPlaceholder": "도시를 선택하세요",
+      "cityError": "도시를 선택해주세요.",
+      "storeAddress": "매장 주소",
+      "storeAddressPlaceholder": "도로명, 동, 구",
+      "storeAddressError": "매장 주소를 입력해주세요.",
+      "businessLicenseImage": "사업자등록증 이미지",
+      "businessLicenseImageError": "사업자등록증 이미지를 업로드해주세요.",
+      "addImage": "이미지 추가",
+      "reupload": "다시 업로드",
+      "delete": "삭제",
+      "submit": "정보 제출",
+      "invalidImageType": "올바른 이미지 파일을 선택해주세요.",
+      "imageTooLarge": "이미지가 너무 큽니다. 5MB 이하 파일을 선택해주세요."
     }
   }
 }

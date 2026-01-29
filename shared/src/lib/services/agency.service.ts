@@ -7,6 +7,12 @@ import {
   AgencyResponse,
   CreateAgencyRequest,
 } from '../interfaces/agency.interface';
+import {
+  RequestOtpRequest,
+  RequestOtpResponse,
+  VerifyOtpRequest,
+  VerifyOtpResponse,
+} from '../interfaces/otp.interface';
 
 @Injectable({ providedIn: 'root' })
 export class AgencyService {
@@ -51,8 +57,30 @@ export class AgencyService {
    * Create new agency
    */
   create(dto: CreateAgencyRequest): Observable<AgencyResponse> {
-    return this.http.post<AgencyResponse>(this.baseUrl, dto, {
+    return this.http.post<AgencyResponse>(`${this.baseUrl}/register`, dto, {
       withCredentials: true,
     });
+  }
+
+  /**
+   * Request OTP for phone verification
+   */
+  requestOtp(phone: string): Observable<RequestOtpResponse> {
+    const payload: RequestOtpRequest = { phone };
+    return this.http.post<RequestOtpResponse>(
+      `${this.baseUrl}/otp/request`,
+      payload
+    );
+  }
+
+  /**
+   * Verify OTP code
+   */
+  verifyOtp(phone: string, code: string): Observable<VerifyOtpResponse> {
+    const payload: VerifyOtpRequest = { phone, code };
+    return this.http.post<VerifyOtpResponse>(
+      `${this.baseUrl}/otp/verify`,
+      payload
+    );
   }
 }

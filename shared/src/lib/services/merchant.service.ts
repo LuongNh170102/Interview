@@ -5,7 +5,15 @@ import {
   MerchantListResponse,
   MerchantQueryParams,
   MerchantApiResponse,
+  CreateMerchantRequest,
+  MerchantResponse,
 } from '../interfaces/merchant.interface';
+import {
+  RequestOtpRequest,
+  RequestOtpResponse,
+  VerifyOtpRequest,
+  VerifyOtpResponse,
+} from '../interfaces/otp.interface';
 
 @Injectable({ providedIn: 'root' })
 export class MerchantService {
@@ -44,5 +52,37 @@ export class MerchantService {
     return this.http.get<MerchantApiResponse>(`${this.baseUrl}/${externalId}`, {
       withCredentials: true,
     });
+  }
+
+  /**
+   * Request OTP for phone verification
+   */
+  requestOtp(phone: string): Observable<RequestOtpResponse> {
+    const payload: RequestOtpRequest = { phone };
+    return this.http.post<RequestOtpResponse>(
+      `${this.baseUrl}/otp/request`,
+      payload
+    );
+  }
+
+  /**
+   * Verify OTP code
+   */
+  verifyOtp(phone: string, code: string): Observable<VerifyOtpResponse> {
+    const payload: VerifyOtpRequest = { phone, code };
+    return this.http.post<VerifyOtpResponse>(
+      `${this.baseUrl}/otp/verify`,
+      payload
+    );
+  }
+
+  /**
+   * Register new merchant
+   */
+  register(payload: CreateMerchantRequest): Observable<MerchantResponse> {
+    return this.http.post<MerchantResponse>(
+      `${this.baseUrl}/register`,
+      payload
+    );
   }
 }

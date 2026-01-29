@@ -186,7 +186,9 @@
         "of": "/"
       },
       "filter": {
-        "location": "위치"
+        "location": "위치",
+        "status": "상태",
+        "agency": "에이전시"
       },
       "column": "Column",
       "agencies": {

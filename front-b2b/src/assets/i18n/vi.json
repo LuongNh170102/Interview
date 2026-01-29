@@ -220,7 +220,21 @@
     "registrationFailedDesc": "Hệ thống chưa ghi nhận thông tin. Vui lòng thử lại hoặc liên hệ bộ phận hỗ trợ.",
     "otpInvalid": "Mã OTP không hợp lệ hoặc đã hết hạn. Vui lòng yêu cầu mã mới và thử lại.",
     "registrationSuccess": "Đăng ký thành công",
-    "registrationSuccessDesc": "Cảm ơn bạn! Đội ngũ VHan Delivery sẽ liên hệ trong vòng 24 giờ để xác minh thông tin."
+    "registrationSuccessDesc": "Cảm ơn bạn! Đội ngũ VHan Delivery sẽ liên hệ trong vòng 24 giờ để xác minh thông tin.",
+    "otpTitle": "Xác thực OTP",
+    "otpDesc": "Vui lòng nhập mã xác thực đã gửi đến",
+    "otpNotReceived": "Chưa nhận được mã?",
+    "otpResendIn": "Thời gian gửi lại",
+    "otpResend": "Gửi lại mã"
+  },
+  "registrationSuccess": {
+    "title": "Đăng ký thành công!",
+    "subtitle": "Cảm ơn bạn đã đăng ký trở thành đối tác của VHan Delivery. Chúng tôi sẽ xem xét thông tin và liên hệ với bạn trong thời gian sớm nhất.",
+    "activationNotice": "Kích hoạt tài khoản trong vòng 24 giờ.",
+    "goToHome": "Về trang chủ",
+    "downloadApp": "Tải ứng dụng",
+    "helpText": "Cần hỗ trợ thêm?",
+    "learnMore": "Tìm hiểu thêm"
   },
   "common": {
     "viewMore": "Xem thêm",
@@ -324,7 +338,61 @@
         "question": "Bạn đang điều hành cửa hàng phải không?",
         "detail": "Đăng ký cửa hàng tại VHan Delivery và nhận đơn đặt hàng.",
         "note": "Đăng ký thực đơn, xác nhận đơn đặt hàng, quản lý quyết toán, quản lý đánh giá khách hàng"
+      },
+      "partner": {
+        "badge": "Partner",
+        "title": "Đối tác kinh doanh",
+        "desc": "Đăng ký trở thành đối tác cung cấp dịch vụ với VHan Delivery.",
+        "question": "Bạn muốn hợp tác kinh doanh với chúng tôi?",
+        "detail": "Đăng ký công ty, cung cấp dịch vụ vận tải, logistics và các giải pháp kinh doanh.",
+        "note": "Quản lý hợp đồng, theo dõi hiệu suất, nhận thanh toán đúng hạn"
       }
+    }
+  },
+  "partnerSignup": {
+    "heroTitle1": "Mở rộng mạng lưới kinh doanh cùng",
+    "heroTitle2": "VHan Delivery",
+    "images": {
+      "heroAlt": "Hình minh họa đối tác VHan Delivery"
+    },
+    "formTitle": "Đăng ký đối tác",
+    "benefitsTitle": "Quyền lợi dành cho đối tác",
+    "benefit1Title": "Hợp tác bền vững",
+    "benefit1Desc": "Xây dựng quan hệ đối tác lâu dài với VHan Delivery.",
+    "benefit2Title": "Giao hàng nhanh chóng",
+    "benefit2Desc": "Hệ thống logistics hiện đại, giao hàng tận nơi.",
+    "benefit3Title": "Tăng trưởng doanh thu",
+    "benefit3Desc": "Tiếp cận hàng nghìn khách hàng tiềm năng mỗi ngày.",
+    "form": {
+      "companyName": "Tên công ty",
+      "companyNamePlaceholder": "Nhập tên công ty của bạn",
+      "companyNameError": "Vui lòng nhập tên công ty.",
+      "responsiblePerson": "Tên người chịu trách nhiệm",
+      "responsiblePersonPlaceholder": "Nhập họ tên đầy đủ",
+      "responsiblePersonError": "Vui lòng nhập tên người chịu trách nhiệm.",
+      "phone": "Số điện thoại di động",
+      "phonePlaceholder": "Số dùng để nhận OTP",
+      "phoneError": "Vui lòng nhập số điện thoại hợp lệ.",
+      "email": "Thư điện tử",
+      "emailPlaceholder": "company@email.com",
+      "emailError": "Vui lòng nhập email hợp lệ.",
+      "businessRegistrationNumber": "Số đăng ký kinh doanh",
+      "businessRegistrationNumberPlaceholder": "Nhập số đăng ký kinh doanh",
+      "businessRegistrationNumberError": "Vui lòng nhập số đăng ký kinh doanh.",
+      "city": "Thành phố",
+      "cityPlaceholder": "Vui lòng chọn thành phố",
+      "cityError": "Vui lòng chọn thành phố.",
+      "storeAddress": "Địa chỉ cửa hàng",
+      "storeAddressPlaceholder": "Số nhà, đường, phường, quận",
+      "storeAddressError": "Vui lòng nhập địa chỉ cửa hàng.",
+      "businessLicenseImage": "Hình ảnh thẻ đăng ký kinh doanh",
+      "businessLicenseImageError": "Vui lòng tải lên hình ảnh đăng ký kinh doanh.",
+      "addImage": "Thêm hình ảnh",
+      "reupload": "Tải lại",
+      "delete": "Xóa",
+      "submit": "Gửi thông tin",
+      "invalidImageType": "Vui lòng chọn file hình ảnh hợp lệ.",
+      "imageTooLarge": "Hình ảnh quá lớn. Vui lòng chọn file nhỏ hơn 5MB."
     }
   }
 }

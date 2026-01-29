@@ -1,0 +1,348 @@
+<!-- Main Content -->
+<div class="min-h-screen bg-surface-base">
+  <!-- Header with Back Button and Title -->
+  <header class="py-6 lg:py-10 px-5 lg:px-20">
+    <div class="flex items-start gap-4 lg:gap-8">
+      <app-back-button></app-back-button>
+      <div class="flex-1 text-center">
+        <h3 class="font-normal text-text-primary mb-0 leading-tight">
+          VHan Delivery
+        </h3>
+        <h2 class="font-extrabold text-text-primary leading-tight">
+          {{ 'partnerSignup.formTitle' | translate }}
+        </h2>
+      </div>
+      <div class="w-10 lg:w-14"></div>
+      <!-- Spacer for centering -->
+    </div>
+  </header>
+
+  <!-- Content: Image + Form -->
+  <div class="flex flex-col lg:flex-row gap-8 lg:gap-16 px-5 lg:px-20 pb-16">
+    <!-- Left Section: Hero Image -->
+    <aside class="w-full lg:w-2/5 xl:w-1/3">
+      <div
+        class="relative rounded-lg overflow-hidden h-full lg:sticky lg:top-8"
+      >
+        <img
+          src="assets/images/partner-hero.png"
+          class="hidden lg:block w-full h-auto object-cover rounded-lg"
+          [attr.alt]="'partnerSignup.images.heroAlt' | translate"
+        />
+        <img
+          src="assets/images/partner-hero-mobile.png"
+          class="block lg:hidden w-full h-auto object-cover rounded-lg"
+          [attr.alt]="'partnerSignup.images.heroAlt' | translate"
+        />
+      </div>
+    </aside>
+
+    <!-- Right Section: Registration Form -->
+    <main class="flex-1">
+      <form class="animate-fadeIn space-y-6" (submit)="onSubmit($event)">
+        <!-- Company Name -->
+        <div>
+          <label
+            for="companyName"
+            class="block text-sm font-semibold text-text-primary mb-2"
+          >
+            {{ 'partnerSignup.form.companyName' | translate }}
+            <span class="text-primary">*</span>
+          </label>
+          <input
+            type="text"
+            id="companyName"
+            [placeholder]="
+              'partnerSignup.form.companyNamePlaceholder' | translate
+            "
+            [(ngModel)]="formData.companyName"
+            name="companyName"
+            (blur)="onBlur('companyName')"
+          />
+          <small
+            class="block text-xs mt-1 text-status-error"
+            *ngIf="hasError('companyName')"
+          >
+            <i class="fa-solid fa-circle-exclamation"></i>
+            {{ 'partnerSignup.form.companyNameError' | translate }}
+          </small>
+        </div>
+
+        <!-- Responsible Person -->
+        <div>
+          <label
+            for="responsiblePerson"
+            class="block text-sm font-semibold text-text-primary mb-2"
+          >
+            {{ 'partnerSignup.form.responsiblePerson' | translate }}
+            <span class="text-primary">*</span>
+          </label>
+          <input
+            type="text"
+            id="responsiblePerson"
+            [placeholder]="
+              'partnerSignup.form.responsiblePersonPlaceholder' | translate
+            "
+            [(ngModel)]="formData.responsiblePerson"
+            name="responsiblePerson"
+            (blur)="onBlur('responsiblePerson')"
+          />
+          <small
+            class="block text-xs mt-1 text-status-error"
+            *ngIf="hasError('responsiblePerson')"
+          >
+            <i class="fa-solid fa-circle-exclamation"></i>
+            {{ 'partnerSignup.form.responsiblePersonError' | translate }}
+          </small>
+        </div>
+
+        <!-- Phone -->
+        <div>
+          <label
+            for="phoneNumber"
+            class="block text-sm font-semibold text-text-primary mb-2"
+          >
+            {{ 'partnerSignup.form.phone' | translate }}
+            <span class="text-primary">*</span>
+          </label>
+          <input
+            type="text"
+            id="phoneNumber"
+            [placeholder]="'partnerSignup.form.phonePlaceholder' | translate"
+            [(ngModel)]="formData.phoneNumber"
+            name="phoneNumber"
+            (input)="formatPhoneNumber($event)"
+            (blur)="onBlur('phoneNumber')"
+          />
+          <small
+            class="block text-xs mt-1 text-status-error"
+            *ngIf="hasError('phoneNumber')"
+          >
+            <i class="fa-solid fa-circle-exclamation"></i>
+            {{ 'partnerSignup.form.phoneError' | translate }}
+          </small>
+        </div>
+
+        <!-- City & Store Address Row -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
+          <div>
+            <label
+              for="city"
+              class="block text-sm font-semibold text-text-primary mb-2"
+            >
+              {{ 'partnerSignup.form.city' | translate }}
+              <span class="text-primary">*</span>
+            </label>
+            <app-custom-select
+              id="city"
+              [options]="cities"
+              [placeholder]="'partnerSignup.form.cityPlaceholder' | translate"
+              [(ngModel)]="formData.city"
+              name="city"
+              (blur)="onBlur('city')"
+              class="block"
+            >
+            </app-custom-select>
+            <small
+              class="block text-xs mt-1 text-status-error"
+              *ngIf="hasError('city')"
+            >
+              <i class="fa-solid fa-circle-exclamation"></i>
+              {{ 'partnerSignup.form.cityError' | translate }}
+            </small>
+          </div>
+          <div>
+            <label
+              for="storeAddress"
+              class="block text-sm font-semibold text-text-primary mb-2"
+            >
+              {{ 'partnerSignup.form.storeAddress' | translate }}
+              <span class="text-primary">*</span>
+            </label>
+            <input
+              type="text"
+              id="storeAddress"
+              [placeholder]="
+                'partnerSignup.form.storeAddressPlaceholder' | translate
+              "
+              [(ngModel)]="formData.storeAddress"
+              name="storeAddress"
+              (blur)="onBlur('storeAddress')"
+            />
+            <small
+              class="block text-xs mt-1 text-status-error"
+              *ngIf="hasError('storeAddress')"
+            >
+              <i class="fa-solid fa-circle-exclamation"></i>
+              {{ 'partnerSignup.form.storeAddressError' | translate }}
+            </small>
+          </div>
+        </div>
+
+        <!-- Email -->
+        <div>
+          <label
+            for="email"
+            class="block text-sm font-semibold text-text-primary mb-2"
+          >
+            {{ 'partnerSignup.form.email' | translate }}
+            <span class="text-primary">*</span>
+          </label>
+          <input
+            type="email"
+            id="email"
+            [placeholder]="'partnerSignup.form.emailPlaceholder' | translate"
+            [(ngModel)]="formData.email"
+            name="email"
+            (blur)="onBlur('email')"
+          />
+          <small
+            class="block text-xs mt-1 text-status-error"
+            *ngIf="hasError('email')"
+          >
+            <i class="fa-solid fa-circle-exclamation"></i>
+            {{ 'partnerSignup.form.emailError' | translate }}
+          </small>
+        </div>
+
+        <!-- Business Registration Number -->
+        <div>
+          <label
+            for="businessRegistrationNumber"
+            class="block text-sm font-semibold text-text-primary mb-2"
+          >
+            {{ 'partnerSignup.form.businessRegistrationNumber' | translate }}
+            <span class="text-primary">*</span>
+          </label>
+          <input
+            type="text"
+            id="businessRegistrationNumber"
+            [placeholder]="
+              'partnerSignup.form.businessRegistrationNumberPlaceholder'
+                | translate
+            "
+            [(ngModel)]="formData.businessRegistrationNumber"
+            name="businessRegistrationNumber"
+            (blur)="onBlur('businessRegistrationNumber')"
+          />
+          <small
+            class="block text-xs mt-1 text-status-error"
+            *ngIf="hasError('businessRegistrationNumber')"
+          >
+            <i class="fa-solid fa-circle-exclamation"></i>
+            {{
+              'partnerSignup.form.businessRegistrationNumberError' | translate
+            }}
+          </small>
+        </div>
+
+        <!-- Business License Image -->
+        <div>
+          <label
+            for="businessLicenseImage"
+            class="block text-sm font-semibold text-text-primary mb-2"
+          >
+            {{ 'partnerSignup.form.businessLicenseImage' | translate }}
+            <span class="text-primary">*</span>
+          </label>
+
+          <input
+            type="file"
+            id="businessLicenseImage"
+            accept="image/*"
+            (change)="onImageSelect($event)"
+            class="hidden"
+          />
+
+          <div class="flex flex-wrap items-start gap-4">
+            <!-- Buttons Container -->
+            <div class="flex flex-col gap-3">
+              <!-- Add Image Button -->
+              <button
+                type="button"
+                class="inline-flex items-center gap-2 px-6 py-3 rounded text-sm font-normal cursor-pointer transition-all bg-primary text-content-on-primary shadow-md hover:bg-primary-hover hover:-translate-y-0.5"
+                (click)="triggerFileInput()"
+                *ngIf="!imagePreview"
+              >
+                <i class="fa-solid fa-image"></i>
+                {{ 'partnerSignup.form.addImage' | translate }}
+              </button>
+
+              <!-- Reupload Button -->
+              <button
+                type="button"
+                class="inline-flex items-center gap-2 px-6 py-3 rounded text-sm font-normal cursor-pointer transition-all bg-primary text-content-on-primary shadow-md hover:bg-primary-hover hover:-translate-y-0.5"
+                (click)="triggerFileInput()"
+                *ngIf="imagePreview"
+              >
+                <i class="fa-solid fa-rotate"></i>
+                {{ 'partnerSignup.form.reupload' | translate }}
+              </button>
+
+              <!-- Delete Button -->
+              <button
+                type="button"
+                class="inline-flex items-center gap-2 px-6 py-3 rounded text-sm font-normal cursor-pointer transition-all bg-secondary text-content-on-secondary shadow-md hover:opacity-90 hover:-translate-y-0.5"
+                (click)="removeImage()"
+                *ngIf="imagePreview"
+              >
+                <i class="fa-solid fa-trash"></i>
+                {{ 'partnerSignup.form.delete' | translate }}
+              </button>
+            </div>
+
+            <!-- Preview Area -->
+            <div
+              *ngIf="imagePreview"
+              class="w-48 aspect-[2/3] border border-border-base rounded-lg overflow-hidden flex items-center justify-center bg-surface-muted"
+            >
+              <img
+                [src]="imagePreview"
+                alt="Business License Preview"
+                class="max-w-full max-h-full object-contain"
+              />
+            </div>
+          </div>
+
+          <small
+            class="block text-xs mt-1 text-status-error"
+            *ngIf="hasError('businessLicenseImage')"
+          >
+            <i class="fa-solid fa-circle-exclamation"></i>
+            {{ 'partnerSignup.form.businessLicenseImageError' | translate }}
+          </small>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="pt-8 text-center">
+          <button
+            type="submit"
+            class="inline-flex items-center justify-center gap-2 px-12 py-4 bg-primary text-content-on-primary border-none rounded text-sm font-normal cursor-pointer transition-all shadow-lg hover:bg-primary-hover hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2"
+          >
+            {{ 'partnerSignup.form.submit' | translate }}
+          </button>
+        </div>
+      </form>
+    </main>
+  </div>
+</div>
+
+<!-- Modals -->
+<app-otp-modal
+  [isOpen]="showOtpModal"
+  [phoneNumber]="formData.phoneNumber"
+  (close)="showOtpModal = false"
+  (verify)="onOtpVerify($event)"
+  (resend)="onOtpResend()"
+>
+</app-otp-modal>
+
+<app-global-modal
+  [isOpen]="modalConfig.isOpen"
+  [type]="modalConfig.type"
+  [title]="modalConfig.title"
+  [message]="modalConfig.message"
+  (close)="closeModal()"
+  (confirm)="closeModal()"
+>
+</app-global-modal>

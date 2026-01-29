@@ -129,7 +129,9 @@
         "merchants": "merchants"
       },
       "filter": {
-        "location": "Location"
+        "location": "Location",
+        "status": "Status",
+        "agency": "Agency"
       },
       "column": "Column",
       "agencies": {
