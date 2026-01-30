@@ -328,34 +328,102 @@
     </div>
   </div>
 
-  <!-- Navigation Bar -->
+  <!-- Navigation Bar - Horizontal scroll on all screen sizes -->
   <nav
-    class="border-t border-[var(--color-border)] bg-[var(--color-surface-base)]"
+    class="border-t border-[var(--color-border)] bg-[var(--color-surface-base)] overflow-x-auto scrollbar-hide"
   >
-    <div class="overflow-x-auto scrollbar-hide">
-      <ul
-        class="flex items-center gap-4 xl:gap-8 list-none m-0 p-0 px-4 xl:px-10 w-max min-w-full"
-      >
-        @for (item of activeNavItems(); track item.link) {
-        <li class="relative shrink-0">
-          <a
-            [routerLink]="item.link"
-            class="block py-3 xl:py-4 text-sm xl:text-base transition-colors whitespace-nowrap"
-            [class.text-[var(--color-primary)]]="item.active"
-            [class.font-bold]="item.active"
-            [class.text-[var(--color-text-tertiary)]]="!item.active"
-            [class.hover:text-[var(--color-text-primary)]]="!item.active"
+    <ul
+      class="flex items-center gap-1 list-none m-0 p-0 px-4 xl:px-10 w-max min-w-full"
+    >
+      @for (item of activeNavItems(); track item.labelKey; let i = $index) {
+      <li class="relative shrink-0">
+        @if (item.children && item.children.length > 0) {
+        <!-- Parent with dropdown -->
+        <button
+          type="button"
+          class="flex items-center gap-1.5 px-3 md:px-4 py-3 xl:py-4 text-sm xl:text-base transition-colors whitespace-nowrap rounded-t-lg"
+          [class.text-[var(--color-primary)]]="item.active"
+          [class.font-bold]="item.active"
+          [class.bg-[var(--color-surface-muted)]]="openNavDropdownIndex() === i"
+          [class.text-[var(--color-text-tertiary)]]="
+            !item.active && openNavDropdownIndex() !== i
+          "
+          [class.text-[var(--color-text-primary)]]="
+            openNavDropdownIndex() === i && !item.active
+          "
+          [class.hover:text-[var(--color-text-primary)]]="!item.active"
+          [class.hover:bg-[var(--color-surface-muted)]]="true"
+          (click)="$event.stopPropagation(); toggleNavDropdown(i)"
+        >
+          <span>{{ item.labelKey | translate }}</span>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            class="transition-transform duration-200"
+            [class.rotate-180]="openNavDropdownIndex() === i"
           >
-            {{ item.labelKey | translate }}
-          </a>
-          @if (item.active) {
-          <div
-            class="absolute bottom-0 left-0 right-0 h-[3px] bg-[var(--color-primary)] rounded-t-full"
-          ></div>
-          }
-        </li>
+            <path d="m6 9 6 6 6-6" />
+          </svg>
+        </button>
+        } @else {
+        <!-- Direct link item -->
+        <a
+          [routerLink]="item.link"
+          class="flex items-center gap-2 px-3 md:px-4 py-3 xl:py-4 text-sm xl:text-base transition-colors whitespace-nowrap rounded-t-lg"
+          [class.text-[var(--color-primary)]]="item.active"
+          [class.font-bold]="item.active"
+          [class.text-[var(--color-text-tertiary)]]="!item.active"
+          [class.hover:text-[var(--color-text-primary)]]="!item.active"
+          [class.hover:bg-[var(--color-surface-muted)]]="true"
+        >
+          <span>{{ item.labelKey | translate }}</span>
+        </a>
         }
-      </ul>
-    </div>
+
+        <!-- Active indicator -->
+        @if (item.active) {
+        <div
+          class="absolute bottom-0 left-0 right-0 h-[3px] bg-[var(--color-primary)] rounded-t-full"
+        ></div>
+        }
+      </li>
+      }
+    </ul>
   </nav>
+
+  <!-- Dropdown menus - Rendered outside scroll container -->
+  @for (item of activeNavItems(); track item.labelKey; let i = $index) { @if
+  (item.children && item.children.length > 0 && openNavDropdownIndex() === i) {
+  <div
+    class="fixed bg-[var(--color-surface-elevated)] border border-[var(--color-border)] rounded-lg shadow-xl py-2 z-[100] max-w-[calc(100vw-1rem)]"
+    [style.top.px]="getDropdownPosition(i).top"
+    [style.left.px]="
+      getDropdownPosition(i).right === null
+        ? getDropdownPosition(i).left
+        : 'auto'
+    "
+    [style.right.px]="getDropdownPosition(i).right"
+    [style.min-width.px]="200"
+  >
+    @for (child of item.children; track child.labelKey) {
+    <a
+      [routerLink]="child.link"
+      class="flex items-center gap-3 px-4 py-2.5 text-sm transition-colors"
+      [class.text-[var(--color-primary)]]="child.active"
+      [class.font-medium]="child.active"
+      [class.bg-[var(--color-primary-soft)]]="child.active"
+      [class.text-[var(--color-text-primary)]]="!child.active"
+      [class.hover:bg-[var(--color-surface-muted)]]="!child.active"
+      (click)="openNavDropdownIndex.set(null)"
+    >
+      {{ child.labelKey | translate }}
+    </a>
+    }
+  </div>
+  } }
 </header>

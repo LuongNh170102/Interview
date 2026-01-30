@@ -81,18 +81,48 @@
   "admin": {
     "nav": {
       "dashboard": "Dashboard",
+      "users": "Quản trị người dùng",
+      "userList": "Danh sách người dùng",
+      "staff": "Nhân viên",
+      "couriers": "Tài xế",
+      "roles": "Vai trò & Quyền",
       "partners": "Đối tác & Cửa hàng",
+      "agencies": "Đối tác",
+      "brands": "Thương hiệu",
+      "merchants": "Cửa hàng",
+      "tags": "Thẻ & Nhãn",
+      "products": "Sản phẩm & Danh mục",
       "categories": "Danh mục",
+      "productList": "Danh sách sản phẩm",
+      "menu": "Thực đơn",
       "orders": "Đơn hàng",
+      "marketing": "Marketing & Tài chính",
+      "promotions": "Khuyến mãi",
+      "shippingFees": "Phí vận chuyển",
+      "payments": "Thanh toán",
+      "reviews": "Đánh giá",
       "reports": "Báo cáo",
-      "auditLogs": "Audit Logs"
+      "statistics": "Thống kê",
+      "export": "Xuất dữ liệu",
+      "notifications": "Thông báo",
+      "settings": "Cài đặt",
+      "systemSettings": "Cài đặt hệ thống",
+      "auditLogs": "Nhật ký hệ thống"
     },
     "header": {
       "searchPlaceholder": "Tìm kiếm...",
       "profile": "Hồ sơ",
       "settings": "Cài đặt",
       "logout": "Đăng xuất",
-      "language": "Ngôn ngữ"
+      "language": "Ngôn ngữ",
+      "menu": "Menu",
+      "notifications": "Thông báo",
+      "search": "Tìm kiếm"
+    },
+    "underDevelopment": {
+      "title": "Tính năng đang phát triển",
+      "description": "Trang này đang được xây dựng. Vui lòng quay lại sau!",
+      "backToDashboard": "Quay lại Dashboard"
     },
     "footer": {
       "systemOnline": "Hệ thống đang hoạt động",
