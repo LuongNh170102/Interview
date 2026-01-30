@@ -132,10 +132,32 @@
   "admin": {
     "nav": {
       "dashboard": "대시보드",
+      "users": "사용자 관리",
+      "userList": "사용자 목록",
+      "staff": "직원",
+      "couriers": "배달 기사",
+      "roles": "역할 및 권한",
       "partners": "파트너 & 매장",
+      "agencies": "파트너",
+      "brands": "브랜드",
+      "merchants": "매장",
+      "tags": "태그 및 라벨",
+      "products": "제품 & 카테고리",
       "categories": "카테고리",
+      "productList": "제품 목록",
+      "menu": "메뉴",
       "orders": "주문",
+      "marketing": "마케팅 & 재무",
+      "promotions": "프로모션",
+      "shippingFees": "배송비",
+      "payments": "결제",
+      "reviews": "리뷰",
       "reports": "리포트",
+      "statistics": "통계",
+      "export": "데이터 내보내기",
+      "notifications": "알림",
+      "settings": "설정",
+      "systemSettings": "시스템 설정",
       "auditLogs": "감사 로그"
     },
     "header": {
@@ -143,7 +165,15 @@
       "profile": "프로필",
       "settings": "설정",
       "logout": "로그아웃",
-      "language": "언어"
+      "language": "언어",
+      "menu": "메뉴",
+      "notifications": "알림",
+      "search": "검색"
+    },
+    "underDevelopment": {
+      "title": "개발 중",
+      "description": "이 페이지는 현재 개발 중입니다. 나중에 다시 확인해 주세요!",
+      "backToDashboard": "대시보드로 돌아가기"
     },
     "footer": {
       "systemOnline": "시스템 온라인",

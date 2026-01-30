@@ -80,10 +80,32 @@
   "admin": {
     "nav": {
       "dashboard": "Dashboard",
+      "users": "User Management",
+      "userList": "User List",
+      "staff": "Staff",
+      "couriers": "Couriers",
+      "roles": "Roles & Permissions",
       "partners": "Partners & Stores",
+      "agencies": "Agencies",
+      "brands": "Brands",
+      "merchants": "Merchants",
+      "tags": "Tags & Labels",
+      "products": "Products & Categories",
       "categories": "Categories",
+      "productList": "Product List",
+      "menu": "Menu",
       "orders": "Orders",
+      "marketing": "Marketing & Finance",
+      "promotions": "Promotions",
+      "shippingFees": "Shipping Fees",
+      "payments": "Payments",
+      "reviews": "Reviews",
       "reports": "Reports",
+      "statistics": "Statistics",
+      "export": "Export Data",
+      "notifications": "Notifications",
+      "settings": "Settings",
+      "systemSettings": "System Settings",
       "auditLogs": "Audit Logs"
     },
     "header": {
@@ -91,7 +113,15 @@
       "profile": "Profile",
       "settings": "Settings",
       "logout": "Logout",
-      "language": "Language"
+      "language": "Language",
+      "menu": "Menu",
+      "notifications": "Notifications",
+      "search": "Search"
+    },
+    "underDevelopment": {
+      "title": "Under Development",
+      "description": "This page is currently under construction. Please check back later!",
+      "backToDashboard": "Back to Dashboard"
     },
     "footer": {
       "systemOnline": "System Online",

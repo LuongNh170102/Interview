@@ -2,11 +2,14 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 @Component({
-  selector: 'app-partners-layout',
+  selector: 'app-settings-layout',
   standalone: true,
   imports: [RouterOutlet],
-  templateUrl: './partners-layout.component.html',
-  styleUrl: './partners-layout.component.scss',
+  template: `
+    <div class="flex flex-col gap-4 px-4 md:px-0">
+      <router-outlet />
+    </div>
+  `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PartnersLayoutComponent {}
+export class SettingsLayoutComponent {}
