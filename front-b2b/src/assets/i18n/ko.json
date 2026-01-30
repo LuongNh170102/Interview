@@ -20,13 +20,13 @@
   "landing": {
     "hero": {
       "title1": "베트남 인기 맛집을 빠르게 만나보세요",
-      "title2": "VHan Delivery",
+      "title2": "SharkBee",
       "button": "파트너 신청하기"
     },
     "intro": {
       "subtitle": "한국 고객을 베트남 전역의 수천 개 신뢰할 수 있는 매장과 연결합니다.",
       "desc1": "간편한 주문 경험을 제공하여 메뉴 선택부터 주문, 배송 추적까지 쉽게 이용할 수 있습니다.",
-      "desc2": "해외 고객과 현지 파트너를 연결함으로써 VHAN Delivery는 매장이 판매 채널을 확장하고",
+      "desc2": "해외 고객과 현지 파트너를 연결함으로써 SharkBee는 매장이 판매 채널을 확장하고",
       "desc3": "더 많은 한국 고객에게 도달하여 매출을 효과적으로 성장시킬 수 있도록 지원합니다."
     },
     "stats": {
@@ -64,7 +64,7 @@
       },
       "step2": {
         "title": "신속한 가입 심사",
-        "desc": "VHan Delivery 담당자가 정보를 확인하고 24시간 내 활성화합니다."
+        "desc": "SharkBee 담당자가 정보를 확인하고 24시간 내 활성화합니다."
       },
       "step3": {
         "title": "판매 시작 및 배송",
@@ -91,15 +91,15 @@
     "bottomCta": {
       "title1": "레스토랑과 브랜드",
       "title2": "새로운 시작",
-      "title3": "VHan Delivery와 함께",
+      "title3": "SharkBee와 함께",
       "button": "파트너 신청하기"
     }
   },
   "merchantSignup": {
     "heroTitle1": "안정적인 매출 성장을 위한 최고의 파트너",
-    "heroTitle2": "VHan Delivery 가맹 신청",
+    "heroTitle2": "SharkBee 가맹 신청",
     "images": {
-      "heroAlt": "VHan Delivery 파트너 매장 일러스트"
+      "heroAlt": "SharkBee 파트너 매장 일러스트"
     },
     "benefitsTitle": "지금 시작하면 얻을 수 있는 혜택",
     "benefit1Title": "한국 고객에게 즉시 노출",
@@ -138,7 +138,7 @@
       "phone": "연락처",
       "phonePlaceholder": "OTP 수신 전화번호",
       "phoneError": "유효한 전화번호를 입력해주세요.",
-      "knowReason": "VHan Delivery를 알게 된 경로",
+      "knowReason": "SharkBee를 알게 된 경로",
       "knowReasonPlaceholder": "추천, SNS, 행사 등",
       "knowReasonError": "알게 된 경로를 입력해주세요.",
       "shopType": "영업 형태",
@@ -193,18 +193,18 @@
     }
   },
   "footer": {
-    "copyright": "© VHan Delivery Co.,Ltd. All rights reserved.",
+    "copyright": "© SharkBee Co.,Ltd. All rights reserved.",
     "admin": "관리자",
     "terms": "이용약관",
     "privacy": "개인정보 처리방침",
     "contactUs": "문의하기",
-    "brand": "VHan Delivery",
+    "brand": "SharkBee",
     "phone": "0778 79 1004 – 0933 51 2838",
     "email": "vhanit.business@gmail.com",
     "address": "05 Noi Khu Hung Phuoc 1, Phu My Hung, Tan Hung Ward, HCMC."
   },
   "menu": {
-    "vhanDelivery": "VHan Delivery",
+    "vhanDelivery": "SharkBee",
     "subMenu1": "회사 소개",
     "subMenu2": "서비스",
     "subMenu3": "연락처",
@@ -229,7 +229,7 @@
   },
   "registrationSuccess": {
     "title": "가입 완료!",
-    "subtitle": "VHan Delivery 파트너로 등록해 주셔서 감사합니다. 정보를 검토한 후 빠른 시일 내에 연락드리겠습니다.",
+    "subtitle": "SharkBee 파트너로 등록해 주셔서 감사합니다. 정보를 검토한 후 빠른 시일 내에 연락드리겠습니다.",
     "activationNotice": "24시간 이내 계정 활성화.",
     "goToHome": "홈으로 이동",
     "downloadApp": "앱 다운로드",
@@ -243,7 +243,7 @@
   },
   "auth": {
     "common": {
-      "brand": "VHanDelivery",
+      "brand": "SharkBee",
       "logout": "로그아웃"
     },
     "field": {
@@ -279,7 +279,7 @@
       },
       "welcome": "다시 오신 것을 환영합니다",
       "subtitle": "오늘 저희 파트너가 되기 위해 로그인하세요.",
-      "emailPlaceholder": "admin@vhandelivery.vn",
+      "emailPlaceholder": "admin@sharkbee.vn",
       "passwordPlaceholder": "••••••••",
       "showPassword": "비밀번호 표시",
       "hidePassword": "비밀번호 숨기기",
@@ -319,7 +319,7 @@
     },
     "registerType": {
       "badge": "파트너 등록",
-      "title": "VHan Delivery 등록",
+      "title": "SharkBee 등록",
       "subtitle": "가장 알맞은 역할을 선택하면 맞춤 지원을 받을 수 있습니다.",
       "tip": "역할 변경이 필요하면 나중에 지원팀에 요청할 수 있습니다.",
       "continue": "다음",
@@ -328,21 +328,21 @@
         "title": "매장 운영자",
         "desc": "매장을 등록하고 주문을 받아보세요.",
         "question": "현재 매장을 운영하고 계신가요?",
-        "detail": "VHan Delivery에 매장을 등록하고 주문을 받아보세요.",
+        "detail": "SharkBee에 매장을 등록하고 주문을 받아보세요.",
         "note": "메뉴 등록, 주문 확인, 정산 관리, 고객 리뷰 관리까지 한번에"
       },
       "merchant": {
         "badge": "Merchant",
         "title": "비즈니스 파트너",
-        "desc": "기술, 서비스, 비즈니스 협업까지 VHan Delivery와 함께하세요.",
+        "desc": "기술, 서비스, 비즈니스 협업까지 SharkBee와 함께하세요.",
         "question": "비즈니스 협업을 찾고 계신가요?",
-        "detail": "기술, 서비스, 비즈니스 협업까지 VHan Delivery와 함께하세요.",
-        "note": "서비스 연계, 운영 최적화, 매출 성장을 VHan Delivery와 함께"
+        "detail": "기술, 서비스, 비즈니스 협업까지 SharkBee와 함께하세요.",
+        "note": "서비스 연계, 운영 최적화, 매출 성장을 SharkBee와 함께"
       },
       "partner": {
         "badge": "Partner",
         "title": "사업 파트너",
-        "desc": "VHan Delivery와 서비스 제공 파트너로 등록하세요.",
+        "desc": "SharkBee와 서비스 제공 파트너로 등록하세요.",
         "question": "저희와 파트너십을 원하시나요?",
         "detail": "회사를 등록하고 운송, 물류 및 비즈니스 솔루션을 제공하세요.",
         "note": "계약 관리, 성과 추적, 정시 지급 받기"
@@ -351,14 +351,14 @@
   },
   "partnerSignup": {
     "heroTitle1": "비즈니스 네트워크 확장",
-    "heroTitle2": "VHan Delivery와 함께",
+    "heroTitle2": "SharkBee와 함께",
     "images": {
-      "heroAlt": "VHan Delivery 파트너 일러스트"
+      "heroAlt": "SharkBee 파트너 일러스트"
     },
     "formTitle": "파트너 등록",
     "benefitsTitle": "파트너 혜택",
     "benefit1Title": "지속 가능한 파트너십",
-    "benefit1Desc": "VHan Delivery와 장기적인 파트너십을 구축하세요.",
+    "benefit1Desc": "SharkBee와 장기적인 파트너십을 구축하세요.",
     "benefit2Title": "빠른 배송",
     "benefit2Desc": "현대적인 물류 시스템으로 문전 배송 서비스.",
     "benefit3Title": "매출 성장",

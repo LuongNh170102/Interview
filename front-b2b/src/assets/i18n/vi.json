@@ -20,13 +20,13 @@
   "landing": {
     "hero": {
       "title1": "Thưởng thức món ngon Việt Nam chuẩn vị Hàn",
-      "title2": "VHan Delivery",
+      "title2": "SharkBee",
       "button": "Đăng ký đối tác ngay"
     },
     "intro": {
       "subtitle": "Kết nối khách hàng Hàn Quốc với hàng nghìn cửa hàng uy tín tại Việt Nam.",
       "desc1": "Chúng tôi mang đến trải nghiệm đặt món đơn giản, giúp khách hàng dễ dàng chọn món, đặt hàng và theo dõi đơn.",
-      "desc2": "Thông qua việc kết nối khách hàng quốc tế với đối tác địa phương, VHAN Delivery hỗ trợ cửa hàng mở rộng kênh bán hàng,",
+      "desc2": "Thông qua việc kết nối khách hàng quốc tế với đối tác địa phương, SharkBee hỗ trợ cửa hàng mở rộng kênh bán hàng,",
       "desc3": "tiếp cận nhiều khách hàng Hàn Quốc hơn và gia tăng doanh thu một cách hiệu quả."
     },
     "stats": {
@@ -64,7 +64,7 @@
       },
       "step2": {
         "title": "Xét duyệt hồ sơ",
-        "desc": "Chuyên viên VHan Delivery liên hệ, duyệt thông tin và kích hoạt trong 24 giờ."
+        "desc": "Chuyên viên SharkBee liên hệ, duyệt thông tin và kích hoạt trong 24 giờ."
       },
       "step3": {
         "title": "Kích hoạt và bán hàng",
@@ -91,15 +91,15 @@
     "bottomCta": {
       "title1": "Nhà hàng và thương hiệu",
       "title2": "Một khởi đầu mới",
-      "title3": "Với VHan Delivery",
+      "title3": "Với SharkBee",
       "button": "Bắt đầu hợp tác ngay"
     }
   },
   "merchantSignup": {
     "heroTitle1": "Tăng trưởng doanh thu bền vững cùng đội ngũ chuyên gia",
-    "heroTitle2": "Đăng ký trở thành đối tác của VHan Delivery",
+    "heroTitle2": "Đăng ký trở thành đối tác của SharkBee",
     "images": {
-      "heroAlt": "Hình minh họa cửa hàng đối tác VHan Delivery"
+      "heroAlt": "Hình minh họa cửa hàng đối tác SharkBee"
     },
     "benefitsTitle": "Quyền lợi nổi bật dành cho cửa hàng",
     "benefit1Title": "Tiếp cận khách Hàn Quốc",
@@ -138,7 +138,7 @@
       "phone": "Số điện thoại",
       "phonePlaceholder": "Số dùng để nhận OTP",
       "phoneError": "Vui lòng nhập số điện thoại hợp lệ.",
-      "knowReason": "Bạn biết đến VHan Delivery qua đâu?",
+      "knowReason": "Bạn biết đến SharkBee qua đâu?",
       "knowReasonPlaceholder": "Ví dụ: giới thiệu, mạng xã hội, sự kiện...",
       "knowReasonError": "Vui lòng cho biết nguồn thông tin.",
       "shopType": "Hình thức kinh doanh",
@@ -193,18 +193,18 @@
     }
   },
   "footer": {
-    "copyright": "© VHan Delivery Co.,Ltd. All rights reserved.",
+    "copyright": "© SharkBee Co.,Ltd. All rights reserved.",
     "admin": "Admin",
     "terms": "Điều khoản chính sách",
     "privacy": "Thông báo bảo mật",
     "contactUs": "Contact Us",
-    "brand": "VHan Delivery",
+    "brand": "SharkBee",
     "phone": "0778 79 1004 – 0933 51 2838",
     "email": "vhanit.business@gmail.com",
     "address": "05 Nội Khu Hưng Phước 1, Phú Mỹ Hưng, P.Tân Hưng, TPHCM."
   },
   "menu": {
-    "vhanDelivery": "VHan Delivery",
+    "vhanDelivery": "SharkBee",
     "subMenu1": "Về chúng tôi",
     "subMenu2": "Dịch vụ",
     "subMenu3": "Liên hệ",
@@ -220,7 +220,7 @@
     "registrationFailedDesc": "Hệ thống chưa ghi nhận thông tin. Vui lòng thử lại hoặc liên hệ bộ phận hỗ trợ.",
     "otpInvalid": "Mã OTP không hợp lệ hoặc đã hết hạn. Vui lòng yêu cầu mã mới và thử lại.",
     "registrationSuccess": "Đăng ký thành công",
-    "registrationSuccessDesc": "Cảm ơn bạn! Đội ngũ VHan Delivery sẽ liên hệ trong vòng 24 giờ để xác minh thông tin.",
+    "registrationSuccessDesc": "Cảm ơn bạn! Đội ngũ SharkBee sẽ liên hệ trong vòng 24 giờ để xác minh thông tin.",
     "otpTitle": "Xác thực OTP",
     "otpDesc": "Vui lòng nhập mã xác thực đã gửi đến",
     "otpNotReceived": "Chưa nhận được mã?",
@@ -229,7 +229,7 @@
   },
   "registrationSuccess": {
     "title": "Đăng ký thành công!",
-    "subtitle": "Cảm ơn bạn đã đăng ký trở thành đối tác của VHan Delivery. Chúng tôi sẽ xem xét thông tin và liên hệ với bạn trong thời gian sớm nhất.",
+    "subtitle": "Cảm ơn bạn đã đăng ký trở thành đối tác của SharkBee. Chúng tôi sẽ xem xét thông tin và liên hệ với bạn trong thời gian sớm nhất.",
     "activationNotice": "Kích hoạt tài khoản trong vòng 24 giờ.",
     "goToHome": "Về trang chủ",
     "downloadApp": "Tải ứng dụng",
@@ -243,7 +243,7 @@
   },
   "auth": {
     "common": {
-      "brand": "VHanDelivery",
+      "brand": "SharkBee",
       "logout": "Đăng xuất"
     },
     "field": {
@@ -279,7 +279,7 @@
       },
       "welcome": "Chào mừng trở lại",
       "subtitle": "Đăng nhập để trở thành đối tác của chúng tôi ngay hôm nay.",
-      "emailPlaceholder": "admin@vhandelivery.vn",
+      "emailPlaceholder": "admin@sharkbee.vn",
       "passwordPlaceholder": "••••••••",
       "showPassword": "Hiện mật khẩu",
       "hidePassword": "Ẩn mật khẩu",
@@ -326,23 +326,23 @@
       "agency": {
         "badge": "Agency",
         "title": "Đối tác hợp tác",
-        "desc": "Công nghệ, dịch vụ, hợp tác kinh doanh... Hợp tác với VHanDelivery.",
+        "desc": "Công nghệ, dịch vụ, hợp tác kinh doanh... Hợp tác với SharkBee.",
         "question": "Bạn đang tìm kiếm sự hợp tác kinh doanh phải không?",
-        "detail": "Công nghệ, dịch vụ, hợp tác kinh doanh... Hợp tác với VHanDelivery.",
-        "note": "Kết nối dịch vụ, tối ưu vận hành, phát triển doanh thu cùng VHan Delivery"
+        "detail": "Công nghệ, dịch vụ, hợp tác kinh doanh... Hợp tác với SharkBee.",
+        "note": "Kết nối dịch vụ, tối ưu vận hành, phát triển doanh thu cùng SharkBee"
       },
       "merchant": {
         "badge": "Merchant",
         "title": "Ông chủ cửa hàng",
-        "desc": "Đăng ký cửa hàng tại VHan Delivery và nhận đơn đặt hàng.",
+        "desc": "Đăng ký cửa hàng tại SharkBee và nhận đơn đặt hàng.",
         "question": "Bạn đang điều hành cửa hàng phải không?",
-        "detail": "Đăng ký cửa hàng tại VHan Delivery và nhận đơn đặt hàng.",
+        "detail": "Đăng ký cửa hàng tại SharkBee và nhận đơn đặt hàng.",
         "note": "Đăng ký thực đơn, xác nhận đơn đặt hàng, quản lý quyết toán, quản lý đánh giá khách hàng"
       },
       "partner": {
         "badge": "Partner",
         "title": "Đối tác kinh doanh",
-        "desc": "Đăng ký trở thành đối tác cung cấp dịch vụ với VHan Delivery.",
+        "desc": "Đăng ký trở thành đối tác cung cấp dịch vụ với SharkBee.",
         "question": "Bạn muốn hợp tác kinh doanh với chúng tôi?",
         "detail": "Đăng ký công ty, cung cấp dịch vụ vận tải, logistics và các giải pháp kinh doanh.",
         "note": "Quản lý hợp đồng, theo dõi hiệu suất, nhận thanh toán đúng hạn"
@@ -351,14 +351,14 @@
   },
   "partnerSignup": {
     "heroTitle1": "Mở rộng mạng lưới kinh doanh cùng",
-    "heroTitle2": "VHan Delivery",
+    "heroTitle2": "SharkBee",
     "images": {
-      "heroAlt": "Hình minh họa đối tác VHan Delivery"
+      "heroAlt": "Hình minh họa đối tác SharkBee"
     },
     "formTitle": "Đăng ký đối tác",
     "benefitsTitle": "Quyền lợi dành cho đối tác",
     "benefit1Title": "Hợp tác bền vững",
-    "benefit1Desc": "Xây dựng quan hệ đối tác lâu dài với VHan Delivery.",
+    "benefit1Desc": "Xây dựng quan hệ đối tác lâu dài với SharkBee.",
     "benefit2Title": "Giao hàng nhanh chóng",
     "benefit2Desc": "Hệ thống logistics hiện đại, giao hàng tận nơi.",
     "benefit3Title": "Tăng trưởng doanh thu",
