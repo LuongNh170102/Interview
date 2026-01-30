@@ -11,7 +11,7 @@
     }
   },
   "menu": {
-    "vhanDelivery": "VHan Delivery"
+    "vhanDelivery": "SharkBee"
   },
   "modal": {
     "logoutConfirmTitle": "Xác nhận đăng xuất",
@@ -75,7 +75,7 @@
   },
   "app": {
     "title": {
-      "management": "VHan Delivery Management"
+      "management": "SharkBee Management"
     }
   },
   "admin": {
@@ -97,7 +97,7 @@
     "footer": {
       "systemOnline": "Hệ thống đang hoạt động",
       "apiConnection": "Kết nối API",
-      "copyright": "© 2025 VHan Delivery. All rights reserved."
+      "copyright": "© 2025 SharkBee. All rights reserved."
     },
     "common": {
       "search": "Tìm kiếm...",
@@ -249,7 +249,7 @@
       "welcome": "Xin chào ! Chào mừng các bạn",
       "notMember": "Vẫn chưa là hội viên à?",
       "joinMember": "gia nhập hội viên",
-      "emailPlaceholder": "vhandelivery@vhanit.com",
+      "emailPlaceholder": "sharkbee@vhanit.com",
       "passwordPlaceholder": "Hãy nhập mật khẩu của bạn",
       "submit": "Tiếp tục",
       "google": "Đăng nhập với Google",

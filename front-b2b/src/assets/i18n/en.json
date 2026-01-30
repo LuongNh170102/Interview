@@ -20,13 +20,13 @@
   "landing": {
     "hero": {
       "title1": "Discover local favorites with fast delivery",
-      "title2": "VHan Delivery",
+      "title2": "SharkBee",
       "button": "Become a partner today"
     },
     "intro": {
       "subtitle": "Connecting Korean customers with thousands of trusted stores across Vietnam.",
       "desc1": "We provide a simple ordering experience that makes it easy to choose dishes, place orders, and track deliveries.",
-      "desc2": "By connecting international customers with local partners, VHAN Delivery helps stores expand their sales channels",
+      "desc2": "By connecting international customers with local partners, SharkBee helps stores expand their sales channels",
       "desc3": "reach more Korean customers, and increase revenue effectively."
     },
     "stats": {
@@ -68,7 +68,7 @@
       },
       "step3": {
         "title": "Launch and start delivering",
-        "desc": "Configure your menu, accept the first order, and scale with VHan."
+        "desc": "Configure your menu, accept the first order, and scale with SharkBee."
       }
     },
     "news": {
@@ -91,15 +91,15 @@
     "bottomCta": {
       "title1": "Restaurants and brands",
       "title2": "A new beginning",
-      "title3": "With VHan Delivery",
+      "title3": "With SharkBee",
       "button": "Start partnering now"
     }
   },
   "merchantSignup": {
     "heroTitle1": "Grow faster with a trusted delivery partner",
-    "heroTitle2": "Register your store on VHan Delivery",
+    "heroTitle2": "Register your store on SharkBee",
     "images": {
-      "heroAlt": "Illustration of a VHan Delivery partner storefront"
+      "heroAlt": "Illustration of a SharkBee partner storefront"
     },
     "benefitsTitle": "Benefits you unlock immediately",
     "benefit1Title": "Reach Korean diners",
@@ -140,7 +140,7 @@
       "phoneError": "Enter a valid phone number.",
       "knowReason": "How did you hear about us?",
       "knowReasonPlaceholder": "Referral, social media, event, etc.",
-      "knowReasonError": "Please share how you heard about VHan Delivery.",
+      "knowReasonError": "Please share how you heard about SharkBee.",
       "shopType": "Business model",
       "online": "Online only",
       "offline": "Physical storefront",
@@ -193,18 +193,18 @@
     }
   },
   "footer": {
-    "copyright": "© VHan Delivery Co.,Ltd. All rights reserved.",
+    "copyright": "© SharkBee Co.,Ltd. All rights reserved.",
     "admin": "Admin",
     "terms": "Terms & Policy",
     "privacy": "Privacy Notice",
     "contactUs": "Contact Us",
-    "brand": "VHan Delivery",
+    "brand": "SharkBee",
     "phone": "0778 79 1004 – 0933 51 2838",
     "email": "vhanit.business@gmail.com",
     "address": "05 Noi Khu Hung Phuoc 1, Phu My Hung, Tan Hung Ward, HCMC."
   },
   "menu": {
-    "vhanDelivery": "VHan Delivery",
+    "vhanDelivery": "SharkBee",
     "subMenu1": "About Us",
     "subMenu2": "Services",
     "subMenu3": "Contact",
@@ -229,7 +229,7 @@
   },
   "registrationSuccess": {
     "title": "Registration Successful!",
-    "subtitle": "Thank you for registering to become a VHan Delivery partner. We will review your information and contact you as soon as possible.",
+    "subtitle": "Thank you for registering to become a SharkBee partner. We will review your information and contact you as soon as possible.",
     "activationNotice": "Account activation within 24 hours.",
     "goToHome": "Go to Home",
     "downloadApp": "Download App",
@@ -243,7 +243,7 @@
   },
   "auth": {
     "common": {
-      "brand": "VHanDelivery",
+      "brand": "SharkBee",
       "logout": "Logout"
     },
     "field": {
@@ -279,7 +279,7 @@
       },
       "welcome": "Welcome back",
       "subtitle": "Log in to become our partner today.",
-      "emailPlaceholder": "admin@vhandelivery.com",
+      "emailPlaceholder": "admin@sharkbee.com",
       "passwordPlaceholder": "••••••••",
       "showPassword": "Show password",
       "hidePassword": "Hide password",
@@ -319,30 +319,30 @@
     },
     "registerType": {
       "badge": "Partner onboarding",
-      "title": "Join VHan Delivery",
+      "title": "Join SharkBee",
       "subtitle": "Choose the role so we can support you best.",
       "tip": "You can switch roles later by contacting support.",
       "continue": "Continue",
       "agency": {
         "badge": "Agency",
         "title": "Business partner",
-        "desc": "Technology, services, and business collaboration—partner with VHan Delivery.",
+        "desc": "Technology, services, and business collaboration—partner with SharkBee.",
         "question": "Looking for a business collaboration?",
-        "detail": "Technology, services, and business collaboration—partner with VHan Delivery.",
-        "note": "Connect services, streamline operations, and grow revenue with VHan Delivery"
+        "detail": "Technology, services, and business collaboration—partner with SharkBee.",
+        "note": "Connect services, streamline operations, and grow revenue with SharkBee"
       },
       "merchant": {
         "badge": "Merchant",
         "title": "Store owner",
-        "desc": "Register your store on VHan Delivery and start receiving orders.",
+        "desc": "Register your store on SharkBee and start receiving orders.",
         "question": "Are you running a store?",
-        "detail": "Register your store on VHan Delivery and receive orders.",
+        "detail": "Register your store on SharkBee and receive orders.",
         "note": "Set up menus, confirm orders, manage settlements, and customer reviews"
       },
       "partner": {
         "badge": "Partner",
         "title": "Business Partner",
-        "desc": "Register as a service provider partner with VHan Delivery.",
+        "desc": "Register as a service provider partner with SharkBee.",
         "question": "Looking to partner with us?",
         "detail": "Register your company, provide transportation, logistics and business solutions.",
         "note": "Manage contracts, track performance, receive timely payments"
@@ -351,14 +351,14 @@
   },
   "partnerSignup": {
     "heroTitle1": "Expand your business network with",
-    "heroTitle2": "VHan Delivery",
+    "heroTitle2": "SharkBee",
     "images": {
-      "heroAlt": "VHan Delivery partner illustration"
+      "heroAlt": "SharkBee partner illustration"
     },
     "formTitle": "Partner Registration",
     "benefitsTitle": "Partner Benefits",
     "benefit1Title": "Sustainable Partnership",
-    "benefit1Desc": "Build long-term partnerships with VHan Delivery.",
+    "benefit1Desc": "Build long-term partnerships with SharkBee.",
     "benefit2Title": "Fast Delivery",
     "benefit2Desc": "Modern logistics system with door-to-door delivery.",
     "benefit3Title": "Revenue Growth",

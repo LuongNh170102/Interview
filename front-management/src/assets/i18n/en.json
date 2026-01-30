@@ -11,7 +11,7 @@
     }
   },
   "menu": {
-    "vhanDelivery": "VHan Delivery"
+    "vhanDelivery": "SharkBee"
   },
   "modal": {
     "logoutConfirmTitle": "Confirm Logout",
@@ -74,7 +74,7 @@
   },
   "app": {
     "title": {
-      "management": "VHan Delivery Management"
+      "management": "SharkBee Management"
     }
   },
   "admin": {
@@ -96,7 +96,7 @@
     "footer": {
       "systemOnline": "System Online",
       "apiConnection": "API Connection",
-      "copyright": "© 2025 VHan Delivery. All rights reserved."
+      "copyright": "© 2025 SharkBee. All rights reserved."
     },
     "common": {
       "search": "Search...",
@@ -234,7 +234,7 @@
       "welcome": "Hello! Welcome back",
       "notMember": "Not a member yet?",
       "joinMember": "Join member",
-      "emailPlaceholder": "vhandelivery@vhanit.com",
+      "emailPlaceholder": "sharkbee@vhanit.com",
       "passwordPlaceholder": "Enter your password",
       "submit": "Continue",
       "google": "Sign in with Google",

@@ -2,18 +2,14 @@
 <div class="min-h-screen bg-surface-base">
   <!-- Header with Back Button and Title -->
   <header class="py-6 lg:py-10 px-5 lg:px-20">
-    <div class="flex items-start gap-4 lg:gap-8">
-      <app-back-button></app-back-button>
-      <div class="flex-1 text-center">
-        <h3 class="font-normal text-text-primary mb-0 leading-tight">
-          VHan Delivery
-        </h3>
+    <div class="relative flex items-center justify-center">
+      <app-back-button class="absolute left-0"></app-back-button>
+      <div class="text-center">
+        <h3 class="font-normal text-primary mb-0 leading-tight">SharkBee</h3>
         <h2 class="font-extrabold text-text-primary leading-tight">
           {{ 'partnerSignup.formTitle' | translate }}
         </h2>
       </div>
-      <div class="w-10 lg:w-14"></div>
-      <!-- Spacer for centering -->
     </div>
   </header>
 

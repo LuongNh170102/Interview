@@ -11,7 +11,7 @@
     }
   },
   "menu": {
-    "vhanDelivery": "VHan Delivery"
+    "vhanDelivery": "SharkBee"
   },
   "modal": {
     "logoutConfirmTitle": "로그아웃 확인",
@@ -75,7 +75,7 @@
   },
   "app": {
     "title": {
-      "management": "VHan Delivery 관리"
+      "management": "SharkBee 관리"
     }
   },
   "dashboard": {
@@ -109,7 +109,7 @@
       "welcome": "안녕하세요! 환영합니다",
       "notMember": "아직 회원이 아니신가요?",
       "joinMember": "회원 가입",
-      "emailPlaceholder": "vhandelivery@vhanit.com",
+      "emailPlaceholder": "sharkbee@vhanit.com",
       "passwordPlaceholder": "비밀번호를 입력하세요",
       "submit": "계속",
       "google": "Google로 로그인",
@@ -148,7 +148,7 @@
     "footer": {
       "systemOnline": "시스템 온라인",
       "apiConnection": "API 연결",
-      "copyright": "© 2025 VHan Delivery. All rights reserved."
+      "copyright": "© 2025 SharkBee. All rights reserved."
     },
     "common": {
       "search": "검색...",
