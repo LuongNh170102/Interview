@@ -33,10 +33,11 @@ on:
 # 🔧 CONFIGURATION - Change AI provider here!
 # =============================================================================
 env:
-  # Options: 'gemini' (free) | 'groq' (free) | 'openai' (paid)
-  AI_PROVIDER: 'gemini'
+  # Options: 'gemini' (free) | 'groq' (free, recommended) | 'openai' (paid)
+  # NOTE: Gemini free tier has strict rate limits, Groq is more generous
+  AI_PROVIDER: 'groq'
   # Optional: Override default model
-  # AI_MODEL: 'gemini-1.5-pro'  # Uncomment to use different model
+  # AI_MODEL: 'llama-3.3-70b-versatile'  # Uncomment to use different model
 
 # Prevent duplicate runs
 concurrency:
