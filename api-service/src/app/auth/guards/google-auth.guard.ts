@@ -10,7 +10,26 @@ export class GoogleAuthGuard extends AuthGuard('google') {
    */
   private getOriginFromHost(request: Request): string {
     const host = request.get('host') || 'localhost:4200';
-    const protocol = request.secure || request.get('x-forwarded-proto') === 'https' ? 'https' : 'http';
+
+    // Force HTTPS for production domains (non-localhost)
+    // Check x-forwarded-proto header first, then request.secure, then default based on host
+    const isLocalhost =
+      host.includes('localhost') || host.includes('127.0.0.1');
+    const forwardedProto = request.get('x-forwarded-proto');
+
+    let protocol: string;
+    if (forwardedProto) {
+      // Trust the forwarded proto from reverse proxy
+      protocol = forwardedProto.split(',')[0].trim(); // Handle "https, http" format
+    } else if (request.secure) {
+      protocol = 'https';
+    } else if (isLocalhost) {
+      protocol = 'http';
+    } else {
+      // Production should always be HTTPS
+      protocol = 'https';
+    }
+
     return `${protocol}://${host}`;
   }
 
@@ -27,7 +46,7 @@ export class GoogleAuthGuard extends AuthGuard('google') {
   getAuthenticateOptions(context: ExecutionContext) {
     const request = context.switchToHttp().getRequest<Request>();
     const origin = this.getOriginFromHost(request);
-    
+
     return {
       // Dynamic callback URL based on Host header
       callbackURL: `${origin}/api/auth/google/callback`,
