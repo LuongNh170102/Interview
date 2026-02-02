@@ -19,6 +19,22 @@ export const AUTH_MESSAGES = {
   INVALID_TOKEN_TYPE: 'Invalid token type',
   PHONE_NUMBER_MISMATCH: 'Phone number does not match the verified token',
   LOGGED_OUT_SUCCESSFULLY: 'Logged out successfully',
+  // Google OAuth
+  GOOGLE_ACCOUNT_REQUIRES_LINKING:
+    'This email is already registered. Please enter your password to link your Google account.',
+  GOOGLE_ALREADY_LINKED_OTHER:
+    'This Google account is already linked to another user.',
+  USER_ALREADY_HAS_GOOGLE: 'Your account already has a Google account linked.',
+  CANNOT_UNLINK_ONLY_AUTH:
+    'Cannot unlink Google account. Please set a password first.',
+  GOOGLE_AUTH_SUCCESS: 'Google authentication successful',
+  GOOGLE_LINK_SUCCESS: 'Google account linked successfully',
+  OAUTH_ONLY_ACCOUNT:
+    'This account was created with OAuth. Please login with your OAuth provider or set a password.',
+  OAUTH_ONLY_ACCOUNT_PROVIDERS: (providers: string) =>
+    `Tài khoản này được tạo bằng ${providers}. Vui lòng đăng nhập bằng ${providers} hoặc đặt mật khẩu trong cài đặt tài khoản.`,
+  PASSWORD_SET_SUCCESS: 'Password has been set successfully',
+  PASSWORD_ALREADY_SET: 'Account already has a password set',
 };
 
 export const PRODUCT_MESSAGES = {

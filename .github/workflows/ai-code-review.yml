@@ -1,0 +1,98 @@
+# VhanDelivery AI Code Review Workflow
+# Automatically reviews PRs using AI (Gemini/Groq/OpenAI)
+#
+# Setup required:
+# 1. Choose your AI provider (all FREE options available):
+#    - Gemini (default): https://aistudio.google.com/app/apikey
+#    - Groq (fast): https://console.groq.com/keys
+#    - OpenAI (paid): https://platform.openai.com/api-keys
+#
+# 2. Add secret in: Settings > Secrets > Actions
+#    - GEMINI_API_KEY (if using Gemini - FREE)
+#    - GROQ_API_KEY (if using Groq - FREE)
+#    - OPENAI_API_KEY (if using OpenAI - PAID)
+#
+# 3. Change AI_PROVIDER below to switch providers
+
+name: 🤖 AI Code Review
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    # Only review code changes, not docs
+    paths:
+      - '**.ts'
+      - '**.tsx'
+      - '**.js'
+      - '**.jsx'
+      - '**.html'
+      - '**.scss'
+      - '**.css'
+
+# =============================================================================
+# 🔧 CONFIGURATION - Change AI provider here!
+# =============================================================================
+env:
+  # Options: 'gemini' (free) | 'groq' (free, recommended) | 'openai' (paid)
+  # NOTE: Gemini free tier has strict rate limits, Groq is more generous
+  AI_PROVIDER: 'groq'
+  # Optional: Override default model
+  # AI_MODEL: 'llama-3.3-70b-versatile'  # Uncomment to use different model
+
+# Prevent duplicate runs
+concurrency:
+  group: ai-review-${{ github.head_ref }}
+  cancel-in-progress: true
+
+jobs:
+  review:
+    name: AI Review
+    runs-on: ubuntu-latest
+
+    # Required permissions
+    permissions:
+      contents: read
+      pull-requests: write
+
+    steps:
+      # 1. Checkout code with full history for diff
+      - name: 📥 Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Full history for accurate diff
+
+      # 2. Setup Node.js
+      - name: 🟢 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      # 3. Install TypeScript for running script
+      - name: 📦 Install Dependencies
+        run: npm install -g tsx
+
+      # 4. Run AI Review
+      - name: 🧠 Run AI Code Review
+        env:
+          # AI Provider (set above)
+          AI_PROVIDER: ${{ env.AI_PROVIDER }}
+          AI_MODEL: ${{ env.AI_MODEL }}
+          # API Keys - Add the one matching your provider
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          # Auto-provided by GitHub - NO need to add!
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: tsx .github/scripts/ai-review.ts
+
+      # 5. Summary
+      - name: 📊 Review Summary
+        if: always()
+        run: |
+          echo "## 🤖 AI Review Completed" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- **PR**: #${{ github.event.pull_request.number }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Branch**: ${{ github.head_ref }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Provider**: ${{ env.AI_PROVIDER }}" >> $GITHUB_STEP_SUMMARY

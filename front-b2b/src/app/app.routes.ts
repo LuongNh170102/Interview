@@ -4,12 +4,7 @@ import { registrationSuccessGuard } from './shared/guards/registration-success.g
 
 export const appRoutes: Route[] = [
   {
-    path: '',
-    pathMatch: 'full',
-    redirectTo: 'landing',
-  },
-  {
-    path: 'auth/login',
+    path: 'login',
     loadComponent: () =>
       import('./pages/auth/login/login.component').then(
         (m) => m.LoginComponent
@@ -17,7 +12,7 @@ export const appRoutes: Route[] = [
   },
 
   {
-    path: 'auth/register',
+    path: 'register',
     loadComponent: () =>
       import('./pages/auth/register/register.component').then(
         (m) => m.RegisterComponent
@@ -35,6 +30,11 @@ export const appRoutes: Route[] = [
     loadComponent: () =>
       import('./layout/layout.component').then((m) => m.LayoutComponent),
     children: [
+      {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: '/landing',
+      },
       {
         path: 'merchant-signup',
         canActivate: [authGuard],
@@ -67,5 +67,10 @@ export const appRoutes: Route[] = [
           ).then((m) => m.RegistrationSuccessComponent),
       },
     ],
+  },
+  // Fallback redirect to landing
+  {
+    path: '**',
+    redirectTo: 'landing',
   },
 ];

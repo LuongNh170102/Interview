@@ -117,25 +117,38 @@ export class HeaderComponent implements AfterViewInit {
 
   protected readonly activeNavItems = computed((): NavItemWithState[] => {
     const url = this.currentUrl()?.urlAfterRedirects || this.router.url;
-    return this.navItems()
-      .filter((item) => this.hasNavPermission(item))
-      .map((item) => {
-        const children = item.children
-          ?.filter((child) => this.hasNavPermission(child))
-          .map((child) => ({
-            ...child,
-            active: child.link ? url.startsWith(child.link) : false,
-          }));
+    return (
+      this.navItems()
+        .filter((item) => this.hasNavPermission(item))
+        .map((item) => {
+          const children = item.children
+            ?.filter((child) => this.hasNavPermission(child))
+            .map((child) => ({
+              ...child,
+              active: child.link ? url.startsWith(child.link) : false,
+            }));
 
-        const hasActiveChild = children?.some((c) => c.active) ?? false;
-        const isDirectActive = item.link ? url.startsWith(item.link) : false;
+          const hasActiveChild = children?.some((c) => c.active) ?? false;
+          const isDirectActive = item.link ? url.startsWith(item.link) : false;
 
-        return {
-          ...item,
-          active: hasActiveChild || isDirectActive,
-          children,
-        };
-      });
+          return {
+            ...item,
+            active: hasActiveChild || isDirectActive,
+            children,
+          };
+        })
+        // Hide parent if it has children config but all children are filtered out
+        .filter((item) => {
+          // If item originally has children, ensure at least one child remains visible
+          const originalItem = this.navItems().find(
+            (n) => n.labelKey === item.labelKey
+          );
+          if (originalItem?.children && originalItem.children.length > 0) {
+            return item.children && item.children.length > 0;
+          }
+          return true;
+        })
+    );
   });
 
   private scrollToActiveNavItem(): void {

@@ -165,34 +165,54 @@
           class="flex items-center gap-2 xl:gap-3 p-1 xl:px-3 xl:py-2 rounded-lg hover:bg-[var(--color-surface-muted)] transition-colors"
           (click)="toggleUserDropdown()"
         >
-          <div
-            class="w-9 h-9 xl:w-10 xl:h-10 rounded-full bg-[var(--color-surface-muted)] flex items-center justify-center overflow-hidden"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.5"
-              class="text-[var(--color-text-secondary)] xl:w-6 xl:h-6"
+          <!-- Mobile: Username only -->
+          <div class="flex items-center gap-2 lg:hidden">
+            <span
+              class="text-sm font-medium text-[var(--color-text-primary)] truncate"
             >
-              <circle cx="12" cy="8" r="4" />
-              <path d="M6 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2" />
-            </svg>
+              {{ user.username || user.email }}
+            </span>
           </div>
-          <div class="hidden xl:block text-left">
-            <p class="font-bold text-[var(--color-text-primary)]">
-              {{ user.username || 'User Name' }}
-            </p>
-            <span class="text-[var(--color-primary)]"> Super Admin </span>
+
+          <!-- Desktop: Avatar + Username -->
+          <div class="hidden lg:flex items-center gap-3">
+            @if (user.avatarUrl) {
+            <img
+              [src]="user.avatarUrl"
+              [alt]="user.username || 'User avatar'"
+              class="w-10 h-10 rounded-full object-cover border-2 border-[var(--color-border)]"
+            />
+            } @else {
+            <div
+              class="w-10 h-10 rounded-full bg-[var(--color-surface-muted)] flex items-center justify-center overflow-hidden"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                class="text-[var(--color-text-secondary)] w-6 h-6"
+              >
+                <circle cx="12" cy="8" r="4" />
+                <path d="M6 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2" />
+              </svg>
+            </div>
+            }
+            <div class="text-left">
+              <p class="font-bold text-[var(--color-text-primary)]">
+                {{ user.username || 'User Name' }}
+              </p>
+              <span class="text-[var(--color-primary)]"> Super Admin </span>
+            </div>
           </div>
         </button>
 
         @if (isUserDropdownOpen()) {
         <div
-          class="absolute top-full right-0 mt-2 w-56 bg-[var(--color-surface-elevated)] border border-[var(--color-border)] rounded-lg shadow-xl py-2 z-50"
+          class="absolute w-auto top-full right-0 mt-2 bg-[var(--color-surface-elevated)] border border-[var(--color-border)] rounded-lg shadow-xl py-2 z-50"
         >
           <div class="px-4 py-3 border-b border-[var(--color-border)]">
             <p class="font-medium text-[var(--color-text-primary)]">
