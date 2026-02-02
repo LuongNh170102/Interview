@@ -5,29 +5,36 @@ import { Request } from 'express';
 @Injectable()
 export class GoogleAuthGuard extends AuthGuard('google') {
   /**
+   * Production domains from environment variable
+   * Format: comma-separated list of domains (e.g., "sharkbee.vn,vhandelivery.com")
+   */
+  private readonly productionDomains: string[] = (
+    process.env['PRODUCTION_DOMAINS'] || ''
+  )
+    .split(',')
+    .map((d) => d.trim())
+    .filter(Boolean);
+
+  /**
    * Build the frontend origin from the request Host header
    * Nginx preserves the original Host, so we can use it to redirect back
    */
   private getOriginFromHost(request: Request): string {
     const host = request.get('host') || 'localhost:4200';
 
-    // Force HTTPS for production domains (non-localhost)
-    // Check x-forwarded-proto header first, then request.secure, then default based on host
-    const isLocalhost =
-      host.includes('localhost') || host.includes('127.0.0.1');
-    const forwardedProto = request.get('x-forwarded-proto');
+    // Check if host contains any production domain
+    const isProductionDomain = this.productionDomains.some((domain) =>
+      host.includes(domain)
+    );
 
     let protocol: string;
-    if (forwardedProto) {
-      // Trust the forwarded proto from reverse proxy
-      protocol = forwardedProto.split(',')[0].trim(); // Handle "https, http" format
-    } else if (request.secure) {
+    if (isProductionDomain) {
       protocol = 'https';
-    } else if (isLocalhost) {
-      protocol = 'http';
     } else {
-      // Production should always be HTTPS
-      protocol = 'https';
+      protocol =
+        request.secure || request.get('x-forwarded-proto') === 'https'
+          ? 'https'
+          : 'http';
     }
 
     return `${protocol}://${host}`;
