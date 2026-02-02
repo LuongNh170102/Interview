@@ -239,7 +239,13 @@
   "common": {
     "viewMore": "더 보기",
     "partnerReg": "파트너 등록",
-    "start": "시작"
+    "start": "시작",
+    "button": {
+      "cancel": "취소",
+      "submit": "제출",
+      "confirm": "확인",
+      "close": "닫기"
+    }
   },
   "auth": {
     "common": {
@@ -316,6 +322,16 @@
       "successMessage": "계정이 생성되었습니다.",
       "errorTitle": "회원가입 실패",
       "errorMessage": "계정을 생성할 수 없습니다."
+    },
+    "google": {
+      "linkAccount": "Google 계정 연결",
+      "linkDescription": "이 이메일은 이미 등록되어 있습니다. Google 계정과 연결하려면 비밀번호를 입력하세요.",
+      "confirmPassword": "비밀번호 확인",
+      "passwordPlaceholder": "현재 계정 비밀번호를 입력하세요",
+      "linkButton": "계정 연결",
+      "loginSuccess": "Google 로그인 성공!",
+      "linkSuccess": "Google 계정이 성공적으로 연결되었습니다!",
+      "linkFailed": "계정 연결에 실패했습니다. 비밀번호를 확인해주세요."
     },
     "registerType": {
       "badge": "파트너 등록",

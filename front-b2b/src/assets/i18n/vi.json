@@ -239,7 +239,13 @@
   "common": {
     "viewMore": "Xem thêm",
     "partnerReg": "Đăng ký đối tác",
-    "start": "Bắt đầu"
+    "start": "Bắt đầu",
+    "button": {
+      "cancel": "Hủy",
+      "submit": "Gửi",
+      "confirm": "Xác nhận",
+      "close": "Đóng"
+    }
   },
   "auth": {
     "common": {
@@ -316,6 +322,16 @@
       "successMessage": "Tài khoản của bạn đã được tạo.",
       "errorTitle": "Đăng ký thất bại",
       "errorMessage": "Không thể tạo tài khoản."
+    },
+    "google": {
+      "linkAccount": "Liên kết tài khoản Google",
+      "linkDescription": "Email này đã được đăng ký. Vui lòng nhập mật khẩu để liên kết với tài khoản Google của bạn.",
+      "confirmPassword": "Xác nhận mật khẩu",
+      "passwordPlaceholder": "Nhập mật khẩu tài khoản hiện tại",
+      "linkButton": "Liên kết tài khoản",
+      "loginSuccess": "Đăng nhập thành công với Google!",
+      "linkSuccess": "Liên kết tài khoản Google thành công!",
+      "linkFailed": "Liên kết tài khoản thất bại. Vui lòng kiểm tra lại mật khẩu."
     },
     "registerType": {
       "badge": "Đăng ký đối tác",

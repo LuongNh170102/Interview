@@ -296,7 +296,17 @@
     "error": {
       "emailInvalid": "Email không hợp lệ",
       "passwordMin": "Mật khẩu cần ít nhất 6 ký tự",
-      "loginFailed": "Email hoặc mật khẩu không đúng"
+      "loginFailed": "Email hoặc mật khẩu không đúng",
+      "linkFailed": "Không thể liên kết tài khoản. Vui lòng thử lại."
+    },
+    "google": {
+      "linkAccount": "Liên kết tài khoản",
+      "linkDescription": "Một tài khoản với email này đã tồn tại. Nhập mật khẩu để liên kết tài khoản Google của bạn.",
+      "confirmPassword": "Nhập mật khẩu của bạn",
+      "passwordPlaceholder": "Mật khẩu hiện tại của bạn",
+      "linkButton": "Liên kết tài khoản",
+      "loginSuccess": "Đăng nhập với Google thành công!",
+      "linkSuccess": "Đã liên kết tài khoản Google thành công!"
     }
   }
 }

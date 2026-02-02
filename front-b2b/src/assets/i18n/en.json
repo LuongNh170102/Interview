@@ -239,7 +239,13 @@
   "common": {
     "viewMore": "View More",
     "partnerReg": "Partner Registration",
-    "start": "Start"
+    "start": "Start",
+    "button": {
+      "cancel": "Cancel",
+      "submit": "Submit",
+      "confirm": "Confirm",
+      "close": "Close"
+    }
   },
   "auth": {
     "common": {
@@ -316,6 +322,16 @@
       "successMessage": "Your account has been created.",
       "errorTitle": "Registration Failed",
       "errorMessage": "Unable to create account."
+    },
+    "google": {
+      "linkAccount": "Link Google Account",
+      "linkDescription": "This email is already registered. Please enter your password to link with your Google account.",
+      "confirmPassword": "Confirm Password",
+      "passwordPlaceholder": "Enter your current account password",
+      "linkButton": "Link Account",
+      "loginSuccess": "Successfully logged in with Google!",
+      "linkSuccess": "Google account linked successfully!",
+      "linkFailed": "Failed to link account. Please check your password."
     },
     "registerType": {
       "badge": "Partner onboarding",

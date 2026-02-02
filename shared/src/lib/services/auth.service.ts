@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { tap, finalize } from 'rxjs/operators';
 import {
   AuthResponse,
+  GoogleLinkRequest,
+  LinkedAccount,
   LoginRequest,
   RegisterRequest,
   UserProfile,
@@ -16,6 +18,14 @@ export class AuthService {
   readonly accessToken = signal<string | null>(null);
   readonly currentUser = signal<UserProfile | null>(null);
   readonly permissions = signal<string[]>([]);
+
+  // Google OAuth linking state
+  readonly googleLinkingData = signal<{
+    email: string;
+    googleId: string;
+    displayName: string;
+    avatarUrl: string;
+  } | null>(null);
 
   /** Check if user has a specific permission (format: 'resource:action') */
   readonly hasPermission = (permission: string): boolean => {
@@ -81,6 +91,82 @@ export class AuthService {
           this.permissions.set([]);
         })
       );
+  }
+
+  // =====================
+  // Google OAuth Methods
+  // =====================
+
+  /**
+   * Redirect to Google OAuth login
+   * Backend uses Host header to determine which frontend to redirect back to
+   */
+  loginWithGoogle() {
+    window.location.href = '/api/auth/google';
+  }
+
+  /** Link Google account after password confirmation */
+  linkGoogleAccount(payload: GoogleLinkRequest) {
+    return this.http
+      .post<AuthResponse>('/api/auth/google/link', payload, {
+        withCredentials: true,
+      })
+      .pipe(
+        tap((res) => {
+          this.persist(res.access_token, res.user, res.permissions);
+          this.googleLinkingData.set(null);
+        })
+      );
+  }
+
+  /** Unlink Google account */
+  unlinkGoogleAccount() {
+    return this.http.delete<{ message: string }>('/api/auth/google/unlink', {
+      withCredentials: true,
+    });
+  }
+
+  /** Get linked OAuth accounts */
+  getLinkedAccounts() {
+    return this.http.get<LinkedAccount[]>('/api/auth/linked-accounts', {
+      withCredentials: true,
+    });
+  }
+
+  /** Set password for OAuth-only user */
+  setPassword(password: string) {
+    return this.http.post<{ message: string }>(
+      '/api/auth/set-password',
+      { password },
+      { withCredentials: true }
+    );
+  }
+
+  /** Check if current user has password set */
+  hasPassword() {
+    return this.http.get<{ hasPassword: boolean }>('/api/auth/has-password', {
+      withCredentials: true,
+    });
+  }
+
+  /** Set Google linking data from callback */
+  setGoogleLinkingData(data: {
+    email: string;
+    googleId: string;
+    displayName: string;
+    avatarUrl: string;
+  }) {
+    this.googleLinkingData.set(data);
+  }
+
+  /** Clear Google linking data */
+  clearGoogleLinkingData() {
+    this.googleLinkingData.set(null);
+  }
+
+  /** Persist Google OAuth response (used after callback redirect) */
+  persistGoogleAuth(token: string, user: UserProfile, permissions: string[]) {
+    this.persist(token, user, permissions);
   }
 
   private persist(token: string, user: UserProfile, permissions: string[]) {

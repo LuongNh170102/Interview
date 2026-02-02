@@ -17,9 +17,10 @@ model User {
   email         String    @unique
   phone         String?
   username      String?
-  passwordHash  String    @map("password_hash")
+  passwordHash  String?   @map("password_hash") // Optional for OAuth-only users
   hashedRefreshToken String? @map("hashed_refresh_token")
   profile       Json?
+  avatarUrl     String?   @map("avatar_url") // Profile picture from OAuth
   createdAt     DateTime  @default(now()) @map("created_at")
   updatedAt     DateTime? @updatedAt @map("updated_at")
   lastSeenAt    DateTime? @map("last_seen_at")
@@ -32,8 +33,39 @@ model User {
   courier       Courier?
   orders        Order[]
   reviews       Review[]
+  linkedAccounts LinkedAccount[] // OAuth linked accounts
 
   @@map("users")
+}
+
+// OAuth Linked Accounts (Google, Facebook, etc.)
+model LinkedAccount {
+  id            Int       @id @default(autoincrement())
+  userId        Int       @map("user_id")
+  provider      AuthProvider
+  providerId    String    @map("provider_id") // Google ID, Facebook ID, etc.
+  email         String?   // Email from OAuth provider
+  displayName   String?   @map("display_name")
+  avatarUrl     String?   @map("avatar_url")
+  accessToken   String?   @map("access_token") @db.Text // Store encrypted if needed
+  refreshToken  String?   @map("refresh_token") @db.Text
+  expiresAt     DateTime? @map("expires_at")
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime? @updatedAt @map("updated_at")
+
+  // Relations
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerId]) // Each provider account can only link once
+  @@unique([userId, provider]) // Each user can only have one account per provider
+  @@map("linked_accounts")
+}
+
+enum AuthProvider {
+  GOOGLE
+  FACEBOOK
+  APPLE
+  KAKAO // Korean social login
 }
 
 model Role {

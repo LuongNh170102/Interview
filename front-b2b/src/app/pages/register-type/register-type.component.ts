@@ -49,7 +49,7 @@ export class RegisterTypeComponent {
         'warning',
         this.translationService.translate('auth.loginRequired.title'),
         this.translationService.translate('auth.loginRequired.message'),
-        () => this.router.navigate(['/auth/login'])
+        () => this.router.navigate(['/login'])
       );
       return;
     }

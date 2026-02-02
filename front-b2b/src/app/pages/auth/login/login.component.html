@@ -160,6 +160,7 @@
 
           <button
             type="button"
+            (click)="loginWithGoogle()"
             class="w-full h-[3rem] rounded-[0.5rem] border border-border-base text-text-primary text-[0.9375rem] font-semibold flex items-center justify-center gap-3 px-5 bg-surface-base hover:text-primary transition-colors"
           >
             <span
@@ -185,7 +186,7 @@
           'auth.login.noAccount' | translate
         }}</span>
         <a
-          routerLink="/auth/register"
+          routerLink="/register"
           class="text-[1rem] font-semibold text-primary hover:underline"
         >
           {{ 'auth.login.registerLink' | translate }}
@@ -194,3 +195,13 @@
     </div>
   </div>
 </div>
+
+<!-- Google Account Linking Modal -->
+<app-google-link-modal
+  [isOpen]="showLinkingModal()"
+  [googleData]="googleLinkingData()"
+  [isLoading]="linkingLoading()"
+  [error]="linkingError()"
+  (closeModal)="closeLinkingModal()"
+  (submitForm)="submitLinking($event.password)"
+/>

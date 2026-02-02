@@ -281,7 +281,17 @@
     "error": {
       "emailInvalid": "Invalid email address",
       "passwordMin": "Password must be at least 6 characters",
-      "loginFailed": "Invalid email or password"
+      "loginFailed": "Invalid email or password",
+      "linkFailed": "Failed to link account. Please try again."
+    },
+    "google": {
+      "linkAccount": "Link Your Account",
+      "linkDescription": "An account with this email already exists. Enter your password to link your Google account.",
+      "confirmPassword": "Enter your password",
+      "passwordPlaceholder": "Your current password",
+      "linkButton": "Link Account",
+      "loginSuccess": "Successfully logged in with Google!",
+      "linkSuccess": "Google account linked successfully!"
     }
   }
 }

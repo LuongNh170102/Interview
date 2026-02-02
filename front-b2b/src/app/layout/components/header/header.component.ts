@@ -177,7 +177,7 @@ export class HeaderComponent {
       'modal.logoutConfirmMessage',
       () => {
         this.auth.logout().subscribe(() => {
-          this.router.navigate(['/auth/login']);
+          this.router.navigate(['/login']);
         });
       }
     );

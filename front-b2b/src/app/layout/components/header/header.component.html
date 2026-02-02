@@ -1,6 +1,6 @@
 <header class="bg-surface-elevated shadow-[0_0_37px_rgba(140,140,140,0.2)]">
   <!-- Desktop -->
-  <div class="hidden md:flex h-20 items-center">
+  <div class="hidden lg:flex h-20 items-center">
     <div class="mx-10 w-full flex justify-between items-center">
       <a
         href="/"
@@ -15,7 +15,7 @@
       </a>
       <div class="flex items-center gap-8 flex-1 justify-between">
         <nav class="flex-1">
-          <ul class="flex justify-center gap-8 list-none m-0 p-0">
+          <ul class="flex justify-center gap-6 xl:gap-8 list-none m-0 p-0">
             <li *ngFor="let item of navItems()">
               <a
                 class="text-[1rem] font-medium text-text-secondary transition-colors duration-200 ease-out hover:text-primary"
@@ -116,22 +116,33 @@
             <div class="relative group p-2">
               <button
                 type="button"
-                class="p-2 text-text-primary hover:text-primary transition-colors"
+                class="flex items-center gap-2 px-3 py-2 text-text-primary hover:text-primary transition-colors rounded-lg hover:bg-surface-neutral/10"
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="22"
-                  height="22"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1.8"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <circle cx="12" cy="7" r="4" />
-                  <path d="M5.5 21a6.5 6.5 0 0 1 13 0" />
-                </svg>
+                <img
+                  *ngIf="user.avatarUrl; else defaultUserIcon"
+                  [src]="user.avatarUrl"
+                  [alt]="user.username || 'User avatar'"
+                  class="w-[1.75rem] h-[1.75rem] rounded-full object-cover border-2 border-border-base"
+                />
+                <ng-template #defaultUserIcon>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="22"
+                    height="22"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <circle cx="12" cy="7" r="4" />
+                    <path d="M5.5 21a6.5 6.5 0 0 1 13 0" />
+                  </svg>
+                </ng-template>
+                <span class="text-[0.875rem] font-medium">
+                  {{ user.username || user.email }}
+                </span>
               </button>
 
               <div
@@ -175,7 +186,7 @@
             <button
               type="button"
               class="px-4 py-2 text-[0.875rem] font-medium text-text-primary hover:text-primary transition-colors"
-              routerLink="/auth/login"
+              routerLink="/login"
             >
               {{ 'header.nav.login' | translate }}
             </button>
@@ -185,15 +196,19 @@
     </div>
   </div>
 
-  <!-- Mobile -->
-  <div class="md:hidden flex flex-col gap-3 px-4 py-3">
+  <!-- Mobile & Tablet -->
+  <div class="lg:hidden flex flex-col gap-3 px-4 py-3">
     <div class="flex items-center justify-between gap-3">
       <a
         href="/"
-        class="flex items-center gap-2 no-underline text-[20px] font-semibold text-text-primary"
+        class="flex items-center gap-2 no-underline"
         aria-label="SharkBee"
       >
-        <span>SharkBee</span>
+        <img
+          src="assets/images/logo-trans.png"
+          alt="SharkBee Logo"
+          class="h-12 w-auto"
+        />
       </a>
       <div class="flex items-center gap-3">
         <div class="relative text-left">
@@ -302,7 +317,7 @@
           <button
             type="button"
             class="px-2 py-1 text-sm font-medium text-text-primary hover:text-primary transition-colors"
-            routerLink="/auth/login"
+            routerLink="/login"
           >
             {{ 'header.nav.login' | translate }}
           </button>
@@ -312,7 +327,7 @@
 
     <nav class="-mx-4 px-4">
       <ul
-        class="header-scroll flex gap-5 list-none m-0 p-0 overflow-x-auto whitespace-nowrap text-[15px] font-medium text-text-secondary"
+        class="header-scroll flex justify-center gap-5 list-none m-0 p-0 overflow-x-auto whitespace-nowrap text-[15px] font-medium text-text-secondary"
       >
         <li *ngFor="let item of navItems()">
           <a
