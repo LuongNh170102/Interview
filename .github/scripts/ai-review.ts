@@ -33,7 +33,7 @@ const PROVIDER_CONFIG: Record<
 > = {
   gemini: {
     envKey: 'GEMINI_API_KEY',
-    defaultModel: 'gemini-1.5-flash', // Free, fast
+    defaultModel: 'gemini-2.0-flash', // Free, fast (updated model name)
     name: 'Google Gemini',
   },
   groq: {
@@ -176,7 +176,7 @@ ${diff.substring(0, 50000)}
  */
 async function callGemini(prompt: string): Promise<string> {
   const response = await fetch(
-    `https://generativelanguage.googleapis.com/v1beta/models/${AI_MODEL}:generateContent?key=${API_KEY}`,
+    `https://generativelanguage.googleapis.com/v1/models/${AI_MODEL}:generateContent?key=${API_KEY}`,
     {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
