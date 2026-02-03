@@ -10,9 +10,9 @@
     <!-- Header -->
     <div class="text-center space-y-2">
       <div class="flex justify-center">
-        @if (googleData()?.avatarUrl) {
+        @if (oauthData()?.avatarUrl) {
         <img
-          [src]="googleData()!.avatarUrl"
+          [src]="oauthData()!.avatarUrl"
           alt="Avatar"
           class="w-16 h-16 rounded-full border-2 border-primary"
         />
@@ -37,10 +37,10 @@
         }
       </div>
       <h3 class="text-lg font-bold text-text-primary">
-        {{ 'auth.google.linkAccount' | translate }}
+        {{ linkAccountTitle() }}
       </h3>
       <p class="text-sm text-text-secondary">
-        {{ 'auth.google.linkDescription' | translate }}
+        {{ linkDescription() }}
       </p>
     </div>
 
@@ -62,9 +62,9 @@
             d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"
           />
         </svg>
-        <span class="text-sm text-text-primary">{{ googleData()?.email }}</span>
+        <span class="text-sm text-text-primary">{{ oauthData()?.email }}</span>
       </div>
-      @if (googleData()?.displayName) {
+      @if (oauthData()?.displayName) {
       <div class="flex items-center gap-3">
         <svg
           class="w-5 h-5 text-text-tertiary"
@@ -80,7 +80,7 @@
           />
         </svg>
         <span class="text-sm text-text-primary">{{
-          googleData()?.displayName
+          oauthData()?.displayName
         }}</span>
       </div>
       }
@@ -90,15 +90,15 @@
     <form [formGroup]="linkingForm" (ngSubmit)="onSubmit()">
       <div class="space-y-2">
         <label class="text-sm font-medium text-text-primary">{{
-          'auth.google.confirmPassword' | translate
+          'auth.oauth.confirmPassword' | translate
         }}</label>
         <div class="relative">
           <input
             [type]="passwordVisible() ? 'text' : 'password'"
             formControlName="password"
             class="w-full h-[2.875rem] rounded-[0.5rem] border border-border-base focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-20 outline-none text-base text-text-primary placeholder:text-text-tertiary px-4 bg-surface-base transition-colors"
-            [attr.placeholder]="'auth.google.passwordPlaceholder' | translate"
-            [attr.aria-label]="'auth.google.confirmPassword' | translate"
+            [attr.placeholder]="'auth.oauth.passwordPlaceholder' | translate"
+            [attr.aria-label]="'auth.oauth.confirmPassword' | translate"
           />
           <button
             type="button"
@@ -197,7 +197,7 @@
             ></path>
           </svg>
           }
-          <span>{{ 'auth.google.linkButton' | translate }}</span>
+          <span>{{ linkButtonText() }}</span>
         </button>
       </div>
     </form>

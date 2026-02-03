@@ -7,6 +7,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtStrategy } from './jwt.strategy';
 import { GoogleStrategy } from './strategies/google.strategy';
+import { KakaoStrategy } from './strategies/kakao.strategy';
 import { PrismaService } from '../prisma.service';
 
 @Module({
@@ -24,7 +25,13 @@ import { PrismaService } from '../prisma.service';
       inject: [ConfigService],
     }),
   ],
-  providers: [AuthService, JwtStrategy, GoogleStrategy, PrismaService],
+  providers: [
+    AuthService,
+    JwtStrategy,
+    GoogleStrategy,
+    KakaoStrategy,
+    PrismaService,
+  ],
   controllers: [AuthController],
   exports: [AuthService],
 })

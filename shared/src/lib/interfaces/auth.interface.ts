@@ -44,6 +44,26 @@ export interface GoogleAuthRequiresLinking {
   message: string;
 }
 
+// Kakao OAuth
+export interface KakaoLinkRequest {
+  email: string;
+  password: string;
+  kakaoId: string;
+  displayName?: string;
+  avatarUrl?: string;
+  accessToken?: string;
+  refreshToken?: string;
+}
+
+export interface KakaoAuthRequiresLinking {
+  requiresLinking: true;
+  email: string;
+  kakaoId: string;
+  displayName: string;
+  avatarUrl: string;
+  message: string;
+}
+
 export interface LinkedAccount {
   id: number;
   provider: 'GOOGLE' | 'FACEBOOK' | 'APPLE' | 'KAKAO';

@@ -161,14 +161,27 @@
           <button
             type="button"
             (click)="loginWithGoogle()"
-            class="w-full h-[3rem] rounded-[0.5rem] border border-border-base text-text-primary text-[0.9375rem] font-semibold flex items-center justify-center gap-3 px-5 bg-surface-base hover:text-primary transition-colors"
+            class="w-full h-[3rem] rounded-[0.5rem] border border-border-base text-text-primary text-[0.9375rem] font-semibold flex items-center justify-center gap-3 px-5 bg-surface-base hover:bg-surface-muted transition-colors"
           >
-            <span
-              class="flex items-center justify-center rounded-full border border-border-base w-6 h-6 text-text-primary"
-            >
-              G
-            </span>
+            <img 
+              src="assets/icons/icon-google.svg" 
+              alt="Google" 
+              class="w-5 h-5"
+            />
             <span>{{ 'auth.login.google' | translate }}</span>
+          </button>
+
+          <button
+            type="button"
+            (click)="loginWithKakao()"
+            class="w-full h-[3rem] rounded-[0.5rem] border border-border-base text-text-primary text-[0.9375rem] font-semibold flex items-center justify-center gap-3 px-5 bg-surface-base hover:bg-[#FEE500] hover:border-[#FEE500] transition-colors"
+          >
+            <img 
+              src="assets/icons/icon-kakao.svg" 
+              alt="Kakao" 
+              class="w-5 h-5"
+            />
+            <span>{{ 'auth.login.kakao' | translate }}</span>
           </button>
 
           <a
@@ -196,10 +209,10 @@
   </div>
 </div>
 
-<!-- Google Account Linking Modal -->
-<app-google-link-modal
+<!-- OAuth Account Linking Modal -->
+<app-oauth-link-modal
   [isOpen]="showLinkingModal()"
-  [googleData]="googleLinkingData()"
+  [oauthData]="oauthLinkingData()"
   [isLoading]="linkingLoading()"
   [error]="linkingError()"
   (closeModal)="closeLinkingModal()"

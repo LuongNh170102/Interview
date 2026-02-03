@@ -18,8 +18,13 @@ import {
   LinkGoogleAccountDto,
   GoogleAuthResponse,
 } from './dto/google-auth.dto';
+import { LinkKakaoAccountDto, KakaoAuthResponse } from './dto/kakao-auth.dto';
 import { AuthProvider, User, UserRole, Role } from '@prisma/client';
-import { GoogleProfile } from '../common/interfaces/auth.interface';
+import {
+  GoogleProfile,
+  KakaoProfile,
+  AuthSuccessResponse,
+} from '../common/interfaces/auth.interface';
 import { UserEntity } from '../users/entities/user.entity';
 import { plainToInstance } from 'class-transformer';
 
@@ -281,15 +286,44 @@ export class AuthService {
     const existingUser = await this.usersService.findOne(email);
 
     if (existingUser) {
-      // Email exists → Require password confirmation to link
-      return {
-        requiresLinking: true,
-        email,
-        googleId: providerId,
-        displayName,
-        avatarUrl,
-        message: AUTH_MESSAGES.GOOGLE_ACCOUNT_REQUIRES_LINKING,
-      };
+      // Email exists → Check if user has password set
+      if (existingUser.passwordHash) {
+        // User has password → Require password confirmation to link
+        return {
+          requiresLinking: true,
+          email,
+          googleId: providerId,
+          displayName,
+          avatarUrl,
+          message: AUTH_MESSAGES.GOOGLE_ACCOUNT_REQUIRES_LINKING,
+        };
+      }
+
+      // User is OAuth-only (no password) → Auto-link Google account
+      await this.prisma.linkedAccount.create({
+        data: {
+          userId: existingUser.id,
+          provider: AuthProvider.GOOGLE,
+          providerId,
+          email,
+          displayName,
+          avatarUrl,
+          accessToken: googleProfile.accessToken,
+          refreshToken: googleProfile.refreshToken,
+        },
+      });
+
+      // Update user avatar if not set
+      if (!existingUser.avatarUrl && avatarUrl) {
+        await this.prisma.user.update({
+          where: { id: existingUser.id },
+          data: { avatarUrl },
+        });
+      }
+
+      // Login with linked account
+      const fullUser = await this.usersService.findOneById(existingUser.id);
+      return this.loginWithLinkedAccount(fullUser);
     }
 
     // 3. Email doesn't exist → Create new user with Google account
@@ -420,12 +454,220 @@ export class AuthService {
     return user;
   }
 
+  // ===========================================================================
+  // KAKAO OAUTH
+  // ===========================================================================
+
+  /**
+   * Handle Kakao OAuth callback
+   */
+  async handleKakaoAuth(
+    kakaoProfile: KakaoProfile
+  ): Promise<KakaoAuthResponse> {
+    const { providerId, email, displayName, avatarUrl } = kakaoProfile;
+
+    // 1. Check if Kakao account is already linked
+    const existingLinkedAccount = await this.prisma.linkedAccount.findUnique({
+      where: {
+        provider_providerId: {
+          provider: AuthProvider.KAKAO,
+          providerId,
+        },
+      },
+      include: {
+        user: {
+          include: {
+            userRoles: {
+              include: {
+                role: true,
+              },
+            },
+          },
+        },
+      },
+    });
+
+    if (existingLinkedAccount) {
+      // Kakao account already linked → Login directly
+      return this.loginWithLinkedAccount(existingLinkedAccount.user);
+    }
+
+    // 2. Check if email exists in DB
+    const existingUser = await this.usersService.findOne(email);
+
+    if (existingUser) {
+      // Email exists → Check if user has password set
+      if (existingUser.passwordHash) {
+        // User has password → Require password confirmation to link
+        return {
+          requiresLinking: true,
+          email,
+          kakaoId: providerId,
+          displayName,
+          avatarUrl,
+          message: AUTH_MESSAGES.KAKAO_ACCOUNT_REQUIRES_LINKING,
+        };
+      }
+
+      // User is OAuth-only (no password) → Auto-link Kakao account
+      await this.prisma.linkedAccount.create({
+        data: {
+          userId: existingUser.id,
+          provider: AuthProvider.KAKAO,
+          providerId,
+          email,
+          displayName,
+          avatarUrl,
+          accessToken: kakaoProfile.accessToken,
+          refreshToken: kakaoProfile.refreshToken,
+        },
+      });
+
+      // Update user avatar if not set
+      if (!existingUser.avatarUrl && avatarUrl) {
+        await this.prisma.user.update({
+          where: { id: existingUser.id },
+          data: { avatarUrl },
+        });
+      }
+
+      // Login with linked account
+      const fullUser = await this.usersService.findOneById(existingUser.id);
+      return this.loginWithLinkedAccount(fullUser);
+    }
+
+    // 3. Email doesn't exist → Create new user with Kakao account
+    const newUser = await this.createUserWithKakao(kakaoProfile);
+    return this.loginWithLinkedAccount(newUser);
+  }
+
+  /**
+   * Link Kakao account to existing user
+   */
+  async linkKakaoAccount(dto: LinkKakaoAccountDto): Promise<KakaoAuthResponse> {
+    const {
+      email,
+      password,
+      kakaoId,
+      displayName,
+      avatarUrl,
+      accessToken,
+      refreshToken,
+    } = dto;
+
+    // Validate user credentials
+    const user = await this.validateUser(email, password);
+    if (!user) {
+      throw new UnauthorizedException(AUTH_MESSAGES.INVALID_CREDENTIALS);
+    }
+
+    // Check if this Kakao ID is already linked to another account
+    const existingLink = await this.prisma.linkedAccount.findUnique({
+      where: {
+        provider_providerId: {
+          provider: AuthProvider.KAKAO,
+          providerId: kakaoId,
+        },
+      },
+    });
+
+    if (existingLink) {
+      throw new ConflictException(AUTH_MESSAGES.KAKAO_ALREADY_LINKED_OTHER);
+    }
+
+    // Check if user already has a Kakao account linked
+    const userKakaoLink = await this.prisma.linkedAccount.findUnique({
+      where: {
+        userId_provider: {
+          userId: user.id,
+          provider: AuthProvider.KAKAO,
+        },
+      },
+    });
+
+    if (userKakaoLink) {
+      throw new ConflictException(AUTH_MESSAGES.USER_ALREADY_HAS_KAKAO);
+    }
+
+    // Create linked account
+    await this.prisma.linkedAccount.create({
+      data: {
+        userId: user.id,
+        provider: AuthProvider.KAKAO,
+        providerId: kakaoId,
+        email,
+        displayName,
+        avatarUrl,
+        accessToken,
+        refreshToken,
+      },
+    });
+
+    // Update user avatar if not set
+    if (!user.avatarUrl && avatarUrl) {
+      await this.prisma.user.update({
+        where: { id: user.id },
+        data: { avatarUrl },
+      });
+    }
+
+    // Return login response
+    const fullUser = await this.usersService.findOneById(user.id);
+    return this.loginWithLinkedAccount(fullUser);
+  }
+
+  /**
+   * Create new user from Kakao profile
+   */
+  private async createUserWithKakao(
+    profile: KakaoProfile
+  ): Promise<UserWithRoles> {
+    const {
+      email,
+      displayName,
+      avatarUrl,
+      providerId,
+      accessToken,
+      refreshToken,
+    } = profile;
+
+    // Create user without password (OAuth-only user)
+    const user = await this.prisma.user.create({
+      data: {
+        email,
+        username: displayName || `kakao_${providerId}`,
+        passwordHash: null,
+        avatarUrl,
+        linkedAccounts: {
+          create: {
+            provider: AuthProvider.KAKAO,
+            providerId,
+            email,
+            displayName,
+            avatarUrl,
+            accessToken,
+            refreshToken,
+          },
+        },
+      },
+      include: {
+        userRoles: {
+          include: {
+            role: true,
+          },
+        },
+      },
+    });
+
+    return user;
+  }
+
   /**
    * Login user with linked OAuth account
    */
   private async loginWithLinkedAccount(
     user: UserWithRoles | null
-  ): Promise<GoogleAuthResponse> {
+  ): Promise<AuthSuccessResponse> {
     if (!user) {
       throw new UnauthorizedException(AUTH_MESSAGES.INVALID_CREDENTIALS);
     }
@@ -471,6 +713,30 @@ export class AuthService {
       where: {
         userId,
         provider: AuthProvider.GOOGLE,
+      },
+    });
+  }
+
+  /**
+   * Unlink Kakao account from user
+   */
+  async unlinkKakaoAccount(userId: number): Promise<void> {
+    // Check if user has password set (can't unlink if no other auth method)
+    const user = await this.prisma.user.findUnique({
+      where: { id: userId },
+      select: { passwordHash: true },
+    });
+
+    if (!user?.passwordHash) {
+      throw new BadRequestException(
+        AUTH_MESSAGES.CANNOT_UNLINK_KAKAO_ONLY_AUTH
+      );
+    }
+
+    await this.prisma.linkedAccount.deleteMany({
+      where: {
+        userId,
+        provider: AuthProvider.KAKAO,
       },
     });
   }

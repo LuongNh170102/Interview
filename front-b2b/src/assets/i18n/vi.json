@@ -293,6 +293,7 @@
       "forgot": "Quên mật khẩu?",
       "submit": "Đăng nhập ngay",
       "google": "Đăng nhập với Google",
+      "kakao": "Đăng nhập với Kakao",
       "backHome": "Quay về trang chủ",
       "successTitle": "Đăng nhập thành công",
       "successMessage": "Chào mừng bạn quay trở lại!",
@@ -332,6 +333,17 @@
       "loginSuccess": "Đăng nhập thành công với Google!",
       "linkSuccess": "Liên kết tài khoản Google thành công!",
       "linkFailed": "Liên kết tài khoản thất bại. Vui lòng kiểm tra lại mật khẩu."
+    },
+    "kakao": {
+      "linkAccount": "Liên kết tài khoản Kakao",
+      "linkDescription": "Email này đã được đăng ký. Vui lòng nhập mật khẩu để liên kết với tài khoản Kakao của bạn.",
+      "loginSuccess": "Đăng nhập thành công với Kakao!",
+      "linkSuccess": "Liên kết tài khoản Kakao thành công!",
+      "linkFailed": "Liên kết tài khoản thất bại. Vui lòng kiểm tra lại mật khẩu."
+    },
+    "oauth": {
+      "confirmPassword": "Xác nhận mật khẩu",
+      "passwordPlaceholder": "Nhập mật khẩu tài khoản hiện tại"
     },
     "registerType": {
       "badge": "Đăng ký đối tác",

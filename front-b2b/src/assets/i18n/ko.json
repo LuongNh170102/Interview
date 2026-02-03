@@ -293,6 +293,7 @@
       "forgot": "비밀번호를 잊으셨나요?",
       "submit": "로그인",
       "google": "Google로 로그인",
+      "kakao": "Kakao 로그인",
       "backHome": "홈으로 돌아가기",
       "successTitle": "로그인 성공",
       "successMessage": "환영합니다!",
@@ -332,6 +333,17 @@
       "loginSuccess": "Google 로그인 성공!",
       "linkSuccess": "Google 계정이 성공적으로 연결되었습니다!",
       "linkFailed": "계정 연결에 실패했습니다. 비밀번호를 확인해주세요."
+    },
+    "kakao": {
+      "linkAccount": "Kakao 계정 연결",
+      "linkDescription": "이 이메일은 이미 등록되어 있습니다. Kakao 계정과 연결하려면 비밀번호를 입력하세요.",
+      "loginSuccess": "Kakao 로그인 성공!",
+      "linkSuccess": "Kakao 계정이 성공적으로 연결되었습니다!",
+      "linkFailed": "계정 연결에 실패했습니다. 비밀번호를 확인해 주세요."
+    },
+    "oauth": {
+      "confirmPassword": "비밀번호 확인",
+      "passwordPlaceholder": "현재 비밀번호를 입력하세요"
     },
     "registerType": {
       "badge": "파트너 등록",
