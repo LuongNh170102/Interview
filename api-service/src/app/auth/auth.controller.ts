@@ -18,8 +18,13 @@ import {
   SetPasswordDto,
   GoogleAuthSuccessResponse,
 } from './dto/google-auth.dto';
+import {
+  LinkKakaoAccountDto,
+  KakaoAuthSuccessResponse,
+} from './dto/kakao-auth.dto';
 import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
 import { GoogleAuthGuard } from './guards/google-auth.guard';
+import { KakaoAuthGuard } from './guards/kakao-auth.guard';
 import { Request as ExpressRequest, Response } from 'express';
 import { AUTH_MESSAGES } from '../common/constants/messages.constant';
 import { TOKEN_TYPE } from '../common/constants/token.constant';
@@ -27,6 +32,7 @@ import { ConfigService } from '@nestjs/config';
 import {
   AuthenticatedRequest,
   GoogleProfile,
+  KakaoProfile,
   RequestWithCookies,
 } from '../common/interfaces/auth.interface';
 
@@ -241,7 +247,7 @@ export class AuthController {
   @Delete('google/unlink')
   async unlinkGoogleAccount(@Request() req: AuthenticatedRequest) {
     await this.authService.unlinkGoogleAccount(req.user.userId);
-    return { message: 'Google account unlinked successfully' };
+    return { message: AUTH_MESSAGES.GOOGLE_UNLINK_SUCCESS };
   }
 
   /**
@@ -275,5 +281,108 @@ export class AuthController {
   async hasPassword(@Request() req: AuthenticatedRequest) {
     const hasPassword = await this.authService.hasPassword(req.user.userId);
     return { hasPassword };
+  }
+
+  // ===========================================================================
+  // KAKAO OAUTH ENDPOINTS
+  // ===========================================================================
+
+  /**
+   * Initiate Kakao OAuth flow
+   */
+  @Get('kakao')
+  @UseGuards(KakaoAuthGuard)
+  kakaoAuth() {
+    // Guard will redirect to Kakao
+  }
+
+  /**
+   * Kakao OAuth callback
+   */
+  @Get('kakao/callback')
+  @UseGuards(KakaoAuthGuard)
+  async kakaoAuthCallback(
+    @Req() req: ExpressRequest & { user: KakaoProfile },
+    @Res() res: Response
+  ) {
+    const kakaoProfile = req.user;
+    const result = await this.authService.handleKakaoAuth(kakaoProfile);
+
+    // Get frontend URL from Host header
+    const frontendUrl = this.getFrontendUrlFromHost(req);
+
+    if (result.requiresLinking) {
+      // Redirect to frontend with linking params
+      const params = new URLSearchParams({
+        requiresLinking: 'true',
+        email: result.email,
+        kakaoId: result.kakaoId,
+        displayName: result.displayName || '',
+        avatarUrl: result.avatarUrl || '',
+        provider: 'kakao',
+      });
+      return res.redirect(`${frontendUrl}/login?${params.toString()}`);
+    }
+
+    // Type narrowing
+    const successResult = result as KakaoAuthSuccessResponse;
+
+    // Success - set cookie and redirect
+    res.cookie(TOKEN_TYPE.REFRESH_TOKEN, successResult.refresh_token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      maxAge: Number(process.env.MAX_AGE_REFRESH_COOKIE),
+    });
+
+    // Redirect to frontend
+    const params = new URLSearchParams({
+      success: 'true',
+      access_token: successResult.access_token,
+      user: JSON.stringify(successResult.user),
+      permissions: JSON.stringify(successResult.permissions),
+    });
+    return res.redirect(`${frontendUrl}/login?${params.toString()}`);
+  }
+
+  /**
+   * Link Kakao account to existing user
+   */
+  @Post('kakao/link')
+  async linkKakaoAccount(
+    @Body() dto: LinkKakaoAccountDto,
+    @Res({ passthrough: true }) res: Response
+  ) {
+    const result = await this.authService.linkKakaoAccount(dto);
+
+    if (!result.requiresLinking) {
+      const successResult = result as KakaoAuthSuccessResponse;
+
+      res.cookie(TOKEN_TYPE.REFRESH_TOKEN, successResult.refresh_token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'strict', // Strict for POST APIs
+        maxAge: Number(process.env.MAX_AGE_REFRESH_COOKIE),
+      });
+
+      return {
+        access_token: successResult.access_token,
+        user: successResult.user,
+        permissions: successResult.permissions,
+        message: AUTH_MESSAGES.KAKAO_LINK_SUCCESS,
+      };
+    }
+
+    return result;
+  }
+
+  /**
+   * Unlink Kakao account from current user
+   */
+  @UseGuards(JwtAuthGuard)
+  @Delete('kakao/unlink')
+  async unlinkKakaoAccount(@Request() req: AuthenticatedRequest) {
+    await this.authService.unlinkKakaoAccount(req.user.userId);
+    return { message: AUTH_MESSAGES.KAKAO_UNLINK_SUCCESS };
   }
 }

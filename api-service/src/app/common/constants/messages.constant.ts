@@ -29,6 +29,18 @@ export const AUTH_MESSAGES = {
     'Cannot unlink Google account. Please set a password first.',
   GOOGLE_AUTH_SUCCESS: 'Google authentication successful',
   GOOGLE_LINK_SUCCESS: 'Google account linked successfully',
+  GOOGLE_UNLINK_SUCCESS: 'Google account unlinked successfully',
+  // Kakao OAuth
+  KAKAO_ACCOUNT_REQUIRES_LINKING:
+    'This email is already registered. Please enter your password to link your Kakao account.',
+  KAKAO_ALREADY_LINKED_OTHER:
+    'This Kakao account is already linked to another user.',
+  USER_ALREADY_HAS_KAKAO: 'Your account already has a Kakao account linked.',
+  KAKAO_AUTH_SUCCESS: 'Kakao authentication successful',
+  KAKAO_LINK_SUCCESS: 'Kakao account linked successfully',
+  KAKAO_UNLINK_SUCCESS: 'Kakao account unlinked successfully',
+  CANNOT_UNLINK_KAKAO_ONLY_AUTH:
+    'Cannot unlink Kakao account. Please set a password first.',
   OAUTH_ONLY_ACCOUNT:
     'This account was created with OAuth. Please login with your OAuth provider or set a password.',
   OAUTH_ONLY_ACCOUNT_PROVIDERS: (providers: string) =>

@@ -4,6 +4,7 @@ import { tap, finalize } from 'rxjs/operators';
 import {
   AuthResponse,
   GoogleLinkRequest,
+  KakaoLinkRequest,
   LinkedAccount,
   LoginRequest,
   RegisterRequest,
@@ -166,6 +167,43 @@ export class AuthService {
 
   /** Persist Google OAuth response (used after callback redirect) */
   persistGoogleAuth(token: string, user: UserProfile, permissions: string[]) {
+    this.persist(token, user, permissions);
+  }
+
+  // =====================
+  // Kakao OAuth Methods
+  // =====================
+
+  /**
+   * Redirect to Kakao OAuth login
+   * Backend uses Host header to determine which frontend to redirect back to
+   */
+  loginWithKakao() {
+    window.location.href = '/api/auth/kakao';
+  }
+
+  /** Link Kakao account after password confirmation */
+  linkKakaoAccount(payload: KakaoLinkRequest) {
+    return this.http
+      .post<AuthResponse>('/api/auth/kakao/link', payload, {
+        withCredentials: true,
+      })
+      .pipe(
+        tap((res) => {
+          this.persist(res.access_token, res.user, res.permissions);
+        })
+      );
+  }
+
+  /** Unlink Kakao account */
+  unlinkKakaoAccount() {
+    return this.http.delete<{ message: string }>('/api/auth/kakao/unlink', {
+      withCredentials: true,
+    });
+  }
+
+  /** Persist OAuth response (used after callback redirect for both Google and Kakao) */
+  persistOAuthAuth(token: string, user: UserProfile, permissions: string[]) {
     this.persist(token, user, permissions);
   }
 

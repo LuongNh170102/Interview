@@ -16,7 +16,10 @@ import { catchError, EMPTY, finalize } from 'rxjs';
 import { TranslatePipe } from '@vhandelivery/shared-ui';
 import { GlobalModalService } from '../../../shared/components/global-modal/global-modal.service';
 import { TranslationService } from '@vhandelivery/shared-ui';
-import { GoogleLinkModalComponent } from './components/google-link-modal/google-link-modal.component';
+import {
+  OAuthLinkModalComponent,
+  OAuthLinkingData,
+} from './components/oauth-link-modal/oauth-link-modal.component';
 
 @Component({
   standalone: true,
@@ -28,7 +31,7 @@ import { GoogleLinkModalComponent } from './components/google-link-modal/google-
     ReactiveFormsModule,
     RouterLink,
     TranslatePipe,
-    GoogleLinkModalComponent,
+    OAuthLinkModalComponent,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -51,14 +54,9 @@ export class LoginComponent implements OnInit {
   readonly error = signal<string | null>(null);
   readonly passwordVisible = signal(false);
 
-  // Google OAuth states
+  // OAuth states (Google & Kakao)
   readonly showLinkingModal = signal(false);
-  readonly googleLinkingData = signal<{
-    email: string;
-    googleId: string;
-    displayName: string;
-    avatarUrl: string;
-  } | null>(null);
+  readonly oauthLinkingData = signal<OAuthLinkingData | null>(null);
   readonly linkingLoading = signal(false);
   readonly linkingError = signal<string | null>(null);
 
@@ -67,39 +65,49 @@ export class LoginComponent implements OnInit {
   );
 
   ngOnInit(): void {
-    // Handle Google OAuth callback
+    // Handle OAuth callbacks (Google & Kakao)
     this.route.queryParams
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((params) => {
+        const provider = params['provider'] || 'google';
+
         if (params['success'] === 'true' && params['access_token']) {
           try {
             const user = JSON.parse(params['user'] || '{}');
             const permissions = JSON.parse(params['permissions'] || '[]');
 
-            this.auth.persistGoogleAuth(
+            this.auth.persistOAuthAuth(
               params['access_token'],
               user,
               permissions
             );
 
+            const successMessage =
+              provider === 'kakao'
+                ? 'auth.kakao.loginSuccess'
+                : 'auth.google.loginSuccess';
+
             this.modalService.showSuccess(
               this.translationService.translate('auth.login.successTitle'),
-              this.translationService.translate('auth.google.loginSuccess')
+              this.translationService.translate(successMessage)
             );
 
             this.router.navigateByUrl('/landing', { replaceUrl: true });
           } catch {
             this.modalService.showError(
               this.translationService.translate('auth.login.errorTitle'),
-              'Failed to process Google login response'
+              `Failed to process ${provider} login response`
             );
           }
         } else if (params['requiresLinking'] === 'true') {
-          this.googleLinkingData.set({
+          // Note: Auto-link is now enabled on backend, this branch should rarely be hit
+          // Kept for backward compatibility
+          this.oauthLinkingData.set({
             email: params['email'] || '',
-            googleId: params['googleId'] || '',
+            providerId: params['googleId'] || params['kakaoId'] || '',
             displayName: params['displayName'] || '',
             avatarUrl: params['avatarUrl'] || '',
+            provider: provider as 'google' | 'kakao',
           });
           this.showLinkingModal.set(true);
           // Clear URL params
@@ -131,29 +139,44 @@ export class LoginComponent implements OnInit {
     this.auth.loginWithGoogle();
   }
 
+  // Kakao OAuth login
+  loginWithKakao(): void {
+    this.auth.loginWithKakao();
+  }
+
   // Close linking modal
   closeLinkingModal(): void {
     this.showLinkingModal.set(false);
-    this.googleLinkingData.set(null);
+    this.oauthLinkingData.set(null);
     this.linkingError.set(null);
   }
 
   // Submit account linking
   submitLinking(password: string): void {
-    const linkingData = this.googleLinkingData();
+    const linkingData = this.oauthLinkingData();
     if (this.linkingLoading() || !linkingData) return;
 
     this.linkingLoading.set(true);
     this.linkingError.set(null);
 
-    this.auth
-      .linkGoogleAccount({
-        email: linkingData.email,
-        password,
-        googleId: linkingData.googleId,
-        displayName: linkingData.displayName,
-        avatarUrl: linkingData.avatarUrl,
-      })
+    const linkObservable =
+      linkingData.provider === 'kakao'
+        ? this.auth.linkKakaoAccount({
+            email: linkingData.email,
+            password,
+            kakaoId: linkingData.providerId,
+            displayName: linkingData.displayName,
+            avatarUrl: linkingData.avatarUrl,
+          })
+        : this.auth.linkGoogleAccount({
+            email: linkingData.email,
+            password,
+            googleId: linkingData.providerId,
+            displayName: linkingData.displayName,
+            avatarUrl: linkingData.avatarUrl,
+          });
+
+    linkObservable
       .pipe(
         catchError((err) => {
           const message =
@@ -166,9 +189,13 @@ export class LoginComponent implements OnInit {
       )
       .subscribe(() => {
         this.closeLinkingModal();
+        const successMessage =
+          linkingData.provider === 'kakao'
+            ? 'auth.kakao.linkSuccess'
+            : 'auth.google.linkSuccess';
         this.modalService.showSuccess(
           this.translationService.translate('auth.login.successTitle'),
-          this.translationService.translate('auth.google.linkSuccess')
+          this.translationService.translate(successMessage)
         );
         this.router.navigateByUrl('/landing');
       });

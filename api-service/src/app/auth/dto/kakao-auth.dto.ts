@@ -8,9 +8,9 @@ import {
 import { AuthSuccessResponse } from '../../common/interfaces/auth.interface';
 
 /**
- * DTO for linking existing account with Google
+ * DTO for linking existing account with Kakao
  */
-export class LinkGoogleAccountDto {
+export class LinkKakaoAccountDto {
   @IsEmail()
   @IsNotEmpty()
   email: string;
@@ -22,7 +22,7 @@ export class LinkGoogleAccountDto {
 
   @IsString()
   @IsNotEmpty()
-  googleId: string;
+  kakaoId: string;
 
   @IsString()
   @IsOptional()
@@ -42,9 +42,9 @@ export class LinkGoogleAccountDto {
 }
 
 /**
- * DTO for setting password on OAuth-only account
+ * DTO for setting password for Kakao-only users
  */
-export class SetPasswordDto {
+export class SetKakaoPasswordDto {
   @IsString()
   @IsNotEmpty()
   @MinLength(6)
@@ -52,22 +52,22 @@ export class SetPasswordDto {
 }
 
 /**
- * Response when Google account already exists - requires linking
+ * Response when Kakao account already exists - requires linking
  */
-export interface GoogleAuthRequiresLinkingResponse {
+export interface KakaoAuthRequiresLinkingResponse {
   requiresLinking: true;
   email: string;
-  googleId: string;
+  kakaoId: string;
   displayName: string;
   avatarUrl: string;
   message: string;
 }
 
 /**
- * Response when Google login is successful
+ * Response when Kakao login is successful
  */
-export type GoogleAuthSuccessResponse = AuthSuccessResponse;
+export type KakaoAuthSuccessResponse = AuthSuccessResponse;
 
-export type GoogleAuthResponse =
-  | GoogleAuthRequiresLinkingResponse
-  | GoogleAuthSuccessResponse;
+export type KakaoAuthResponse =
+  | KakaoAuthRequiresLinkingResponse
+  | KakaoAuthSuccessResponse;

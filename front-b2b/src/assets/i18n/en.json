@@ -293,6 +293,7 @@
       "forgot": "Forgot password?",
       "submit": "Sign in now",
       "google": "Sign in with Google",
+      "kakao": "Sign in with Kakao",
       "backHome": "Back to home",
       "successTitle": "Login Successful",
       "successMessage": "Welcome back!",
@@ -332,8 +333,17 @@
       "loginSuccess": "Successfully logged in with Google!",
       "linkSuccess": "Google account linked successfully!",
       "linkFailed": "Failed to link account. Please check your password."
+    },    "kakao": {
+      "linkAccount": "Link Kakao Account",
+      "linkDescription": "This email is already registered. Please enter your password to link with your Kakao account.",
+      "loginSuccess": "Successfully signed in with Kakao!",
+      "linkSuccess": "Kakao account linked successfully!",
+      "linkFailed": "Failed to link account. Please check your password."
     },
-    "registerType": {
+    "oauth": {
+      "confirmPassword": "Confirm Password",
+      "passwordPlaceholder": "Enter your current password"
+    },    "registerType": {
       "badge": "Partner onboarding",
       "title": "Join SharkBee",
       "subtitle": "Choose the role so we can support you best.",
