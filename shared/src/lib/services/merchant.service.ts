@@ -5,7 +5,8 @@ import {
   MerchantListResponse,
   MerchantQueryParams,
   MerchantApiResponse,
-  CreateMerchantRequest,
+  RegisterMerchantRequest,
+  AdminCreateMerchantRequest,
   MerchantResponse,
 } from '../interfaces/merchant.interface';
 import {
@@ -77,12 +78,25 @@ export class MerchantService {
   }
 
   /**
-   * Register new merchant
+   * Register new merchant (B2B self-registration with OTP)
    */
-  register(payload: CreateMerchantRequest): Observable<MerchantResponse> {
+  register(payload: RegisterMerchantRequest): Observable<MerchantResponse> {
     return this.http.post<MerchantResponse>(
       `${this.baseUrl}/register`,
       payload
+    );
+  }
+
+  /**
+   * Admin creates a merchant directly (no OTP required)
+   */
+  adminCreate(
+    payload: AdminCreateMerchantRequest
+  ): Observable<MerchantResponse> {
+    return this.http.post<MerchantResponse>(
+      `${this.baseUrl}/admin-create`,
+      payload,
+      { withCredentials: true }
     );
   }
 }

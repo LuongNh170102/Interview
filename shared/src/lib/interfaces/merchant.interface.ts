@@ -1,15 +1,45 @@
-export interface CreateMerchantRequest {
+import { BUSINESS_TYPE } from '../types/business.type';
+import { MERCHANT_OPERATIONAL_STATUS } from '../types/merchant-status.type';
+
+/**
+ * Request payload for merchant self-registration (B2B flow).
+ * Requires verificationToken from OTP verification.
+ */
+export interface RegisterMerchantRequest {
   name: string;
   phone: string;
   verificationToken: string;
   address: string;
   city: string;
   contactName: string;
-  businessType: string;
+  businessType: BUSINESS_TYPE;
   businessCategory: string;
-  referralSource: string;
   hasBusinessLicense: boolean;
-  socialLinks?: unknown;
+  referralSource?: string;
+  socialLinks?: string;
+}
+
+/**
+ * Request payload for admin creating a merchant from management panel.
+ * No verificationToken needed — admin has authority.
+ */
+export interface AdminCreateMerchantRequest {
+  name: string;
+  phone: string;
+  address: string;
+  city: string;
+  ownerName: string;
+  contactName: string;
+  businessType: BUSINESS_TYPE;
+  businessCategory: string;
+  operationalStatus: MERCHANT_OPERATIONAL_STATUS;
+  hasBusinessLicense: boolean;
+  // Optional fields
+  referralSource?: string;
+  socialLinks?: string;
+  agencyId?: string;
+  brandId?: string;
+  logoUrl?: string;
 }
 
 export interface MerchantResponse {
@@ -20,8 +50,7 @@ export interface MerchantResponse {
   address?: string | null;
   city?: string | null;
   contactName?: string | null;
-  businessType?: string | null;
-  businessCategory?: string | null;
+  businessType?: BUSINESS_TYPE | null;
   referralSource?: string | null;
   hasBusinessLicense?: boolean | null;
   metadata?: unknown;

@@ -1,46 +1,51 @@
 import { IsNotEmpty, IsOptional, IsString, IsBoolean } from 'class-validator';
 
+/**
+ * DTO for merchant self-registration (B2B flow).
+ * Requires verificationToken from OTP verification.
+ */
 export class CreateMerchantDto {
   @IsNotEmpty()
   @IsString()
-  name: string;
+  name!: string;
 
   @IsNotEmpty()
   @IsString()
-  address: string;
+  phone!: string;
 
   @IsNotEmpty()
   @IsString()
-  city: string;
+  verificationToken!: string;
 
   @IsNotEmpty()
   @IsString()
-  contactName: string;
+  address!: string;
 
   @IsNotEmpty()
   @IsString()
-  businessType: string;
+  city!: string;
 
   @IsNotEmpty()
   @IsString()
-  businessCategory: string;
+  contactName!: string;
 
   @IsNotEmpty()
   @IsString()
-  referralSource: string;
+  businessType!: string;
+
+  @IsNotEmpty()
+  @IsString()
+  businessCategory!: string;
 
   @IsNotEmpty()
   @IsBoolean()
-  hasBusinessLicense: boolean;
+  hasBusinessLicense!: boolean;
 
   @IsOptional()
-  socialLinks?: any;
-
-  @IsNotEmpty()
   @IsString()
-  phone: string;
+  referralSource?: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
-  verificationToken: string;
+  socialLinks?: string;
 }

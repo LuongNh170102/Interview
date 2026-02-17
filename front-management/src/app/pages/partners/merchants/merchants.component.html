@@ -2,28 +2,28 @@
   <!-- Reusable Templates -->
   <!-- Status Badge Template -->
   <ng-template #statusBadge let-merchant>
-    @switch (merchant.operationalStatus) { @case ('active') {
+    @switch (merchant.operationalStatus) { @case ('ACTIVE') {
     <span
       class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-status-success-bg text-status-success"
     >
       <span class="w-1.5 h-1.5 rounded-full bg-status-success"></span>
       {{ 'common.status.active' | translate }}
     </span>
-    } @case ('inactive') {
+    } @case ('INACTIVE') {
     <span
       class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm bg-status-default-bg text-status-default"
     >
       <span class="w-1.5 h-1.5 rounded-full bg-status-default"></span>
       {{ 'common.status.inactive' | translate }}
     </span>
-    } @case ('suspended') {
+    } @case ('SUSPENDED') {
     <span
       class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm bg-status-info-bg text-status-info"
     >
       <span class="w-1.5 h-1.5 rounded-full bg-status-info"></span>
       {{ 'common.status.suspended' | translate }}
     </span>
-    } @case ('locked') {
+    } @case ('LOCKED') {
     <span
       class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm bg-status-error-bg text-status-error"
     >
@@ -77,7 +77,7 @@
           {{ 'admin.partners.actions.modify' | translate }}
         </button>
         <div class="border-t border-border my-1"></div>
-        @if (merchant.operationalStatus === 'active') {
+        @if (merchant.operationalStatus === 'ACTIVE') {
         <button
           (click)="onMenuAction('deactivate', merchant); closeMenu()"
           class="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-content-primary hover:bg-surface-muted transition-colors"
@@ -421,7 +421,7 @@
                     {{ 'admin.partners.actions.modify' | translate }}
                   </button>
                   <div class="border-t border-border my-1"></div>
-                  @if (merchant.operationalStatus === 'active') {
+                  @if (merchant.operationalStatus === 'ACTIVE') {
                   <button
                     (click)="onMenuAction('deactivate', merchant)"
                     class="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-content-primary hover:bg-surface-muted transition-colors"
@@ -468,3 +468,15 @@
     </app-data-table>
   </div>
 </div>
+
+<!-- Add Merchant Slide-over Panel -->
+<app-slide-over-panel
+  [isOpen]="isAddMerchantPanelOpen()"
+  [config]="addMerchantPanelConfig"
+  (closePanel)="closeAddMerchantPanel()"
+>
+  <app-add-merchant-form
+    (submitForm)="onAddMerchantSubmit($event)"
+    (cancel)="closeAddMerchantPanel()"
+  />
+</app-slide-over-panel>

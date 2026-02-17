@@ -1,3 +1,8 @@
+import {
+  MERCHANT_APPROVAL_STATUS,
+  MERCHANT_OPERATIONAL_STATUS,
+} from '@vhandelivery/shared-ui';
+
 /**
  * Tag info for display
  */
@@ -66,8 +71,8 @@ export interface Merchant {
 
   readonly businessType: string;
   readonly businessCategory: string;
-  readonly approvalStatus: 'pending' | 'approved' | 'rejected';
-  readonly operationalStatus: 'active' | 'inactive' | 'suspended' | 'locked';
+  readonly approvalStatus: MERCHANT_APPROVAL_STATUS;
+  readonly operationalStatus: MERCHANT_OPERATIONAL_STATUS;
   readonly averageRating: number;
   readonly totalReviews: number;
 
@@ -175,21 +180,18 @@ export interface MerchantQueryParams {
 }
 
 /**
- * Maps OperationalStatus from API to UI status
+ * Maps OperationalStatus from API (returns as-is since database uses UPPERCASE)
  */
 export function mapMerchantOperationalStatus(
   status: string
-): 'active' | 'inactive' | 'suspended' | 'locked' {
-  const statusMap: Record<
-    string,
-    'active' | 'inactive' | 'suspended' | 'locked'
-  > = {
-    ACTIVE: 'active',
-    INACTIVE: 'inactive',
-    SUSPENDED: 'suspended',
-    LOCKED: 'locked',
+): MERCHANT_OPERATIONAL_STATUS {
+  const statusMap: Record<string, MERCHANT_OPERATIONAL_STATUS> = {
+    ACTIVE: 'ACTIVE',
+    INACTIVE: 'INACTIVE',
+    SUSPENDED: 'SUSPENDED',
+    LOCKED: 'LOCKED',
   };
-  return statusMap[status] ?? 'inactive';
+  return statusMap[status] ?? 'INACTIVE';
 }
 
 /**
@@ -197,13 +199,13 @@ export function mapMerchantOperationalStatus(
  */
 export function mapMerchantApprovalStatus(
   status: string
-): 'pending' | 'approved' | 'rejected' {
-  const statusMap: Record<string, 'pending' | 'approved' | 'rejected'> = {
-    PENDING: 'pending',
-    APPROVED: 'approved',
-    REJECTED: 'rejected',
+): MERCHANT_APPROVAL_STATUS {
+  const statusMap: Record<string, MERCHANT_APPROVAL_STATUS> = {
+    PENDING: 'PENDING',
+    APPROVED: 'APPROVED',
+    REJECTED: 'REJECTED',
   };
-  return statusMap[status] ?? 'pending';
+  return statusMap[status] ?? 'PENDING';
 }
 
 /**

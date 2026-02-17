@@ -5,6 +5,7 @@ import {
 } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
 import { CreateMerchantDto } from './dto/create-merchant.dto';
+import { AdminCreateMerchantDto } from './dto/admin-create-merchant.dto';
 import {
   MerchantQueryDto,
   MerchantStatistics,
@@ -25,6 +26,7 @@ import { OtpService } from '../otp/otp.service';
 import { ROLE } from '../common/constants/role.constants';
 import { RESOURCE_TARGETS } from '../common/constants/resource.constant';
 import { ApprovalStatus } from '@prisma/client';
+import { OperationalStatus } from '@prisma/client';
 import { MerchantEntity } from './entities/merchant.entity';
 import { MerchantQueryBuilder } from './builders/merchant-query.builder';
 
@@ -270,6 +272,51 @@ export class MerchantService {
         phone: dto.phone,
         ownerId: userId,
         approvalStatus: MERCHANT_STATUS.PENDING as ApprovalStatus,
+      },
+    });
+
+    return merchant;
+  }
+
+  /**
+   * Admin creates a merchant directly — no OTP verification required.
+   * Sets approvalStatus to APPROVED immediately.
+   */
+  async adminCreate(adminUserId: number, dto: AdminCreateMerchantDto) {
+    // Resolve agencyId (externalId → internal id)
+    let agencyId: number | undefined;
+    if (dto.agencyId) {
+      const agency = await this.prisma.agency.findUnique({
+        where: { externalId: dto.agencyId },
+        select: { id: true },
+      });
+      if (!agency) {
+        throw new NotFoundException(RESOURCE_MESSAGES.NOT_FOUND('Agency'));
+      }
+      agencyId = agency.id;
+    }
+
+    const merchant = await this.prisma.merchant.create({
+      data: {
+        name: dto.name,
+        phone: dto.phone,
+        address: dto.address,
+        city: dto.city,
+        contactName: dto.contactName,
+        businessType: dto.businessType,
+        businessCategory: dto.businessCategory,
+        hasBusinessLicense: dto.hasBusinessLicense,
+        operationalStatus: dto.operationalStatus as OperationalStatus,
+        referralSource: dto.referralSource,
+        metadata: {
+          ownerName: dto.ownerName,
+          ...(dto.socialLinks ? { socialLinks: dto.socialLinks } : {}),
+        },
+        logoUrl: dto.logoUrl,
+        agencyId,
+        approvalStatus: MERCHANT_STATUS.APPROVED as ApprovalStatus,
+        approvedAt: new Date(),
+        approvedBy: adminUserId,
       },
     });
 

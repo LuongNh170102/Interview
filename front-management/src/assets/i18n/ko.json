@@ -37,7 +37,8 @@
       "delete": "삭제",
       "continue": "계속",
       "view": "상세 보기",
-      "edit": "수정"
+      "edit": "수정",
+      "close": "닫기"
     },
     "loading": "로딩 중...",
     "noData": "데이터가 없습니다",
@@ -55,6 +56,8 @@
       "total": "총"
     },
     "status": {
+      "success": "성공",
+      "error": "오류",
       "active": "활성",
       "inactive": "비활성",
       "pending": "대기 중",
@@ -71,6 +74,20 @@
       "reset": "초기화",
       "of": "/",
       "visible": "열 표시됨"
+    },
+    "validation": {
+      "required": "필수 입력 항목입니다",
+      "minLength": "최소 길이가 부족합니다",
+      "invalidFormat": "형식이 올바르지 않습니다",
+      "invalidEmail": "이메일이 올바르지 않습니다",
+      "invalidPhone": "전화번호가 올바르지 않습니다"
+    },
+    "validation": {
+      "required": "필수 입력 항목입니다",
+      "minLength": "최소 길이가 부족합니다",
+      "invalidFormat": "형식이 올바르지 않습니다",
+      "invalidEmail": "이메일이 올바르지 않습니다",
+      "invalidPhone": "전화번호가 올바르지 않습니다"
     }
   },
   "app": {
@@ -241,7 +258,10 @@
         "title": "매장 목록",
         "subtitle": "시스템의 매장 정보를 관리합니다",
         "addNew": "매장 추가",
+        "addMerchant": "매장 추가",
         "searchPlaceholder": "매장 검색...",
+        "createSuccess": "매장이 성공적으로 생성되었습니다!",
+        "createError": "매장을 생성할 수 없습니다. 다시 시도해 주세요.",
         "stats": {
           "totalStores": "총 매장 수",
           "pendingApproval": "승인 대기",
@@ -260,6 +280,59 @@
           "orders": "주문",
           "status": "상태",
           "rating": "평점"
+        },
+        "form": {
+          "title": "새 매장 정보",
+          "subtitle": "시스템에 새 매장을 생성하기 위해 정보를 입력하세요",
+          "basicInfo": "기본 정보",
+          "agencyBrand": "에이전시 & 브랜드",
+          "name": "매장명",
+          "namePlaceholder": "매장명을 입력하세요",
+          "id": "매장 ID",
+          "idPlaceholder": "매장 ID를 입력하세요",
+          "phone": "전화번호",
+          "address": "주소",
+          "city": "도시",
+          "operationalStatus": "운영 상태",
+          "ownerName": "소유자 이름",
+          "ownerNamePlaceholder": "소유자 이름을 입력하세요",
+          "ownerId": "소유자 ID",
+          "ownerIdPlaceholder": "소유자 ID를 입력하세요",
+          "agency": "에이전시",
+          "agencyPlaceholder": "에이전시를 선택하세요",
+          "agencySearchPlaceholder": "이름 또는 ID로 에이전시 검색...",
+          "businessCategory": "업종",
+          "selectCategory": "업종을 선택하세요",
+          "brand": "브랜드",
+          "brandPlaceholder": "브랜드를 선택하세요",
+          "submit": "매장 추가",
+          "contactName": "담당자 이름",
+          "contactNamePlaceholder": "담당자 이름을 입력하세요",
+          "businessType": "운영 형태",
+          "selectBusinessType": "운영 형태를 선택하세요",
+          "referralSource": "유입 경로",
+          "selectReferralSource": "유입 경로를 선택하세요",
+          "hasBusinessLicense": "사업자 등록증 보유",
+          "socialLinks": "소셜 미디어 링크",
+          "socialLinksPlaceholder": "소셜 미디어 URL 입력 (Facebook, Instagram...)"
+        },
+        "category": {
+          "fnb": "음식 및 음료",
+          "retail": "소매",
+          "service": "서비스",
+          "other": "기타"
+        },
+        "businessType": {
+          "online": "온라인",
+          "offline": "오프라인",
+          "hybrid": "혼합형"
+        },
+        "referralSource": {
+          "facebook": "Facebook",
+          "google": "Google",
+          "referral": "추천",
+          "direct": "직접 방문",
+          "other": "기타"
         }
       },
       "stores": {

@@ -1,0 +1,122 @@
+<div class="relative w-full">
+  <!-- Trigger Button -->
+  <button
+    type="button"
+    class="w-full h-[3.375rem] px-4 pr-10 border rounded-lg text-sm bg-surface-base text-left transition-colors duration-200 flex items-center justify-between"
+    [class.border-border]="!isOpen"
+    [class.border-primary]="isOpen"
+    [class.bg-surface-muted]="disabled"
+    [class.cursor-not-allowed]="disabled"
+    [class.opacity-60]="disabled"
+    [class.cursor-pointer]="!disabled"
+    [disabled]="disabled"
+    (click)="toggle()"
+  >
+    <span
+      class="flex-1 truncate"
+      [class.text-content-primary]="selectedOption"
+      [class.text-content-tertiary]="!selectedOption"
+    >
+      @if (selectedOption) {
+      {{ selectedOption.label | localizedText }}
+      } @else {
+      {{ placeholder | translate }}
+      }
+    </span>
+
+    <!-- Clear button (X) -->
+    <button
+      *ngIf="clearable && selectedOption && !disabled"
+      type="button"
+      (click)="clearSelection($event)"
+      class="absolute right-10 top-1/2 -translate-y-1/2 w-4 h-4 text-content-tertiary hover:text-content-primary transition-colors z-10"
+      aria-label="Clear selection"
+    >
+      <svg
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+        class="w-full h-full"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M6 18L18 6M6 6l12 12"
+        />
+      </svg>
+    </button>
+
+    <!-- Chevron icon -->
+    <svg
+      class="w-4 h-4 text-content-tertiary absolute right-4 top-1/2 -translate-y-1/2 transition-transform duration-200"
+      [class.rotate-180]="isOpen"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <polyline points="6 9 12 15 18 9"></polyline>
+    </svg>
+  </button>
+
+  <!-- Dropdown -->
+  <div
+    *ngIf="isOpen"
+    class="scrollbar-primary absolute top-full left-0 right-0 mt-1 bg-surface-base border border-border rounded-lg shadow-lg max-h-60 overflow-hidden z-[9999] animate-fadeIn"
+  >
+    <!-- Search input (if searchable) -->
+    <div *ngIf="searchable" class="p-3 border-b border-border">
+      <div class="relative">
+        <input
+          type="text"
+          [(ngModel)]="searchQuery"
+          (ngModelChange)="onSearchChange()"
+          (click)="$event.stopPropagation()"
+          class="w-full h-10 pl-10 pr-4 rounded-lg border border-border bg-surface-base text-content-primary placeholder:text-content-tertiary focus:border-primary focus:ring-1 focus:ring-primary outline-none text-sm"
+          [placeholder]="searchPlaceholder | translate"
+        />
+        <svg
+          class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-content-tertiary"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+          />
+        </svg>
+      </div>
+    </div>
+
+    <!-- Options list -->
+    <div class="overflow-y-auto max-h-48">
+      @for (option of filteredOptions; track option.value) {
+      <div
+        class="px-4 py-3 text-sm cursor-pointer transition-colors duration-150 hover:bg-surface-muted"
+        [class.bg-surface-muted]="option.value === value"
+        [class.text-primary]="option.value === value"
+        [class.font-medium]="option.value === value"
+        [class.text-content-primary]="option.value !== value"
+        (click)="selectOption(option)"
+      >
+        {{ option.label | localizedText }}
+      </div>
+      }
+
+      <!-- No results -->
+      <div
+        *ngIf="filteredOptions.length === 0"
+        class="px-4 py-3 text-sm text-content-tertiary text-center"
+      >
+        {{ 'common.noResults' | translate }}
+      </div>
+    </div>
+  </div>
+</div>

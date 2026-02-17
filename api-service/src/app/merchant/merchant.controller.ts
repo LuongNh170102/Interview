@@ -11,6 +11,7 @@ import {
 } from '@nestjs/common';
 import { MerchantService } from './merchant.service';
 import { CreateMerchantDto } from './dto/create-merchant.dto';
+import { AdminCreateMerchantDto } from './dto/admin-create-merchant.dto';
 import { RequestOtpDto, VerifyOtpDto } from '../otp/dto/otp.dto';
 import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
 import { UpdateMerchantStatusDto } from './dto/update-merchant-status.dto';
@@ -60,5 +61,12 @@ export class MerchantController {
   @Post('register')
   create(@Request() req, @Body() createMerchantDto: CreateMerchantDto) {
     return this.merchantService.create(req.user.userId, createMerchantDto);
+  }
+
+  @Post('admin-create')
+  @UseGuards(JwtAuthGuard, PermissionsGuard)
+  @Permissions('system:manage_users')
+  adminCreate(@Request() req, @Body() dto: AdminCreateMerchantDto) {
+    return this.merchantService.adminCreate(req.user.userId, dto);
   }
 }
