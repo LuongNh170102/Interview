@@ -7,7 +7,7 @@ import { GlobalModalComponent } from '../../shared/components/global-modal/globa
 import { OtpModalComponent } from '../../shared/components/otp-modal/otp-modal.component';
 import {
   TranslatePipe,
-  CreateMerchantRequest,
+  RegisterMerchantRequest,
   MerchantService,
   formatPhoneVN,
   cleanPhoneNumber,
@@ -194,18 +194,18 @@ export class MerchantSignup {
   }
 
   submitRegistration() {
-    const payload: CreateMerchantRequest = {
+    const payload: RegisterMerchantRequest = {
       name: this.formData.storeName,
       address: this.formData.storeAddress,
       city: this.formData.city,
       contactName: this.formData.contactName,
-      businessType: this.formData.shopType,
+      businessType: this.formData.shopType as any,
       businessCategory: this.formData.businessCategory,
       referralSource: this.formData.knowReason,
       hasBusinessLicense: this.formData.businessLicense === 'HAS_LICENSE',
       phone: cleanPhoneNumber(this.formData.phoneNumber),
       verificationToken: this.verificationToken!,
-      socialLinks: this.formData.socialLinks || null,
+      socialLinks: this.formData.socialLinks || undefined,
     };
 
     // Login Authentication Token Temporary Hardcoding

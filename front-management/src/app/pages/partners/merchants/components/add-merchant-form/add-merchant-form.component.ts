@@ -20,6 +20,8 @@ import {
   CategoryService,
   SelectOption,
   AdminCreateMerchantRequest,
+  formatPhoneVN,
+  cleanPhoneNumber,
 } from '@vhandelivery/shared-ui';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CustomSelectComponent } from '../../../../../shared/components/custom-select/custom-select.component';
@@ -51,18 +53,18 @@ export class AddMerchantFormComponent implements OnInit {
 
   /** Business type options for CustomSelectComponent */
   readonly businessTypeOptions = signal<SelectOption[]>([
-    { value: 'ONLINE', label: 'admin.merchants.businessType.online' },
-    { value: 'OFFLINE', label: 'admin.merchants.businessType.offline' },
-    { value: 'HYBRID', label: 'admin.merchants.businessType.hybrid' },
+    { value: 'ONLINE', label: 'admin.partners.merchants.businessType.online' },
+    { value: 'OFFLINE', label: 'admin.partners.merchants.businessType.offline' },
+    { value: 'HYBRID', label: 'admin.partners.merchants.businessType.hybrid' },
   ]);
 
   /** Referral source options for CustomSelectComponent */
   readonly referralSourceOptions = signal<SelectOption[]>([
-    { value: 'FACEBOOK', label: 'admin.merchants.referralSource.facebook' },
-    { value: 'GOOGLE', label: 'admin.merchants.referralSource.google' },
-    { value: 'REFERRAL', label: 'admin.merchants.referralSource.referral' },
-    { value: 'DIRECT', label: 'admin.merchants.referralSource.direct' },
-    { value: 'OTHER', label: 'admin.merchants.referralSource.other' },
+    { value: 'FACEBOOK', label: 'admin.partners.merchants.referralSource.facebook' },
+    { value: 'GOOGLE', label: 'admin.partners.merchants.referralSource.google' },
+    { value: 'REFERRAL', label: 'admin.partners.merchants.referralSource.referral' },
+    { value: 'DIRECT', label: 'admin.partners.merchants.referralSource.direct' },
+    { value: 'OTHER', label: 'admin.partners.merchants.referralSource.other' },
   ]);
 
   /** Emits when form is submitted successfully */
@@ -81,7 +83,7 @@ export class AddMerchantFormComponent implements OnInit {
   readonly form: FormGroup = this.fb.group({
     // Basic Info
     name: ['', [Validators.required, Validators.minLength(2)]],
-    phone: ['', [Validators.required, Validators.pattern(/^\+?[0-9]{10,15}$/)]],
+    phone: ['', [Validators.required, Validators.pattern(/^[\d\-]{10,15}$/)]],
     address: ['', [Validators.required]],
     city: ['', [Validators.required]],
     operationalStatus: ['ACTIVE', [Validators.required]],
@@ -169,6 +171,14 @@ export class AddMerchantFormComponent implements OnInit {
     return '';
   }
 
+  /** Format phone number as user types (VN format: 0123-456-7890) */
+  formatPhoneNumber(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const formatted = formatPhoneVN(input.value);
+    this.form.patchValue({ phone: formatted }, { emitEvent: false });
+    input.value = formatted;
+  }
+
   /** Handle form submission */
   onSubmit(): void {
     if (this.form.invalid) {
@@ -177,7 +187,10 @@ export class AddMerchantFormComponent implements OnInit {
     }
 
     this.isLoading.set(true);
-    const formData = this.form.value as AdminCreateMerchantRequest;
+    const formData = {
+      ...this.form.value,
+      phone: cleanPhoneNumber(this.form.value.phone ?? ''),
+    } as AdminCreateMerchantRequest;
     this.submitForm.emit(formData);
   }
 

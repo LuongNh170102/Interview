@@ -85,6 +85,11 @@ export class CustomSelectComponent implements ControlValueAccessor, OnChanges {
     this.disabled = isDisabled;
   }
 
+  /** Type guard: is the label a translation key string? */
+  isStringLabel(label: string | object): label is string {
+    return typeof label === 'string';
+  }
+
   // Toggle dropdown
   toggle(): void {
     if (!this.disabled) {
