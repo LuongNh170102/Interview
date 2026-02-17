@@ -248,35 +248,36 @@ export function generateMerchantInitialsColor(name: string): string {
 }
 
 /**
- * Map business category to display label
+ * Map business category code to display label.
+ * Used as fallback when category UUID is not found in the category lookup map.
  */
 export function mapBusinessCategory(category: string | null): string {
-  if (!category) return 'Chưa phân loại';
+  if (!category) return '';
 
   const categoryMap: Record<string, string> = {
     'F&B': 'F&B',
-    RESTAURANT: 'Nhà hàng',
-    CAFE: 'Cà phê & Đồ uống',
-    BAKERY: 'Tiệm bánh',
-    FAST_FOOD: 'Thức ăn nhanh',
-    GROCERY: 'Tạp hóa',
-    RETAIL: 'Bán lẻ',
-    OTHER: 'Khác',
+    RESTAURANT: 'Restaurant',
+    CAFE: 'Cafe & Drinks',
+    BAKERY: 'Bakery',
+    FAST_FOOD: 'Fast Food',
+    GROCERY: 'Grocery',
+    RETAIL: 'Retail',
+    OTHER: 'Other',
   };
 
   return categoryMap[category] ?? category;
 }
 
 /**
- * Map business type to display label
+ * Map business type enum to display label
  */
 export function mapBusinessType(type: string | null): string {
-  if (!type) return 'Chưa xác định';
+  if (!type) return '';
 
   const typeMap: Record<string, string> = {
     ONLINE: 'Online',
     OFFLINE: 'Offline',
-    HYBRID: 'Kết hợp',
+    HYBRID: 'Hybrid',
   };
 
   return typeMap[type] ?? type;

@@ -14,6 +14,8 @@ import {
   TranslatePipe,
   MerchantService as SharedMerchantService,
   TranslationService,
+  CategoryService,
+  LocalizedString,
 } from '@vhandelivery/shared-ui';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
@@ -77,8 +79,12 @@ import { GlobalModalService } from '../../../shared/components/global-modal/glob
 export class MerchantsComponent implements OnInit {
   private readonly destroyRef = inject(DestroyRef);
   private readonly merchantService = inject(SharedMerchantService);
+  private readonly categoryService = inject(CategoryService);
   private readonly modalService = inject(GlobalModalService);
   private readonly translationService = inject(TranslationService);
+
+  /** Category lookup map: externalId → display name */
+  private readonly categoryMap = signal<Map<string, string>>(new Map());
 
   // Loading state
   readonly isLoading = signal(false);
@@ -145,7 +151,52 @@ export class MerchantsComponent implements OnInit {
   readonly agencyFilter = signal('');
 
   ngOnInit(): void {
+    this.loadCategories();
     this.loadMerchants();
+  }
+
+  /**
+   * Load categories from API to build lookup map for table display
+   */
+  private loadCategories(): void {
+    this.categoryService
+      .findAll()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (categories) => {
+          const map = new Map<string, string>();
+          for (const cat of categories) {
+            const name = this.resolveCategoryName(cat.name);
+            map.set(cat.externalId, name);
+          }
+          this.categoryMap.set(map);
+
+          // Re-map merchants if already loaded (categories may arrive after merchants)
+          if (this.merchants().length > 0) {
+            this.loadMerchants();
+          }
+        },
+        error: (error) => {
+          console.error('Failed to load categories:', error);
+        },
+      });
+  }
+
+  /**
+   * Resolve category name from LocalizedString based on current language
+   */
+  private resolveCategoryName(name: LocalizedString): string {
+    return this.translationService.getLocalizedValue(name, 'vi');
+  }
+
+  /**
+   * Resolve businessCategory UUID to readable name using category lookup map.
+   * Falls back to mapBusinessCategory for non-UUID values.
+   */
+  private resolveMerchantCategory(category: string | null): string {
+    if (!category) return '';
+    const name = this.categoryMap().get(category);
+    return name ?? mapBusinessCategory(category);
   }
 
   /**
@@ -217,7 +268,7 @@ export class MerchantsComponent implements OnInit {
       ownerEmail: item.owner?.email ?? '',
 
       businessType: mapBusinessType(item.businessType),
-      businessCategory: mapBusinessCategory(item.businessCategory),
+      businessCategory: this.resolveMerchantCategory(item.businessCategory),
       approvalStatus: mapMerchantApprovalStatus(item.approvalStatus),
       operationalStatus: mapMerchantOperationalStatus(item.operationalStatus),
       averageRating: item.averageRating,

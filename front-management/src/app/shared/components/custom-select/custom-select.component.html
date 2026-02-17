@@ -18,7 +18,11 @@
       [class.text-content-tertiary]="!selectedOption"
     >
       @if (selectedOption) {
-      {{ selectedOption.label | localizedText }}
+        @if (isStringLabel(selectedOption.label)) {
+          {{ selectedOption.label | translate }}
+        } @else {
+          {{ selectedOption.label | localizedText }}
+        }
       } @else {
       {{ placeholder | translate }}
       }
@@ -106,7 +110,11 @@
         [class.text-content-primary]="option.value !== value"
         (click)="selectOption(option)"
       >
-        {{ option.label | localizedText }}
+        @if (isStringLabel(option.label)) {
+          {{ option.label | translate }}
+        } @else {
+          {{ option.label | localizedText }}
+        }
       </div>
       }
 

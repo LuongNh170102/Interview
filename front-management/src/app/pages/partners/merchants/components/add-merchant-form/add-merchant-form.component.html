@@ -51,7 +51,8 @@
               type="tel"
               formControlName="phone"
               class="w-full h-[3.375rem] px-4 rounded-lg border border-border bg-surface-base text-content-primary placeholder:text-content-tertiary focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors"
-              placeholder="+84901234567"
+              placeholder="0123-456-7890"
+              (input)="formatPhoneNumber($event)"
             />
             @if (hasError('phone')) {
             <p class="text-sm text-status-error">
@@ -65,7 +66,7 @@
             <label
               class="text-sm font-normal text-content-tertiary uppercase tracking-wide"
             >
-              {{ 'admin.partners.merchants.form.businessCategory' | translate }}
+              {{ 'admin.partners.merchants.form.businessType' | translate }}
               <span class="text-status-error">*</span>
             </label>
             <app-custom-select
