@@ -55,6 +55,8 @@
       "total": "Tổng"
     },
     "status": {
+      "success": "Thành công",
+      "error": "Lỗi",
       "active": "Hoạt động",
       "inactive": "Ngừng hoạt động",
       "pending": "Chờ duyệt",
@@ -71,6 +73,13 @@
       "reset": "Đặt lại",
       "of": "/",
       "visible": "cột hiển thị"
+    },
+    "validation": {
+      "required": "Trường này là bắt buộc",
+      "minLength": "Độ dài tối thiểu không đủ",
+      "invalidFormat": "Định dạng không hợp lệ",
+      "invalidEmail": "Email không hợp lệ",
+      "invalidPhone": "Số điện thoại không hợp lệ"
     }
   },
   "app": {
@@ -175,7 +184,10 @@
         "title": "Cửa hàng",
         "subtitle": "Quản lý thông tin cửa hàng trong hệ thống",
         "addNew": "Thêm cửa hàng",
+        "addMerchant": "Thêm cửa hàng",
         "searchPlaceholder": "Tìm kiếm cửa hàng...",
+        "createSuccess": "Tạo cửa hàng thành công!",
+        "createError": "Không thể tạo cửa hàng. Vui lòng thử lại.",
         "stats": {
           "totalStores": "Tổng số cửa hàng",
           "pendingApproval": "Cửa hàng chờ duyệt",
@@ -194,6 +206,63 @@
           "orders": "ĐƠN HÀNG",
           "status": "TRẠNG THÁI",
           "rating": "XẾP HẠNG"
+        },
+        "form": {
+          "title": "Thông tin cửa hàng mới",
+          "subtitle": "Điền đầy đủ thông tin để tạo cửa hàng mới trong hệ thống",
+          "basicInfo": "Nội dung cơ bản",
+          "agencyBrand": "Đại lý & thương hiệu",
+          "name": "Tên cửa hàng",
+          "namePlaceholder": "Nhập tên cửa hàng",
+          "id": "Mã cửa hàng",
+          "idPlaceholder": "Nhập mã cửa hàng",
+          "phone": "Số điện thoại",
+          "address": "Địa chỉ",
+          "city": "Thành phố",
+          "operationalStatus": "Trạng thái hoạt động",
+          "ownerName": "Tên chủ sở hữu",
+          "ownerNamePlaceholder": "Nhập tên chủ sở hữu",
+          "ownerId": "Mã chủ sở hữu",
+          "ownerIdPlaceholder": "Nhập mã chủ sở hữu",
+          "agency": "Đại lý",
+          "agencyPlaceholder": "Chọn đại lý",
+          "selectAgency": "Chọn đại lý",
+          "agencySearchPlaceholder": "Tìm kiếm đại lý theo tên hoặc ID...",
+          "businessCategory": "Loại hình kinh doanh",
+          "selectCategory": "Chọn ngành nghề",
+          "brand": "Thương hiệu",
+          "brandPlaceholder": "Hãy nhập tên thương hiệu vào nhé",
+          "contactName": "Tên liên hệ",
+          "contactNamePlaceholder": "Nhập tên người liên hệ",
+          "businessType": "Loại hình kinh doanh",
+          "selectBusinessType": "Chọn loại hình",
+          "referralSource": "Nguồn giới thiệu",
+          "selectReferralSource": "Chọn nguồn",
+          "socialLinks": "Liên kết mạng xã hội",
+          "socialLinksPlaceholder": "Nhập đường dẫn mạng xã hội",
+          "hasBusinessLicense": "Có giấy phép kinh doanh",
+          "logo": "Logo cửa hàng",
+          "uploadLogo": "Tải lên logo",
+          "logoHint": "PNG, JPG, JPEG, tối đa 5MB",
+          "submit": "Thêm Đối tác Mới"
+        },
+        "category": {
+          "fnb": "F&B",
+          "retail": "Bán lẻ",
+          "service": "Dịch vụ",
+          "other": "Khác"
+        },
+        "businessType": {
+          "online": "Trực tuyến",
+          "offline": "Truyền thống",
+          "hybrid": "Kết hợp"
+        },
+        "referralSource": {
+          "facebook": "Facebook",
+          "google": "Google",
+          "referral": "Giới thiệu",
+          "direct": "Trực tiếp",
+          "other": "Khác"
         }
       },
       "filter": {

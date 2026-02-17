@@ -1,0 +1,1 @@
+export type BUSINESS_TYPE = 'ONLINE' | 'OFFLINE' | 'HYBRID';

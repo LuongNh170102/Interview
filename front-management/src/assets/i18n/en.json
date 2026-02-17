@@ -37,7 +37,8 @@
       "delete": "Delete",
       "continue": "Continue",
       "view": "View details",
-      "edit": "Edit"
+      "edit": "Edit",
+      "close": "Close"
     },
     "loading": "Loading...",
     "noData": "No data available",
@@ -55,6 +56,8 @@
       "total": "Total"
     },
     "status": {
+      "success": "Success",
+      "error": "Error",
       "active": "Active",
       "inactive": "Inactive",
       "pending": "Pending",
@@ -70,6 +73,13 @@
       "reset": "Reset",
       "of": "of",
       "visible": "columns visible"
+    },
+    "validation": {
+      "required": "This field is required",
+      "minLength": "Minimum length not met",
+      "invalidFormat": "Invalid format",
+      "invalidEmail": "Invalid email",
+      "invalidPhone": "Invalid phone number"
     }
   },
   "app": {
@@ -173,7 +183,10 @@
         "title": "Merchants",
         "subtitle": "Manage merchant information in the system",
         "addNew": "Add Merchant",
+        "addMerchant": "Add Merchant",
         "searchPlaceholder": "Search merchants...",
+        "createSuccess": "Merchant created successfully!",
+        "createError": "Unable to create merchant. Please try again.",
         "stats": {
           "totalStores": "Total Stores",
           "pendingApproval": "Pending Approval",
@@ -192,6 +205,59 @@
           "orders": "ORDERS",
           "status": "STATUS",
           "rating": "RATING"
+        },
+        "form": {
+          "title": "New Merchant Information",
+          "subtitle": "Fill in the information to create a new merchant in the system",
+          "basicInfo": "Basic Information",
+          "agencyBrand": "Agency & Brand",
+          "name": "Merchant Name",
+          "namePlaceholder": "Enter merchant name",
+          "id": "Merchant ID",
+          "idPlaceholder": "Enter merchant ID",
+          "phone": "Phone",
+          "address": "Address",
+          "city": "City",
+          "operationalStatus": "Operational Status",
+          "ownerName": "Owner Name",
+          "ownerNamePlaceholder": "Enter owner name",
+          "ownerId": "Owner ID",
+          "ownerIdPlaceholder": "Enter owner ID",
+          "agency": "Agency",
+          "agencyPlaceholder": "Select an agency",
+          "agencySearchPlaceholder": "Search agency by name or ID...",
+          "businessCategory": "Business Category",
+          "selectCategory": "Select a category",
+          "brand": "Brand",
+          "brandPlaceholder": "Select a brand",
+          "submit": "Add Merchant",
+          "contactName": "Contact Name",
+          "contactNamePlaceholder": "Enter contact name",
+          "businessType": "Business Type",
+          "selectBusinessType": "Select business type",
+          "referralSource": "Referral Source",
+          "selectReferralSource": "Select referral source",
+          "hasBusinessLicense": "Has Business License",
+          "socialLinks": "Social Media Links",
+          "socialLinksPlaceholder": "Enter social media URL (Facebook, Instagram...)"
+        },
+        "category": {
+          "fnb": "Food & Beverage",
+          "retail": "Retail",
+          "service": "Service",
+          "other": "Other"
+        },
+        "businessType": {
+          "online": "Online",
+          "offline": "Offline",
+          "hybrid": "Hybrid"
+        },
+        "referralSource": {
+          "facebook": "Facebook",
+          "google": "Google",
+          "referral": "Referral",
+          "direct": "Direct",
+          "other": "Other"
         }
       },
       "table": {

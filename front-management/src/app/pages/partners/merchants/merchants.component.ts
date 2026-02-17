@@ -7,11 +7,13 @@ import {
   inject,
   OnInit,
   signal,
+  viewChild,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   TranslatePipe,
   MerchantService as SharedMerchantService,
+  TranslationService,
 } from '@vhandelivery/shared-ui';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
@@ -46,6 +48,13 @@ import {
   MerchantStatistics,
   createMerchantStatisticCards,
 } from './merchants.config';
+import {
+  SlideOverPanelComponent,
+  SlideOverConfig,
+} from '../../../shared/components/slide-over-panel/slide-over-panel.component';
+import { AddMerchantFormComponent } from './components/add-merchant-form/add-merchant-form.component';
+import { AdminCreateMerchantRequest } from '@vhandelivery/shared-ui';
+import { GlobalModalService } from '../../../shared/components/global-modal/global-modal.service';
 
 @Component({
   selector: 'app-merchants',
@@ -58,6 +67,8 @@ import {
     MobileCardDirective,
     ActionMenuDirective,
     StatisticCardComponent,
+    SlideOverPanelComponent,
+    AddMerchantFormComponent,
   ],
   templateUrl: './merchants.component.html',
   styleUrls: ['./merchants.component.scss'],
@@ -66,9 +77,24 @@ import {
 export class MerchantsComponent implements OnInit {
   private readonly destroyRef = inject(DestroyRef);
   private readonly merchantService = inject(SharedMerchantService);
+  private readonly modalService = inject(GlobalModalService);
+  private readonly translationService = inject(TranslationService);
 
   // Loading state
   readonly isLoading = signal(false);
+
+  // Slide-over panel state
+  readonly isAddMerchantPanelOpen = signal(false);
+  readonly addMerchantPanelConfig: SlideOverConfig = {
+    titleKey: 'admin.partners.merchants.addMerchant',
+    width: 'xl',
+    showCloseButton: true,
+    showBackdrop: true,
+    closeOnBackdropClick: true,
+    closeOnEscape: true,
+    showHeader: true,
+    headerIcon: 'assets/icons/icon-stat-store.svg', // Store/shop icon SVG path
+  };
 
   // Statistics data from API
   readonly statisticsData = signal<MerchantStatistics>({
@@ -256,8 +282,58 @@ export class MerchantsComponent implements OnInit {
   }
 
   onAddMerchant(): void {
-    console.log('Add new merchant clicked');
-    // TODO: Open add merchant modal/dialog
+    this.isAddMerchantPanelOpen.set(true);
+  }
+
+  /** Close add merchant panel */
+  closeAddMerchantPanel(): void {
+    this.isAddMerchantPanelOpen.set(false);
+  }
+
+  /** Reference to the add merchant form component */
+  private readonly addMerchantForm = viewChild(AddMerchantFormComponent);
+
+  /** Handle add merchant form submission */
+  onAddMerchantSubmit(formData: AdminCreateMerchantRequest): void {
+    this.merchantService
+      .adminCreate(formData)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: () => {
+          // Reset loading state first
+          this.addMerchantForm()?.isLoading.set(false);
+
+          // Show success modal
+          this.modalService.showSuccess(
+            this.translationService.translate('common.status.success'),
+            this.translationService.translate(
+              'admin.partners.merchants.createSuccess'
+            )
+          );
+
+          // Close panel, reset form, reload list
+          this.closeAddMerchantPanel();
+          this.addMerchantForm()?.resetForm();
+          this.loadMerchants();
+        },
+        error: (error) => {
+          console.error('Failed to create merchant:', error);
+
+          // Reset loading state
+          this.addMerchantForm()?.isLoading.set(false);
+
+          // Show error modal with error details
+          const errorMessage =
+            error?.error?.message ||
+            this.translationService.translate(
+              'admin.partners.merchants.createError'
+            );
+          this.modalService.showError(
+            this.translationService.translate('common.status.error'),
+            errorMessage
+          );
+        },
+      });
   }
 
   // Header event handlers

@@ -212,9 +212,11 @@
 
         @if (isUserDropdownOpen()) {
         <div
-          class="absolute w-auto top-full right-0 mt-2 bg-[var(--color-surface-elevated)] border border-[var(--color-border)] rounded-lg shadow-xl py-2 z-50"
+          class="absolute w-auto top-full right-0 mt-2 bg-[var(--color-surface-elevated)] border border-[var(--color-border)] rounded-lg shadow-xl py-2 z-50 min-w-[13rem]"
         >
-          <div class="px-4 py-3 border-b border-[var(--color-border)]">
+          <div
+            class="px-4 py-3 border-b border-[var(--color-border)]"
+          >
             <p class="font-medium text-[var(--color-text-primary)]">
               {{ user.username || 'User' }}
             </p>
