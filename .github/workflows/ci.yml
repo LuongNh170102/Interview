@@ -35,7 +35,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
+#          cache: 'npm'
 
       - name: Cache node_modules
         id: cache-modules
@@ -72,7 +72,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
+#          cache: 'npm'
 
       - name: Restore node_modules
         uses: actions/cache@v4
@@ -105,7 +105,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
+#          cache: 'npm'
 
       - name: Restore node_modules
         uses: actions/cache@v4
@@ -147,7 +147,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
+#          cache: 'npm'
 
       - name: Restore node_modules
         uses: actions/cache@v4
@@ -163,12 +163,12 @@ jobs:
       - name: Build affected projects
         run: npx nx affected -t build --parallel=3 --configuration=production
 
-      - name: Upload build artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: dist
-          path: dist/
-          retention-days: 1
+#      - name: Upload build artifacts
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: dist
+#          path: dist/
+#          retention-days: 1
 
   # ===========================================================================
   # E2E - End-to-end tests (optional, runs on main only)
@@ -188,7 +188,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
+#          cache: 'npm'
 
       - name: Restore node_modules
         uses: actions/cache@v4
@@ -208,10 +208,10 @@ jobs:
         run: npx nx affected -t e2e --parallel=1
         continue-on-error: true
 
-      - name: Upload E2E reports
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: playwright-report
-          path: '**/playwright-report/'
-          retention-days: 7
+#      - name: Upload E2E reports
+#        uses: actions/upload-artifact@v4
+#        if: always()
+#        with:
+#          name: playwright-report
+#          path: '**/playwright-report/'
+#          retention-days: 7
