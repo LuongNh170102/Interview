@@ -214,9 +214,7 @@
         <div
           class="absolute w-auto top-full right-0 mt-2 bg-[var(--color-surface-elevated)] border border-[var(--color-border)] rounded-lg shadow-xl py-2 z-50 min-w-[13rem]"
         >
-          <div
-            class="px-4 py-3 border-b border-[var(--color-border)]"
-          >
+          <div class="px-4 py-3 border-b border-[var(--color-border)]">
             <p class="font-medium text-[var(--color-text-primary)]">
               {{ user.username || 'User' }}
             </p>
@@ -355,7 +353,7 @@
     class="border-t border-[var(--color-border)] bg-[var(--color-surface-base)] overflow-x-auto scrollbar-hide"
   >
     <ul
-      class="flex items-center gap-1 list-none m-0 p-0 px-4 xl:px-10 w-max min-w-full"
+      class="flex items-stretch gap-1 list-none m-0 p-0 px-4 xl:px-10 w-max min-w-full h-16 xl:h-[72px]"
     >
       @for (item of activeNavItems(); track item.labelKey; let i = $index) {
       <li class="relative shrink-0">
@@ -363,7 +361,7 @@
         <!-- Parent with dropdown -->
         <button
           type="button"
-          class="flex items-center gap-1.5 px-3 md:px-4 py-3 xl:py-4 text-sm xl:text-base transition-colors whitespace-nowrap rounded-t-lg"
+          class="flex items-center gap-1.5 px-3 md:px-4 h-full text-sm xl:text-base transition-all whitespace-nowrap relative group"
           [class.text-[var(--color-primary)]]="item.active"
           [class.font-bold]="item.active"
           [class.bg-[var(--color-surface-muted)]]="openNavDropdownIndex() === i"
@@ -373,8 +371,8 @@
           [class.text-[var(--color-text-primary)]]="
             openNavDropdownIndex() === i && !item.active
           "
-          [class.hover:text-[var(--color-text-primary)]]="!item.active"
-          [class.hover:bg-[var(--color-surface-muted)]]="true"
+          [class.hover:text-[var(--color-primary)]]="!item.active"
+          [class.hover:bg-[var(--color-primary-light)]]="!item.active"
           (click)="$event.stopPropagation(); toggleNavDropdown(i)"
         >
           <span>{{ item.labelKey | translate }}</span>
@@ -396,12 +394,12 @@
         <!-- Direct link item -->
         <a
           [routerLink]="item.link"
-          class="flex items-center gap-2 px-3 md:px-4 py-3 xl:py-4 text-sm xl:text-base transition-colors whitespace-nowrap rounded-t-lg"
+          class="flex items-center gap-2 px-3 md:px-4 h-full text-sm xl:text-base transition-all whitespace-nowrap relative group"
           [class.text-[var(--color-primary)]]="item.active"
           [class.font-bold]="item.active"
           [class.text-[var(--color-text-tertiary)]]="!item.active"
-          [class.hover:text-[var(--color-text-primary)]]="!item.active"
-          [class.hover:bg-[var(--color-surface-muted)]]="true"
+          [class.hover:text-[var(--color-primary)]]="!item.active"
+          [class.hover:bg-[var(--color-primary-light)]]="!item.active"
         >
           <span>{{ item.labelKey | translate }}</span>
         </a>
@@ -410,7 +408,7 @@
         <!-- Active indicator -->
         @if (item.active) {
         <div
-          class="absolute bottom-0 left-0 right-0 h-[3px] bg-[var(--color-primary)] rounded-t-full"
+          class="absolute bottom-0 left-0 right-0 h-1 bg-[var(--color-primary)] shadow-[0_-2px_8px_rgba(243,91,42,0.3)]"
         ></div>
         }
       </li>
