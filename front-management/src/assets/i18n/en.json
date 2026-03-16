@@ -233,6 +233,8 @@
           "submit": "Add Merchant",
           "contactName": "Contact Name",
           "contactNamePlaceholder": "Enter contact name",
+          "email": "Email",
+          "emailPlaceholder": "Enter email address",
           "businessType": "Business Method",
           "selectBusinessType": "Select method",
           "referralSource": "Referral Source",

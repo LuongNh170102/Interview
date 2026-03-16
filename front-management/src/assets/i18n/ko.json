@@ -308,6 +308,8 @@
           "submit": "매장 추가",
           "contactName": "담당자 이름",
           "contactNamePlaceholder": "담당자 이름을 입력하세요",
+          "email": "이메일",
+          "emailPlaceholder": "이메일 주소를 입력하세요",
           "businessType": "사업 방식",
           "selectBusinessType": "방식 선택",
           "referralSource": "유입 경로",

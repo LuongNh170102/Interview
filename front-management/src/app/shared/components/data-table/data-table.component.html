@@ -201,7 +201,7 @@
 
   <!-- Mobile Cards Layout (when mobile template is provided) -->
   @if (mobileCardTemplate) {
-    <div class="md:hidden flex flex-col gap-0">
+    <div class="md:hidden flex flex-col gap-0 border border-[var(--color-border)]">
       @for (row of data(); track trackByRow($index, row); let isLast = $last) {
         <ng-container
           *ngTemplateOutlet="mobileCardTemplate.templateRef; context: {
@@ -217,7 +217,7 @@
   }
 
   <!-- Desktop Table (hidden on mobile when mobile template exists) -->
-  <div class="w-full bg-[var(--color-surface-base)] rounded-t-lg" [class.hidden]="mobileCardTemplate" [class.md:block]="mobileCardTemplate">
+  <div class="w-full bg-[var(--color-surface-base)] rounded-t-lg border border-[var(--color-border)]" [class.hidden]="mobileCardTemplate" [class.md:block]="mobileCardTemplate">
   <div class="overflow-x-auto">
   <!-- Table Container -->
   <div
@@ -490,7 +490,7 @@
 
   <!-- Pagination (shown for both mobile and desktop) -->
   @if (pagination()) {
-    <div class="flex flex-col md:flex-row bg-background px-4 justify-between items-center gap-3 py-3 md:py-[1rem] border-t border-[var(--color-border)] rounded-b-lg">
+    <div class="flex flex-col md:flex-row bg-background px-4 justify-between items-center gap-3 py-3 md:py-[1rem] border-l border-r border-b border-[var(--color-border)] rounded-b-lg">
       <!-- Pagination Info Text -->
       <span class="text-xs md:text-[0.875rem] text-[var(--color-text-tertiary)] font-normal uppercase text-center md:text-left">
         {{ 'common.pagination.page' | translate }} {{ pagination()?.page ?? 1 }}/{{ totalPages() }} - {{ 'common.pagination.total' | translate }} {{ pagination()?.total ?? 0 }} {{ 'common.pagination.items' | translate }}

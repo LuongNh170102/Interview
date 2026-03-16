@@ -14,6 +14,7 @@ import {
   AgencyService,
   AgencyResponse,
   AgencyListResponse,
+  APPROVAL_STATUS,
 } from '@vhandelivery/shared-ui';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
@@ -131,7 +132,7 @@ export class AgenciesComponent implements OnInit {
         page: pag.page,
         limit: pag.pageSize,
         include: 'statistics',
-        approvalStatus: 'APPROVED',
+        approvalStatus: APPROVAL_STATUS.APPROVED,
       })
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({

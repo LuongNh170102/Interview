@@ -31,6 +31,7 @@ export * from './lib/types/business.type';
 // constants
 export * from './lib/constants/date-format.constant';
 export * from './lib/constants/language.constant';
+export * from './lib/constants/status.constant';
 // utils;
 export * from './lib/utils/storage.util';
 export * from './lib/utils/validation.util';

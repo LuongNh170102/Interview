@@ -124,7 +124,7 @@
             }
           </div>
 
-          <!-- Owner Name -->
+          <!-- Owner Name (contactName in DB) -->
           <div class="space-y-2">
             <label
               class="text-sm font-normal text-content-tertiary uppercase tracking-wide"
@@ -134,39 +134,38 @@
             </label>
             <input
               type="text"
-              formControlName="ownerName"
+              formControlName="contactName"
               class="w-full h-[3.375rem] px-4 rounded-lg border border-border bg-surface-base text-content-primary placeholder:text-content-tertiary focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors"
               [placeholder]="
                 'admin.partners.merchants.form.ownerNamePlaceholder' | translate
               "
             />
-            @if (hasError('ownerName')) {
+            @if (hasError('contactName')) {
             <p class="text-sm text-status-error">
-              {{ getErrorKey('ownerName') | translate }}
+              {{ getErrorKey('contactName') | translate }}
             </p>
             }
           </div>
 
-          <!-- Contact Name -->
+          <!-- Email -->
           <div class="space-y-2">
             <label
               class="text-sm font-normal text-content-tertiary uppercase tracking-wide"
             >
-              {{ 'admin.partners.merchants.form.contactName' | translate }}
+              {{ 'admin.partners.merchants.form.email' | translate }}
               <span class="text-status-error">*</span>
             </label>
             <input
-              type="text"
-              formControlName="contactName"
+              type="email"
+              formControlName="email"
               class="w-full h-[3.375rem] px-4 rounded-lg border border-border bg-surface-base text-content-primary placeholder:text-content-tertiary focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors"
               [placeholder]="
-                'admin.partners.merchants.form.contactNamePlaceholder'
-                  | translate
+                'admin.partners.merchants.form.emailPlaceholder' | translate
               "
             />
-            @if (hasError('contactName')) {
+            @if (hasError('email')) {
             <p class="text-sm text-status-error">
-              {{ getErrorKey('contactName') | translate }}
+              {{ getErrorKey('email') | translate }}
             </p>
             }
           </div>
@@ -356,7 +355,7 @@
                 <span class="text-sm text-content-primary">{{
                   status.labelKey | translate
                 }}</span>
-                @if (status.value === 'active') {
+                @if (status.value === 'ACTIVE') {
                 <span class="w-2 h-2 rounded-full bg-status-success"></span>
                 }
               </label>

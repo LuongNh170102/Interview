@@ -10,3 +10,18 @@ export function slugify(text: string): string {
     .replace(/^-+/, '') // remove hyphens from the start
     .replace(/-+$/, ''); // remove hyphens from the end
 }
+
+/**
+ * Generate a secure temporary password for admin-created accounts.
+ * The user should change this password on first login.
+ * @param length - Length of password (default: 12)
+ * @returns Random password string
+ */
+export function generateTempPassword(length = 12): string {
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789!@#$';
+  let password = '';
+  for (let i = 0; i < length; i++) {
+    password += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return password;
+}

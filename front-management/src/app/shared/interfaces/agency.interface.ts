@@ -1,3 +1,5 @@
+import { APPROVAL_STATUS, OPERATIONAL_STATUS } from '@vhandelivery/shared-ui';
+
 /**
  * Agency interface for DataTable display
  * Maps API response to UI display format
@@ -28,10 +30,10 @@ export function mapOperationalStatusToUI(
     string,
     'active' | 'inactive' | 'suspended' | 'locked'
   > = {
-    ACTIVE: 'active',
-    INACTIVE: 'inactive',
-    SUSPENDED: 'suspended',
-    LOCKED: 'locked',
+    [OPERATIONAL_STATUS.ACTIVE]: 'active',
+    [OPERATIONAL_STATUS.INACTIVE]: 'inactive',
+    [OPERATIONAL_STATUS.SUSPENDED]: 'suspended',
+    [OPERATIONAL_STATUS.LOCKED]: 'locked',
   };
   return statusMap[status] ?? 'inactive';
 }
@@ -43,9 +45,9 @@ export function mapApprovalStatusToUI(
   status: string
 ): 'pending' | 'approved' | 'rejected' {
   const statusMap: Record<string, 'pending' | 'approved' | 'rejected'> = {
-    PENDING: 'pending',
-    APPROVED: 'approved',
-    REJECTED: 'rejected',
+    [APPROVAL_STATUS.PENDING]: 'pending',
+    [APPROVAL_STATUS.APPROVED]: 'approved',
+    [APPROVAL_STATUS.REJECTED]: 'rejected',
   };
   return statusMap[status] ?? 'pending';
 }

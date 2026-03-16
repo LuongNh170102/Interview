@@ -22,6 +22,8 @@ import {
   AdminCreateMerchantRequest,
   formatPhoneVN,
   cleanPhoneNumber,
+  APPROVAL_STATUS,
+  OPERATIONAL_STATUS,
 } from '@vhandelivery/shared-ui';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CustomSelectComponent } from '../../../../../shared/components/custom-select/custom-select.component';
@@ -54,16 +56,31 @@ export class AddMerchantFormComponent implements OnInit {
   /** Business type options for CustomSelectComponent */
   readonly businessTypeOptions = signal<SelectOption[]>([
     { value: 'ONLINE', label: 'admin.partners.merchants.businessType.online' },
-    { value: 'OFFLINE', label: 'admin.partners.merchants.businessType.offline' },
+    {
+      value: 'OFFLINE',
+      label: 'admin.partners.merchants.businessType.offline',
+    },
     { value: 'HYBRID', label: 'admin.partners.merchants.businessType.hybrid' },
   ]);
 
   /** Referral source options for CustomSelectComponent */
   readonly referralSourceOptions = signal<SelectOption[]>([
-    { value: 'FACEBOOK', label: 'admin.partners.merchants.referralSource.facebook' },
-    { value: 'GOOGLE', label: 'admin.partners.merchants.referralSource.google' },
-    { value: 'REFERRAL', label: 'admin.partners.merchants.referralSource.referral' },
-    { value: 'DIRECT', label: 'admin.partners.merchants.referralSource.direct' },
+    {
+      value: 'FACEBOOK',
+      label: 'admin.partners.merchants.referralSource.facebook',
+    },
+    {
+      value: 'GOOGLE',
+      label: 'admin.partners.merchants.referralSource.google',
+    },
+    {
+      value: 'REFERRAL',
+      label: 'admin.partners.merchants.referralSource.referral',
+    },
+    {
+      value: 'DIRECT',
+      label: 'admin.partners.merchants.referralSource.direct',
+    },
     { value: 'OTHER', label: 'admin.partners.merchants.referralSource.other' },
   ]);
 
@@ -84,10 +101,10 @@ export class AddMerchantFormComponent implements OnInit {
     // Basic Info
     name: ['', [Validators.required, Validators.minLength(2)]],
     phone: ['', [Validators.required, Validators.pattern(/^[\d\-]{10,15}$/)]],
+    email: ['', [Validators.required, Validators.email]],
     address: ['', [Validators.required]],
     city: ['', [Validators.required]],
-    operationalStatus: ['ACTIVE', [Validators.required]],
-    ownerName: ['', [Validators.required]],
+    operationalStatus: [OPERATIONAL_STATUS.ACTIVE, [Validators.required]],
     contactName: ['', [Validators.required]],
     businessType: ['', [Validators.required]],
     businessCategory: ['', [Validators.required]],
@@ -103,8 +120,8 @@ export class AddMerchantFormComponent implements OnInit {
 
   /** Operational status options */
   readonly operationalStatuses = signal([
-    { value: 'ACTIVE', labelKey: 'common.status.active' },
-    { value: 'INACTIVE', labelKey: 'common.status.inactive' },
+    { value: OPERATIONAL_STATUS.ACTIVE, labelKey: 'common.status.active' },
+    { value: OPERATIONAL_STATUS.INACTIVE, labelKey: 'common.status.inactive' },
   ]);
 
   ngOnInit(): void {
@@ -115,7 +132,7 @@ export class AddMerchantFormComponent implements OnInit {
   /** Load agencies from API */
   private loadAgencies(): void {
     this.agencyService
-      .findAll({ approvalStatus: 'APPROVED', limit: 1000 })
+      .findAll({ approvalStatus: APPROVAL_STATUS.APPROVED, limit: 1000 })
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: (response) => {
@@ -164,6 +181,9 @@ export class AddMerchantFormComponent implements OnInit {
     }
     if (field?.hasError('minlength')) {
       return 'common.validation.minLength';
+    }
+    if (field?.hasError('email')) {
+      return 'common.validation.invalidEmail';
     }
     if (field?.hasError('pattern')) {
       return 'common.validation.invalidFormat';
@@ -238,7 +258,7 @@ export class AddMerchantFormComponent implements OnInit {
   /** Reset form */
   resetForm(): void {
     this.form.reset({
-      operationalStatus: 'ACTIVE',
+      operationalStatus: OPERATIONAL_STATUS.ACTIVE,
       hasBusinessLicense: false,
     });
   }

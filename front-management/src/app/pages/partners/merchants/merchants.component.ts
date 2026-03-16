@@ -16,6 +16,7 @@ import {
   TranslationService,
   CategoryService,
   LocalizedString,
+  APPROVAL_STATUS,
 } from '@vhandelivery/shared-ui';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
@@ -212,7 +213,7 @@ export class MerchantsComponent implements OnInit {
         page,
         limit: pageSize,
         include: 'statistics',
-        approvalStatus: 'APPROVED',
+        approvalStatus: APPROVAL_STATUS.APPROVED,
       })
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({

@@ -234,6 +234,8 @@
           "brandPlaceholder": "Hãy nhập tên thương hiệu vào nhé",
           "contactName": "Tên liên hệ",
           "contactNamePlaceholder": "Nhập tên người liên hệ",
+          "email": "Email",
+          "emailPlaceholder": "Nhập địa chỉ email",
           "businessType": "Phương thức kinh doanh",
           "selectBusinessType": "Chọn phương thức",
           "referralSource": "Nguồn giới thiệu",

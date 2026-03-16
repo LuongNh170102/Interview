@@ -27,14 +27,14 @@ export class MerchantQueryBuilder extends QueryBuilder<Prisma.MerchantWhereInput
   }
 
   /**
-   * Search by name, phone, or contact name
+   * Search by name, phone, or owner email
    */
   withSearch(search?: string): this {
     if (search) {
       this.where.OR = [
         { name: { contains: search, mode: 'insensitive' } },
         { phone: { contains: search } },
-        { contactName: { contains: search, mode: 'insensitive' } },
+        { owner: { email: { contains: search, mode: 'insensitive' } } },
       ];
     }
     return this;

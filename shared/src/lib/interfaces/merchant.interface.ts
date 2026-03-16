@@ -26,9 +26,9 @@ export interface RegisterMerchantRequest {
 export interface AdminCreateMerchantRequest {
   name: string;
   phone: string;
+  email: string;
   address: string;
   city: string;
-  ownerName: string;
   contactName: string;
   businessType: BUSINESS_TYPE;
   businessCategory: string;

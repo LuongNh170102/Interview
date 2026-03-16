@@ -2,6 +2,7 @@ import {
   Injectable,
   UnauthorizedException,
   NotFoundException,
+  ConflictException,
 } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
 import { CreateMerchantDto } from './dto/create-merchant.dto';
@@ -26,9 +27,11 @@ import { OtpService } from '../otp/otp.service';
 import { ROLE } from '../common/constants/role.constants';
 import { RESOURCE_TARGETS } from '../common/constants/resource.constant';
 import { ApprovalStatus } from '@prisma/client';
-import { OperationalStatus } from '@prisma/client';
+import { OperationalStatus, RoleScope } from '@prisma/client';
 import { MerchantEntity } from './entities/merchant.entity';
 import { MerchantQueryBuilder } from './builders/merchant-query.builder';
+import * as bcrypt from 'bcrypt';
+import { generateTempPassword } from '../common/utils/string.util';
 
 @Injectable()
 export class MerchantService {
@@ -179,7 +182,7 @@ export class MerchantService {
     });
 
     // If status is APPROVED, assign MERCHANT_OWNER role and link merchantId
-    if (status === MERCHANT_STATUS.APPROVED) {
+    if (status === MERCHANT_STATUS.APPROVED && merchant.ownerId) {
       const merchantOwnerRole = await this.prisma.role.findUnique({
         where: { name: ROLE.MERCHANT_OWNER },
       });
@@ -281,9 +284,16 @@ export class MerchantService {
   /**
    * Admin creates a merchant directly — no OTP verification required.
    * Sets approvalStatus to APPROVED immediately.
+   
    */
   async adminCreate(adminUserId: number, dto: AdminCreateMerchantDto) {
-    // Resolve agencyId (externalId → internal id)
+    const existingUser = await this.prisma.user.findUnique({
+      where: { email: dto.email },
+    });
+    if (existingUser) {
+      throw new ConflictException(AUTH_MESSAGES.EMAIL_EXISTS);
+    }
+
     let agencyId: number | undefined;
     if (dto.agencyId) {
       const agency = await this.prisma.agency.findUnique({
@@ -296,30 +306,65 @@ export class MerchantService {
       agencyId = agency.id;
     }
 
-    const merchant = await this.prisma.merchant.create({
-      data: {
-        name: dto.name,
-        phone: dto.phone,
-        address: dto.address,
-        city: dto.city,
-        contactName: dto.contactName,
-        businessType: dto.businessType,
-        businessCategory: dto.businessCategory,
-        hasBusinessLicense: dto.hasBusinessLicense,
-        operationalStatus: dto.operationalStatus as OperationalStatus,
-        referralSource: dto.referralSource,
-        metadata: {
-          ownerName: dto.ownerName,
-          ...(dto.socialLinks ? { socialLinks: dto.socialLinks } : {}),
+    let merchantOwnerRole = await this.prisma.role.findUnique({
+      where: { name: ROLE.MERCHANT_OWNER },
+    });
+    if (!merchantOwnerRole) {
+      merchantOwnerRole = await this.prisma.role.create({
+        data: { name: ROLE.MERCHANT_OWNER, scope: RoleScope.MERCHANT },
+      });
+    }
+
+    const tempPassword = generateTempPassword();
+    const salt = await bcrypt.genSalt();
+    const passwordHash = await bcrypt.hash(tempPassword, salt);
+
+    const result = await this.prisma.$transaction(async (tx) => {
+      const user = await tx.user.create({
+        data: {
+          email: dto.email,
+          phone: dto.phone,
+          username: dto.contactName,
+          passwordHash,
         },
-        logoUrl: dto.logoUrl,
-        agencyId,
-        approvalStatus: MERCHANT_STATUS.APPROVED as ApprovalStatus,
-        approvedAt: new Date(),
-        approvedBy: adminUserId,
-      },
+      });
+
+      const merchant = await tx.merchant.create({
+        data: {
+          name: dto.name,
+          phone: dto.phone,
+          address: dto.address,
+          city: dto.city,
+          contactName: dto.contactName,
+          businessType: dto.businessType,
+          businessCategory: dto.businessCategory,
+          hasBusinessLicense: dto.hasBusinessLicense,
+          operationalStatus: dto.operationalStatus as OperationalStatus,
+          referralSource: dto.referralSource,
+          metadata: dto.socialLinks ? { socialLinks: dto.socialLinks } : {},
+          logoUrl: dto.logoUrl,
+          agencyId,
+          ownerId: user.id,
+          approvalStatus: MERCHANT_STATUS.APPROVED as ApprovalStatus,
+          approvedAt: new Date(),
+          approvedBy: adminUserId,
+        },
+      });
+
+      await tx.userRole.create({
+        data: {
+          userId: user.id,
+          roleId: merchantOwnerRole.id,
+          merchantId: merchant.id,
+        },
+      });
+
+      return merchant;
     });
 
-    return merchant;
+    // TODO: Send email to merchant owner with temporary password
+    // await this.emailService.sendWelcomeEmail(dto.email, tempPassword);
+
+    return result;
   }
 }

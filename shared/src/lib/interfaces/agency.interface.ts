@@ -1,3 +1,8 @@
+import {
+  ApprovalStatusValue,
+  OperationalStatusValue,
+} from '../constants/status.constant';
+
 export interface CreateAgencyRequest {
   name: string;
   phone: string;
@@ -31,8 +36,8 @@ export interface AgencyResponse {
   updatedAt?: string | Date | null;
 }
 
-export type ApprovalStatus = 'PENDING' | 'APPROVED' | 'REJECTED';
-export type OperationalStatus = 'ACTIVE' | 'INACTIVE' | 'SUSPENDED' | 'LOCKED';
+export type ApprovalStatus = ApprovalStatusValue;
+export type OperationalStatus = OperationalStatusValue;
 
 export interface AgencyStatistics {
   totalApproved: number;
