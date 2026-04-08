@@ -431,9 +431,26 @@ async function main() {
   console.log('Assigned permissions to roles.');
 
   // 4. Create Default Admin User
-  const adminEmail = process.env.ADMIN_EMAIL || 'admin@vhandelivery.com';
-  const adminPassword = process.env.ADMIN_PASSWORD || 'admin123';
-  const passwordHash = await bcrypt.hash(adminPassword, 10);
+  // SECURITY: Credentials MUST be provided via environment variables.
+  // No fallback defaults — fail fast if they are missing or too weak.
+  const adminEmail = process.env.ADMIN_EMAIL;
+  const adminPassword = process.env.ADMIN_PASSWORD;
+
+  if (!adminEmail || !adminPassword) {
+    throw new Error(
+      '[SEED] FATAL: ADMIN_EMAIL and ADMIN_PASSWORD environment variables must be set before seeding. ' +
+      'Never use default/hardcoded credentials. Set them in your .env.development or CI/CD secrets.',
+    );
+  }
+
+  if (adminPassword.length < 16) {
+    throw new Error(
+      '[SEED] FATAL: ADMIN_PASSWORD must be at least 16 characters long to meet minimum security requirements.',
+    );
+  }
+
+  const passwordHash = await bcrypt.hash(adminPassword, 12); // Cost factor 12 (up from 10)
+
 
   const adminUser = await prisma.user.upsert({
     where: { email: adminEmail },
