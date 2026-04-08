@@ -398,10 +398,10 @@ model Product {
   id          Int      @id @default(autoincrement())
   externalId  String   @unique @default(uuid()) @map("external_id") @db.Uuid
   merchantId  Int      @map("merchant_id")
-  
+
   // Menu Organization
   sectionId   Int?     @map("section_id")
-  
+
   name        Json
   description Json?
   price       Decimal? @db.Decimal(12, 2)
@@ -409,26 +409,44 @@ model Product {
   sku         String?
   stock       Int?
   isActive    Boolean? @default(true) @map("is_active")
+
+  // Product lifecycle status: DRAFT → PUBLISHED → ARCHIVED
+  status      ProductStatus @default(DRAFT)
+
+  // Images stored as JSON array of URLs: ["https://...", "https://..."]
+  images      Json?
+
   metadata    Json?
-  
+
   // Denormalized rating stats (updated via service when reviews change)
   averageRating   Float     @default(0) @map("average_rating")
   totalReviews    Int       @default(0) @map("total_reviews")
-  
+
   createdAt   DateTime @default(now()) @map("created_at")
   updatedAt   DateTime? @updatedAt @map("updated_at")
 
   // Relations
   merchant          Merchant          @relation(fields: [merchantId], references: [id])
   section           MenuSection?      @relation(fields: [sectionId], references: [id])
-  
+
   variants          ProductVariant[]
   cartItems         CartItem[]
   orderItems        OrderItem[]
   reviews           Review[]
 
+  // Indexes for B2C storefront queries
+  @@index([status])                     // fast filter: status = PUBLISHED
+  @@index([merchantId, status])         // merchant product management page
+  @@index([status, createdAt])          // B2C listing: published + newest first
   @@map("products")
 }
+
+enum ProductStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
 
 model ProductVariant {
   id        Int      @id @default(autoincrement())
@@ -567,12 +585,13 @@ model Order {
   merchantId      Int      @map("merchant_id")
   totalAmount     Decimal? @map("total_amount") @db.Decimal(12, 2)
   currency        String?  @default("VND")
-  status          String?  // 'pending' | 'confirmed' | 'preparing' | 'delivering' | 'completed' | 'cancelled'
+  status          OrderStatus @default(PENDING) // typed enum instead of raw string
   paymentStatus   String?  @map("payment_status") // 'pending' | 'paid' | 'failed' | 'refunded'
   deliveryAddress Json?    @map("delivery_address")
   courierId       Int?     @map("courier_id")
-  shippingFee     Decimal? @map("shipping_fee")
+  shippingFee     Decimal? @map("shipping_fee") @db.Decimal(12, 2)
   promotionId     Int?     @map("promotion_id")
+  notes           String?  @db.Text // Buyer's delivery notes
   createdAt       DateTime @default(now()) @map("created_at")
   updatedAt       DateTime? @updatedAt @map("updated_at")
 
@@ -583,8 +602,22 @@ model Order {
   promotion Promotion? @relation(fields: [promotionId], references: [id])
   orderItems OrderItem[]
 
+  @@index([userId])                // customer order history
+  @@index([merchantId, status])    // merchant dashboard order list
+  @@index([courierId, status])     // courier's active deliveries
+  @@index([status])                // admin order management
   @@map("orders")
 }
+
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  PREPARING
+  DELIVERING
+  COMPLETED
+  CANCELLED
+}
+
 
 model OrderItem {
   id        Int      @id @default(autoincrement())

@@ -13,6 +13,7 @@ import { BrandModule } from './brand/brand.module';
 import { CommonModule } from './common/common.module';
 import { HealthModule } from './health/health.module';
 import { CourierModule } from './courier/courier.module';
+import { OrderModule } from './order/order.module';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { CourierModule } from './courier/courier.module';
     CategoryModule,
     BrandModule,
     CourierModule,
+    OrderModule,
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService],
