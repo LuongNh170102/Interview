@@ -480,20 +480,47 @@ model CartItem {
 }
 
 model Courier {
-  id              Int      @id @default(autoincrement())
-  userId          Int      @unique @map("user_id")
-  name            String?
-  phone           String?
-  status          String?  // 'available' | 'busy' | 'offline'
-  vehicleType     String?  @map("vehicle_type") // 'bike' | 'motorbike' | 'car'
-  currentLocation Json?    @map("current_location")
-  createdAt       DateTime @default(now()) @map("created_at")
-  updatedAt       DateTime? @updatedAt @map("updated_at")
+  id          Int      @id @default(autoincrement())
+  externalId  String   @unique @default(uuid()) @map("external_id") @db.Uuid
+  userId      Int?     @unique @map("user_id")
+
+  // Basic info
+  name          String
+  phone         String   @unique
+  email         String   @unique
+  vehicleType   String?  @map("vehicle_type") // 'bike' | 'motorbike' | 'car'
+  licenseNumber String?  @map("license_number")
+  avatarUrl     String?  @map("avatar_url") @db.Text
+  address       String?  @db.Text
+
+  // Online presence
+  onlineStatus    String  @default("OFFLINE") @map("online_status") // 'ONLINE' | 'OFFLINE' | 'BUSY'
+  currentLocation Json?   @map("current_location") // { lat, lng }
+
+  // Approval Status (one-time, for registration process — mirrors Agency/Merchant pattern)
+  approvalStatus  ApprovalStatus  @default(PENDING) @map("approval_status")
+  approvedAt      DateTime?       @map("approved_at")
+  approvedBy      Int?            @map("approved_by")
+  rejectedAt      DateTime?       @map("rejected_at")
+  rejectedBy      Int?            @map("rejected_by")
+  rejectionReason String?         @map("rejection_reason") @db.Text
+
+  // Soft delete
+  deletedAt   DateTime? @map("deleted_at")
+
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime? @updatedAt @map("updated_at")
 
   // Relations
-  user   User    @relation(fields: [userId], references: [id])
+  user   User?   @relation(fields: [userId], references: [id])
   orders Order[]
 
+  // Indexes for fast queries by status, online status, and soft delete
+  @@index([approvalStatus])
+  @@index([onlineStatus])
+  @@index([approvalStatus, onlineStatus])
+  @@index([deletedAt])
+  @@index([createdAt])
   @@map("couriers")
 }
 
