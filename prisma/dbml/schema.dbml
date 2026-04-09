@@ -1,0 +1,570 @@
+//// ------------------------------------------------------
+//// THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+//// ------------------------------------------------------
+
+Table users {
+  id Int [pk, increment]
+  externalId String [unique, not null]
+  email String [unique, not null]
+  phone String
+  username String
+  passwordHash String
+  hashedRefreshToken String
+  profile Json
+  avatarUrl String
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime
+  lastSeenAt DateTime
+  userRoles user_roles [not null]
+  ownedAgencies agencies [not null]
+  ownedMerchants merchants [not null]
+  carts carts [not null]
+  courier couriers
+  orders orders [not null]
+  reviews reviews [not null]
+  linkedAccounts linked_accounts [not null]
+}
+
+Table linked_accounts {
+  id Int [pk, increment]
+  userId Int [not null]
+  provider AuthProvider [not null]
+  providerId String [not null]
+  email String
+  displayName String
+  avatarUrl String
+  accessToken String
+  refreshToken String
+  expiresAt DateTime
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime
+  user users [not null]
+
+  indexes {
+    (provider, providerId) [unique]
+    (userId, provider) [unique]
+  }
+}
+
+Table roles {
+  id Int [pk, increment]
+  name String [unique, not null]
+  scope RoleScope [not null]
+  description Json
+  permissions role_permissions [not null]
+  userRoles user_roles [not null]
+}
+
+Table permissions {
+  id Int [pk, increment]
+  resource String [not null]
+  action String [not null]
+  description Json
+  roles role_permissions [not null]
+
+  indexes {
+    (resource, action) [unique]
+  }
+}
+
+Table role_permissions {
+  roleId Int [not null]
+  permissionId Int [not null]
+  description Json
+  role roles [not null]
+  permission permissions [not null]
+
+  indexes {
+    (roleId, permissionId) [pk]
+  }
+}
+
+Table user_roles {
+  id Int [pk, increment]
+  userId Int [not null]
+  roleId Int [not null]
+  merchantId Int
+  agencyId Int
+  brandId Int
+  createdAt DateTime [default: `now()`, not null]
+  user users [not null]
+  role roles [not null]
+  merchant merchants
+  agency agencies
+  brand brands
+
+  indexes {
+    (userId, roleId, merchantId, agencyId, brandId) [unique]
+  }
+}
+
+Table agencies {
+  id Int [pk, increment]
+  externalId String [unique, not null]
+  name String [not null]
+  taxCode String
+  bankAccount String
+  address String
+  phone String
+  email String
+  logo String
+  businessLicenseUrl String
+  approvalStatus ApprovalStatus [not null, default: 'PENDING']
+  approvedAt DateTime
+  approvedBy Int
+  rejectedAt DateTime
+  rejectedBy Int
+  rejectionReason String
+  operationalStatus OperationalStatus [not null, default: 'ACTIVE']
+  statusChangedAt DateTime
+  statusChangedBy Int
+  statusReason String
+  ownerId Int
+  owner users
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime
+  brands brands [not null]
+  merchants merchants [not null]
+  userRoles user_roles [not null]
+}
+
+Table brands {
+  id Int [pk, increment]
+  externalId String [unique, not null]
+  name String
+  slug String [unique]
+  description Json
+  metadata Json
+  businessCategory String
+  agencyId Int
+  agency agencies
+  merchants merchants [not null]
+  categories brand_categories [not null]
+  userRoles user_roles [not null]
+}
+
+Table categories {
+  id Int [pk, increment]
+  externalId String [unique, not null]
+  name Json
+  parentId Int
+  slug String
+  parent categories
+  children categories [not null]
+  brands brand_categories [not null]
+  merchants merchant_categories [not null]
+}
+
+Table brand_categories {
+  brandId Int [not null]
+  categoryId Int [not null]
+  isFeatured Boolean [not null, default: false]
+  displayOrder Int [not null, default: 0]
+  brand brands [not null]
+  category categories [not null]
+
+  indexes {
+    (brandId, categoryId) [pk]
+  }
+}
+
+Table tags {
+  id Int [pk, increment]
+  code String [unique, not null]
+  name Json [not null]
+  icon String
+  color String
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime
+  merchants merchant_tags [not null]
+}
+
+Table merchant_tags {
+  merchantId Int [not null]
+  tagId Int [not null]
+  description Json
+  merchant merchants [not null]
+  tag tags [not null]
+
+  indexes {
+    (merchantId, tagId) [pk]
+  }
+}
+
+Table merchants {
+  id Int [pk, increment]
+  externalId String [unique, not null]
+  name String [not null]
+  brandId Int
+  agencyId Int
+  ownerId Int
+  address String
+  city String
+  contactName String
+  businessType String
+  businessCategory String
+  referralSource String
+  hasBusinessLicense Boolean [default: false]
+  latitude Float
+  longitude Float
+  phone String
+  logoUrl String
+  approvalStatus ApprovalStatus [not null, default: 'PENDING']
+  approvedAt DateTime
+  approvedBy Int
+  rejectedAt DateTime
+  rejectedBy Int
+  rejectionReason String
+  operationalStatus OperationalStatus [not null, default: 'ACTIVE']
+  statusChangedAt DateTime
+  statusChangedBy Int
+  statusReason String
+  isAcceptingOrders Boolean [not null, default: true]
+  metadata Json
+  averageRating Float [not null, default: 0]
+  totalReviews Int [not null, default: 0]
+  ratingBreakdown Json
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime
+  brand brands
+  agency agencies
+  owner users
+  tags merchant_tags [not null]
+  products products [not null]
+  menus menus [not null]
+  carts carts [not null]
+  promotions promotions [not null]
+  shippingFees shipping_fees [not null]
+  orders orders [not null]
+  reviews reviews [not null]
+  userRoles user_roles [not null]
+  operatingHours operating_hours [not null]
+  categories merchant_categories [not null]
+}
+
+Table merchant_categories {
+  merchantId Int [not null]
+  categoryId Int [not null]
+  isFeatured Boolean [not null, default: false]
+  displayOrder Int [not null, default: 0]
+  merchant merchants [not null]
+  category categories [not null]
+
+  indexes {
+    (merchantId, categoryId) [pk]
+  }
+}
+
+Table operating_hours {
+  id Int [pk, increment]
+  merchantId Int [not null]
+  dayOfWeek Int [not null]
+  openTime String [not null]
+  closeTime String [not null]
+  merchant merchants [not null]
+}
+
+Table menus {
+  id Int [pk, increment]
+  merchantId Int [not null]
+  name Json
+  isActive Boolean [not null, default: true]
+  description Json
+  merchant merchants [not null]
+  sections menu_sections [not null]
+}
+
+Table menu_sections {
+  id Int [pk, increment]
+  menuId Int [not null]
+  name Json [not null]
+  displayOrder Int [not null, default: 0]
+  menu menus [not null]
+  products products [not null]
+}
+
+Table products {
+  id Int [pk, increment]
+  externalId String [unique, not null]
+  merchantId Int [not null]
+  sectionId Int
+  name Json [not null]
+  description Json
+  price Decimal
+  currency String [default: 'VND']
+  sku String
+  stock Int
+  isActive Boolean [default: true]
+  metadata Json
+  averageRating Float [not null, default: 0]
+  totalReviews Int [not null, default: 0]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime
+  merchant merchants [not null]
+  section menu_sections
+  variants product_variants [not null]
+  cartItems cart_items [not null]
+  orderItems order_items [not null]
+  reviews reviews [not null]
+  status ProductStatus [not null, default: 'DRAFT']
+}
+
+Table product_variants {
+  id Int [pk, increment]
+  productId Int [not null]
+  name Json
+  price Decimal
+  stock Int
+  metadata Json
+  product products [not null]
+}
+
+Table carts {
+  id Int [pk, increment]
+  userId Int [not null]
+  merchantId Int [not null]
+  totalAmount Decimal
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime
+  user users [not null]
+  merchant merchants [not null]
+  cartItems cart_items [not null]
+}
+
+Table cart_items {
+  id Int [pk, increment]
+  cartId Int [not null]
+  productId Int [not null]
+  variantId Int
+  quantity Int
+  price Decimal
+  total Decimal
+  metadata Json
+  cart carts [not null]
+  product products [not null]
+}
+
+Table couriers {
+  id Int [pk, increment]
+  userId Int [unique, not null]
+  name String
+  phone String
+  status String
+  vehicleType String
+  currentLocation Json
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime
+  user users [not null]
+  orders orders [not null]
+  approvalStatus String [not null, default: 'PENDING']
+  rejectionReason String
+  operationalStatus String [not null, default: 'INACTIVE']
+}
+
+Table promotions {
+  id Int [pk, increment]
+  merchantId Int
+  code String
+  description Json
+  discountType String
+  discountValue Decimal
+  minOrderAmount Decimal
+  startAt DateTime
+  endAt DateTime
+  maxUses Int
+  metadata Json
+  merchant merchants
+  orders orders [not null]
+}
+
+Table shipping_fees {
+  id Int [pk, increment]
+  merchantId Int [not null]
+  minDistance Decimal
+  maxDistance Decimal
+  baseFee Decimal
+  feePerKm Decimal
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime
+  merchant merchants [not null]
+}
+
+Table orders {
+  id Int [pk, increment]
+  externalId String [unique, not null]
+  userId Int [not null]
+  merchantId Int [not null]
+  totalAmount Decimal
+  currency String [default: 'VND']
+  status String
+  paymentStatus String
+  deliveryAddress Json
+  courierId Int
+  shippingFee Decimal
+  promotionId Int
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime
+  user users [not null]
+  merchant merchants [not null]
+  courier couriers
+  promotion promotions
+  orderItems order_items [not null]
+}
+
+Table order_items {
+  id Int [pk, increment]
+  orderId Int [not null]
+  productId Int [not null]
+  variantId Int
+  quantity Int
+  price Decimal
+  total Decimal
+  metadata Json
+  order orders [not null]
+  product products [not null]
+}
+
+Table reviews {
+  id Int [pk, increment]
+  userId Int [not null]
+  productId Int
+  merchantId Int
+  rating Decimal
+  comment String
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime
+  user users [not null]
+  product products
+  merchant merchants
+}
+
+Table otp_verifications {
+  id Int [pk, increment]
+  phone String [not null]
+  code String [not null]
+  verified Boolean [not null, default: false]
+  expiresAt DateTime [not null]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+}
+
+Enum AuthProvider {
+  GOOGLE
+  FACEBOOK
+  APPLE
+  KAKAO
+}
+
+Enum RoleScope {
+  PLATFORM
+  MERCHANT
+}
+
+Enum ApprovalStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+Enum OperationalStatus {
+  ACTIVE
+  INACTIVE
+  SUSPENDED
+  LOCKED
+}
+
+Enum CourierStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+Enum ProductStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+Ref: linked_accounts.userId > users.id [delete: Cascade]
+
+Ref: role_permissions.roleId > roles.id
+
+Ref: role_permissions.permissionId > permissions.id
+
+Ref: user_roles.userId > users.id
+
+Ref: user_roles.roleId > roles.id
+
+Ref: user_roles.merchantId > merchants.id
+
+Ref: user_roles.agencyId > agencies.id
+
+Ref: user_roles.brandId > brands.id
+
+Ref: agencies.ownerId > users.id
+
+Ref: brands.agencyId > agencies.id
+
+Ref: categories.parentId - categories.id
+
+Ref: brand_categories.brandId > brands.id
+
+Ref: brand_categories.categoryId > categories.id
+
+Ref: merchant_tags.merchantId > merchants.id
+
+Ref: merchant_tags.tagId > tags.id
+
+Ref: merchants.brandId > brands.id
+
+Ref: merchants.agencyId > agencies.id
+
+Ref: merchants.ownerId > users.id
+
+Ref: merchant_categories.merchantId > merchants.id
+
+Ref: merchant_categories.categoryId > categories.id
+
+Ref: operating_hours.merchantId > merchants.id [delete: Cascade]
+
+Ref: menus.merchantId > merchants.id
+
+Ref: menu_sections.menuId > menus.id
+
+Ref: products.merchantId > merchants.id
+
+Ref: products.sectionId > menu_sections.id
+
+Ref: product_variants.productId > products.id
+
+Ref: carts.userId > users.id
+
+Ref: carts.merchantId > merchants.id
+
+Ref: cart_items.cartId > carts.id
+
+Ref: cart_items.productId > products.id
+
+Ref: couriers.userId - users.id
+
+Ref: promotions.merchantId > merchants.id
+
+Ref: shipping_fees.merchantId > merchants.id
+
+Ref: orders.userId > users.id
+
+Ref: orders.merchantId > merchants.id
+
+Ref: orders.courierId > couriers.id
+
+Ref: orders.promotionId > promotions.id
+
+Ref: order_items.orderId > orders.id
+
+Ref: order_items.productId > products.id
+
+Ref: reviews.userId > users.id
+
+Ref: reviews.productId > products.id
+
+Ref: reviews.merchantId > merchants.id

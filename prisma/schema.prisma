@@ -5,6 +5,10 @@ generator client {
   provider = "prisma-client-js"
 }
 
+generator dbml {
+  provider = "prisma-dbml-generator"
+}
+
 datasource db {
   provider = "postgresql"
 }
@@ -427,7 +431,14 @@ model Product {
   orderItems        OrderItem[]
   reviews           Review[]
 
+  status      ProductStatus @default(DRAFT)
+
+   // Nice to Have: Soft delete to maintain order history integrity
+  deletedAt         DateTime?         @map("deleted_at") 
+  
   @@map("products")
+  @@index([status, merchantId]) 
+  @@index([status, deletedAt])
 }
 
 model ProductVariant {
@@ -479,22 +490,47 @@ model CartItem {
   @@map("cart_items")
 }
 
+enum CourierStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
 model Courier {
-  id              Int      @id @default(autoincrement())
-  userId          Int      @unique @map("user_id")
-  name            String?
-  phone           String?
-  status          String?  // 'available' | 'busy' | 'offline'
-  vehicleType     String?  @map("vehicle_type") // 'bike' | 'motorbike' | 'car'
-  currentLocation Json?    @map("current_location")
-  createdAt       DateTime @default(now()) @map("created_at")
-  updatedAt       DateTime? @updatedAt @map("updated_at")
+  id                Int               @id @default(autoincrement())
+  // Security: Use UUID for public-facing APIs to prevent ID enumeration
+  externalId        String            @unique @default(uuid()) @map("external_id") @db.Uuid
+  userId            Int               @unique @map("user_id")
+  name              String?
+  phone             String?           @unique // Constraint: One account per phone number
+  
+  // Requirement: Approval Lifecycle (Standardized with Merchant/Agency)
+  approvalStatus    ApprovalStatus    @default(PENDING) @map("approval_status")
+  approvedAt        DateTime?         @map("approved_at")
+  approvedBy        Int?              @map("approved_by")
+  rejectedAt        DateTime?         @map("rejected_at")
+  rejectedBy        Int?              @map("rejected_by")
+  rejectionReason   String?           @map("rejection_reason") @db.Text
+  
+  // Requirement: Operational Status (Online/Offline toggle)
+  operationalStatus OperationalStatus @default(INACTIVE) @map("operational_status")
+  
+  vehicleType       String?           @map("vehicle_type") 
+  currentLocation   Json?             @map("current_location")
+  
+  createdAt         DateTime          @default(now()) @map("created_at")
+  updatedAt         DateTime?         @updatedAt @map("updated_at")
+  // Nice to Have: Soft delete to maintain order history integrity
+  deletedAt         DateTime?         @map("deleted_at") 
 
   // Relations
-  user   User    @relation(fields: [userId], references: [id])
-  orders Order[]
+  user              User              @relation(fields: [userId], references: [id])
+  orders            Order[]
 
   @@map("couriers")
+  // Performance: Indexing for faster Admin filtering and API lookups
+  @@index([externalId])        
+  @@index([approvalStatus, operationalStatus])
 }
 
 model Promotion {
@@ -556,7 +592,15 @@ model Order {
   promotion Promotion? @relation(fields: [promotionId], references: [id])
   orderItems OrderItem[]
 
+   // Nice to Have: Soft delete to maintain order history integrity
+  deletedAt         DateTime?         @map("deleted_at") 
+
   @@map("orders")
+  @@map("orders")
+  @@index([userId])
+  @@index([merchantId])
+  @@index([courierId, status])
+  @@index([status])
 }
 
 model OrderItem {
@@ -604,4 +648,10 @@ model OtpVerification {
   updatedAt DateTime @updatedAt @map("updated_at")
 
   @@map("otp_verifications")
+}
+
+enum ProductStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
 }
