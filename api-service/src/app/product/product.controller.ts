@@ -36,16 +36,17 @@ export class ProductController {
   @Permissions('product:create')
   @UseInterceptors(FilesInterceptor('images', 10))
   async create(
-    @Query('merchantId') merchantId: string,
+    @Request() req: any,
     @Body(MerchantOwnershipPipe) createProductDto: CreateProductDto,
     @UploadedFiles() files: Array<Express.Multer.File>
   ) {
-    return this.productService.create(createProductDto, files);
+    return this.productService.create(req.user, createProductDto, files);
   }
 
+  //* TASK 3: Implement pagination for product listing APIs
   @Get()
-  findAll() {
-    return this.productService.findAll();
+  async findByPage(@Query() paginationDto: PaginationDto) {
+    return this.productService.findProductByPage(paginationDto);
   }
 
   @Get('merchant/:merchantId')
@@ -53,7 +54,7 @@ export class ProductController {
     @Param('merchantId') merchantId: string,
     @Query() paginationDto: PaginationDto
   ) {
-    return this.productService.findAllByMerchant(merchantId, paginationDto);
+    return this.productService.findProductByMerchant(merchantId, paginationDto);
   }
 
   @Get(':id')
@@ -76,5 +77,19 @@ export class ProductController {
   @Permissions('product:delete')
   remove(@Param('id') externalId: string) {
     return this.productService.remove(externalId);
+  }
+
+  @Get('suggestions')
+  async getSuggestions(@Query('q') q: string) {
+    return this.productService.getSuggestions(q);
+  }
+
+  @Get('search')
+  async search(
+    @Query('q') q: string,
+    @Query('page') page = '1',
+    @Query('limit') limit = '10'
+  ) {
+    return this.productService.searchProducts(q, +page, +limit);
   }
 }

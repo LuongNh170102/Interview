@@ -226,6 +226,43 @@ async function main() {
         ko: '시스템 보고서 보기',
       },
     },
+    // Courier Permissions (NEW)
+    {
+      resource: 'courier',
+      action: 'create',
+      description: {
+        en: 'Register as courier',
+        vi: 'Đăng ký làm tài xế',
+        ko: '배달 기사 등록',
+      },
+    },
+    {
+      resource: 'courier',
+      action: 'read',
+      description: {
+        en: 'View courier details',
+        vi: 'Xem chi tiết tài xế',
+        ko: '배달 기사 상세 보기',
+      },
+    },
+    {
+      resource: 'courier',
+      action: 'update',
+      description: {
+        en: 'Approve or Reject courier',
+        vi: 'Duyệt hoặc Từ chối tài xế',
+        ko: '배달 기사 승인 또는 거절',
+      },
+    },
+    {
+      resource: 'courier',
+      action: 'delete',
+      description: {
+        en: 'Delete courier profile',
+        vi: 'Xóa hồ sơ tài xế',
+        ko: '배달 기사 프로필 삭제',
+      },
+    },
   ];
 
   console.log(`Creating ${permissionsData.length} permissions...`);

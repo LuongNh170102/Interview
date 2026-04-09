@@ -1,4 +1,12 @@
-import { IsNotEmpty, IsNumber, IsOptional, IsString, IsBoolean, ValidateNested } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+  IsBoolean,
+  ValidateNested,
+  IsEnum,
+} from 'class-validator';
 import { Type, Transform, plainToInstance } from 'class-transformer';
 
 export class LocalizedStringDto {
@@ -96,4 +104,8 @@ export class CreateProductDto {
   @ValidateNested()
   @Type(() => ProductMetadataDto)
   metadata?: ProductMetadataDto;
+
+  @IsOptional()
+  @IsEnum(['DRAFT', 'PUBLISHED', 'ARCHIVED'])
+  status?: string;
 }
