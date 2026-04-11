@@ -50,8 +50,11 @@ export const appRoutes: Route[] = [
           },
           {
             path: 'couriers',
-            loadComponent: loadUnderDevelopment,
-            // canActivate: [withPermissions('courier:read')],
+            loadComponent: () =>
+              import('./pages/couriers/couriers.component').then(
+                (m) => m.CouriersComponent
+              ),
+            canActivate: [withPermissions('courier:read')],
           },
           {
             path: 'roles',
@@ -116,7 +119,7 @@ export const appRoutes: Route[] = [
           import(
             './pages/products/products-layout/products-layout.component'
           ).then((m) => m.ProductsLayoutComponent),
-        canActivate: [withPermissions('category:read', 'product:read')],
+        canActivate: [withPermissions('product:read')],
         children: [
           {
             path: 'categories',
@@ -128,7 +131,10 @@ export const appRoutes: Route[] = [
           },
           {
             path: 'list',
-            loadComponent: loadUnderDevelopment,
+            loadComponent: () =>
+              import(
+                './pages/products/product-list/product-list.component'
+              ).then((m) => m.ProductListComponent),
             canActivate: [withPermissions('product:read')],
           },
           {
@@ -138,7 +144,7 @@ export const appRoutes: Route[] = [
           },
           {
             path: '',
-            redirectTo: 'categories',
+            redirectTo: 'list',
             pathMatch: 'full',
           },
         ],

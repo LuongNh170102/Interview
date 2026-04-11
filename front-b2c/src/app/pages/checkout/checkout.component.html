@@ -1,0 +1,54 @@
+<div class="container mx-auto px-4 py-8 max-w-2xl">
+  <h1 class="text-3xl font-bold mb-8">Thanh toán</h1>
+
+  <div class="grid grid-cols-1 lg:grid-cols-5 gap-8">
+    <!-- Form -->
+    <div class="lg:col-span-3">
+      <h2 class="text-xl font-semibold mb-4">Thông tin giao hàng</h2>
+      <div class="space-y-4">
+        <input
+          [(ngModel)]="phone"
+          placeholder="Số điện thoại"
+          class="w-full p-4 border rounded-xl"
+        />
+        <textarea
+          [(ngModel)]="shippingAddress"
+          rows="3"
+          placeholder="Địa chỉ giao hàng"
+          class="w-full p-4 border rounded-xl"
+        ></textarea>
+        <textarea
+          [(ngModel)]="note"
+          rows="2"
+          placeholder="Ghi chú (tùy chọn)"
+          class="w-full p-4 border rounded-xl"
+        ></textarea>
+      </div>
+    </div>
+
+    <!-- Order Summary -->
+    <div class="lg:col-span-2">
+      <h2 class="text-xl font-semibold mb-4">Đơn hàng</h2>
+      <div class="bg-gray-50 p-6 rounded-2xl">
+        @for (item of cartItems(); track item.productId) {
+        <div class="flex justify-between py-2">
+          <span>{{ item.name }} × {{ item.quantity }}</span>
+          <span>{{ item.price * item.quantity | number }} ₫</span>
+        </div>
+        }
+        <div class="border-t pt-4 mt-4 font-bold text-lg flex justify-between">
+          <span>Tổng tiền:</span>
+          <span>{{ totalPrice() | number }} ₫</span>
+        </div>
+      </div>
+
+      <button
+        (click)="createOrder()"
+        [disabled]="isSubmitting() || cartItems().length === 0"
+        class="mt-6 w-full bg-black text-white py-4 rounded-xl font-semibold text-lg disabled:bg-gray-400"
+      >
+        {{ isSubmitting() ? 'Đang xử lý...' : 'Xác nhận đặt hàng' }}
+      </button>
+    </div>
+  </div>
+</div>

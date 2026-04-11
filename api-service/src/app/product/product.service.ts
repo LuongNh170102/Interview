@@ -1,18 +1,22 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
+import { Prisma } from '@prisma/client';
+import { MERCHANT_STATUS } from '../common/constants/merchant.constant';
+import {
+  COMMON_MESSAGES,
+  PRODUCT_MESSAGES,
+} from '../common/constants/messages.constant';
+import { PRODUCT_CONSTANTS } from '../common/constants/product.constant';
+import { PaginationDto } from '../common/dto/pagination.dto';
+import { PaginatedResult } from '../common/interfaces/paginated-result.interface';
+import { StorageService } from '../common/services/storage.service';
+import { toLocalizedJson } from '../common/utils/localization.util';
 import { PrismaService } from '../prisma.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
-import { Prisma } from '@prisma/client';
-import {
-  PRODUCT_MESSAGES,
-  COMMON_MESSAGES,
-} from '../common/constants/messages.constant';
-import { StorageService } from '../common/services/storage.service';
-import { toLocalizedJson } from '../common/utils/localization.util';
-import { PRODUCT_CONSTANTS } from '../common/constants/product.constant';
-import { PRIMITIVE_TYPES } from '../common/constants/common.constant';
-import { PaginationDto } from '../common/dto/pagination.dto';
-import { PaginatedResult } from '../common/interfaces/paginated-result.interface';
 
 @Injectable()
 export class ProductService {
@@ -23,59 +27,84 @@ export class ProductService {
 
   async create(
     createProductDto: CreateProductDto,
-    files?: Array<Express.Multer.File>
+    files: Array<Express.Multer.File> = [],
+    merchantId: string
   ) {
-    const { name, description, metadata, merchantId, ...rest } =
-      createProductDto;
+    const merchant = await this.prisma.merchant.findUnique({
+      where: { id: createProductDto.merchantId as unknown as number },
+      include: { owner: true },
+    });
+
+    if (!merchant) {
+      throw new NotFoundException('Merchant not found');
+    }
+
+    if (merchant.ownerId !== merchantId) {
+      throw new ForbiddenException(PRODUCT_MESSAGES.PERMISSION_DENIED_CREATION);
+    }
+
+    if (merchant.approvalStatus !== MERCHANT_STATUS.APPROVED) {
+      throw new ForbiddenException(
+        `Merchant status is ${merchant.approvalStatus}. Only APPROVED merchants can create products.`
+      );
+    }
 
     const imageUrls: string[] = [];
-    if (files && files.length > 0) {
-      for (const file of files) {
-        const url = await this.storageService.uploadFile(
-          file,
-          PRODUCT_CONSTANTS.STORAGE_FOLDER
-        );
-        imageUrls.push(url);
-      }
+    for (const file of files) {
+      const url = await this.storageService.uploadFile(
+        file,
+        PRODUCT_CONSTANTS.STORAGE_FOLDER
+      );
+      imageUrls.push(url);
     }
 
-    const nameJson = toLocalizedJson(name);
-    const descJson = description
-      ? toLocalizedJson(description)
-      : Prisma.JsonNull;
+    const nameJson = toLocalizedJson(createProductDto.name);
+    const descJson = createProductDto.description
+      ? toLocalizedJson(createProductDto.description)
+      : null;
 
-    const metaObj = metadata
-      ? typeof metadata === PRIMITIVE_TYPES.STRING
-        ? JSON.parse(metadata as unknown as string)
-        : metadata
-      : {};
-
-    if (imageUrls.length > 0) {
-      metaObj[PRODUCT_CONSTANTS.METADATA.IMAGES] = imageUrls;
-      if (!metaObj[PRODUCT_CONSTANTS.METADATA.THUMBNAIL]) {
-        metaObj[PRODUCT_CONSTANTS.METADATA.THUMBNAIL] = imageUrls[0];
-      }
-    }
-
-    const metaJson = metaObj as unknown as Prisma.InputJsonValue;
+    const metadata = {
+      images: imageUrls,
+      thumbnail: imageUrls[0] || null,
+    };
 
     return this.prisma.product.create({
       data: {
-        ...rest,
-        merchantId: merchantId as unknown as number,
         name: nameJson,
         description: descJson,
-        metadata: metaJson,
+        price: createProductDto.price,
+        sku: createProductDto.sku,
+        stock: createProductDto.stock,
+        merchantId: merchant.id,
+        isActive: createProductDto.isActive ?? true,
+        metadata: metadata as any,
+      },
+      include: {
+        merchant: {
+          select: { name: true, externalId: true },
+        },
       },
     });
   }
 
-  async findAll() {
-    return this.prisma.product.findMany({
-      include: {
-        merchant: true,
-      },
-    });
+  async findAll(paginationDto: PaginationDto): Promise<PaginatedResult<any>> {
+    const { page = 1, limit = 10 } = paginationDto;
+    const skip = (page - 1) * limit;
+
+    const [data, total] = await Promise.all([
+      this.prisma.product.findMany({
+        skip,
+        take: limit,
+        orderBy: { createdAt: 'desc' },
+        include: { merchant: true },
+      }),
+      this.prisma.product.count(),
+    ]);
+
+    return {
+      data,
+      meta: { total, page, lastPage: Math.ceil(total / limit), limit },
+    };
   }
 
   async findAllByMerchant(
