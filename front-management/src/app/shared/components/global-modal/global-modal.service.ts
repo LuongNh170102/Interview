@@ -6,6 +6,14 @@ import { ModalType } from '../../types/modal-type.type';
   providedIn: 'root',
 })
 export class GlobalModalService {
+  lastConfirmResult: any;
+  showConfirm(
+    arg0: string,
+    arg1: string,
+    arg2: { confirmText: string; cancelText: string; confirmVariant: string }
+  ) {
+    throw new Error('Method not implemented.');
+  }
   readonly state = signal<ModalState>({
     isOpen: false,
     type: 'info',

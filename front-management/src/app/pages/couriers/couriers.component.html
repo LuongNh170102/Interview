@@ -1,0 +1,71 @@
+<div class="page-container">
+  <!-- Header -->
+  <div class="page-header">
+    <h1 class="page-title">{{ 'admin.nav.couriers' | translate }}</h1>
+    <p class="page-subtitle">Danh sách tài xế chờ duyệt và quản lý</p>
+  </div>
+
+  <!-- Statistics Cards -->
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+    @for (card of statisticCards(); track card.labelKey) {
+    <app-statistic-card [config]="card" />
+    }
+  </div>
+
+  <!-- Data Table -->
+  <app-data-table
+    [config]="tableConfig"
+    [data]="couriers()"
+    [pagination]="pagination()"
+    [loading]="isLoading()"
+    [selectedIds]="selectedIds()"
+    (pageChange)="onPageChange($event)"
+    (sortChange)="onSortChange($event)"
+    (headerSearch)="onSearchChange($event.query)"
+    (headerAction)="onHeaderAction($event)"
+    (actionClick)="onActionClick($event)"
+  >
+    <!-- Custom cell templates -->
+    <ng-template tableCell="name" let-row="row">
+      <div class="flex items-center gap-3">
+        <div
+          class="w-10 h-10 rounded-full flex items-center justify-center text-white font-medium text-sm"
+          [style.backgroundColor]="row.initialsColor"
+        >
+          {{ row.initials }}
+        </div>
+        <div>
+          <div class="font-medium">{{ row.fullName }}</div>
+          <div class="text-xs text-gray-500">{{ row.phone }}</div>
+        </div>
+      </div>
+    </ng-template>
+
+    <ng-template tableCell="status" let-row="row">
+      <span
+        class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium"
+        [class]="getStatusClass(row.approvalStatus)"
+      >
+        {{ getStatusLabel(row.approvalStatus) | translate }}
+      </span>
+    </ng-template>
+  </app-data-table>
+</div>
+
+<!-- Reject Modal -->
+<app-global-modal
+  [isOpen]="showRejectModal()"
+  type="warning"
+  title="Từ chối tài xế"
+  message="Vui lòng nhập lý do từ chối tài xế này."
+  (close)="closeRejectModal()"
+  (confirm)="confirmReject()"
+>
+  <div class="mt-4">
+    <textarea
+      [(ngModel)]="rejectionReason"
+      class="w-full h-32 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+      placeholder="Nhập lý do từ chối..."
+    ></textarea>
+  </div>
+</app-global-modal>

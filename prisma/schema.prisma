@@ -480,20 +480,52 @@ model CartItem {
 }
 
 model Courier {
-  id              Int      @id @default(autoincrement())
-  userId          Int      @unique @map("user_id")
-  name            String?
-  phone           String?
-  status          String?  // 'available' | 'busy' | 'offline'
-  vehicleType     String?  @map("vehicle_type") // 'bike' | 'motorbike' | 'car'
-  currentLocation Json?    @map("current_location")
-  createdAt       DateTime @default(now()) @map("created_at")
-  updatedAt       DateTime? @updatedAt @map("updated_at")
+  id                Int      @id @default(autoincrement())
+  externalId        String   @unique @default(uuid()) @map("external_id") @db.Uuid
 
-  // Relations
-  user   User    @relation(fields: [userId], references: [id])
-  orders Order[]
+  fullName          String
+  phone             String   @unique
+  email             String?  @unique
+  avatarUrl         String?  @map("avatar_url")
+  identityCard      String?  @map("identity_card")
+  address           String?  @db.Text
+  city              String?
 
+  vehicleType       String?  @map("vehicle_type")
+  vehiclePlate      String?  @map("vehicle_plate")
+  licenseNumber     String?  @map("license_number")
+
+  bankAccount       String?  @map("bank_account")
+  bankName          String?  @map("bank_name")
+
+  // Approval Flow
+  approvalStatus    ApprovalStatus    @default(PENDING) @map("approval_status")
+  approvedAt        DateTime?         @map("approved_at")
+  approvedBy        Int?              @map("approved_by")
+  rejectedAt        DateTime?         @map("rejected_at")
+  rejectedBy        Int?              @map("rejected_by")
+  rejectionReason   String?           @map("rejection_reason") @db.Text
+
+  // Operational Status
+  operationalStatus OperationalStatus @default(ACTIVE) @map("operational_status")
+  statusChangedAt   DateTime?         @map("status_changed_at")
+  statusChangedBy   Int?              @map("status_changed_by")
+  statusReason      String?           @map("status_reason") @db.Text
+
+  userId            Int      @unique @map("user_id")
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  approvedByUser    User?    @relation("CourierApprovedBy", fields: [approvedBy], references: [id])
+  rejectedByUser    User?    @relation("CourierRejectedBy", fields: [rejectedBy], references: [id])
+
+  createdAt         DateTime @default(now()) @map("created_at")
+  updatedAt         DateTime? @updatedAt @map("updated_at")
+
+  orders            Order[]
+
+  @@index([approvalStatus])
+  @@index([phone])
+  @@index([createdAt])
   @@map("couriers")
 }
 

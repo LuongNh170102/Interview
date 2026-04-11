@@ -1,0 +1,46 @@
+<div class="container mx-auto px-4 py-8">
+  <h1 class="text-3xl font-bold mb-8">Tất cả sản phẩm</h1>
+
+  @if (isLoading()) {
+  <!-- Skeleton Loading -->
+  <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    @for (i of [1,2,3,4,5,6,7,8]; track i) {
+    <div
+      class="animate-pulse border border-gray-200 rounded-2xl overflow-hidden"
+    >
+      <div class="bg-gray-300 aspect-square w-full"></div>
+      <div class="p-4 space-y-3">
+        <div class="h-4 bg-gray-300 rounded w-4/5"></div>
+        <div class="h-4 bg-gray-300 rounded w-2/3"></div>
+        <div class="h-6 bg-gray-300 rounded w-1/2 mt-4"></div>
+      </div>
+    </div>
+    }
+  </div>
+  } @else {
+  <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    @for (product of products(); track product.externalId) {
+    <a
+      [routerLink]="['/products', product.externalId]"
+      class="group block border border-gray-200 rounded-2xl overflow-hidden hover:shadow-lg transition-all"
+    >
+      <img
+        [src]="product.thumbnail || '/assets/placeholder.jpg'"
+        [alt]="product.name"
+        class="w-full aspect-square object-cover group-hover:scale-105 transition-transform"
+      />
+      <div class="p-4">
+        <h3
+          class="font-medium line-clamp-2 group-hover:text-blue-600 transition-colors"
+        >
+          {{ product.name }}
+        </h3>
+        <p class="text-lg font-semibold mt-3 text-green-600">
+          {{ product.price | number }} ₫
+        </p>
+      </div>
+    </a>
+    }
+  </div>
+  }
+</div>

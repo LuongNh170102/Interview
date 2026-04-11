@@ -226,6 +226,62 @@ async function main() {
         ko: '시스템 보고서 보기',
       },
     },
+
+    // Courier
+    {
+      resource: 'courier',
+      action: 'create',
+      description: {
+        en: 'Create new courier',
+        vi: 'Tạo tài xế mới',
+        ko: '새 배달 기사 생성',
+      },
+    },
+    {
+      resource: 'courier',
+      action: 'read',
+      description: {
+        en: 'View courier list and details',
+        vi: 'Xem danh sách và thông tin tài xế',
+        ko: '배달 기사 목록 및 상세 보기',
+      },
+    },
+    {
+      resource: 'courier',
+      action: 'update',
+      description: {
+        en: 'Update courier information',
+        vi: 'Cập nhật thông tin tài xế',
+        ko: '배달 기사 정보 업데이트',
+      },
+    },
+    {
+      resource: 'courier',
+      action: 'update_status',
+      description: {
+        en: 'Update courier operational status',
+        vi: 'Cập nhật trạng thái hoạt động của tài xế',
+        ko: '배달 기사 운영 상태 업데이트',
+      },
+    },
+    {
+      resource: 'courier',
+      action: 'approve',
+      description: {
+        en: 'Approve courier registration',
+        vi: 'Phê duyệt đăng ký tài xế',
+        ko: '배달 기사 등록 승인',
+      },
+    },
+    {
+      resource: 'courier',
+      action: 'reject',
+      description: {
+        en: 'Reject courier registration with reason',
+        vi: 'Từ chối đăng ký tài xế kèm lý do',
+        ko: '배달 기사 등록 거부 (사유 포함)',
+      },
+    },
   ];
 
   console.log(`Creating ${permissionsData.length} permissions...`);
@@ -349,6 +405,14 @@ async function main() {
         getPerm('order', 'read'),
         getPerm('product', 'read'),
       ].filter(Boolean), // Filter out undefined
+    },
+    {
+      role: 'COURIER',
+      perms: [
+        getPerm('order', 'read'),
+        getPerm('courier', 'read'),
+        getPerm('courier', 'update'),
+      ].filter(Boolean),
     },
   ];
 

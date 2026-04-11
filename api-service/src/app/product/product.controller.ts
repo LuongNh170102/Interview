@@ -40,15 +40,18 @@ export class ProductController {
     @Body(MerchantOwnershipPipe) createProductDto: CreateProductDto,
     @UploadedFiles() files: Array<Express.Multer.File>
   ) {
-    return this.productService.create(createProductDto, files);
+    return this.productService.create(createProductDto, files, merchantId);
   }
 
   @Get()
-  findAll() {
-    return this.productService.findAll();
+  @UseGuards(JwtAuthGuard)
+  findAll(@Query() paginationDto: PaginationDto) {
+    return this.productService.findAll(paginationDto);
   }
 
   @Get('merchant/:merchantId')
+  @UseGuards(JwtAuthGuard, PermissionsGuard)
+  @Permissions('product:read')
   findAllByMerchant(
     @Param('merchantId') merchantId: string,
     @Query() paginationDto: PaginationDto

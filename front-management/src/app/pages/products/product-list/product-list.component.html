@@ -1,0 +1,47 @@
+<div class="page-container">
+  <div class="page-header">
+    <h1 class="page-title">{{ 'admin.nav.productList' | translate }}</h1>
+    <p class="page-subtitle">Quản lý sản phẩm của cửa hàng bạn</p>
+  </div>
+
+  <!-- Statistic Cards -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+    @for (card of statisticCards(); track card.labelKey) {
+    <app-statistic-card [config]="card" />
+    }
+  </div>
+
+  <!-- Data Table -->
+  <app-data-table
+    [config]="tableConfig"
+    [data]="products()"
+    [pagination]="pagination()"
+    [loading]="isLoading()"
+    (pageChange)="onPageChange($event)"
+    (headerAction)="onHeaderAction($event)"
+    (actionClick)="onActionClick($event)"
+  >
+    <!-- Custom cell for product name + image -->
+    <ng-template tableCell="name" let-row="row">
+      <div class="flex items-center gap-3">
+        @if (row.thumbnail) {
+        <img
+          [src]="row.thumbnail"
+          class="w-10 h-10 object-cover rounded"
+          alt=""
+        />
+        } @else {
+        <div
+          class="w-10 h-10 bg-gray-200 rounded flex items-center justify-center text-gray-400"
+        >
+          📦
+        </div>
+        }
+        <div>
+          <div class="font-medium">{{ row.name }}</div>
+          <div class="text-xs text-gray-500">{{ row.sku }}</div>
+        </div>
+      </div>
+    </ng-template>
+  </app-data-table>
+</div>

@@ -1,0 +1,63 @@
+<div class="container mx-auto px-4 py-8 max-w-4xl">
+  <h1 class="text-3xl font-bold mb-8">Giỏ hàng của bạn</h1>
+
+  @if (cartService.items().length === 0) {
+  <div class="text-center py-20">
+    <p class="text-xl text-gray-500">Giỏ hàng trống</p>
+    <a
+      routerLink="/products"
+      class="mt-6 inline-block bg-black text-white px-8 py-3 rounded-xl"
+    >
+      Tiếp tục mua sắm
+    </a>
+  </div>
+  } @else {
+  <div class="space-y-6">
+    @for (item of cartService.items(); track item.productId) {
+    <div class="flex gap-6 border-b pb-6">
+      <img
+        [src]="item.thumbnail || 'assets/placeholder.jpg'"
+        [alt]="item.name"
+        class="w-24 h-24 object-cover rounded-lg"
+      />
+
+      <div class="flex-1">
+        <h3 class="font-semibold">{{ item.name }}</h3>
+        <p class="text-lg font-medium mt-1">{{ item.price | number }} ₫</p>
+
+        <div class="flex items-center gap-4 mt-4">
+          <div class="flex border rounded-lg">
+            <button (click)="decrease(item)" class="px-3 py-1">-</button>
+            <span class="px-6 py-1">{{ item.quantity }}</span>
+            <button (click)="increase(item)" class="px-3 py-1">+</button>
+          </div>
+          <button
+            (click)="remove(item)"
+            class="text-red-600 hover:text-red-700"
+          >
+            Xóa
+          </button>
+        </div>
+      </div>
+
+      <div class="text-right">
+        <p class="font-semibold">{{ item.price * item.quantity | number }} ₫</p>
+      </div>
+    </div>
+    }
+  </div>
+
+  <div class="mt-10 border-t pt-8">
+    <div class="flex justify-between text-xl">
+      <span>Tổng cộng:</span>
+      <span class="font-bold">{{ cartService.totalPrice() | number }} ₫</span>
+    </div>
+    <button
+      (click)="checkout()"
+      class="mt-6 w-full bg-black text-white py-4 rounded-xl text-lg font-semibold"
+    >
+      Tiến hành đặt hàng
+    </button>
+  </div>
+  }
+</div>
