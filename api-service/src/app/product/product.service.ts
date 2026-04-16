@@ -1,5 +1,5 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { PrismaService } from '../prisma.service';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import { PrismaService } from '../prisma/prisma.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { Prisma } from '@prisma/client';
@@ -9,19 +9,23 @@ import {
 } from '../common/constants/messages.constant';
 import { StorageService } from '../common/services/storage.service';
 import { toLocalizedJson } from '../common/utils/localization.util';
-import { PRODUCT_CONSTANTS } from '../common/constants/product.constant';
+import { PRODUCT_CONSTANTS, PRODUCT_STATUS } from '../common/constants/product.constant';
 import { PRIMITIVE_TYPES } from '../common/constants/common.constant';
 import { PaginationDto } from '../common/dto/pagination.dto';
 import { PaginatedResult } from '../common/interfaces/paginated-result.interface';
+import { ProductListResponse, ProductQueryDto, ProductStatistics } from './dto/product-query.dto';
+import { ProductEntity } from './entities';
+import { ProductQueryBuilder } from './builders/product-query.builder';
+import { AuthenticatedRequest } from '../common/interfaces/auth.interface';
 
 @Injectable()
 export class ProductService {
   constructor(
     private prisma: PrismaService,
-    private storageService: StorageService
-  ) {}
+  ) { }
 
   async create(
+    req: AuthenticatedRequest,
     createProductDto: CreateProductDto,
     files?: Array<Express.Multer.File>
   ) {
@@ -31,11 +35,8 @@ export class ProductService {
     const imageUrls: string[] = [];
     if (files && files.length > 0) {
       for (const file of files) {
-        const url = await this.storageService.uploadFile(
-          file,
-          PRODUCT_CONSTANTS.STORAGE_FOLDER
-        );
-        imageUrls.push(url);
+        // imageUrls.push(`${req.protocol}://${req.get('host')}/uploads/${file.originalname}`);
+        imageUrls.push(`${req.protocol}://${req.get('host')}/uploads/${file.filename}`);
       }
     }
 
@@ -70,12 +71,59 @@ export class ProductService {
     });
   }
 
-  async findAll() {
-    return this.prisma.product.findMany({
-      include: {
-        merchant: true,
-      },
-    });
+  async findAll(query: ProductQueryDto): Promise<ProductListResponse<ProductEntity>> {
+    const take = query.limit ?? 10;
+    const skip = query.skip;
+
+    const where = new ProductQueryBuilder()
+      .withStatus(query.status)
+      .withDateRange(query.startDate, query.endDate)
+      .withPriceRange(query.startPrice, query.endPrice)
+      .withSearch(query.search)
+      .build();
+
+    const [items, total] = await this.prisma.$transaction([
+      this.prisma.product.findMany({
+        include: { merchant: true },
+        where,
+        skip,
+        take,
+        orderBy: { createdAt: 'desc' },
+      }),
+      this.prisma.product.count({ where }),
+    ]);
+
+    const response: ProductListResponse<ProductEntity> = {
+      data: items.map((item) => new ProductEntity(item, {
+        merchant: item.merchant
+      })),
+      total,
+      page: query.page ?? 1,
+      limit: take,
+    };
+
+    if (query.shouldIncludeStatistics) {
+      response.statistics = await this.getStatistics();
+    }
+
+    return response;
+  }
+
+  private async getStatistics(): Promise<ProductStatistics> {
+    const [totalDraft, totalPublished, totalArchived] =
+      await this.prisma.$transaction([
+        this.prisma.product.count({
+          where: { status: PRODUCT_STATUS.DRAFT },
+        }),
+        this.prisma.product.count({
+          where: { status: PRODUCT_STATUS.PUBLISHED },
+        }),
+        this.prisma.product.count({
+          where: { status: PRODUCT_STATUS.ARCHIVED },
+        })
+      ]);
+
+    return { totalDraft, totalPublished, totalArchived };
   }
 
   async findAllByMerchant(

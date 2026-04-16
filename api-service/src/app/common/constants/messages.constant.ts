@@ -67,6 +67,17 @@ export const BRAND_MESSAGES = {
   NOT_OWNER: 'You do not own this Brand',
 };
 
+export const COURIER_MESSAGES = {
+  NOT_FOUND: 'Courier not found',
+  REJECT_REASON_REQUIRED: 'Courier reject reason must be provided'
+};
+
+export const ORDER_MESSAGES = {
+  NO_DUPLICATE_ALLOWED: 'Duplicate products not allowed',
+  INVALID_PRODUCT: 'Some product are invalid',
+  NO_STOCK: 'Insufficient stock'
+};
+
 export const RESOURCE_MESSAGES = {
   NOT_FOUND: (target: string) => `${target} not found`,
   OPERATION_DENIED: (target: string, status: string) =>

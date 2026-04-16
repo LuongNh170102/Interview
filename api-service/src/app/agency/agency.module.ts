@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { AgencyService } from './agency.service';
 import { AgencyController } from './agency.controller';
-import { PrismaService } from '../prisma.service';
+import { PrismaService } from '../prisma/prisma.service';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { OtpModule } from '../otp/otp.module';
@@ -22,6 +22,6 @@ import { OtpModule } from '../otp/otp.module';
     OtpModule,
   ],
   controllers: [AgencyController],
-  providers: [AgencyService, PrismaService],
+  providers: [AgencyService],
 })
 export class AgencyModule {}

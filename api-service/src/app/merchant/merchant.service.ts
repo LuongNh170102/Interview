@@ -4,7 +4,7 @@ import {
   NotFoundException,
   ConflictException,
 } from '@nestjs/common';
-import { PrismaService } from '../prisma.service';
+import { PrismaService } from '../prisma/prisma.service';
 import { CreateMerchantDto } from './dto/create-merchant.dto';
 import { AdminCreateMerchantDto } from './dto/admin-create-merchant.dto';
 import {
@@ -39,7 +39,7 @@ export class MerchantService {
     private prisma: PrismaService,
     private jwtService: JwtService,
     private otpService: OtpService
-  ) {}
+  ) { }
 
   async requestOtp(dto: RequestOtpDto) {
     return this.otpService.requestOtp(dto);
@@ -209,11 +209,11 @@ export class MerchantService {
           // 2. If not, check if user has CUSTOMER role to switch
           const existingCustomerRole = customerRole
             ? await this.prisma.userRole.findFirst({
-                where: {
-                  userId: merchant.ownerId,
-                  roleId: customerRole.id,
-                },
-              })
+              where: {
+                userId: merchant.ownerId,
+                roleId: customerRole.id,
+              },
+            })
             : null;
 
           if (existingCustomerRole) {

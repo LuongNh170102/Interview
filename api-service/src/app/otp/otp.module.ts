@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common';
 import { OtpService } from './otp.service';
-import { PrismaService } from '../prisma.service';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 
@@ -18,7 +17,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
       inject: [ConfigService],
     }),
   ],
-  providers: [OtpService, PrismaService],
+  providers: [OtpService],
   exports: [OtpService],
 })
-export class OtpModule {}
+export class OtpModule { }

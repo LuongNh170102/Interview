@@ -16,17 +16,17 @@ export class PrismaService extends PrismaClient implements OnModuleInit, OnModul
   async onModuleInit() {
     await this.$connect();
 
-    // auto-apply migrations only in development environment
-    if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
-      try {
-        console.log('🔄 Auto-applying Prisma migrations...');
-        // stdio: 'inherit' để hiện log của prisma ra terminal
-        execSync('npx prisma migrate deploy', { stdio: 'inherit' });
-        console.log('✅ Migrations applied successfully.');
-      } catch (error) {
-        console.error('❌ Migration failed:', error);
-      }
-    }
+    // auto - apply migrations only in development environment
+    // if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+    //   try {
+    //     console.log('🔄 Auto-applying Prisma migrations...');
+    //     // stdio: 'inherit' để hiện log của prisma ra terminal
+    //     execSync('npx prisma migrate deploy', { stdio: 'inherit' });
+    //     console.log('✅ Migrations applied successfully.');
+    //   } catch (error) {
+    //     console.error('❌ Migration failed:', error);
+    //   }
+    // }
   }
 
   async onModuleDestroy() {

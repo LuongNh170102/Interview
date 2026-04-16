@@ -13,7 +13,7 @@ import { LoginDto } from './dto/login.dto';
 import { RegisterDto } from './dto/register.dto';
 import { AUTH_MESSAGES } from '../common/constants/messages.constant';
 import { JWT_CONSTANTS } from '../common/constants/token.constant';
-import { PrismaService } from '../prisma.service';
+import { PrismaService } from '../prisma/prisma.service';
 import {
   LinkGoogleAccountDto,
   GoogleAuthResponse,
@@ -40,7 +40,7 @@ export class AuthService {
     private jwtService: JwtService,
     private configService: ConfigService,
     private prisma: PrismaService
-  ) {}
+  ) { }
 
   async validateUser(
     email: string,

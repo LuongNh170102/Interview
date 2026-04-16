@@ -28,3 +28,21 @@ export const OPERATIONAL_STATUS = {
 
 export type OperationalStatusValue =
   (typeof OPERATIONAL_STATUS)[keyof typeof OPERATIONAL_STATUS];
+
+export const COURIER_ACTIVE_STATUS = {
+  AVAILABLE: 'AVAILABLE',
+  BUSY: 'BUSY',
+  OFFLINE: 'OFFLINE',
+} as const;
+
+export type CourierActiveStatusValue =
+  (typeof COURIER_ACTIVE_STATUS)[keyof typeof COURIER_ACTIVE_STATUS];
+
+export const PRODUCT_STATUS = {
+  DRAFT: 'DRAFT',
+  PUBLISHED: 'PUBLISHED',
+  ARCHIVED: 'ARCHIVED',
+} as const;
+
+export type ProductStatusValue =
+  (typeof PRODUCT_STATUS)[keyof typeof PRODUCT_STATUS];

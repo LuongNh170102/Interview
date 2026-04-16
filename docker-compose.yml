@@ -1,6 +1,7 @@
 services:
   postgres:
-    image: postgres:16-alpine
+    image: postgis/postgis:15-3.4
+    # image: postgres:16-alpine
     container_name: vhandelivery_postgres
     env_file:
       - .env.${NODE_ENV:-development}

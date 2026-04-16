@@ -8,7 +8,7 @@ import {
   ArgumentMetadata,
 } from '@nestjs/common';
 import { REQUEST } from '@nestjs/core';
-import { PrismaService } from '../../prisma.service';
+import { PrismaService } from '../../prisma/prisma.service';
 import { ROLE } from '../constants/role.constants';
 import {
   PRODUCT_MESSAGES,
@@ -21,7 +21,7 @@ export class MerchantOwnershipPipe implements PipeTransform {
   constructor(
     @Inject(REQUEST) private request: any,
     private prisma: PrismaService
-  ) {}
+  ) { }
 
   async transform(value: any, metadata: ArgumentMetadata) {
     if (metadata.type !== 'body') {
@@ -31,6 +31,10 @@ export class MerchantOwnershipPipe implements PipeTransform {
     value = value || {};
 
     const user = this.request.user;
+
+    if (user.permissions) {
+      console.log(user.permissions)
+    }
 
     if (!user) {
       throw new ForbiddenException(COMMON_MESSAGES.USER_NOT_FOUND_IN_CONTEXT);
@@ -76,6 +80,15 @@ export class MerchantOwnershipPipe implements PipeTransform {
     );
 
     if (!hasPermission) {
+      throw new ForbiddenException(PRODUCT_MESSAGES.PERMISSION_DENIED_CREATION);
+    }
+
+    // Merchant Owners can only create products for their own store
+    const isOwner = await this.prisma.merchant.findFirst({
+      where: { id: internalMerchantId, ownerId: user.userId }
+    })
+
+    if (!isOwner) {
       throw new ForbiddenException(PRODUCT_MESSAGES.PERMISSION_DENIED_CREATION);
     }
 

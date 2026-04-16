@@ -154,28 +154,28 @@ export class MerchantEntity extends BaseEntity {
     // Map agency info (grouped)
     this.agency = relations?.agency?.externalId
       ? {
-          externalId: relations.agency.externalId,
-          name: relations.agency.name ?? '',
-          phone: relations.agency.phone ?? null,
-        }
+        externalId: relations.agency.externalId,
+        name: relations.agency.name ?? '',
+        phone: relations.agency.phone ?? null,
+      }
       : null;
 
     // Map brand info (grouped)
     this.brand = relations?.brand?.externalId
       ? {
-          externalId: relations.brand.externalId,
-          name: relations.brand.name ?? '',
-          slug: relations.brand.slug ?? null,
-        }
+        externalId: relations.brand.externalId,
+        name: relations.brand.name ?? '',
+        slug: relations.brand.slug ?? null,
+      }
       : null;
 
     // Map owner info (grouped)
     this.owner = relations?.owner?.username
       ? {
-          name: relations.owner.username,
-          email: relations.owner.email ?? null,
-          phone: relations.owner.phone ?? null,
-        }
+        name: relations.owner.username,
+        email: relations.owner.email ?? null,
+        phone: relations.owner.phone ?? null,
+      }
       : null;
 
     // Map tags

@@ -60,4 +60,24 @@ export class GlobalModalService {
   close() {
     this.state.update((s) => ({ ...s, isOpen: false }));
   }
+
+  showInput(title: string, message: string, onSubmitInput: (value: string) => void) {
+    this.state.set({
+      isOpen: true,
+      type: 'info',
+      title,
+      message,
+      isInput: true,
+      inputValue: '',
+      onSubmitInput,
+    });
+  }
+
+  submitInput(value: string) {
+    const state = this.state()
+    if (state.onSubmitInput) {
+      state.onSubmitInput(value);
+    }
+    this.close();
+  }
 }

@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '@vhandelivery/shared-ui';
 import {
@@ -9,11 +9,13 @@ import {
   state,
 } from '@angular/animations';
 import { ModalType } from '../../types/modal-type.type';
+import { GlobalModalService } from './global-modal.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-global-modal',
   standalone: true,
-  imports: [CommonModule, TranslatePipe],
+  imports: [CommonModule, TranslatePipe, FormsModule],
   templateUrl: './global-modal.component.html',
   styleUrls: ['./global-modal.component.scss'],
   animations: [
@@ -48,6 +50,12 @@ export class GlobalModalComponent {
   @Input() message = '';
   @Output() close = new EventEmitter<void>();
   @Output() confirm = new EventEmitter<void>();
+  private readonly modalService = inject(GlobalModalService);
+  inputValue = '';
+
+  isWithInput() {
+    return this.modalService.state().isInput ?? false
+  }
 
   onClose() {
     this.close.emit();
@@ -55,6 +63,7 @@ export class GlobalModalComponent {
 
   onConfirm() {
     this.confirm.emit();
+    if (this.modalService.state().isInput) this.modalService.submitInput(this.inputValue);
   }
 
   get iconClass(): string {

@@ -7,12 +7,12 @@ import { CreateBrandDto } from './dto/create-brand.dto';
 import { CreateBranchDto } from './dto/create-branch.dto';
 import { slugify } from '../common/utils/string.util';
 import { MERCHANT_STATUS } from '../common/constants/merchant.constant';
-import { PrismaService } from '../prisma.service';
+import { PrismaService } from '../prisma/prisma.service';
 import { BRAND_MESSAGES } from '../common/constants/messages.constant';
 
 @Injectable()
 export class BrandService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) { }
 
   async createBrand(userId: number, dto: CreateBrandDto) {
     const agency = await this.prisma.agency.findFirst({

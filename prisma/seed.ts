@@ -226,6 +226,52 @@ async function main() {
         ko: '시스템 보고서 보기',
       },
     },
+    // Courier (NEW)
+    {
+      resource: 'courier',
+      action: 'create',
+      description: {
+        en: 'Create courier',
+        vi: 'Tạo người giao hàng',
+        ko: '배달원 만들기',
+      },
+    },
+    {
+      resource: 'courier',
+      action: 'update',
+      description: {
+        en: 'Update courier info',
+        vi: 'Cập nhật thông tin người giao hàng',
+        ko: '배송 기사 정보 업데이트',
+      },
+    },
+    {
+      resource: 'courier',
+      action: 'delete',
+      description: {
+        en: 'Delete courier',
+        vi: 'Xóa người giao hàng',
+        ko: '배달원 삭제',
+      },
+    },
+    {
+      resource: 'courier',
+      action: 'update_status',
+      description: {
+        en: 'Update courier status',
+        vi: 'Cập nhật trạng thái người giao hàng',
+        ko: '배송원 상태 업데이트',
+      },
+    },
+    {
+      resource: 'courier',
+      action: 'read',
+      description: {
+        en: 'View courier details',
+        vi: 'Xem chi tiết người giao hàng',
+        ko: '택배 정보 보기',
+      },
+    },
   ];
 
   console.log(`Creating ${permissionsData.length} permissions...`);
@@ -349,6 +395,14 @@ async function main() {
         getPerm('order', 'read'),
         getPerm('product', 'read'),
       ].filter(Boolean), // Filter out undefined
+    },
+    {
+      role: 'COURIER',
+      perms: [
+        getPerm('order', 'read'),
+        // couriers cannot see other couriers but only themselves
+        getPerm('courier', 'read'),
+      ].filter(Boolean),
     },
   ];
 
