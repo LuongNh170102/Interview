@@ -25,27 +25,30 @@ import { MerchantOwnershipPipe } from '../common/pipes/merchant-ownership.pipe';
 import { PaginationDto } from '../common/dto/pagination.dto';
 import { RESOURCE_TARGETS } from '../common/constants/resource.constant';
 import { PermissionsGuard } from '../common/guards/permissions.guard';
+import { ProductQueryDto } from './dto/product-query.dto';
+import { AuthenticatedRequest } from '../common/interfaces/auth.interface';
+import { multerOptions } from '../common/utils/multer.config';
 
 @Controller('products')
 export class ProductController {
-  constructor(private readonly productService: ProductService) {}
+  constructor(private readonly productService: ProductService) { }
 
   @Post()
   @UseGuards(JwtAuthGuard, PermissionsGuard, ResourceStatusGuard)
   @CheckStatus(RESOURCE_TARGETS.MERCHANT)
   @Permissions('product:create')
-  @UseInterceptors(FilesInterceptor('images', 10))
+  @UseInterceptors(FilesInterceptor('images', 10, multerOptions))
   async create(
-    @Query('merchantId') merchantId: string,
+    @Request() req: AuthenticatedRequest,
     @Body(MerchantOwnershipPipe) createProductDto: CreateProductDto,
     @UploadedFiles() files: Array<Express.Multer.File>
   ) {
-    return this.productService.create(createProductDto, files);
+    return this.productService.create(req, createProductDto, files);
   }
 
   @Get()
-  findAll() {
-    return this.productService.findAll();
+  findAll(@Query() query: ProductQueryDto) {
+    return this.productService.findAll(query);
   }
 
   @Get('merchant/:merchantId')

@@ -25,7 +25,8 @@ export interface CourierResponse {
     statusChangedAt: string | null;
     vehicleType: string;
     vehiclePlate: string;
-    currentLocation: string | null
+    latitude: number | null
+    longitude: number | null
     createdAt: string;
     updatedAt: string | null;
     deletedAt: string | null;

@@ -16,7 +16,8 @@ export class CourierEntity extends BaseEntity {
   rejectedAt?: Date | null;
   rejectionReason?: string | null;
   vehicleType!: string;
-  currentLocation!: string;
+  latitude!: number;
+  longitude!: number;
   vehiclePlate!: string;
   activeStatus?: string;
   statusChangedAt?: Date | null;

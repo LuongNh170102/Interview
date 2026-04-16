@@ -235,4 +235,13 @@ export class CourierService {
         }
         return deletedCourier;
     }
+
+    async update() {
+        // if courier need to be updated especially current position we use this raw query to make sure they are valid for PostGIS calculation
+        // await this.prisma.$executeRaw`
+        //     UPDATE couriers
+        //     SET location = ST_SetSRID(ST_MakePoint(${lng}, ${lat}), 4326)
+        //     WHERE id = ${courierId}
+        // `;
+    }
 }

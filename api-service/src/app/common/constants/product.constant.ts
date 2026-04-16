@@ -5,3 +5,9 @@ export const PRODUCT_CONSTANTS = {
     THUMBNAIL: 'thumbnail',
   },
 } as const;
+
+export enum PRODUCT_STATUS {
+  DRAFT = 'DRAFT',
+  PUBLISHED = 'PUBLISHED',
+  ARCHIVED = 'ARCHIVED',
+}

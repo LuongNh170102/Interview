@@ -4,7 +4,7 @@ import { Type, Transform, plainToInstance } from 'class-transformer';
 export class LocalizedStringDto {
   @IsString()
   @IsNotEmpty()
-  vi: string;
+  vi!: string;
 
   @IsString()
   @IsOptional()
@@ -45,7 +45,7 @@ export class CreateProductDto {
     return plainToInstance(LocalizedStringDto, parsed);
   })
   @Type(() => LocalizedStringDto)
-  name: LocalizedStringDto;
+  name!: LocalizedStringDto;
 
   @IsOptional()
   @ValidateNested()
@@ -72,25 +72,25 @@ export class CreateProductDto {
   @IsNumber()
   @IsNotEmpty()
   @Type(() => Number)
-  price: number;
+  price!: number;
 
   @IsString()
   @IsNotEmpty()
-  sku: string;
+  sku!: string;
 
   @IsNumber()
   @IsNotEmpty()
   @Type(() => Number)
-  stock: number;
-
-  @IsString()
-  @IsOptional()
-  merchantId?: string;
+  stock!: number;
 
   @IsBoolean()
   @IsOptional()
   @Transform(({ value }) => value === 'true' || value === true)
   isActive?: boolean;
+
+  @IsString()
+  @IsOptional()
+  merchantId?: string;
 
   @IsOptional()
   @ValidateNested()

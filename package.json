@@ -4,13 +4,15 @@
   "license": "MIT",
   "scripts": {
     "prepare": "husky install",
-    "start:api-service": "npx prisma generate && npx prisma migrate dev && nx serve api-service",
+    "start:api-service": "nx serve api-service",
     "start:api-service:prod": "NODE_ENV=production nx serve api-service",
     "test:api-service": "nx test api-service",
     "start:front-b2b": "nx serve front-b2b",
-    "start:front-b2c": "nx serve front-b2c",
+    "start:front-b2c": "nx serve front-b2b",
     "start:front-management": "nx serve front-management",
-    "db:studio": "prisma studio"
+    "db:studio": "prisma studio",
+    "db:generate": "npx prisma generate",
+    "db:migrate": "npx prisma migrate dev"
   },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"
@@ -33,6 +35,7 @@
     "@nestjs/mapped-types": "^2.1.0",
     "@nestjs/passport": "^11.0.5",
     "@nestjs/platform-express": "^11.0.0",
+    "@nestjs/serve-static": "^5.0.5",
     "@nestjs/terminus": "^11.0.0",
     "@ngx-translate/core": "^17.0.0",
     "@ngx-translate/http-loader": "^17.0.0",

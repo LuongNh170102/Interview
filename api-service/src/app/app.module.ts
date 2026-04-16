@@ -2,7 +2,6 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { PrismaService } from './prisma/prisma.service';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { AgencyModule } from './agency/agency.module';
@@ -14,6 +13,9 @@ import { CommonModule } from './common/common.module';
 import { HealthModule } from './health/health.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { CourierModule } from './courier/courier.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
+import { OrderModule } from './order/orders.module';
 
 @Module({
   imports: [
@@ -23,6 +25,10 @@ import { CourierModule } from './courier/courier.module';
         process.env.NODE_ENV === 'production'
           ? '.env.production'
           : '.env.development',
+    }),
+    ServeStaticModule.forRoot({
+      rootPath: join(process.cwd(), 'uploads'),
+      serveRoot: '/uploads',
     }),
     PrismaModule,
     HealthModule,
@@ -34,7 +40,8 @@ import { CourierModule } from './courier/courier.module';
     ProductModule,
     CategoryModule,
     BrandModule,
-    CourierModule
+    CourierModule,
+    OrderModule
   ],
   controllers: [AppController],
   providers: [AppService],

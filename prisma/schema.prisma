@@ -394,6 +394,12 @@ model MenuSection {
   @@map("menu_sections")
 }
 
+enum ProductStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
 model Product {
   id          Int      @id @default(autoincrement())
   externalId  String   @unique @default(uuid()) @map("external_id") @db.Uuid
@@ -418,6 +424,8 @@ model Product {
   createdAt   DateTime @default(now()) @map("created_at")
   updatedAt   DateTime? @updatedAt @map("updated_at")
 
+  status      ProductStatus     @default(DRAFT) @map("staus") // DRAFT / PUBLISHED / ARCHIVED
+
   // Relations
   merchant          Merchant          @relation(fields: [merchantId], references: [id])
   section           MenuSection?      @relation(fields: [sectionId], references: [id])
@@ -428,6 +436,12 @@ model Product {
   reviews           Review[]
 
   @@map("products")
+
+  @@index([externalId])
+  @@index([name])
+  @@index([status])
+  @@index([sku])
+  @@index([price])
 }
 
 model ProductVariant {
@@ -515,7 +529,10 @@ model Courier {
   // changed courier's vehicleType type to enum for consistency
   vehicleType     VehicleType @map("vehicle_type") // 'bike' | 'motorbike' | 'car'
   vehiclePlate    String      @map("vehicle_plate")
-  currentLocation Json?       @map("current_location")
+  // store geo point for implementing PostGIS
+  latitude        Float?
+  longitude       Float?
+
   createdAt       DateTime    @default(now()) @map("created_at")
   updatedAt       DateTime?   @updatedAt @map("updated_at")
   // requirements for soft delete
@@ -587,6 +604,9 @@ model Order {
   promotionId     Int?     @map("promotion_id")
   createdAt       DateTime @default(now()) @map("created_at")
   updatedAt       DateTime? @updatedAt @map("updated_at")
+  // add geo columns for implementing PostGIS  
+  deliveryLat     Float?   @map("delivery_lat")
+  deliveryLng     Float?   @map("delivery_lng")
 
   // Relations
   user      User       @relation(fields: [userId], references: [id])

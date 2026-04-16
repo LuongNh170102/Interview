@@ -104,8 +104,13 @@ export const COURIERS_TABLE_CONFIG: TableConfig<Courier> = {
       type: 'text',
     },
     {
-      key: 'currentLocation',
-      labelKey: 'admin.users.couriers.table.currentLocation',
+      key: 'latitude',
+      labelKey: 'admin.users.couriers.table.latitude',
+      type: 'text',
+    },
+    {
+      key: 'longitude',
+      labelKey: 'admin.users.couriers.table.longitude',
       type: 'text',
     },
     {

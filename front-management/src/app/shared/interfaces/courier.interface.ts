@@ -26,7 +26,8 @@ export interface Courier {
   readonly deletedAt: string
   readonly vehiclePlate: string
   readonly vehicleType: string
-  readonly currentLocation: string
+  readonly latitude: number
+  readonly longitude: number
 
   readonly approvalStatus: COURIER_APPROVAL_STATUS;
   readonly activeStatus: COURIER_ACTIVE_STATUS_TYPE;
@@ -49,7 +50,8 @@ export interface CourierApiResponse {
   deletedAt: string | null
   vehiclePlate: string
   vehicleType: string
-  currentLocation: string | null
+  latitude: number | null
+  longitude: number | null
 
   approvalStatus: string;
   activeStatus: string
