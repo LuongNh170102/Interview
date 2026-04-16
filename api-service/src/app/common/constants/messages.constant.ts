@@ -67,6 +67,11 @@ export const BRAND_MESSAGES = {
   NOT_OWNER: 'You do not own this Brand',
 };
 
+export const COURIER_MESSAGES = {
+  NOT_FOUND: 'Courier not found',
+  REJECT_REASON_REQUIRED: 'Courier reject reason must be provided'
+};
+
 export const RESOURCE_MESSAGES = {
   NOT_FOUND: (target: string) => `${target} not found`,
   OPERATION_DENIED: (target: string, status: string) =>

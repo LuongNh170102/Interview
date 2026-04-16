@@ -81,28 +81,70 @@
         <!-- Mobile/Tablet Filter Buttons -->
         @if (headerConfig()?.filters?.length) {
           @for (filter of headerConfig()!.filters; track filter.id) {
-            <button
-              (click)="onHeaderFilterClick(filter.id)"
-              class="flex items-center gap-2 px-3 py-2 bg-surface border border-border rounded-3xl text-content-secondary hover:bg-surface-muted transition-colors whitespace-nowrap shrink-0"
-            >
-              {{ filter.labelKey | translate }}
-              <svg
-                width="9"
-                height="5"
-                viewBox="0 0 9 5"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                class="text-content-tertiary"
-              >
-                <path
-                  d="M1 1L4.5 4L8 1"
-                  stroke="currentColor"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-              </svg>
-            </button>
+            @switch (filter.type) {
+              @case ('dropdown') {
+                <div
+                  class="flex items-center gap-2 px-3 py-2 bg-surface border border-border rounded-3xl text-content-secondary whitespace-nowrap shrink-0"
+                >
+                  <label class="text-content-tertiary text-sm">
+                    {{ filter.labelKey | translate }}
+                  </label>
+                  <select
+                    class="border-none bg-transparent outline-none text-content-primary text-sm min-w-[120px]"
+                    [value]="getHeaderFilterValue(filter.id)"
+                    (change)="onHeaderDropdownFilterChange(filter.id, $event)"
+                  >
+                    <option value="">
+                      {{ (filter.placeholderKey ?? filter.labelKey) | translate }}
+                    </option>
+                    @for (option of filter.options ?? []; track option.value) {
+                      <option [value]="option.value">
+                        {{ option.labelKey | translate }}
+                      </option>
+                    }
+                  </select>
+                </div>
+              }
+              @case ('date') {
+                <div
+                  class="flex items-center gap-2 px-3 py-2 bg-surface border border-border rounded-3xl text-content-secondary whitespace-nowrap shrink-0"
+                >
+                  <label class="text-content-tertiary text-sm">
+                    {{ filter.labelKey | translate }}
+                  </label>
+                  <input
+                    type="date"
+                    class="border-none bg-transparent outline-none text-content-primary text-sm"
+                    [value]="getHeaderFilterValue(filter.id)"
+                    (change)="onHeaderDateFilterChange(filter.id, $event)"
+                  />
+                </div>
+              }
+              @default {
+                <button
+                  (click)="onHeaderFilterClick(filter.id)"
+                  class="flex items-center gap-2 px-3 py-2 bg-surface border border-border rounded-3xl text-content-secondary hover:bg-surface-muted transition-colors whitespace-nowrap shrink-0"
+                >
+                  {{ filter.labelKey | translate }}
+                  <svg
+                    width="9"
+                    height="5"
+                    viewBox="0 0 9 5"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="text-content-tertiary"
+                  >
+                    <path
+                      d="M1 1L4.5 4L8 1"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </button>
+              }
+            }
           }
         }
       </div>
@@ -129,31 +171,73 @@
             />
           </div>
         }
-        <!-- Filter Buttons -->
+        <!-- Filter Buttons/Input/Date -->
         @if (headerConfig()?.filters?.length) {
           @for (filter of headerConfig()!.filters; track filter.id) {
-            <button
-              (click)="onHeaderFilterClick(filter.id)"
-              class="flex items-center gap-2 px-4 py-2.5 bg-surface border border-border rounded-3xl text-base text-content-secondary hover:bg-surface-muted transition-colors whitespace-nowrap"
-            >
-              {{ filter.labelKey | translate }}
-              <svg
-                width="9"
-                height="5"
-                viewBox="0 0 9 5"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                class="text-content-tertiary"
-              >
-                <path
-                  d="M1 1L4.5 4L8 1"
-                  stroke="currentColor"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-              </svg>
-            </button>
+            @switch (filter.type) {
+              @case ('dropdown') {
+                <div
+                  class="flex items-center gap-2 px-4 py-2.5 bg-surface border border-border rounded-3xl text-base text-content-secondary whitespace-nowrap"
+                >
+                  <label class="text-content-tertiary text-sm">
+                    {{ filter.labelKey | translate }}
+                  </label>
+                  <select
+                    class="border-none bg-transparent outline-none text-content-primary text-sm min-w-[140px]"
+                    [value]="getHeaderFilterValue(filter.id)"
+                    (change)="onHeaderDropdownFilterChange(filter.id, $event)"
+                  >
+                    <option value="">
+                      {{ (filter.placeholderKey ?? filter.labelKey) | translate }}
+                    </option>
+                    @for (option of filter.options ?? []; track option.value) {
+                      <option [value]="option.value">
+                        {{ option.labelKey | translate }}
+                      </option>
+                    }
+                  </select>
+                </div>
+              }
+              @case ('date') {
+                <div
+                  class="flex items-center gap-2 px-4 py-2.5 bg-surface border border-border rounded-3xl text-base text-content-secondary whitespace-nowrap"
+                >
+                  <label class="text-content-tertiary text-sm">
+                    {{ filter.labelKey | translate }}
+                  </label>
+                  <input
+                    type="date"
+                    class="border-none bg-transparent outline-none text-content-primary text-sm"
+                    [value]="getHeaderFilterValue(filter.id)"
+                    (change)="onHeaderDateFilterChange(filter.id, $event)"
+                  />
+                </div>
+              }
+              @default {
+                <button
+                  (click)="onHeaderFilterClick(filter.id)"
+                  class="flex items-center gap-2 px-4 py-2.5 bg-surface border border-border rounded-3xl text-base text-content-secondary hover:bg-surface-muted transition-colors whitespace-nowrap"
+                >
+                  {{ filter.labelKey | translate }}
+                  <svg
+                    width="9"
+                    height="5"
+                    viewBox="0 0 9 5"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="text-content-tertiary"
+                  >
+                    <path
+                      d="M1 1L4.5 4L8 1"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </button>
+              }
+            }
           }
         }
       </div>

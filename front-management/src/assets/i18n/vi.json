@@ -55,6 +55,7 @@
       "total": "Tổng"
     },
     "status": {
+      "busy": "Đang bận",
       "success": "Thành công",
       "error": "Lỗi",
       "active": "Hoạt động",
@@ -304,6 +305,103 @@
         "activation": "Kích hoạt",
         "deactivation": "Tạm ngừng",
         "delete": "Xóa"
+      }
+    },
+    "users": {
+      "tabs": {
+        "couriers": "Tài xế"
+      },
+      "stats": {
+        "totalCouriers": "Tổng số tài xế",
+        "totalStores": "Tổng số cửa hàng",
+        "pendingApproval": "Chờ duyệt",
+        "pendingCouriers": "Tài xế chờ duyệt",
+        "activeCouriers": "Tài xế hoạt động",
+        "comparedToLastMonth": "so với tháng trước",
+        "needsProcessing": "Yêu cầu cần xử lý ngay",
+        "currentMonthEstimate": "Tháng hiện tại ước tính"
+      },
+      "pagination": {
+        "page": "Trang",
+        "total": "Tổng",
+        "showing": "Hiển thị",
+        "of": "của"
+      },
+      "column": "Cột",
+      "filter": {
+        "approvalStatus": "Trạng thái duyệt",
+        "activeStatus": "Trạng thái online",
+        "startDate": "Ngày bắt đầu",
+        "endDate": "Ngày kết thúc"
+      },
+      "table": {
+        "agencyName": "TÊN ĐỐI TÁC",
+        "merchantName": "Tên cửa hàng",
+        "storeName": "Tên cửa hàng",
+        "agency": "Đối tác",
+        "owner": "Chủ sở hữu",
+        "phone": "SỐ ĐIỆN THOẠI",
+        "email": "EMAIL",
+        "address": "ĐỊA CHỈ",
+        "merchantCount": "Số cửa hàng",
+        "productCount": "Số sản phẩm",
+        "status": "STATUS",
+        "approvalStatus": "TRẠNG THÁI DUYỆT",
+        "operationalStatus": "TRẠNG THÁI HOẠT ĐỘNG",
+        "createdAt": "NGÀY TẠO",
+        "createdDate": "Ngày tạo",
+        "location": "ĐỊA ĐIỂM",
+        "totalMerchants": "TỔNG CỬA HÀNG",
+        "totalStores": "TỔNG CỬA HÀNG",
+        "joinDate": "NGÀY THAM GIA"
+      },
+      "actions": {
+        "viewDetail": "Xem chi tiết",
+        "approve": "Phê duyệt",
+        "reject": "Từ chối",
+        "delete": "Xóa",
+        "modify": "Chỉnh sửa"
+      },
+      "couriers": {
+        "title": "Tài xế",
+        "subtitle": "Quản lý thông tin tài xế trong hệ thống",
+        "searchPlaceholder": "Tìm kiếm tài xế...",
+        "deleteSuccess": "Xóa tài xế thành công",
+        "deleteError": "Xóa tài xế thất bại",
+        "rejectSuccess": "Từ chối tài xế thành công!",
+        "rejectError": "Không thể từ chối tài xế. Vui lòng thử lại.",
+        "approveSuccess": "Duyệt tài xế thành công!",
+        "approveError": "Không thể duyệt tài xế. Vui lòng thử lại.",
+        "stats": {
+          "totalCouriers": "Tổng số tài xế",
+          "pendingApproval": "Tài xế chờ duyệt",
+          "activeCouriers": "Tài xế hoạt động"
+        },
+        "table": {
+          "name": "Tên tài xế",
+          "rejectionReason": "Lý do từ chối",
+          "rejectedAt": "Từ chối vào",
+          "deletedAt": "Xóa vào",
+          "vehiclePlate": "Biển số xe",
+          "vehicleType": "Loại xe",
+          "currentLocation": "Vị trí hiện tại",
+          "activeStatus": "Trạng thái hoạt động",
+          "phone": "SỐ ĐIỆN THOẠI",
+          "email": "EMAIL",
+          "status": "STATUS",
+          "approvalStatus": "TRẠNG THÁI DUYỆT",
+          "operationalStatus": "TRẠNG THÁI HOẠT ĐỘNG",
+          "createdAt": "NGÀY TẠO",
+          "createdDate": "Ngày tạo",
+          "location": "ĐỊA ĐIỂM",
+          "totalMerchants": "TỔNG CỬA HÀNG",
+          "totalStores": "TỔNG CỬA HÀNG",
+          "joinDate": "NGÀY THAM GIA"
+        }
+      },
+      "reject": {
+        "title": "Lý do từ chối",
+        "message": "Nhập lý do từ chối tài xế"
       }
     },
     "categories": {

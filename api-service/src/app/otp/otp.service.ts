@@ -1,5 +1,5 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
-import { PrismaService } from '../prisma.service';
+import { PrismaService } from '../prisma/prisma.service';
 import { RequestOtpDto, VerifyOtpDto } from './dto/otp.dto';
 import { JwtService } from '@nestjs/jwt';
 import { AUTH_MESSAGES } from '../common/constants/messages.constant';
@@ -9,7 +9,7 @@ export class OtpService {
   constructor(
     private prisma: PrismaService,
     private jwtService: JwtService,
-  ) {}
+  ) { }
 
   async requestOtp(dto: RequestOtpDto) {
     // Generate 6 digit code

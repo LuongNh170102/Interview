@@ -6,4 +6,8 @@ export interface ModalState {
   title: string;
   message: string;
   onConfirm?: () => void;
+  // extends for input functionality
+  inputValue?: string;
+  isInput?: boolean;
+  onSubmitInput?: (value: string) => void;
 }

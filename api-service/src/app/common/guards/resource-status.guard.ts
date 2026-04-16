@@ -6,7 +6,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { PrismaService } from '../../prisma.service';
+import { PrismaService } from '../../prisma/prisma.service';
 import { MERCHANT_STATUS } from '../constants/merchant.constant';
 import { isUUID } from 'class-validator';
 import { DECORATOR_KEYS } from '../constants/decorator.constant';
@@ -19,7 +19,7 @@ import { RESOURCE_MESSAGES } from '../constants/messages.constant';
 
 @Injectable()
 export class ResourceStatusGuard implements CanActivate {
-  constructor(private prisma: PrismaService, private reflector: Reflector) {}
+  constructor(private prisma: PrismaService, private reflector: Reflector) { }
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const target = this.reflector.getAllAndOverride<ResourceTarget>(

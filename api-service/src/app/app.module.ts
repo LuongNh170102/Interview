@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { PrismaService } from './prisma.service';
+import { PrismaService } from './prisma/prisma.service';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { AgencyModule } from './agency/agency.module';
@@ -12,6 +12,8 @@ import { CategoryModule } from './category/category.module';
 import { BrandModule } from './brand/brand.module';
 import { CommonModule } from './common/common.module';
 import { HealthModule } from './health/health.module';
+import { PrismaModule } from './prisma/prisma.module';
+import { CourierModule } from './courier/courier.module';
 
 @Module({
   imports: [
@@ -22,6 +24,7 @@ import { HealthModule } from './health/health.module';
           ? '.env.production'
           : '.env.development',
     }),
+    PrismaModule,
     HealthModule,
     CommonModule,
     AuthModule,
@@ -31,8 +34,9 @@ import { HealthModule } from './health/health.module';
     ProductModule,
     CategoryModule,
     BrandModule,
+    CourierModule
   ],
   controllers: [AppController],
-  providers: [AppService, PrismaService],
+  providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }

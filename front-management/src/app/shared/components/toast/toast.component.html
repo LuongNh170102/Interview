@@ -1,0 +1,16 @@
+<div class="fixed inset-0 pointer-events-none z-[200]">
+  <ng-container *ngFor="let toast of toastService.toasts()">
+    <div
+      class="absolute pointer-events-auto"
+      [ngClass]="getPositionClass(toast.position)"
+      (click)="toastService.remove(toast.id)"
+    >
+      <div
+        class="mb-3 min-w-[250px] max-w-sm flex justify-between items-center"
+        [ngClass]="getTypeClass(toast.type)"
+      >
+        <span>{{ toast.message }}</span>
+      </div>
+    </div>
+  </ng-container>
+</div>

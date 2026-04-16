@@ -202,6 +202,7 @@ export class DataTableComponent<
 
   // Column visibility state
   private readonly hiddenColumnKeys = signal<Set<string>>(new Set());
+  private readonly headerFilterValues = signal<Record<string, unknown>>({});
   private isInitialized = false;
 
   constructor() {
@@ -365,9 +366,14 @@ export class DataTableComponent<
   getCellDateValue(row: T, column: TableColumn<T>): Date | string | null {
     const value = this.getCellValue(row, column);
     if (value === null || value === undefined) return null;
-    if (value instanceof Date) return value;
-    if (typeof value === 'string' || typeof value === 'number')
-      return new Date(value);
+    if (value instanceof Date) {
+      return isNaN(value.getTime()) ? null : value;
+    }
+    if (typeof value === 'string' || typeof value === 'number') {
+      if (typeof value === 'string' && value.trim() === '') return null;
+      const parsed = new Date(value);
+      return isNaN(parsed.getTime()) ? null : parsed;
+    }
     return null;
   }
 
@@ -634,6 +640,27 @@ export class DataTableComponent<
 
   onHeaderFilterClick(filterId: string): void {
     this.headerFilter.emit({ filterId, value: null });
+  }
+
+  getHeaderFilterValue(filterId: string): string {
+    const value = this.headerFilterValues()[filterId];
+    if (typeof value === 'string') return value;
+    if (value === null || value === undefined) return '';
+    return String(value);
+  }
+
+  onHeaderDropdownFilterChange(filterId: string, event: Event): void {
+    const select = event.target as HTMLSelectElement;
+    const value = select.value;
+    this.headerFilterValues.update((prev) => ({ ...prev, [filterId]: value }));
+    this.headerFilter.emit({ filterId, value });
+  }
+
+  onHeaderDateFilterChange(filterId: string, event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const value = input.value;
+    this.headerFilterValues.update((prev) => ({ ...prev, [filterId]: value }));
+    this.headerFilter.emit({ filterId, value });
   }
 
   onHeaderActionClick(actionId: string): void {

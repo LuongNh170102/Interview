@@ -8,7 +8,7 @@ import {
   ArgumentMetadata,
 } from '@nestjs/common';
 import { REQUEST } from '@nestjs/core';
-import { PrismaService } from '../../prisma.service';
+import { PrismaService } from '../../prisma/prisma.service';
 import { ROLE } from '../constants/role.constants';
 import {
   PRODUCT_MESSAGES,
@@ -21,7 +21,7 @@ export class MerchantOwnershipPipe implements PipeTransform {
   constructor(
     @Inject(REQUEST) private request: any,
     private prisma: PrismaService
-  ) {}
+  ) { }
 
   async transform(value: any, metadata: ArgumentMetadata) {
     if (metadata.type !== 'body') {

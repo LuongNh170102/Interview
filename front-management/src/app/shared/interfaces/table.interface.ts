@@ -288,7 +288,16 @@ export interface TableHeaderFilter {
   icon?: string;
 
   /** Filter type */
-  type: 'dropdown' | 'button';
+  type: 'dropdown' | 'date' | 'button';
+
+  /** Placeholder translation key for input-like filters */
+  placeholderKey?: string;
+
+  /** Dropdown options (required for dropdown type) */
+  options?: Array<{
+    value: string;
+    labelKey: string;
+  }>;
 }
 
 /**

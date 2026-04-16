@@ -479,22 +479,61 @@ model CartItem {
   @@map("cart_items")
 }
 
+enum CourierActiveStatus {
+  AVAILABLE
+  BUSY
+  OFFLINE
+}
+
+enum VehicleType {
+  BIKE
+  MOTORBIKE
+  CAR
+}
+
 model Courier {
   id              Int      @id @default(autoincrement())
   userId          Int      @unique @map("user_id")
+  externalId      String   @unique @default(uuid()) @map("external_id") @db.Uuid
+
+  // Approval Status (one-time, for registration process)
+  approvalStatus    ApprovalStatus    @default(PENDING) @map("approval_status")
+  approvedAt        DateTime?         @map("approved_at")
+  approvedBy        Int?              @map("approved_by")
+  rejectedAt        DateTime?         @map("rejected_at")
+  rejectedBy        Int?              @map("rejected_by")
+  rejectionReason   String?           @map("rejection_reason") @db.Text
+  
+  // Operational Status (ongoing, can change multiple times)
+  // changed courier's status type to enum for consistency
+  activeStatus CourierActiveStatus    @default(AVAILABLE) @map("active_status") // 'available' | 'busy' | 'offline'
+  statusChangedAt   DateTime?         @map("status_changed_at")
+
   name            String?
-  phone           String?
-  status          String?  // 'available' | 'busy' | 'offline'
-  vehicleType     String?  @map("vehicle_type") // 'bike' | 'motorbike' | 'car'
-  currentLocation Json?    @map("current_location")
-  createdAt       DateTime @default(now()) @map("created_at")
-  updatedAt       DateTime? @updatedAt @map("updated_at")
+  phone           String?     @unique
+  email           String?     @unique
+  // changed courier's vehicleType type to enum for consistency
+  vehicleType     VehicleType @map("vehicle_type") // 'bike' | 'motorbike' | 'car'
+  vehiclePlate    String      @map("vehicle_plate")
+  currentLocation Json?       @map("current_location")
+  createdAt       DateTime    @default(now()) @map("created_at")
+  updatedAt       DateTime?   @updatedAt @map("updated_at")
+  // requirements for soft delete
+  deletedAt       DateTime?   @map("deleted_at")
 
   // Relations
   user   User    @relation(fields: [userId], references: [id])
   orders Order[]
 
   @@map("couriers")
+
+  // requirements for improving query performance
+  // also needed for when creating orders, need to be approved and online as the same time
+  // filtering by registration date or status (can also be both as the same time -> composite index)
+  @@index([externalId])
+  @@index([createdAt])
+  @@index([activeStatus])
+  @@index([approvalStatus, activeStatus, createdAt])
 }
 
 model Promotion {

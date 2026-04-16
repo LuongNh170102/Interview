@@ -28,3 +28,12 @@ export const OPERATIONAL_STATUS = {
 
 export type OperationalStatusValue =
   (typeof OPERATIONAL_STATUS)[keyof typeof OPERATIONAL_STATUS];
+
+export const COURIER_ACTIVE_STATUS = {
+  AVAILABLE: 'AVAILABLE',
+  BUSY: 'BUSY',
+  OFFLINE: 'OFFLINE',
+} as const;
+
+export type CourierActiveStatusValue =
+  (typeof COURIER_ACTIVE_STATUS)[keyof typeof COURIER_ACTIVE_STATUS];

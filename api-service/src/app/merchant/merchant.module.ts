@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { MerchantService } from './merchant.service';
 import { MerchantController } from './merchant.controller';
-import { PrismaService } from '../prisma.service';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { OtpModule } from '../otp/otp.module';
@@ -22,6 +21,6 @@ import { OtpModule } from '../otp/otp.module';
     OtpModule,
   ],
   controllers: [MerchantController],
-  providers: [MerchantService, PrismaService],
+  providers: [MerchantService],
 })
-export class MerchantModule {}
+export class MerchantModule { }

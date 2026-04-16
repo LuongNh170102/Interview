@@ -5,7 +5,7 @@ import {
   ForbiddenException,
   NotFoundException,
 } from '@nestjs/common';
-import { PrismaService } from '../../prisma.service';
+import { PrismaService } from '../../prisma/prisma.service';
 import {
   PRODUCT_MESSAGES,
   RESOURCE_MESSAGES,
@@ -15,7 +15,7 @@ import { RESOURCE_TARGETS } from '../../common/constants/resource.constant';
 
 @Injectable()
 export class ProductOwnershipGuard implements CanActivate {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) { }
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
