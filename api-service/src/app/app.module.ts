@@ -12,6 +12,7 @@ import { CategoryModule } from './category/category.module';
 import { BrandModule } from './brand/brand.module';
 import { CommonModule } from './common/common.module';
 import { HealthModule } from './health/health.module';
+import { CourierModule } from './courier/courier.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { HealthModule } from './health/health.module';
     AgencyModule,
     MerchantModule,
     ProductModule,
+    CourierModule,
     CategoryModule,
     BrandModule,
   ],

@@ -4,6 +4,7 @@ export * from './lib/shared-ui/shared-ui';
 export * from './lib/interfaces/auth.interface';
 export * from './lib/interfaces/otp.interface';
 export * from './lib/interfaces/agency.interface';
+export * from './lib/interfaces/courier.interface';
 export * from './lib/interfaces/category.interface';
 export * from './lib/interfaces/merchant.interface';
 export * from './lib/interfaces/date-format.interface';
@@ -11,6 +12,7 @@ export * from './lib/interfaces/date-format.interface';
 export * from './lib/services/translation.service';
 export * from './lib/services/auth.service';
 export * from './lib/services/agency.service';
+export * from './lib/services/courier.service';
 export * from './lib/services/category.service';
 export * from './lib/services/merchant.service';
 // interceptors

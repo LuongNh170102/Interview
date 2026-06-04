@@ -1,0 +1,169 @@
+<section class="flex flex-col gap-5">
+  <header class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+    <div>
+      <h1 class="text-2xl font-bold text-content-primary">
+        Pending Courier Approvals
+      </h1>
+      <p class="text-sm text-content-tertiary">
+        Review courier registrations before they can receive delivery orders.
+      </p>
+    </div>
+
+    <div class="flex items-center gap-2">
+      <input
+        type="search"
+        class="w-full md:w-80 rounded-lg border border-border bg-surface px-4 py-2 text-content-primary outline-none focus:border-primary"
+        placeholder="Search by name, phone, or email"
+        [value]="search()"
+        (input)="onSearch($any($event.target).value)"
+      />
+    </div>
+  </header>
+
+  <div class="overflow-hidden border border-border bg-surface">
+    <div class="overflow-x-auto">
+      <table class="min-w-full divide-y divide-border">
+        <thead class="bg-surface-muted">
+          <tr>
+            <th class="px-4 py-3 text-left text-xs font-semibold uppercase text-content-tertiary">
+              Courier
+            </th>
+            <th class="px-4 py-3 text-left text-xs font-semibold uppercase text-content-tertiary">
+              Contact
+            </th>
+            <th class="px-4 py-3 text-left text-xs font-semibold uppercase text-content-tertiary">
+              Vehicle
+            </th>
+            <th class="px-4 py-3 text-left text-xs font-semibold uppercase text-content-tertiary">
+              Registered
+            </th>
+            <th class="px-4 py-3 text-right text-xs font-semibold uppercase text-content-tertiary">
+              Actions
+            </th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-border">
+          @if (isLoading()) {
+          <tr>
+            <td colspan="5" class="px-4 py-10 text-center text-content-tertiary">
+              Loading couriers...
+            </td>
+          </tr>
+          } @else if (couriers().length === 0) {
+          <tr>
+            <td colspan="5" class="px-4 py-10 text-center text-content-tertiary">
+              No pending couriers.
+            </td>
+          </tr>
+          } @else { @for (courier of couriers(); track courier.externalId) {
+          <tr class="hover:bg-surface-muted/60">
+            <td class="px-4 py-4">
+              <div class="flex flex-col">
+                <span class="font-semibold text-content-primary">
+                  {{ courier.name || 'Unnamed courier' }}
+                </span>
+                <span class="text-xs text-content-tertiary">
+                  {{ courier.externalId }}
+                </span>
+              </div>
+            </td>
+            <td class="px-4 py-4">
+              <div class="flex flex-col text-sm">
+                <span class="text-content-primary">{{ courier.phone || '-' }}</span>
+                <span class="text-content-tertiary">{{ courier.email || '-' }}</span>
+              </div>
+            </td>
+            <td class="px-4 py-4 text-sm text-content-primary">
+              {{ courier.vehicleType || '-' }}
+            </td>
+            <td class="px-4 py-4 text-sm text-content-primary">
+              {{ courier.createdAt | date : 'yyyy/MM/dd' }}
+            </td>
+            <td class="px-4 py-4">
+              <div class="flex justify-end gap-2">
+                <button
+                  type="button"
+                  class="rounded-md bg-status-success px-3 py-2 text-sm font-semibold text-white disabled:opacity-60"
+                  [disabled]="isSubmitting()"
+                  (click)="approve(courier)"
+                >
+                  Approve
+                </button>
+                <button
+                  type="button"
+                  class="rounded-md bg-status-error px-3 py-2 text-sm font-semibold text-white disabled:opacity-60"
+                  [disabled]="isSubmitting()"
+                  (click)="openRejectModal(courier)"
+                >
+                  Reject
+                </button>
+              </div>
+            </td>
+          </tr>
+          } }
+        </tbody>
+      </table>
+    </div>
+
+    <footer class="flex items-center justify-between border-t border-border px-4 py-3 text-sm">
+      <span class="text-content-tertiary">
+        Page {{ page() }} / {{ lastPage() }} · {{ total() }} pending
+      </span>
+      <div class="flex gap-2">
+        <button
+          type="button"
+          class="rounded-md border border-border px-3 py-2 text-content-primary disabled:opacity-50"
+          [disabled]="page() <= 1 || isLoading()"
+          (click)="previousPage()"
+        >
+          Previous
+        </button>
+        <button
+          type="button"
+          class="rounded-md border border-border px-3 py-2 text-content-primary disabled:opacity-50"
+          [disabled]="page() >= lastPage() || isLoading()"
+          (click)="nextPage()"
+        >
+          Next
+        </button>
+      </div>
+    </footer>
+  </div>
+</section>
+
+@if (rejectTarget(); as courier) {
+<div class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
+  <section class="w-full max-w-lg bg-surface p-5 shadow-xl">
+    <h2 class="text-xl font-bold text-content-primary">Reject courier</h2>
+    <p class="mt-1 text-sm text-content-tertiary">
+      Add a clear reason for {{ courier.name || 'this courier' }}.
+    </p>
+
+    <textarea
+      class="mt-4 min-h-32 w-full rounded-lg border border-border bg-surface px-4 py-3 text-content-primary outline-none focus:border-primary"
+      placeholder="Rejection reason"
+      [ngModel]="rejectionReason()"
+      (ngModelChange)="rejectionReason.set($event)"
+    ></textarea>
+
+    <div class="mt-5 flex justify-end gap-2">
+      <button
+        type="button"
+        class="rounded-md border border-border px-4 py-2 text-content-primary"
+        [disabled]="isSubmitting()"
+        (click)="closeRejectModal()"
+      >
+        Cancel
+      </button>
+      <button
+        type="button"
+        class="rounded-md bg-status-error px-4 py-2 font-semibold text-white disabled:opacity-60"
+        [disabled]="isSubmitting() || !rejectionReason().trim()"
+        (click)="reject()"
+      >
+        Reject courier
+      </button>
+    </div>
+  </section>
+</div>
+}
