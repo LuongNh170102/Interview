@@ -195,6 +195,7 @@ Hành vi đã triển khai:
 
 - Gọi `GET /api/products` để lấy product public.
 - Hiển thị product image, name, description, price, category và merchant.
+- Product card có link sang trang chi tiết sản phẩm.
 - Có loading state khi đang fetch product.
 - Có error state khi load product thất bại.
 - Có pagination.
@@ -205,9 +206,13 @@ File chính:
 - `front-b2b/src/app/pages/shop/shop.component.html`
 - `front-b2b/src/app/pages/shop/shop.component.scss`
 
-### Hiển thị thông tin product
+### Trang chi tiết product
 
-Product card trên storefront hiển thị các thông tin chính:
+B2C có trang chi tiết sản phẩm:
+
+- `/shop/:id`
+
+Trang này gọi `GET /api/products/:id` và hiển thị các thông tin chính:
 
 - Product image.
 - Product name.
@@ -215,8 +220,16 @@ Product card trên storefront hiển thị các thông tin chính:
 - Product price.
 - Product category.
 - Merchant name.
+- SKU.
+- Stock.
 
-Customer có thể xem đủ thông tin cơ bản trước khi thêm product vào cart.
+Customer có thể xem thông tin chi tiết và thêm product vào cart từ trang này.
+
+File chính:
+
+- `front-b2b/src/app/pages/product-detail/product-detail.component.ts`
+- `front-b2b/src/app/pages/product-detail/product-detail.component.html`
+- `front-b2b/src/app/pages/product-detail/product-detail.component.scss`
 
 ### Luồng cart
 
@@ -326,6 +339,9 @@ B2C frontend:
 - `front-b2b/src/app/pages/shop/shop.component.ts`
 - `front-b2b/src/app/pages/shop/shop.component.html`
 - `front-b2b/src/app/pages/shop/shop.component.scss`
+- `front-b2b/src/app/pages/product-detail/product-detail.component.ts`
+- `front-b2b/src/app/pages/product-detail/product-detail.component.html`
+- `front-b2b/src/app/pages/product-detail/product-detail.component.scss`
 - `front-b2b/src/app/pages/checkout/checkout.component.ts`
 - `front-b2b/src/app/pages/checkout/checkout.component.html`
 - `front-b2b/src/app/pages/checkout/checkout.component.scss`
@@ -361,7 +377,7 @@ npx nx build front-management
 Kết quả:
 
 - `api-service`: 6 test files passed, 15 tests passed.
-- `front-b2b`: 5 test files passed, 6 tests passed.
+- `front-b2b`: 6 test files passed, 7 tests passed.
 - `front-management`: 4 test files passed, 7 tests passed.
 - `api-service build`: passed.
 - `front-b2b build`: passed.
@@ -375,6 +391,7 @@ Các phần đã có test:
 - Nearest courier ranking.
 - Cart single-merchant behavior.
 - B2C shop display.
+- B2C product detail display.
 - B2C checkout flow.
 - Management product flow.
 - Management order review.

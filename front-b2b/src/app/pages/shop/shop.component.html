@@ -39,7 +39,11 @@
           <span>{{ product.metadata?.category || 'Món ăn' }}</span>
           <span>{{ merchantName(product) }}</span>
         </div>
-        <h2>{{ productName(product) }}</h2>
+        <h2>
+          <a [routerLink]="['/shop', product.externalId]">
+            {{ productName(product) }}
+          </a>
+        </h2>
         <p>{{ productDescription(product) || 'Sản phẩm đang được mở bán.' }}</p>
         <div class="product-footer">
           <strong>{{ price(product) }}</strong>

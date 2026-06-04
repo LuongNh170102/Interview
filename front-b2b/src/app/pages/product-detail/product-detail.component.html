@@ -1,0 +1,57 @@
+<section class="detail-shell">
+  <a routerLink="/shop" class="back-link">Quay lại Shop</a>
+
+  @if (noticeMessage()) {
+  <div class="notice">{{ noticeMessage() }}</div>
+  }
+
+  @if (isLoading()) {
+  <div class="state-box">Đang tải thông tin sản phẩm...</div>
+  } @else if (errorMessage()) {
+  <div class="state-box error">
+    <span>{{ errorMessage() }}</span>
+    <a routerLink="/shop">Về danh sách sản phẩm</a>
+  </div>
+  } @else if (product()) {
+  <article class="detail-grid">
+    <div class="image-panel">
+      <img [src]="imageUrl(product()!)" [alt]="localizedText(product()!.name)" />
+    </div>
+
+    <div class="content-panel">
+      <p class="eyebrow">{{ product()!.metadata?.category || 'Món ăn' }}</p>
+      <h1>{{ localizedText(product()!.name) }}</h1>
+      <p class="merchant">Cửa hàng: {{ merchantName(product()!) }}</p>
+      <p class="description">
+        {{ localizedText(product()!.description) || 'Sản phẩm đang được mở bán.' }}
+      </p>
+
+      <dl class="info-list">
+        <div>
+          <dt>Giá</dt>
+          <dd>{{ price(product()!) }}</dd>
+        </div>
+        <div>
+          <dt>SKU</dt>
+          <dd>{{ product()!.sku || '-' }}</dd>
+        </div>
+        <div>
+          <dt>Tồn kho</dt>
+          <dd>{{ product()!.stock ?? 0 }}</dd>
+        </div>
+      </dl>
+
+      <div class="actions">
+        <button
+          type="button"
+          [disabled]="!canAdd(product()!)"
+          (click)="addToCart(product()!)"
+        >
+          Thêm vào giỏ
+        </button>
+        <a routerLink="/checkout">Đi tới checkout</a>
+      </div>
+    </div>
+  </article>
+  }
+</section>

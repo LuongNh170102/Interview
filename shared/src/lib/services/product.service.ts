@@ -50,6 +50,10 @@ export class ProductService {
     );
   }
 
+  findOne(productExternalId: string): Observable<ProductResponse> {
+    return this.http.get<ProductResponse>(`${this.baseUrl}/${productExternalId}`);
+  }
+
   create(
     merchantExternalId: string,
     payload: FormData
