@@ -44,8 +44,8 @@ export class ProductController {
   }
 
   @Get()
-  findAll() {
-    return this.productService.findAll();
+  findAll(@Query() paginationDto: PaginationDto) {
+    return this.productService.findAll(paginationDto);
   }
 
   @Get('merchant/:merchantId')

@@ -59,6 +59,19 @@ export const appRoutes: Route[] = [
           ),
       },
       {
+        path: 'shop',
+        loadComponent: () =>
+          import('./pages/shop/shop.component').then((m) => m.ShopComponent),
+      },
+      {
+        path: 'checkout',
+        canActivate: [authGuard],
+        loadComponent: () =>
+          import('./pages/checkout/checkout.component').then(
+            (m) => m.CheckoutComponent
+          ),
+      },
+      {
         path: 'registration-success',
         canActivate: [registrationSuccessGuard],
         loadComponent: () =>

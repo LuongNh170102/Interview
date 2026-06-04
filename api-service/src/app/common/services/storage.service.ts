@@ -59,6 +59,11 @@ export class StorageService {
       return `https://${this.bucketName}.s3.${region}.amazonaws.com/${fileName}`;
     } catch (error) {
       this.logger.error(`Failed to upload file: ${error.message}`);
+      if (process.env.NODE_ENV !== 'production') {
+        return `https://placehold.co/480x320?text=${encodeURIComponent(
+          file.originalname || 'Product'
+        )}`;
+      }
       throw error;
     }
   }

@@ -131,7 +131,10 @@ export const appRoutes: Route[] = [
           },
           {
             path: 'list',
-            loadComponent: loadUnderDevelopment,
+            loadComponent: () =>
+              import('./pages/products/product-list/product-list.component').then(
+                (m) => m.ProductListComponent
+              ),
             canActivate: [withPermissions('product:read')],
           },
           {
@@ -150,8 +153,10 @@ export const appRoutes: Route[] = [
       // Orders
       {
         path: 'orders',
-        loadComponent: loadUnderDevelopment,
-
+        loadComponent: () =>
+          import('./pages/orders/orders.component').then(
+            (m) => m.OrdersComponent
+          ),
         canActivate: [withPermissions('order:read')],
       },
 

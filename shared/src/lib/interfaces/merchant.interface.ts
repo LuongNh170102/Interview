@@ -153,6 +153,20 @@ export interface MerchantListResponse {
   statistics?: MerchantStatistics;
 }
 
+export interface MyMerchantResponse {
+  id: number;
+  externalId: string;
+  name: string;
+  approvalStatus: string;
+  operationalStatus: string;
+  isAcceptingOrders: boolean;
+  createdAt: string | Date;
+}
+
+export interface MyMerchantsResponse {
+  data: MyMerchantResponse[];
+}
+
 /**
  * Query parameters for merchants API
  */

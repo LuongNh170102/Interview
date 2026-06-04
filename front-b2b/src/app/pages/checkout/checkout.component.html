@@ -1,0 +1,122 @@
+<section class="checkout-shell">
+  <div class="checkout-heading">
+    <p>SharkBee Checkout</p>
+    <h1>Kiểm tra giỏ hàng và tạo đơn giao hàng</h1>
+  </div>
+
+  @if (createdOrder()) {
+  <div class="success-panel">
+    <h2>Đặt hàng thành công</h2>
+    <p>
+      Đơn hàng đã được tạo với trạng thái
+      <strong>{{ createdOrder()?.status }}</strong>.
+    </p>
+    <a routerLink="/shop">Tiếp tục mua hàng</a>
+  </div>
+  } @else {
+  <div class="checkout-grid">
+    <div class="cart-panel">
+      <div class="panel-title">
+        <h2>Giỏ hàng</h2>
+        <a routerLink="/shop">Thêm món</a>
+      </div>
+
+      @if (cart.items().length === 0) {
+      <p class="empty-cart">Giỏ hàng đang trống.</p>
+      } @else {
+      @for (item of cart.items(); track item.product.externalId) {
+      <article class="cart-row">
+        <div>
+          <strong>{{ item.product.name.vi || item.product.name.en }}</strong>
+          <span>{{ formatMoney(item.product.price) }}</span>
+        </div>
+        <input
+          type="number"
+          min="1"
+          [ngModel]="item.quantity"
+          (ngModelChange)="updateQuantity(item.product.externalId, $event)"
+        />
+        <button type="button" (click)="cart.removeItem(item.product.externalId)">
+          Xóa
+        </button>
+      </article>
+      }
+      <div class="cart-total">
+        <span>Tổng tiền</span>
+        <strong>{{ formatMoney(cart.total()) }}</strong>
+      </div>
+      }
+    </div>
+
+    <form class="checkout-form" (ngSubmit)="submit()">
+      <h2>Thông tin giao hàng</h2>
+
+      <label>
+        Người nhận
+        <input
+          [ngModel]="form().fullName"
+          name="fullName"
+          (ngModelChange)="updateForm('fullName', $event)"
+        />
+      </label>
+
+      <label>
+        Số điện thoại
+        <input
+          [ngModel]="form().phone"
+          name="phone"
+          (ngModelChange)="updateForm('phone', $event)"
+        />
+      </label>
+
+      <label>
+        Địa chỉ
+        <textarea
+          rows="3"
+          [ngModel]="form().addressLine"
+          name="addressLine"
+          (ngModelChange)="updateForm('addressLine', $event)"
+        ></textarea>
+      </label>
+
+      <label>
+        Ghi chú
+        <input
+          [ngModel]="form().note"
+          name="note"
+          (ngModelChange)="updateForm('note', $event)"
+        />
+      </label>
+
+      <div class="location-grid">
+        <label>
+          Latitude
+          <input
+            type="number"
+            [ngModel]="form().latitude"
+            name="latitude"
+            (ngModelChange)="updateForm('latitude', $event)"
+          />
+        </label>
+        <label>
+          Longitude
+          <input
+            type="number"
+            [ngModel]="form().longitude"
+            name="longitude"
+            (ngModelChange)="updateForm('longitude', $event)"
+          />
+        </label>
+      </div>
+
+      @if (errorMessage()) {
+      <p class="form-error">{{ errorMessage() }}</p>
+      }
+
+      <button type="submit" [disabled]="!isFormValid() || isSubmitting()">
+        {{ isSubmitting() ? 'Đang tạo đơn...' : 'Tạo đơn hàng' }}
+      </button>
+    </form>
+  </div>
+  }
+</section>

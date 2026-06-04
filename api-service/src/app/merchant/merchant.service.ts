@@ -165,6 +165,34 @@ export class MerchantService {
     return merchant;
   }
 
+  async findMine(userId: number) {
+    const merchants = await this.prisma.merchant.findMany({
+      where: {
+        userRoles: {
+          some: {
+            userId,
+            role: { name: ROLE.MERCHANT_OWNER },
+          },
+        },
+      },
+      orderBy: {
+        createdAt: 'desc',
+      },
+    });
+
+    return {
+      data: merchants.map((merchant) => ({
+        id: merchant.id,
+        externalId: merchant.externalId,
+        name: merchant.name,
+        approvalStatus: merchant.approvalStatus,
+        operationalStatus: merchant.operationalStatus,
+        isAcceptingOrders: merchant.isAcceptingOrders,
+        createdAt: merchant.createdAt,
+      })),
+    };
+  }
+
   async updateStatus(externalId: string, status: MERCHANT_STATUS) {
     const merchant = await this.prisma.merchant.findUnique({
       where: { externalId },

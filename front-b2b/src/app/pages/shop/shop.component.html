@@ -1,0 +1,77 @@
+<section class="shop-shell">
+  <div class="shop-hero">
+    <div>
+      <p class="shop-eyebrow">SharkBee Shop</p>
+      <h1>Đặt món từ cửa hàng đang mở bán</h1>
+      <p>
+        Danh sách này lấy trực tiếp từ product public API. Khách chọn món,
+        thêm vào giỏ và checkout thành đơn thật.
+      </p>
+    </div>
+    <a routerLink="/checkout" class="cart-link">
+      Giỏ hàng
+      <strong>{{ cart.count() }}</strong>
+    </a>
+  </div>
+
+  @if (noticeMessage()) {
+  <div class="notice">{{ noticeMessage() }}</div>
+  }
+
+  @if (errorMessage()) {
+  <div class="error-state">
+    <span>{{ errorMessage() }}</span>
+    <button type="button" (click)="loadProducts()">Thử lại</button>
+  </div>
+  }
+
+  @if (isLoading()) {
+  <div class="grid-state">Đang tải sản phẩm...</div>
+  } @else if (products().length === 0 && !errorMessage()) {
+  <div class="grid-state">Chưa có sản phẩm đang mở bán.</div>
+  } @else {
+  <div class="product-grid">
+    @for (product of products(); track product.externalId) {
+    <article class="product-card">
+      <img [src]="imageUrl(product)" [alt]="productName(product)" />
+      <div class="product-body">
+        <div class="product-meta">
+          <span>{{ product.metadata?.category || 'Món ăn' }}</span>
+          <span>{{ merchantName(product) }}</span>
+        </div>
+        <h2>{{ productName(product) }}</h2>
+        <p>{{ productDescription(product) || 'Sản phẩm đang được mở bán.' }}</p>
+        <div class="product-footer">
+          <strong>{{ price(product) }}</strong>
+          <button
+            type="button"
+            [disabled]="!canAdd(product)"
+            (click)="addToCart(product)"
+          >
+            Thêm
+          </button>
+        </div>
+      </div>
+    </article>
+    }
+  </div>
+
+  <div class="pagination">
+    <button
+      type="button"
+      [disabled]="page() <= 1"
+      (click)="loadProducts(page() - 1)"
+    >
+      Trước
+    </button>
+    <span>Trang {{ page() }} / {{ lastPage() }}</span>
+    <button
+      type="button"
+      [disabled]="page() >= lastPage()"
+      (click)="loadProducts(page() + 1)"
+    >
+      Sau
+    </button>
+  </div>
+  }
+</section>

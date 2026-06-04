@@ -23,6 +23,10 @@ export class ProductMetadataDto {
   @IsOptional()
   @IsString()
   thumbnail?: string;
+
+  @IsOptional()
+  @IsString()
+  category?: string;
 }
 
 export class CreateProductDto {
@@ -93,7 +97,13 @@ export class CreateProductDto {
   isActive?: boolean;
 
   @IsOptional()
-  @ValidateNested()
-  @Type(() => ProductMetadataDto)
+  @Transform(({ value }) => {
+    if (!value || typeof value !== 'string') return value;
+    try {
+      return JSON.parse(value);
+    } catch {
+      return undefined;
+    }
+  })
   metadata?: ProductMetadataDto;
 }

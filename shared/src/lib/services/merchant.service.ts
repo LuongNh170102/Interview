@@ -7,6 +7,7 @@ import {
   MerchantApiResponse,
   RegisterMerchantRequest,
   AdminCreateMerchantRequest,
+  MyMerchantsResponse,
   MerchantResponse,
 } from '../interfaces/merchant.interface';
 import {
@@ -51,6 +52,12 @@ export class MerchantService {
    */
   findByExternalId(externalId: string): Observable<MerchantApiResponse> {
     return this.http.get<MerchantApiResponse>(`${this.baseUrl}/${externalId}`, {
+      withCredentials: true,
+    });
+  }
+
+  findMine(): Observable<MyMerchantsResponse> {
+    return this.http.get<MyMerchantsResponse>(`${this.baseUrl}/me`, {
       withCredentials: true,
     });
   }

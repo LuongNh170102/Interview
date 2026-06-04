@@ -40,6 +40,12 @@ export class MerchantController {
     return this.merchantService.findAll(query);
   }
 
+  @Get('me')
+  @UseGuards(JwtAuthGuard)
+  findMine(@Request() req) {
+    return this.merchantService.findMine(req.user.userId);
+  }
+
   @Get(':id')
   @UseGuards(JwtAuthGuard, PermissionsGuard)
   @Permissions('merchant:read')

@@ -7,6 +7,8 @@ export * from './lib/interfaces/agency.interface';
 export * from './lib/interfaces/courier.interface';
 export * from './lib/interfaces/category.interface';
 export * from './lib/interfaces/merchant.interface';
+export * from './lib/interfaces/product.interface';
+export * from './lib/interfaces/order.interface';
 export * from './lib/interfaces/date-format.interface';
 // services
 export * from './lib/services/translation.service';
@@ -15,6 +17,8 @@ export * from './lib/services/agency.service';
 export * from './lib/services/courier.service';
 export * from './lib/services/category.service';
 export * from './lib/services/merchant.service';
+export * from './lib/services/product.service';
+export * from './lib/services/order.service';
 // interceptors
 export * from './lib/interceptors/auth.interceptor';
 // pipes

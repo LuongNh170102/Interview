@@ -12,6 +12,7 @@ import {
 } from '../../common/constants/messages.constant';
 import { MERCHANT_STATUS } from '../../common/constants/merchant.constant';
 import { RESOURCE_TARGETS } from '../../common/constants/resource.constant';
+import { ROLE } from '../../common/constants/role.constants';
 
 @Injectable()
 export class ProductOwnershipGuard implements CanActivate {
@@ -29,11 +30,7 @@ export class ProductOwnershipGuard implements CanActivate {
     const product = await this.prisma.product.findUnique({
       where: { externalId },
       include: {
-        merchant: {
-          include: {
-            agency: true,
-          },
-        },
+        merchant: true,
       },
     });
 
@@ -51,10 +48,15 @@ export class ProductOwnershipGuard implements CanActivate {
       );
     }
 
-    const isMerchantOwner = product.merchant.ownerId === user.userId;
-    const isAgencyOwner = product.merchant.agency?.ownerId === user.userId;
+    const merchantOwnerRole = await this.prisma.userRole.findFirst({
+      where: {
+        userId: user.userId,
+        merchantId: product.merchantId,
+        role: { name: ROLE.MERCHANT_OWNER },
+      },
+    });
 
-    if (!isMerchantOwner && !isAgencyOwner) {
+    if (!merchantOwnerRole) {
       throw new ForbiddenException(
         PRODUCT_MESSAGES.PERMISSION_DENIED_MODIFICATION
       );
