@@ -165,6 +165,61 @@ export class MerchantService {
     return merchant;
   }
 
+  async findMine(userId: number): Promise<MerchantEntity> {
+    const merchant = await this.prisma.merchant.findFirst({
+      where: { ownerId: userId },
+      include: {
+        agency: {
+          select: {
+            name: true,
+            externalId: true,
+            phone: true,
+          },
+        },
+        brand: {
+          select: {
+            name: true,
+            externalId: true,
+            slug: true,
+          },
+        },
+        owner: {
+          select: {
+            email: true,
+            phone: true,
+            username: true,
+          },
+        },
+        tags: {
+          include: {
+            tag: true,
+          },
+        },
+        _count: {
+          select: {
+            products: true,
+            orders: true,
+          },
+        },
+      },
+      orderBy: { createdAt: 'desc' },
+    });
+
+    if (!merchant) {
+      throw new NotFoundException(
+        RESOURCE_MESSAGES.NOT_FOUND(RESOURCE_TARGETS.MERCHANT)
+      );
+    }
+
+    return new MerchantEntity(merchant, {
+      agency: merchant.agency,
+      brand: merchant.brand,
+      owner: merchant.owner,
+      tags: merchant.tags,
+      _count: merchant._count,
+    });
+  }
+
   async updateStatus(externalId: string, status: MERCHANT_STATUS) {
     const merchant = await this.prisma.merchant.findUnique({
       where: { externalId },

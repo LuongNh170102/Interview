@@ -41,6 +41,7 @@
     },
     "loading": "Đang tải...",
     "noData": "Không có dữ liệu",
+    "noResults": "Không có kết quả",
     "actions": "Thao tác",
     "selectAll": "Chọn tất cả",
     "selectRow": "Chọn dòng",
@@ -143,6 +144,52 @@
       "actions": "Thao tác",
       "comingSoon": "Tính năng đang phát triển",
       "filter": "Lọc"
+    },
+    "users": {
+      "couriers": {
+        "title": "Tài xế chờ duyệt",
+        "searchPlaceholder": "Tìm kiếm tài xế...",
+        "stats": {
+          "pendingApproval": "Chờ duyệt",
+          "approvedCouriers": "Tài xế đã duyệt",
+          "onlineCouriers": "Tài xế đang online",
+          "requiresReview": "Cần xử lý"
+        },
+        "table": {
+          "courier": "TÀI XẾ",
+          "phone": "ĐIỆN THOẠI",
+          "vehicleType": "PHƯƠNG TIỆN",
+          "availability": "TRỰC TUYẾN",
+          "approvalStatus": "PHÊ DUYỆT",
+          "orders": "ĐƠN HÀNG",
+          "createdAt": "NGÀY ĐĂNG KÝ",
+          "actions": "THAO TÁC"
+        },
+        "availability": {
+          "offline": "Offline",
+          "online": "Online",
+          "busy": "Bận"
+        },
+        "actions": {
+          "approve": "Duyệt",
+          "reject": "Từ chối",
+          "confirmReject": "Xác nhận từ chối"
+        },
+        "reject": {
+          "title": "Từ chối hồ sơ tài xế",
+          "description": "Nhập lý do từ chối cho",
+          "reasonLabel": "Lý do từ chối",
+          "reasonPlaceholder": "Nhập lý do từ chối",
+          "reasonRequired": "Vui lòng nhập lý do từ chối"
+        },
+        "toasts": {
+          "loadError": "Không thể tải danh sách tài xế.",
+          "approveSuccess": "Duyệt tài xế thành công.",
+          "approveError": "Không thể duyệt tài xế.",
+          "rejectSuccess": "Từ chối tài xế thành công.",
+          "rejectError": "Không thể từ chối tài xế."
+        }
+      }
     },
     "partners": {
       "tabs": {
@@ -308,6 +355,78 @@
     },
     "categories": {
       "subtitle": "Quản lý danh mục sản phẩm"
+    },
+    "productsPage": {
+      "title": "Sản phẩm",
+      "searchPlaceholder": "Tìm kiếm sản phẩm...",
+      "addNew": "Thêm sản phẩm",
+      "stats": {
+        "published": "Sản phẩm đã xuất bản",
+        "draft": "Sản phẩm nháp",
+        "outOfStock": "Hết hàng"
+      },
+      "table": {
+        "product": "SẢN PHẨM",
+        "merchant": "CỬA HÀNG",
+        "category": "DANH MỤC",
+        "price": "GIÁ",
+        "stock": "TỒN KHO",
+        "status": "TRẠNG THÁI",
+        "visibility": "HIỂN THỊ",
+        "createdAt": "NGÀY TẠO"
+      },
+      "status": {
+        "draft": "Nháp",
+        "published": "Đã xuất bản",
+        "archived": "Lưu trữ"
+      },
+      "form": {
+        "createTitle": "Tạo sản phẩm",
+        "editTitle": "Chỉnh sửa sản phẩm",
+        "basicInfo": "Thông tin sản phẩm",
+        "merchant": "Cửa hàng",
+        "selectMerchant": "Chọn cửa hàng",
+        "category": "Danh mục",
+        "selectCategory": "Chọn danh mục",
+        "nameVi": "Tên sản phẩm (VI)",
+        "nameEn": "Tên sản phẩm (EN)",
+        "namePlaceholder": "Nhập tên sản phẩm",
+        "nameEnPlaceholder": "Nhập tên tiếng Anh",
+        "description": "Mô tả",
+        "descriptionPlaceholder": "Nhập mô tả sản phẩm",
+        "images": "Hình ảnh sản phẩm",
+        "imagesDropTitle": "Kéo thả hình ảnh sản phẩm vào đây",
+        "imagesDropActive": "Thả ảnh để thêm vào thư viện sản phẩm",
+        "imagesDropDescription": "Hỗ trợ JPG, PNG, WEBP hoặc GIF cho bộ sưu tập storefront.",
+        "imagesBrowse": "Chọn tệp",
+        "imagesHint": "Bạn có thể tải lên tối đa 10 ảnh mới cho mỗi lần lưu. Ở chế độ chỉnh sửa, ảnh mới sẽ được nối thêm vào thư viện hiện tại.",
+        "currentImages": "Ảnh hiện tại",
+        "newImages": "Ảnh mới sẽ thêm",
+        "currentImageAlt": "Hình ảnh sản phẩm hiện tại",
+        "previewImageAlt": "Ảnh xem trước đã chọn",
+        "removeImage": "Xóa ảnh đã chọn",
+        "status": "Trạng thái phát hành",
+        "selectStatus": "Chọn trạng thái",
+        "price": "Giá bán",
+        "stock": "Tồn kho",
+        "sku": "SKU",
+        "skuPlaceholder": "Nhập SKU",
+        "currency": "Tiền tệ",
+        "visible": "Hiển thị trên storefront"
+      },
+      "delete": {
+        "title": "Xóa sản phẩm",
+        "description": "Sản phẩm này sẽ bị xóa vĩnh viễn khỏi danh mục."
+      },
+      "toasts": {
+        "loadError": "Không thể tải danh sách sản phẩm.",
+        "createSuccess": "Tạo sản phẩm thành công.",
+        "createError": "Không thể tạo sản phẩm.",
+        "updateSuccess": "Cập nhật sản phẩm thành công.",
+        "updateError": "Không thể cập nhật sản phẩm.",
+        "deleteSuccess": "Xóa sản phẩm thành công.",
+        "deleteError": "Không thể xóa sản phẩm."
+      }
     },
     "orders": {
       "subtitle": "Quản lý đơn hàng"

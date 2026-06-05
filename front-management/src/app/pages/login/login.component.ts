@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '@vhandelivery/shared-ui';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { catchError, EMPTY, finalize } from 'rxjs';
@@ -26,7 +26,6 @@ import { GoogleLinkModalComponent } from './components/google-link-modal/google-
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    RouterLink,
     TranslatePipe,
     GoogleLinkModalComponent,
   ],

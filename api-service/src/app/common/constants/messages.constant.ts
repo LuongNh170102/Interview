@@ -57,6 +57,12 @@ export const PRODUCT_MESSAGES = {
     'You do not have permission to create products for this merchant',
 };
 
+export const ORDER_MESSAGES = {
+  EMPTY_ITEMS: 'At least one product is required to place an order',
+  PRODUCT_NOT_AVAILABLE: 'One or more products are not available for ordering',
+  MIXED_MERCHANTS: 'All products in an order must belong to the same merchant',
+};
+
 export const CATEGORY_MESSAGES = {
   NOT_FOUND: 'Category not found',
 };
@@ -65,6 +71,14 @@ export const BRAND_MESSAGES = {
   AGENCY_REQUIRED: 'You must own an Agency to create a Brand',
   NOT_FOUND: 'Brand not found',
   NOT_OWNER: 'You do not own this Brand',
+};
+
+export const COURIER_MESSAGES = {
+  NOT_FOUND: 'Courier not found',
+  ALREADY_REGISTERED: 'Courier profile already exists for this account',
+  REJECTION_REASON_REQUIRED:
+    'Rejection reason is required when rejecting a courier',
+  APPROVAL_REQUIRED: 'Courier must be approved before operating in the system',
 };
 
 export const RESOURCE_MESSAGES = {

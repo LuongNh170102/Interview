@@ -89,6 +89,15 @@ export class MerchantOwnershipPipe implements PipeTransform {
     userId: number,
     merchantId: number
   ): Promise<boolean> {
+    const platformAdminRole = await this.prisma.userRole.findFirst({
+      where: {
+        userId,
+        role: { name: ROLE.PLATFORM_ADMIN },
+      },
+    });
+
+    if (platformAdminRole) return true;
+
     const userRole = await this.prisma.userRole.findFirst({
       where: {
         userId,

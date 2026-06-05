@@ -42,6 +42,7 @@
     },
     "loading": "Loading...",
     "noData": "No data available",
+    "noResults": "No results found",
     "actions": "Actions",
     "selectAll": "Select all",
     "selectRow": "Select row",
@@ -143,6 +144,52 @@
       "actions": "Actions",
       "comingSoon": "Feature coming soon",
       "filter": "Filter"
+    },
+    "users": {
+      "couriers": {
+        "title": "Pending Courier Approvals",
+        "searchPlaceholder": "Search couriers...",
+        "stats": {
+          "pendingApproval": "Pending Approvals",
+          "approvedCouriers": "Approved Couriers",
+          "onlineCouriers": "Online Couriers",
+          "requiresReview": "Needs review"
+        },
+        "table": {
+          "courier": "COURIER",
+          "phone": "PHONE",
+          "vehicleType": "VEHICLE",
+          "availability": "AVAILABILITY",
+          "approvalStatus": "APPROVAL",
+          "orders": "ORDERS",
+          "createdAt": "REGISTERED",
+          "actions": "ACTIONS"
+        },
+        "availability": {
+          "offline": "Offline",
+          "online": "Online",
+          "busy": "Busy"
+        },
+        "actions": {
+          "approve": "Approve",
+          "reject": "Reject",
+          "confirmReject": "Reject Courier"
+        },
+        "reject": {
+          "title": "Reject courier application",
+          "description": "Provide a rejection reason for",
+          "reasonLabel": "Rejection reason",
+          "reasonPlaceholder": "Enter the rejection reason",
+          "reasonRequired": "Rejection reason is required"
+        },
+        "toasts": {
+          "loadError": "Unable to load couriers.",
+          "approveSuccess": "Courier approved successfully.",
+          "approveError": "Unable to approve courier.",
+          "rejectSuccess": "Courier rejected successfully.",
+          "rejectError": "Unable to reject courier."
+        }
+      }
     },
     "partners": {
       "tabs": {
@@ -290,6 +337,78 @@
     },
     "categories": {
       "subtitle": "Manage product categories"
+    },
+    "productsPage": {
+      "title": "Products",
+      "searchPlaceholder": "Search products...",
+      "addNew": "Add Product",
+      "stats": {
+        "published": "Published Products",
+        "draft": "Draft Products",
+        "outOfStock": "Out Of Stock"
+      },
+      "table": {
+        "product": "PRODUCT",
+        "merchant": "MERCHANT",
+        "category": "CATEGORY",
+        "price": "PRICE",
+        "stock": "STOCK",
+        "status": "STATUS",
+        "visibility": "VISIBILITY",
+        "createdAt": "CREATED AT"
+      },
+      "status": {
+        "draft": "Draft",
+        "published": "Published",
+        "archived": "Archived"
+      },
+      "form": {
+        "createTitle": "Create product",
+        "editTitle": "Edit product",
+        "basicInfo": "Product Information",
+        "merchant": "Merchant",
+        "selectMerchant": "Select a merchant",
+        "category": "Category",
+        "selectCategory": "Select a category",
+        "nameVi": "Product Name (VI)",
+        "nameEn": "Product Name (EN)",
+        "namePlaceholder": "Enter product name",
+        "nameEnPlaceholder": "Enter English name",
+        "description": "Description",
+        "descriptionPlaceholder": "Enter product description",
+        "images": "Product Images",
+        "imagesDropTitle": "Drag and drop product images here",
+        "imagesDropActive": "Drop images to add them to the gallery",
+        "imagesDropDescription": "Upload JPG, PNG, WEBP, or GIF files for the storefront gallery.",
+        "imagesBrowse": "Browse files",
+        "imagesHint": "You can upload up to 10 new images per save. In edit mode, new files are appended to the current gallery.",
+        "currentImages": "Current images",
+        "newImages": "New images to add",
+        "currentImageAlt": "Current product image",
+        "previewImageAlt": "Selected product image preview",
+        "removeImage": "Remove selected image",
+        "status": "Publishing Status",
+        "selectStatus": "Select a status",
+        "price": "Price",
+        "stock": "Stock",
+        "sku": "SKU",
+        "skuPlaceholder": "Enter SKU",
+        "currency": "Currency",
+        "visible": "Visible in storefront"
+      },
+      "delete": {
+        "title": "Delete product",
+        "description": "This product will be permanently removed from the catalog."
+      },
+      "toasts": {
+        "loadError": "Unable to load products.",
+        "createSuccess": "Product created successfully.",
+        "createError": "Unable to create product.",
+        "updateSuccess": "Product updated successfully.",
+        "updateError": "Unable to update product.",
+        "deleteSuccess": "Product deleted successfully.",
+        "deleteError": "Unable to delete product."
+      }
     },
     "orders": {
       "subtitle": "Order management"

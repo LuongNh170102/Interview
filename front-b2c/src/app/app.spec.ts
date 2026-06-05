@@ -1,20 +1,43 @@
 import { TestBed } from '@angular/core/testing';
+import { signal } from '@angular/core';
+import { provideRouter } from '@angular/router';
 import { App } from './app';
-import { NxWelcome } from './nx-welcome';
+import { AuthService, TranslationService } from '@vhandelivery/shared-ui';
+import { CartStore } from './cart.store';
 
 describe('App', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [App, NxWelcome],
+      imports: [App],
+      providers: [
+        provideRouter([]),
+        {
+          provide: AuthService,
+          useValue: {
+            currentUser: signal(null),
+            logout: () => ({ subscribe: () => undefined }),
+          },
+        },
+        {
+          provide: CartStore,
+          useValue: {
+            totalItems: signal(0),
+          },
+        },
+        {
+          provide: TranslationService,
+          useValue: {
+            ensureCurrentLanguageLoaded: () => undefined,
+            translate: (key: string) => key,
+          },
+        },
+      ],
     }).compileComponents();
   });
 
-  it('should render title', () => {
+  it('creates the storefront shell', () => {
     const fixture = TestBed.createComponent(App);
     fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain(
-      'Welcome front-b2c'
-    );
+    expect(fixture.componentInstance).toBeTruthy();
   });
 });

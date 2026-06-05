@@ -41,6 +41,11 @@ export class ProductOwnershipGuard implements CanActivate {
       throw new NotFoundException(PRODUCT_MESSAGES.PRODUCT_NOT_FOUND);
     }
 
+    const isPlatformAdmin = user.roles?.includes('PLATFORM_ADMIN');
+    if (isPlatformAdmin) {
+      return true;
+    }
+
     // Check Merchant Status
     if (product.merchant.approvalStatus !== MERCHANT_STATUS.APPROVED) {
       throw new ForbiddenException(
