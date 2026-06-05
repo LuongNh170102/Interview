@@ -3,6 +3,7 @@ import { PrismaPg } from '@prisma/adapter-pg';
 import { Pool } from 'pg';
 import * as bcrypt from 'bcrypt';
 import 'dotenv/config';
+import { seedDemoBusinessData } from './seed-demo-data';
 
 const connectionString = process.env.DATABASE_URL;
 const pool = new Pool({ connectionString });
@@ -207,6 +208,53 @@ async function main() {
       },
     },
 
+    // Courier
+    {
+      resource: 'courier',
+      action: 'create',
+      description: {
+        en: 'Register as courier',
+        vi: 'Đăng ký tài xế',
+        ko: '배달 기사 등록',
+      },
+    },
+    {
+      resource: 'courier',
+      action: 'read',
+      description: {
+        en: 'View courier details',
+        vi: 'Xem chi tiết tài xế',
+        ko: '배달 기사 상세 보기',
+      },
+    },
+    {
+      resource: 'courier',
+      action: 'update',
+      description: {
+        en: 'Update courier info',
+        vi: 'Cập nhật thông tin tài xế',
+        ko: '배달 기사 정보 업데이트',
+      },
+    },
+    {
+      resource: 'courier',
+      action: 'delete',
+      description: {
+        en: 'Delete courier',
+        vi: 'Xóa tài xế',
+        ko: '배달 기사 삭제',
+      },
+    },
+    {
+      resource: 'courier',
+      action: 'update_status',
+      description: {
+        en: 'Approve or reject courier',
+        vi: 'Duyệt hoặc từ chối tài xế',
+        ko: '배달 기사 승인 또는 거절',
+      },
+    },
+
     // System
     {
       resource: 'system',
@@ -350,6 +398,15 @@ async function main() {
         getPerm('product', 'read'),
       ].filter(Boolean), // Filter out undefined
     },
+    {
+      role: 'COURIER',
+      perms: [
+        getPerm('courier', 'read'),
+        getPerm('courier', 'update'),
+        getPerm('order', 'read'),
+        getPerm('order', 'update_status'),
+      ].filter(Boolean),
+    },
   ];
 
   for (const map of rolePermissionsMap) {
@@ -422,6 +479,8 @@ async function main() {
 
     console.log(`Created admin user: ${adminEmail}`);
   }
+
+  await seedDemoBusinessData(prisma, adminUser.id, getRole);
 
   console.log('Seeding finished.');
 }

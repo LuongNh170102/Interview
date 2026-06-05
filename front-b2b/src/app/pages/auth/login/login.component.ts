@@ -71,34 +71,30 @@ export class LoginComponent implements OnInit {
       .subscribe((params) => {
         const provider = params['provider'] || 'google';
 
-        if (params['success'] === 'true' && params['access_token']) {
-          try {
-            const user = JSON.parse(params['user'] || '{}');
-            const permissions = JSON.parse(params['permissions'] || '[]');
+        if (params['oauth_code']) {
+          this.auth
+            .exchangeOAuthCode(params['oauth_code'])
+            .pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe({
+              next: () => {
+                const successMessage =
+                  provider === 'kakao'
+                    ? 'auth.kakao.loginSuccess'
+                    : 'auth.google.loginSuccess';
 
-            this.auth.persistOAuthAuth(
-              params['access_token'],
-              user,
-              permissions
-            );
-
-            const successMessage =
-              provider === 'kakao'
-                ? 'auth.kakao.loginSuccess'
-                : 'auth.google.loginSuccess';
-
-            this.modalService.showSuccess(
-              this.translationService.translate('auth.login.successTitle'),
-              this.translationService.translate(successMessage)
-            );
-
-            this.router.navigateByUrl('/landing', { replaceUrl: true });
-          } catch {
-            this.modalService.showError(
-              this.translationService.translate('auth.login.errorTitle'),
-              `Failed to process ${provider} login response`
-            );
-          }
+                this.modalService.showSuccess(
+                  this.translationService.translate('auth.login.successTitle'),
+                  this.translationService.translate(successMessage)
+                );
+                this.router.navigateByUrl('/landing', { replaceUrl: true });
+              },
+              error: () => {
+                this.modalService.showError(
+                  this.translationService.translate('auth.login.errorTitle'),
+                  `Failed to process ${provider} login response`
+                );
+              },
+            });
         } else if (params['requiresLinking'] === 'true') {
           // Note: Auto-link is now enabled on backend, this branch should rarely be hit
           // Kept for backward compatibility

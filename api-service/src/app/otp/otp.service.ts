@@ -3,6 +3,7 @@ import { PrismaService } from '../prisma.service';
 import { RequestOtpDto, VerifyOtpDto } from './dto/otp.dto';
 import { JwtService } from '@nestjs/jwt';
 import { AUTH_MESSAGES } from '../common/constants/messages.constant';
+import { OTP_LIMITS } from '../common/constants/otp.constant';
 
 @Injectable()
 export class OtpService {
@@ -12,12 +13,20 @@ export class OtpService {
   ) {}
 
   async requestOtp(dto: RequestOtpDto) {
-    // Generate 6 digit code
-    const code = Math.floor(100000 + Math.random() * 900000).toString();
-    const expiresAt = new Date(Date.now() + 5 * 60 * 1000); // 5 minutes
+    const windowStart = new Date(Date.now() - OTP_LIMITS.REQUEST_WINDOW_MS);
+    const recentCount = await this.prisma.otpVerification.count({
+      where: {
+        phone: dto.phone,
+        createdAt: { gte: windowStart },
+      },
+    });
 
-    // TODO: Here I will integrate with an SMS service to send the OTP in the future
-    console.log(`[OTP-DEBUG] OTP for ${dto.phone}: ${code}`);
+    if (recentCount >= OTP_LIMITS.REQUEST_MAX_PER_WINDOW) {
+      throw new BadRequestException(AUTH_MESSAGES.OTP_RATE_LIMIT_EXCEEDED);
+    }
+
+    const code = Math.floor(100000 + Math.random() * 900000).toString();
+    const expiresAt = new Date(Date.now() + OTP_LIMITS.EXPIRES_IN_MS);
 
     await this.prisma.otpVerification.create({
       data: {
@@ -31,23 +40,33 @@ export class OtpService {
   }
 
   async verifyOtp(dto: VerifyOtpDto, type: string) {
-    const record = await this.prisma.otpVerification.findFirst({
+    const latest = await this.prisma.otpVerification.findFirst({
       where: {
         phone: dto.phone,
-        code: dto.code,
         verified: false,
         expiresAt: { gt: new Date() },
       },
       orderBy: { createdAt: 'desc' },
     });
 
-    if (!record) {
+    if (!latest) {
       throw new BadRequestException(AUTH_MESSAGES.INVALID_OR_EXPIRED_OTP);
     }
 
-    // Mark as verified
+    if (latest.failedAttempts >= OTP_LIMITS.VERIFY_MAX_ATTEMPTS) {
+      throw new BadRequestException(AUTH_MESSAGES.OTP_VERIFY_ATTEMPTS_EXCEEDED);
+    }
+
+    if (latest.code !== dto.code) {
+      await this.prisma.otpVerification.update({
+        where: { id: latest.id },
+        data: { failedAttempts: { increment: 1 } },
+      });
+      throw new BadRequestException(AUTH_MESSAGES.INVALID_OR_EXPIRED_OTP);
+    }
+
     await this.prisma.otpVerification.update({
-      where: { id: record.id },
+      where: { id: latest.id },
       data: { verified: true },
     });
 

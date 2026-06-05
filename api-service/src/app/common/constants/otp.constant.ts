@@ -1,0 +1,12 @@
+export const OTP_LIMITS = {
+  REQUEST_MAX_PER_WINDOW: 3,
+  REQUEST_WINDOW_MS: 15 * 60 * 1000,
+  VERIFY_MAX_ATTEMPTS: 5,
+  EXPIRES_IN_MS: 5 * 60 * 1000,
+} as const;
+
+export const COURIER_AUDIT_ACTION = {
+  APPROVE: 'APPROVE',
+  REJECT: 'REJECT',
+  DELETE: 'DELETE',
+} as const;

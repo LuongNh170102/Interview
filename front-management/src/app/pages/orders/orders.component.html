@@ -1,0 +1,29 @@
+<div class="flex flex-col gap-4 md:gap-6">
+  @if (showMerchantFilter()) {
+    <div class="flex flex-col sm:flex-row sm:items-end gap-3">
+      <div class="min-w-[16rem]">
+        <label class="block text-sm font-medium text-content-primary mb-1.5">
+          {{ 'admin.orders.merchantLabel' | translate }}
+        </label>
+        <app-custom-select
+          [options]="merchantOptions()"
+          [placeholder]="'admin.orders.selectMerchant'"
+          [ngModel]="selectedMerchantId()"
+          (ngModelChange)="onMerchantChange($event)"
+        />
+      </div>
+    </div>
+  }
+
+  <div class="refined-table-panel">
+    <app-data-table
+      [config]="tableConfig"
+      [data]="orders()"
+      [pagination]="pagination()"
+      [headerConfig]="tableHeaderConfig"
+      [itemCount]="pagination().total"
+      [loading]="isLoading()"
+      (pageChange)="onPageChange($event)"
+    />
+  </div>
+</div>

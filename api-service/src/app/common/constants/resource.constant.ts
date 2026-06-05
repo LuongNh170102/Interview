@@ -1,6 +1,7 @@
 export const RESOURCE_TARGETS = {
   MERCHANT: 'MERCHANT',
   AGENCY: 'AGENCY',
+  COURIER: 'COURIER',
 } as const;
 
 export type ResourceTarget = keyof typeof RESOURCE_TARGETS;

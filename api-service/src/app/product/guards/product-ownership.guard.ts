@@ -12,6 +12,7 @@ import {
 } from '../../common/constants/messages.constant';
 import { MERCHANT_STATUS } from '../../common/constants/merchant.constant';
 import { RESOURCE_TARGETS } from '../../common/constants/resource.constant';
+import { isPlatformAdmin } from '../../common/utils/role.util';
 
 @Injectable()
 export class ProductOwnershipGuard implements CanActivate {
@@ -49,6 +50,10 @@ export class ProductOwnershipGuard implements CanActivate {
           product.merchant.approvalStatus
         )
       );
+    }
+
+    if (await isPlatformAdmin(this.prisma, user.userId)) {
+      return true;
     }
 
     const isMerchantOwner = product.merchant.ownerId === user.userId;

@@ -1,0 +1,58 @@
+<h1>Giỏ hàng</h1>
+
+@if (isLoading()) {
+  <div class="cart-skeleton" aria-hidden="true">
+    @for (item of skeletonItems; track item) {
+      <div class="cart-skeleton__item">
+        <div class="cart-skeleton__line cart-skeleton__line--title"></div>
+        <div class="cart-skeleton__line cart-skeleton__line--meta"></div>
+        <div class="cart-skeleton__line cart-skeleton__line--price"></div>
+      </div>
+    }
+    <div class="cart-skeleton__total"></div>
+  </div>
+} @else if (!merchantId()) {
+  <p class="empty">Giỏ hàng trống. <a routerLink="/">Tiếp tục mua sắm</a></p>
+} @else if (!cart()?.cartItems?.length) {
+  <p class="empty">Giỏ hàng trống. <a routerLink="/">Tiếp tục mua sắm</a></p>
+} @else {
+  <div class="layout">
+    <section class="items">
+      @for (item of cart()!.cartItems; track item.id) {
+        <div class="item">
+          <div>
+            <strong>{{ getItemName(item) }}</strong>
+            <p>Số lượng: {{ item.quantity }}</p>
+          </div>
+          <div class="item-actions">
+            <span>{{ getItemPrice(item) }}</span>
+            <button type="button" (click)="removeItem(item.product.externalId)">
+              Xóa
+            </button>
+          </div>
+        </div>
+      }
+      <p class="total">Tổng: <strong>{{ getTotal() }}</strong></p>
+    </section>
+
+    <section class="checkout">
+      <h2>Thông tin giao hàng</h2>
+      <form [formGroup]="checkoutForm" (ngSubmit)="placeOrder()">
+        <label>Địa chỉ</label>
+        <input formControlName="address" placeholder="123 Nguyễn Huệ, Q1, HCM" />
+        <label>Số điện thoại</label>
+        <input formControlName="phone" placeholder="0901234567" />
+        <label>Vĩ độ (latitude)</label>
+        <input type="number" step="any" formControlName="latitude" />
+        <label>Kinh độ (longitude)</label>
+        <input type="number" step="any" formControlName="longitude" />
+        <button type="submit" [disabled]="submitting()">
+          {{ submitting() ? 'Đang đặt hàng...' : 'Đặt hàng' }}
+        </button>
+      </form>
+      @if (message()) {
+        <p class="msg">{{ message() }}</p>
+      }
+    </section>
+  </div>
+}

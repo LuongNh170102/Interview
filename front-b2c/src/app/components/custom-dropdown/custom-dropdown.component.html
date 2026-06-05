@@ -1,0 +1,52 @@
+<div class="custom-dropdown">
+  @if (label()) {
+    <span class="custom-dropdown__label">{{ label() }}</span>
+  }
+
+  <div class="custom-dropdown__control">
+    <button
+      type="button"
+      class="custom-dropdown__trigger"
+      [class.custom-dropdown__trigger--compact]="compact()"
+      [class.is-open]="isOpen()"
+      [attr.aria-expanded]="isOpen()"
+      aria-haspopup="listbox"
+      (click)="toggle()"
+    >
+      <span class="custom-dropdown__value">{{ selectedLabel() }}</span>
+      <svg
+        class="custom-dropdown__chevron"
+        [class.is-open]="isOpen()"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <polyline points="6 9 12 15 18 9" />
+      </svg>
+    </button>
+
+    @if (isOpen()) {
+      <ul
+        class="custom-dropdown__menu"
+        [class.custom-dropdown__menu--up]="dropUp()"
+        role="listbox"
+      >
+        @for (option of options(); track option.value) {
+          <li
+            role="option"
+            class="custom-dropdown__option"
+            [class.is-selected]="option.value === value()"
+            [attr.aria-selected]="option.value === value()"
+            (click)="select(option)"
+          >
+            {{ option.label }}
+          </li>
+        }
+      </ul>
+    }
+  </div>
+</div>

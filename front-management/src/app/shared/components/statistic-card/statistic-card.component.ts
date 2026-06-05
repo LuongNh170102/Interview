@@ -14,6 +14,7 @@ import { StatisticCardVariant } from '../../types/statistic-card-variant.type';
   standalone: true,
   imports: [CommonModule, TranslatePipe],
   templateUrl: './statistic-card.component.html',
+  styleUrl: './statistic-card.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StatisticCardComponent {

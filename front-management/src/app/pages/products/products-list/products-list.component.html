@@ -1,0 +1,287 @@
+<div class="flex flex-col gap-4 md:gap-6">
+  <div class="flex flex-col sm:flex-row sm:items-end gap-3">
+    <div class="min-w-[16rem]">
+      <label class="block text-sm font-medium text-content-primary mb-1.5">
+        {{ 'admin.products.merchantLabel' | translate }}
+      </label>
+      <app-custom-select
+        [options]="merchantOptions()"
+        [placeholder]="'admin.products.selectMerchant'"
+        [ngModel]="selectedMerchantId()"
+        (ngModelChange)="onMerchantChange($event)"
+      />
+    </div>
+  </div>
+
+  <div class="refined-table-panel">
+    <app-data-table
+      [config]="tableConfig"
+      [data]="products()"
+      [pagination]="pagination()"
+      [headerConfig]="tableHeaderConfig"
+      [itemCount]="pagination().total"
+      [loading]="isLoading()"
+      (pageChange)="onPageChange($event)"
+      (headerSearch)="onHeaderSearch($event)"
+      (headerAction)="onHeaderAction($event)"
+      (actionClick)="onAction($event)"
+    >
+      <ng-template appTableCell="productInfo" let-row>
+        <div class="flex items-center gap-3 min-w-0">
+          <div
+            class="w-9 h-9 rounded-lg flex items-center justify-center text-xs font-semibold text-[#475467] shrink-0 bg-[#f2f4f7] ring-1 ring-[#eaecf0]"
+          >
+            {{ row.name.charAt(0).toUpperCase() }}
+          </div>
+          <div class="min-w-0">
+            <p class="text-sm font-semibold text-[#101828] truncate leading-5">{{ row.name }}</p>
+            <p class="text-xs text-[#667085] truncate leading-4 mt-0.5">{{ row.sku }}</p>
+          </div>
+        </div>
+      </ng-template>
+    </app-data-table>
+  </div>
+</div>
+
+@if (showFormModal()) {
+  <div
+    class="product-form-modal__overlay"
+    (click)="closeFormModal()"
+  >
+    <div
+      class="product-form-modal"
+      (click)="$event.stopPropagation()"
+      role="dialog"
+      aria-modal="true"
+    >
+      <div class="product-form-modal__header">
+        <div>
+          <h2 class="product-form-modal__title">
+            {{
+              (editingProductId()
+                ? 'admin.products.form.editTitle'
+                : 'admin.products.form.createTitle') | translate
+            }}
+          </h2>
+          <p class="product-form-modal__subtitle">
+            {{
+              (editingProductId()
+                ? 'admin.products.form.editHint'
+                : 'admin.products.form.createHint') | translate
+            }}
+          </p>
+        </div>
+        <button
+          type="button"
+          class="product-form-modal__close"
+          (click)="closeFormModal()"
+          aria-label="Close"
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <form class="product-form-modal__body" [formGroup]="productForm" (ngSubmit)="submitForm()">
+        <div class="product-form-field">
+          <label class="product-form-field__label">
+            {{ 'admin.products.form.name' | translate }}
+          </label>
+          <input
+            formControlName="nameVi"
+            class="product-form-field__input"
+            [class.product-form-field__input--invalid]="
+              productForm.controls.nameVi.touched && productForm.controls.nameVi.invalid
+            "
+          />
+        </div>
+
+        <div class="product-form-field">
+          <label class="product-form-field__label">
+            {{ 'admin.products.form.description' | translate }}
+          </label>
+          <textarea
+            rows="3"
+            formControlName="descriptionVi"
+            class="product-form-field__input product-form-field__textarea"
+          ></textarea>
+        </div>
+
+        <div class="product-form-modal__row">
+          <div class="product-form-field">
+            <label class="product-form-field__label">
+              {{ 'admin.products.form.price' | translate }}
+            </label>
+            <input
+              type="number"
+              formControlName="price"
+              min="0"
+              class="product-form-field__input"
+            />
+          </div>
+          <div class="product-form-field">
+            <label class="product-form-field__label">
+              {{ 'admin.products.form.stock' | translate }}
+            </label>
+            <input
+              type="number"
+              formControlName="stock"
+              min="0"
+              class="product-form-field__input"
+            />
+          </div>
+        </div>
+
+        <div class="product-form-field">
+          <label class="product-form-field__label">
+            {{ 'admin.products.form.sku' | translate }}
+          </label>
+          <input
+            formControlName="sku"
+            class="product-form-field__input"
+            [class.product-form-field__input--invalid]="
+              productForm.controls.sku.touched && productForm.controls.sku.invalid
+            "
+          />
+        </div>
+
+        <div class="product-form-field">
+          <label class="product-form-field__label">
+            {{ 'admin.products.form.category' | translate }}
+          </label>
+          <app-custom-select
+            formControlName="categoryId"
+            [options]="categoryOptions()"
+            [placeholder]="'admin.products.form.selectCategory'"
+          />
+        </div>
+
+        <div class="product-form-field">
+          <label class="product-form-field__label">
+            {{ 'admin.products.form.images' | translate }}
+          </label>
+          @if (existingImages().length) {
+            <div class="product-form-existing-images">
+              @for (image of existingImages(); track image) {
+                <img [src]="image" alt="" class="product-form-existing-images__thumb" />
+              }
+            </div>
+          }
+          <label
+            class="product-form-upload"
+            [class.product-form-upload--dragover]="isDragOver()"
+            (dragover)="onDragOver($event)"
+            (dragleave)="onDragLeave($event)"
+            (drop)="onDrop($event)"
+          >
+            <input
+              type="file"
+              multiple
+              accept="image/*"
+              class="product-form-upload__input"
+              (change)="onImagesSelected($event)"
+            />
+            <span class="product-form-upload__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
+              </svg>
+            </span>
+            <span class="product-form-upload__text">
+              {{ 'admin.products.form.uploadHint' | translate }}
+            </span>
+            <span class="product-form-upload__hint">
+              {{ 'admin.products.form.uploadFormats' | translate }}
+            </span>
+          </label>
+          @if (selectedImages().length) {
+            <p class="product-form-upload__files">
+              {{ selectedImages().length }}
+              {{ 'admin.products.form.filesSelected' | translate }}
+            </p>
+          }
+        </div>
+
+        <div class="product-form-field">
+          <label class="product-form-field__label">
+            {{ 'admin.products.form.publishStatus' | translate }}
+          </label>
+          <app-custom-select
+            formControlName="publishStatus"
+            [options]="publishStatusOptions()"
+          />
+        </div>
+
+        <div class="product-form-modal__footer">
+          <button
+            type="button"
+            class="product-form-modal__btn product-form-modal__btn--ghost"
+            (click)="closeFormModal()"
+          >
+            {{ 'common.button.cancel' | translate }}
+          </button>
+          <button
+            type="button"
+            class="product-form-modal__btn product-form-modal__btn--ghost"
+            (click)="openPreviewModal()"
+          >
+            {{ 'admin.products.form.preview' | translate }}
+          </button>
+          <button
+            type="submit"
+            class="product-form-modal__btn product-form-modal__btn--primary"
+            [disabled]="submitting()"
+          >
+            {{ 'common.button.save' | translate }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+}
+
+@if (showPreviewModal()) {
+  <div class="product-form-modal__overlay" (click)="closePreviewModal()">
+    <div
+      class="product-preview-modal"
+      (click)="$event.stopPropagation()"
+      role="dialog"
+      aria-modal="true"
+    >
+      <div class="product-form-modal__header">
+        <div>
+          <h2 class="product-form-modal__title">
+            {{ 'admin.products.form.previewTitle' | translate }}
+          </h2>
+          <p class="product-form-modal__subtitle">
+            {{ 'admin.products.form.previewHint' | translate }}
+          </p>
+        </div>
+        <button
+          type="button"
+          class="product-form-modal__close"
+          (click)="closePreviewModal()"
+          aria-label="Close"
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      <div class="product-preview-modal__body">
+        @if (getPreviewImages().length) {
+          <img
+            [src]="getPreviewImages()[0]"
+            alt=""
+            class="product-preview-modal__image"
+          />
+        }
+        <h3 class="product-preview-modal__name">{{ getPreviewName() }}</h3>
+        @if (getPreviewDescription()) {
+          <p class="product-preview-modal__desc">{{ getPreviewDescription() }}</p>
+        }
+        <p class="product-preview-modal__price">{{ getPreviewPrice() }}</p>
+      </div>
+    </div>
+  </div>
+}

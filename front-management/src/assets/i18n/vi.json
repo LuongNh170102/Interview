@@ -118,6 +118,137 @@
       "systemSettings": "Cài đặt hệ thống",
       "auditLogs": "Nhật ký hệ thống"
     },
+    "users": {
+      "couriers": {
+        "title": "Tài xế chờ duyệt",
+        "searchPlaceholder": "Tìm theo tên, SĐT, email...",
+        "loadError": "Không thể tải danh sách tài xế",
+        "approveTitle": "Duyệt tài xế",
+        "approveMessage": "Bạn có chắc muốn duyệt tài xế",
+        "approveSuccess": "Đã duyệt tài xế thành công",
+        "approveError": "Duyệt tài xế thất bại",
+        "rejectTitle": "Từ chối tài xế",
+        "rejectDescription": "Nhập lý do từ chối cho tài xế",
+        "rejectReasonLabel": "Lý do từ chối",
+        "rejectReasonPlaceholder": "Ví dụ: Thông tin không hợp lệ, giấy tờ chưa đầy đủ...",
+        "rejectReasonRequired": "Vui lòng nhập lý do từ chối (tối thiểu 5 ký tự)",
+        "rejectSuccess": "Đã từ chối tài xế thành công",
+        "rejectError": "Từ chối tài xế thất bại",
+        "filter": {
+          "all": "Tất cả trạng thái",
+          "fromDate": "Từ ngày đăng ký",
+          "toDate": "Đến ngày đăng ký",
+          "clearDates": "Xóa lọc ngày"
+        },
+        "pagination": {
+          "items": "tài xế"
+        },
+        "stats": {
+          "pending": "Chờ duyệt",
+          "approved": "Đã duyệt",
+          "active": "Đang hoạt động"
+        },
+        "table": {
+          "name": "Tài xế",
+          "phone": "Số điện thoại",
+          "email": "Email",
+          "vehicleType": "Loại xe",
+          "address": "Địa chỉ",
+          "registeredAt": "Ngày đăng ký",
+          "status": "Trạng thái"
+        },
+        "actions": {
+          "approve": "Duyệt",
+          "reject": "Từ chối"
+        }
+      }
+    },
+    "products": {
+      "title": "Danh sách sản phẩm",
+      "merchantLabel": "Cửa hàng",
+      "selectMerchant": "Chọn cửa hàng",
+      "searchPlaceholder": "Tìm theo SKU, tên...",
+      "loadError": "Không thể tải danh sách sản phẩm",
+      "createSuccess": "Tạo sản phẩm thành công",
+      "updateSuccess": "Cập nhật sản phẩm thành công",
+      "saveError": "Lưu sản phẩm thất bại",
+      "deleteTitle": "Xóa sản phẩm",
+      "deleteMessage": "Bạn có chắc muốn xóa sản phẩm",
+      "deleteSuccess": "Đã xóa sản phẩm",
+      "deleteError": "Xóa sản phẩm thất bại",
+      "pagination": {
+        "items": "sản phẩm"
+      },
+      "status": {
+        "active": "Đang bán",
+        "inactive": "Ngừng bán",
+        "draft": "Nháp",
+        "published": "Đã xuất bản",
+        "archived": "Lưu trữ"
+      },
+      "table": {
+        "name": "Tên sản phẩm",
+        "sku": "SKU",
+        "price": "Giá",
+        "stock": "Tồn kho",
+        "status": "Trạng thái",
+        "createdAt": "Ngày tạo"
+      },
+      "actions": {
+        "add": "Thêm sản phẩm",
+        "edit": "Sửa",
+        "delete": "Xóa"
+      },
+      "form": {
+        "createTitle": "Thêm sản phẩm mới",
+        "editTitle": "Chỉnh sửa sản phẩm",
+        "createHint": "Điền thông tin cơ bản để đăng sản phẩm lên cửa hàng",
+        "editHint": "Cập nhật thông tin sản phẩm hiện có",
+        "name": "Tên sản phẩm",
+        "description": "Mô tả",
+        "price": "Giá (VND)",
+        "stock": "Tồn kho",
+        "sku": "SKU",
+        "category": "Danh mục",
+        "selectCategory": "Chọn danh mục",
+        "images": "Hình ảnh",
+        "uploadHint": "Nhấn để chọn ảnh hoặc kéo thả vào đây",
+        "uploadFormats": "PNG, JPG — tối đa 10 ảnh",
+        "filesSelected": "ảnh đã chọn",
+        "isActive": "Đang bán",
+        "publishStatus": "Trạng thái xuất bản",
+        "preview": "Xem trước",
+        "previewTitle": "Xem trước sản phẩm",
+        "previewHint": "Đây là cách sản phẩm sẽ hiển thị trên cửa hàng B2C"
+      }
+    },
+    "orders": {
+      "title": "Quản lý đơn hàng",
+      "subtitle": "Theo dõi đơn hàng từ khách hàng",
+      "merchantLabel": "Cửa hàng",
+      "selectMerchant": "Chọn cửa hàng",
+      "allMerchants": "Tất cả cửa hàng",
+      "loadError": "Không thể tải danh sách đơn hàng",
+      "pagination": {
+        "items": "đơn hàng"
+      },
+      "table": {
+        "id": "Mã đơn",
+        "merchant": "Cửa hàng",
+        "total": "Tổng tiền",
+        "items": "Số SP",
+        "status": "Trạng thái",
+        "createdAt": "Ngày tạo"
+      },
+      "status": {
+        "pending": "Chờ xử lý",
+        "confirmed": "Đã xác nhận",
+        "preparing": "Đang chuẩn bị",
+        "delivering": "Đang giao",
+        "completed": "Hoàn thành",
+        "cancelled": "Đã hủy"
+      }
+    },
     "header": {
       "searchPlaceholder": "Tìm kiếm...",
       "profile": "Hồ sơ",

@@ -1,0 +1,19 @@
+<div class="login-card">
+  <h1>Đăng nhập</h1>
+  <p class="hint">Đăng nhập để thêm sản phẩm vào giỏ và đặt hàng</p>
+
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <label>Email</label>
+    <input type="email" formControlName="email" placeholder="customer@example.com" />
+    <label>Mật khẩu</label>
+    <input type="password" formControlName="password" />
+    @if (error()) {
+      <p class="error">{{ error() }}</p>
+    }
+    <button type="submit" [disabled]="submitting()">
+      {{ submitting() ? 'Đang đăng nhập...' : 'Đăng nhập' }}
+    </button>
+  </form>
+
+  <a routerLink="/" class="back">← Quay lại cửa hàng</a>
+</div>

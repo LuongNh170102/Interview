@@ -47,6 +47,15 @@ export class MerchantService {
   }
 
   /**
+   * Get merchants owned by the current user
+   */
+  findMine(): Observable<MerchantResponse[]> {
+    return this.http.get<MerchantResponse[]>(`${this.baseUrl}/mine`, {
+      withCredentials: true,
+    });
+  }
+
+  /**
    * Get single merchant by external ID
    */
   findByExternalId(externalId: string): Observable<MerchantApiResponse> {

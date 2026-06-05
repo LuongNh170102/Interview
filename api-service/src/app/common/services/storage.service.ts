@@ -1,6 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
+import { GetObjectCommand, PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
+import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { v4 as uuidv4 } from 'uuid';
 import { PRODUCT_CONSTANTS } from '../constants/product.constant';
 
@@ -41,22 +42,20 @@ export class StorageService {
           Key: fileName,
           Body: file.buffer,
           ContentType: file.mimetype,
-          ACL: 'public-read', // Make file public
         })
       );
 
-      // Construct Public URL
-      // Local MinIO: http://localhost:9000/bucket-name/filename
-      // AWS S3: https://bucket-name.s3.region.amazonaws.com/filename
-
-      const endpoint = this.configService.get<string>('AWS_ENDPOINT');
-      if (endpoint && endpoint.includes('localhost')) {
-        return `${endpoint}/${this.bucketName}/${fileName}`;
-      }
-
-      // For Production (Standard S3 URL structure)
-      const region = this.configService.get<string>('AWS_REGION');
-      return `https://${this.bucketName}.s3.${region}.amazonaws.com/${fileName}`;
+      return getSignedUrl(
+        // `getSignedUrl` and `S3Client` can end up with incompatible TS types
+        // when the installed `@aws-sdk/*` packages differ in patch versions.
+        // Runtime is still correct; this cast makes the compiler agree.
+        this.s3Client as unknown as any,
+        new GetObjectCommand({
+          Bucket: this.bucketName,
+          Key: fileName,
+        }),
+        { expiresIn: 60 * 60 * 24 * 7 }
+      );
     } catch (error) {
       this.logger.error(`Failed to upload file: ${error.message}`);
       throw error;

@@ -151,6 +151,9 @@ export interface TableConfig<T = unknown> {
 
   /** Max height for scrollable table */
   maxHeight?: string;
+
+  /** Translation key for pagination item label (default: common.pagination.items) */
+  paginationItemsLabelKey?: string;
 }
 
 /**
@@ -275,6 +278,14 @@ export interface TableHeaderAction {
 }
 
 /**
+ * Table Header Filter Option
+ */
+export interface TableHeaderFilterOption {
+  value: string;
+  labelKey: string;
+}
+
+/**
  * Table Header Filter Configuration
  */
 export interface TableHeaderFilter {
@@ -289,6 +300,9 @@ export interface TableHeaderFilter {
 
   /** Filter type */
   type: 'dropdown' | 'button';
+
+  /** Dropdown options (required when type is dropdown) */
+  options?: TableHeaderFilterOption[];
 }
 
 /**

@@ -14,6 +14,10 @@ export const AUTH_MESSAGES = {
   INVALID_OR_EXPIRED_OTP: 'Invalid or expired OTP',
   OTP_VERIFIED_SUCCESSFULLY: 'OTP verified successfully',
   OTP_SENT_SUCCESSFULLY: 'OTP sent successfully',
+  OTP_RATE_LIMIT_EXCEEDED:
+    'Too many OTP requests. Please try again in 15 minutes',
+  OTP_VERIFY_ATTEMPTS_EXCEEDED:
+    'Too many failed OTP attempts. Please request a new code',
   INVALID_OR_EXPIRED_VERIFICATION_TOKEN:
     'Invalid or expired verification token',
   INVALID_TOKEN_TYPE: 'Invalid token type',
@@ -55,6 +59,24 @@ export const PRODUCT_MESSAGES = {
     'You do not have permission to modify this product',
   PERMISSION_DENIED_CREATION:
     'You do not have permission to create products for this merchant',
+};
+
+export const ORDER_MESSAGES = {
+  ORDER_NOT_FOUND: 'Order not found',
+  CART_EMPTY: 'Cart is empty',
+  NO_COURIER_AVAILABLE: 'No available courier found for delivery',
+  INVALID_DELIVERY_ADDRESS: 'Delivery address with coordinates is required',
+  PRODUCT_UNAVAILABLE: 'One or more products are no longer available',
+};
+
+export const COURIER_MESSAGES = {
+  ALREADY_REGISTERED: 'Courier registration already exists for this user',
+  PHONE_ALREADY_USED: 'Phone number is already registered as a courier',
+  NOT_APPROVED: 'Courier account is not approved yet',
+  CANNOT_APPROVE_REJECTED: 'Cannot approve a rejected courier application',
+  CANNOT_REJECT_APPROVED: 'Cannot reject an already approved courier',
+  EMAIL_ALREADY_USED: 'Email is already registered as a courier',
+  ALREADY_DELETED: 'Courier has already been deleted',
 };
 
 export const CATEGORY_MESSAGES = {

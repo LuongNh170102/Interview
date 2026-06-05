@@ -1,4 +1,5 @@
-import { IsNotEmpty, IsNumber, IsOptional, IsString, IsBoolean, ValidateNested } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsOptional, IsString, IsBoolean, IsIn, ValidateNested } from 'class-validator';
+import { PRODUCT_STATUS } from '../../common/constants/product.constant';
 import { Type, Transform, plainToInstance } from 'class-transformer';
 
 export class LocalizedStringDto {
@@ -91,6 +92,14 @@ export class CreateProductDto {
   @IsOptional()
   @Transform(({ value }) => value === 'true' || value === true)
   isActive?: boolean;
+
+  @IsOptional()
+  @IsIn(Object.values(PRODUCT_STATUS))
+  publishStatus?: string;
+
+  @IsString()
+  @IsOptional()
+  categoryId?: string;
 
   @IsOptional()
   @ValidateNested()

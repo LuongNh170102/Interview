@@ -1,0 +1,243 @@
+<div class="storefront-page">
+  <button type="button" class="mobile-filter-toggle" (click)="toggleMobileFilters()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M4 6h16M7 12h10M10 18h4" stroke-linecap="round" />
+    </svg>
+    Bộ lọc
+  </button>
+
+  <aside class="filters" [class.filters--open]="showMobileFilters()">
+    <div class="filters__head">
+      <h2>Bộ lọc</h2>
+      <button type="button" class="filters__clear" (click)="clearFilters()">Xóa tất cả</button>
+    </div>
+
+    @if (!filtersReady()) {
+      @for (group of [1, 2, 3]; track group) {
+        <section class="filter-group filter-skeleton-group">
+          <div class="filter-skeleton__title"></div>
+          @for (item of [1, 2, 3, 4]; track item) {
+            <div class="filter-skeleton__item"></div>
+          }
+        </section>
+      }
+    } @else {
+      @if (categoryOptions().length) {
+        <section class="filter-group">
+          <h3>Danh mục</h3>
+          <ul class="filter-list">
+            @for (category of categoryOptions(); track category.id) {
+              <li>
+                <label class="filter-check">
+                  <input
+                    type="checkbox"
+                    [checked]="isCategorySelected(category.id)"
+                    (change)="toggleCategory(category.id, $any($event.target).checked)"
+                  />
+                  <span>{{ getCategoryName(category) }}</span>
+                  <span class="filter-count">({{ category.count }})</span>
+                </label>
+              </li>
+            }
+          </ul>
+        </section>
+      }
+
+      @if (merchants().length) {
+        <section class="filter-group">
+          <h3>Cửa hàng</h3>
+          <ul class="filter-list">
+            @for (merchant of merchants(); track merchant.id) {
+              <li>
+                <label class="filter-check">
+                  <input
+                    type="checkbox"
+                    [checked]="isMerchantSelected(merchant.id)"
+                    (change)="toggleMerchant(merchant.id, $any($event.target).checked)"
+                  />
+                  <span>{{ merchant.name }}</span>
+                </label>
+              </li>
+            }
+          </ul>
+        </section>
+      }
+    }
+
+    <section class="filter-group filter-group--price">
+      <div class="filter-group__head">
+        <h3>Giá (VND)</h3>
+        @if (isPriceFilterLoading()) {
+          <span class="price-filter-loading" aria-label="Đang lọc giá">
+            <svg class="price-filter-loading__spinner" viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2" opacity="0.25" />
+              <path d="M12 3a9 9 0 0 1 9 9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+            </svg>
+          </span>
+        }
+      </div>
+      <div class="price-inputs">
+        <label>
+          Từ
+          <input
+            type="number"
+            [min]="0"
+            [max]="priceMax()"
+            [ngModel]="priceMin()"
+            (ngModelChange)="onPriceMinChange($event)"
+          />
+        </label>
+        <label>
+          Đến
+          <input
+            type="number"
+            [min]="priceMin()"
+            [max]="priceCeiling()"
+            [ngModel]="priceMax()"
+            (ngModelChange)="onPriceMaxChange($event)"
+          />
+        </label>
+      </div>
+      <input
+        type="range"
+        class="price-slider"
+        [min]="0"
+        [max]="priceCeiling()"
+        [step]="10000"
+        [value]="priceMax()"
+        (input)="onPriceSliderInput($event)"
+        (change)="onPriceSliderCommit()"
+      />
+      <div class="price-range-labels">
+        <span>0 ₫</span>
+        <span>{{ priceMax() | number:'1.0-0':'vi-VN' }} ₫</span>
+      </div>
+    </section>
+  </aside>
+
+  <section class="catalog">
+    <div class="catalog-toolbar">
+      <div class="search-box">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="7" />
+          <path d="M20 20l-3-3" stroke-linecap="round" />
+        </svg>
+        <input
+          type="search"
+          placeholder="Tìm sản phẩm, SKU..."
+          [value]="searchQuery()"
+          (input)="onSearchInput($any($event.target).value)"
+        />
+      </div>
+
+      <div class="toolbar-actions">
+        <app-custom-dropdown
+          label="Sắp xếp"
+          [options]="sortOptions"
+          [value]="sortBy()"
+          (valueChange)="onSortChange($event)"
+        />
+      </div>
+    </div>
+
+    <p class="result-summary">
+      Hiển thị <strong>{{ products().length }}</strong> / {{ total() }} sản phẩm
+    </p>
+
+    @if (isLoading()) {
+      <div class="product-grid">
+        @for (i of skeletonProductItems(); track i) {
+          <div class="skeleton-product-card" aria-hidden="true">
+            <div class="skeleton-product-card__media"></div>
+            <div class="skeleton-product-card__body">
+              <div class="skeleton-product-card__line skeleton-product-card__line--title"></div>
+              <div class="skeleton-product-card__line skeleton-product-card__line--price"></div>
+              <div class="skeleton-product-card__line skeleton-product-card__line--store"></div>
+            </div>
+          </div>
+        }
+      </div>
+    } @else if (error()) {
+      <p class="state-message state-message--error">{{ error() }}</p>
+    } @else if (!products().length) {
+      <div class="empty-state">
+        <p>Không tìm thấy sản phẩm phù hợp.</p>
+        <button type="button" (click)="clearFilters()">Xóa bộ lọc</button>
+      </div>
+    } @else {
+      <div class="product-grid">
+        @for (product of products(); track product.externalId) {
+          <a [routerLink]="['/products', product.externalId]" class="product-card">
+            <div class="product-card__media">
+              @if (getThumbnail(product); as thumb) {
+                <img [src]="thumb" [alt]="getName(product)" loading="lazy" />
+              } @else {
+                <div class="product-card__placeholder">📦</div>
+              }
+            </div>
+            <div class="product-card__body">
+              <h3>{{ getName(product) }}</h3>
+              <div class="product-card__meta">
+                <span class="product-card__price">{{ getPrice(product) }}</span>
+                @if (product.averageRating && product.averageRating > 0) {
+                  <span class="product-card__rating">
+                    <svg viewBox="0 0 20 20" fill="currentColor">
+                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                    {{ getRating(product) }}
+                  </span>
+                }
+              </div>
+              @if (product.merchant?.name; as storeName) {
+                <p class="product-card__store">{{ storeName }}</p>
+              }
+            </div>
+          </a>
+        }
+      </div>
+    }
+
+    @if (!isLoading() && !error() && total() > 0) {
+      <footer class="catalog-footer">
+        <div class="page-size">
+          <app-custom-dropdown
+            label="Hiển thị"
+            [compact]="true"
+            [dropUp]="true"
+            [options]="pageSizeSelectOptions"
+            [value]="pageSize().toString()"
+            (valueChange)="changePageSize(+$event)"
+          />
+          <span class="page-size__suffix">/ trang</span>
+        </div>
+
+        <nav class="pagination" aria-label="Phân trang">
+          <button
+            type="button"
+            [disabled]="page() <= 1"
+            (click)="goToPage(page() - 1)"
+          >
+            Trước
+          </button>
+          @for (p of pageNumbers(); track p) {
+            <button
+              type="button"
+              class="pagination__page"
+              [class.pagination__page--active]="p === page()"
+              (click)="goToPage(p)"
+            >
+              {{ p }}
+            </button>
+          }
+          <button
+            type="button"
+            [disabled]="page() >= totalPages()"
+            (click)="goToPage(page() + 1)"
+          >
+            Sau
+          </button>
+        </nav>
+      </footer>
+    }
+  </section>
+</div>
