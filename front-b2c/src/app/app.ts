@@ -1,13 +1,14 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { NxWelcome } from './nx-welcome';
+import { ToastComponent } from './components/toast/toast.component';
 
 @Component({
-  imports: [NxWelcome, RouterModule],
+  imports: [RouterModule, ToastComponent],
   selector: 'app-root',
-  templateUrl: './app.html',
+  template: `
+    <router-outlet />
+    <app-toast />
+  `,
   styleUrl: './app.scss',
 })
-export class App {
-  protected title = 'front-b2c';
-}
+export class App {}

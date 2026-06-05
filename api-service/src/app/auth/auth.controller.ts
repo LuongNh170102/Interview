@@ -35,28 +35,53 @@ import {
   KakaoProfile,
   RequestWithCookies,
 } from '../common/interfaces/auth.interface';
+import { resolveAllowedFrontendUrl } from '../common/utils/frontend-url.util';
+import { OAuthExchangeService } from './oauth-exchange.service';
+import { OAuthExchangeDto } from './dto/oauth-exchange.dto';
 
 @Controller('auth')
 export class AuthController {
   constructor(
     private authService: AuthService,
-    private configService: ConfigService
+    private configService: ConfigService,
+    private oauthExchangeService: OAuthExchangeService
   ) {}
 
-  /**
-   * Get frontend URL from Host header
-   * Nginx only accepts requests with valid server_name, so Host header is trusted
-   */
-  private getFrontendUrlFromHost(req: ExpressRequest): string {
-    const defaultUrl = this.configService.get<string>('FRONTEND_URL');
-    const host = req.get('host');
-    if (!host) {
-      return defaultUrl;
-    }
+  @Post('oauth/exchange')
+  async exchangeOAuthCode(
+    @Body() dto: OAuthExchangeDto,
+    @Res({ passthrough: true }) res: Response
+  ) {
+    const payload = this.oauthExchangeService.consumeCode(dto.code);
 
-    const protocol =
-      req.secure || req.get('x-forwarded-proto') === 'https' ? 'https' : 'http';
-    return `${protocol}://${host}`;
+    res.cookie(TOKEN_TYPE.REFRESH_TOKEN, payload.refresh_token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+      maxAge: Number(process.env.MAX_AGE_REFRESH_COOKIE),
+    });
+
+    return {
+      access_token: payload.access_token,
+      user: payload.user,
+      permissions: payload.permissions,
+    };
+  }
+
+  private redirectOAuthSuccess(
+    res: Response,
+    req: ExpressRequest,
+    successResult: GoogleAuthSuccessResponse | KakaoAuthSuccessResponse
+  ) {
+    const frontendUrl = resolveAllowedFrontendUrl(req, this.configService);
+    const code = this.oauthExchangeService.createCode({
+      access_token: successResult.access_token,
+      user: successResult.user,
+      permissions: successResult.permissions,
+      refresh_token: successResult.refresh_token,
+    });
+
+    return res.redirect(`${frontendUrl}/login?oauth_code=${code}`);
   }
 
   @Post('login')
@@ -171,8 +196,7 @@ export class AuthController {
     const googleProfile = req.user;
     const result = await this.authService.handleGoogleAuth(googleProfile);
 
-    // Get frontend URL from Host header (preserved by Nginx)
-    const frontendUrl = this.getFrontendUrlFromHost(req);
+    const frontendUrl = resolveAllowedFrontendUrl(req, this.configService);
 
     if (result.requiresLinking) {
       // Redirect to frontend with linking params
@@ -186,25 +210,8 @@ export class AuthController {
       return res.redirect(`${frontendUrl}/login?${params.toString()}`);
     }
 
-    // Type narrowing: result is now GoogleAuthSuccessResponse
     const successResult = result as GoogleAuthSuccessResponse;
-
-    // Success - set cookie and redirect
-    res.cookie(TOKEN_TYPE.REFRESH_TOKEN, successResult.refresh_token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax', // Allow redirect from Google
-      maxAge: Number(process.env.MAX_AGE_REFRESH_COOKIE),
-    });
-
-    // Redirect to frontend with token in URL (short-lived, will be stored in memory)
-    const params = new URLSearchParams({
-      success: 'true',
-      access_token: successResult.access_token,
-      user: JSON.stringify(successResult.user),
-      permissions: JSON.stringify(successResult.permissions),
-    });
-    return res.redirect(`${frontendUrl}/login?${params.toString()}`);
+    return this.redirectOAuthSuccess(res, req, successResult);
   }
 
   /**
@@ -308,11 +315,9 @@ export class AuthController {
     const kakaoProfile = req.user;
     const result = await this.authService.handleKakaoAuth(kakaoProfile);
 
-    // Get frontend URL from Host header
-    const frontendUrl = this.getFrontendUrlFromHost(req);
+    const frontendUrl = resolveAllowedFrontendUrl(req, this.configService);
 
     if (result.requiresLinking) {
-      // Redirect to frontend with linking params
       const params = new URLSearchParams({
         requiresLinking: 'true',
         email: result.email,
@@ -324,25 +329,8 @@ export class AuthController {
       return res.redirect(`${frontendUrl}/login?${params.toString()}`);
     }
 
-    // Type narrowing
     const successResult = result as KakaoAuthSuccessResponse;
-
-    // Success - set cookie and redirect
-    res.cookie(TOKEN_TYPE.REFRESH_TOKEN, successResult.refresh_token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
-      maxAge: Number(process.env.MAX_AGE_REFRESH_COOKIE),
-    });
-
-    // Redirect to frontend
-    const params = new URLSearchParams({
-      success: 'true',
-      access_token: successResult.access_token,
-      user: JSON.stringify(successResult.user),
-      permissions: JSON.stringify(successResult.permissions),
-    });
-    return res.redirect(`${frontendUrl}/login?${params.toString()}`);
+    return this.redirectOAuthSuccess(res, req, successResult);
   }
 
   /**

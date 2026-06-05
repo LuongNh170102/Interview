@@ -1,0 +1,153 @@
+<div class="flex flex-col gap-4 md:gap-6">
+  <section class="courier-stats">
+    <div class="courier-stats__grid">
+      @if (isLoading()) {
+        @for (item of [1, 2, 3]; track item) {
+          <div class="courier-stat-skeleton" aria-hidden="true">
+            <div class="courier-stat-skeleton__icon"></div>
+            <div class="courier-stat-skeleton__label"></div>
+            <div class="courier-stat-skeleton__value"></div>
+          </div>
+        }
+      } @else {
+        @for (card of statisticCards(); track card.labelKey) {
+          <app-statistic-card [config]="card" />
+        }
+      }
+    </div>
+  </section>
+
+  <div class="courier-date-filter">
+    <label class="courier-date-filter__field">
+      <span>{{ 'admin.users.couriers.filter.fromDate' | translate }}</span>
+      <input
+        type="date"
+        [value]="registeredFrom()"
+        (change)="onRegisteredFromChange($event)"
+      />
+    </label>
+    <label class="courier-date-filter__field">
+      <span>{{ 'admin.users.couriers.filter.toDate' | translate }}</span>
+      <input
+        type="date"
+        [value]="registeredTo()"
+        (change)="onRegisteredToChange($event)"
+      />
+    </label>
+    @if (registeredFrom() || registeredTo()) {
+      <button type="button" class="courier-date-filter__clear" (click)="clearDateFilter()">
+        {{ 'admin.users.couriers.filter.clearDates' | translate }}
+      </button>
+    }
+  </div>
+
+  <div class="relative refined-table-panel">
+    <app-data-table
+      [config]="tableConfig"
+      [data]="couriers()"
+      [pagination]="pagination()"
+      [headerConfig]="tableHeaderConfig"
+      [filterValues]="tableFilterValues()"
+      [itemCount]="pagination().total"
+      [loading]="isLoading()"
+      (pageChange)="onPageChange($event)"
+      (headerSearch)="onHeaderSearch($event)"
+      (headerFilter)="onHeaderFilter($event)"
+      (actionClick)="onAction($event)"
+    >
+      <ng-template appTableCell="courierInfo" let-row>
+        @let courier = row;
+        <div class="flex items-center gap-3 min-w-0">
+          <div
+            class="w-9 h-9 rounded-full flex items-center justify-center text-xs font-semibold text-[#344054] shrink-0 ring-1 ring-[#eaecf0]"
+            [style.background-color]="courier.initialsColor"
+          >
+            {{ courier.initials }}
+          </div>
+          <div class="min-w-0">
+            <p class="text-sm font-semibold text-[#101828] truncate leading-5">{{ courier.name }}</p>
+            @if (courier.ownerEmail) {
+              <p class="text-xs text-[#667085] truncate leading-4 mt-0.5">{{ courier.ownerEmail }}</p>
+            }
+          </div>
+        </div>
+      </ng-template>
+    </app-data-table>
+  </div>
+</div>
+
+@if (showRejectModal()) {
+  <div class="reject-modal__overlay" (click)="closeRejectModal()">
+    <div
+      class="reject-modal"
+      (click)="$event.stopPropagation()"
+      role="dialog"
+      aria-modal="true"
+    >
+      <div class="reject-modal__header">
+        <div>
+          <h2 class="reject-modal__title">
+            {{ 'admin.users.couriers.rejectTitle' | translate }}
+          </h2>
+          <p class="reject-modal__subtitle">
+            {{ 'admin.users.couriers.rejectDescription' | translate }}
+            <strong>{{ rejectTarget()?.name }}</strong>
+          </p>
+        </div>
+        <button
+          type="button"
+          class="reject-modal__close"
+          (click)="closeRejectModal()"
+          [attr.aria-label]="'common.button.cancel' | translate"
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <form class="reject-modal__body" [formGroup]="rejectForm" (ngSubmit)="submitReject()">
+        <div class="reject-modal-field">
+          <label class="reject-modal-field__label">
+            {{ 'admin.users.couriers.rejectReasonLabel' | translate }}
+          </label>
+          <textarea
+            rows="4"
+            formControlName="rejectionReason"
+            class="reject-modal-field__input reject-modal-field__textarea"
+            [class.reject-modal-field__input--invalid]="
+              rejectForm.controls.rejectionReason.touched &&
+              rejectForm.controls.rejectionReason.invalid
+            "
+            [placeholder]="'admin.users.couriers.rejectReasonPlaceholder' | translate"
+          ></textarea>
+          @if (
+            rejectForm.controls.rejectionReason.touched &&
+            rejectForm.controls.rejectionReason.invalid
+          ) {
+            <p class="reject-modal-field__error">
+              {{ 'admin.users.couriers.rejectReasonRequired' | translate }}
+            </p>
+          }
+        </div>
+
+        <div class="reject-modal__footer">
+          <button
+            type="button"
+            class="reject-modal__btn reject-modal__btn--ghost"
+            (click)="closeRejectModal()"
+          >
+            {{ 'common.button.cancel' | translate }}
+          </button>
+          <button
+            type="submit"
+            class="reject-modal__btn reject-modal__btn--danger"
+            [disabled]="rejectSubmitting()"
+          >
+            {{ 'admin.users.couriers.actions.reject' | translate }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+}

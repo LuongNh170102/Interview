@@ -207,6 +207,15 @@ export class AuthService {
     this.persist(token, user, permissions);
   }
 
+  /** Exchange short-lived OAuth code for session tokens (no token in URL) */
+  exchangeOAuthCode(code: string) {
+    return this.http
+      .post<AuthResponse>('/api/auth/oauth/exchange', { code }, { withCredentials: true })
+      .pipe(
+        tap((res) => this.persist(res.access_token, res.user, res.permissions))
+      );
+  }
+
   private persist(token: string, user: UserProfile, permissions: string[]) {
     this.accessToken.set(token);
     this.currentUser.set(user);

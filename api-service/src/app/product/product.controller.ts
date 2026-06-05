@@ -7,7 +7,6 @@ import {
   Param,
   Delete,
   UseGuards,
-  Request,
   UseInterceptors,
   UploadedFiles,
   Query,
@@ -15,6 +14,7 @@ import {
 import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
+import { ProductQueryDto } from './dto/product-query.dto';
 import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
 import { Permissions } from '../common/decorators/permissions.decorator';
 import { ProductOwnershipGuard } from './guards/product-ownership.guard';
@@ -22,9 +22,10 @@ import { ResourceStatusGuard } from '../common/guards/resource-status.guard';
 import { CheckStatus } from '../common/decorators/check-status.decorator';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { MerchantOwnershipPipe } from '../common/pipes/merchant-ownership.pipe';
-import { PaginationDto } from '../common/dto/pagination.dto';
 import { RESOURCE_TARGETS } from '../common/constants/resource.constant';
 import { PermissionsGuard } from '../common/guards/permissions.guard';
+import { ProductMerchantQueryDto } from './dto/product-merchant-query.dto';
+import { MerchantAccessGuard } from './guards/merchant-access.guard';
 
 @Controller('products')
 export class ProductController {
@@ -43,20 +44,41 @@ export class ProductController {
     return this.productService.create(createProductDto, files);
   }
 
-  @Get()
-  findAll() {
-    return this.productService.findAll();
+  @Get('public/filters')
+  findPublicFilters() {
+    return this.productService.findPublicFilters();
+  }
+
+  @Get('public')
+  findPublic(@Query() query: ProductQueryDto) {
+    return this.productService.findPublic(query);
+  }
+
+  @Get('public/:id')
+  findPublicOne(@Param('id') externalId: string) {
+    return this.productService.findPublicOne(externalId);
   }
 
   @Get('merchant/:merchantId')
+  @UseGuards(JwtAuthGuard, PermissionsGuard, MerchantAccessGuard)
+  @Permissions('product:read')
   findAllByMerchant(
     @Param('merchantId') merchantId: string,
-    @Query() paginationDto: PaginationDto
+    @Query() query: ProductMerchantQueryDto
   ) {
-    return this.productService.findAllByMerchant(merchantId, paginationDto);
+    return this.productService.findAllByMerchant(merchantId, query);
+  }
+
+  @Get()
+  @UseGuards(JwtAuthGuard, PermissionsGuard)
+  @Permissions('product:read')
+  findAll(@Query() query: ProductQueryDto) {
+    return this.productService.findAll(query);
   }
 
   @Get(':id')
+  @UseGuards(JwtAuthGuard, PermissionsGuard)
+  @Permissions('product:read')
   findOne(@Param('id') externalId: string) {
     return this.productService.findOne(externalId);
   }
@@ -64,11 +86,13 @@ export class ProductController {
   @Patch(':id')
   @UseGuards(JwtAuthGuard, PermissionsGuard, ProductOwnershipGuard)
   @Permissions('product:update')
+  @UseInterceptors(FilesInterceptor('images', 10))
   update(
     @Param('id') externalId: string,
-    @Body() updateProductDto: UpdateProductDto
+    @Body() updateProductDto: UpdateProductDto,
+    @UploadedFiles() files?: Array<Express.Multer.File>
   ) {
-    return this.productService.update(externalId, updateProductDto);
+    return this.productService.update(externalId, updateProductDto, files);
   }
 
   @Delete(':id')

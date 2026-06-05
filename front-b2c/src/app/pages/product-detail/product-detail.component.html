@@ -1,0 +1,170 @@
+<div class="product-detail-page">
+  @if (isLoading()) {
+    <div class="product-detail__grid product-detail__grid--skeleton" aria-hidden="true">
+      <div class="product-detail__left">
+        <div class="skeleton-block skeleton-block--hero"></div>
+        <div class="product-detail__thumbs">
+          @for (i of [1, 2, 3]; track i) {
+            <div class="skeleton-block skeleton-block--thumb"></div>
+          }
+        </div>
+        <div class="skeleton-block skeleton-block--seller"></div>
+      </div>
+      <div class="product-detail__right">
+        <div class="skeleton-block skeleton-block--title"></div>
+        <div class="skeleton-block skeleton-block--meta"></div>
+        <div class="skeleton-block skeleton-block--price"></div>
+        <div class="skeleton-block skeleton-block--line"></div>
+      </div>
+    </div>
+  } @else if (product(); as p) {
+    <div class="product-detail__grid">
+      <div class="product-detail__left">
+        @if (getActiveImage(); as img) {
+          <div class="media-card">
+            <img [src]="img" [alt]="getName()" />
+          </div>
+        }
+
+        @if (getImages().length > 1) {
+          <div class="product-detail__thumbs">
+            @for (image of getImages(); track image; let i = $index) {
+              <button
+                type="button"
+                class="thumb-btn"
+                [class.is-active]="selectedImageIndex() === i"
+                (click)="selectImage(i)"
+              >
+                <img [src]="image" [alt]="getName()" />
+              </button>
+            }
+          </div>
+        }
+
+        @if (p.merchant?.name; as storeName) {
+          <div class="seller-card">
+            <div class="seller-card__head">
+              <span class="seller-card__name">{{ storeName }}</span>
+            </div>
+            @if (getMerchantLocation(); as location) {
+              <p class="seller-card__location">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 11.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 21s7-4.5 7-10a7 7 0 10-14 0c0 5.5 7 10 7 10z" />
+                </svg>
+                {{ location }}
+              </p>
+            }
+            @if (getDescriptionLines().length) {
+              <a class="seller-card__more" href="#mo-ta">Xem thêm</a>
+            }
+          </div>
+        }
+      </div>
+
+      <div class="product-detail__right">
+        <h1 class="product-title">{{ getName() }}</h1>
+
+        @if (hasProductMeta()) {
+          <div class="product-meta">
+            @if (hasRating()) {
+              <div class="product-meta__stars" aria-hidden="true">
+                @for (star of [1, 2, 3, 4, 5]; track star) {
+                  <svg viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                }
+              </div>
+              <span class="product-meta__score">({{ getRatingLabel() }})</span>
+            }
+            @if (hasReviews()) {
+              @if (hasRating()) {
+                <span class="product-meta__dot" aria-hidden="true">·</span>
+              }
+              <a class="product-meta__link" href="#danh-gia">{{ getReviewLabel() }}</a>
+            }
+            @if (getStockLabel(); as stockLabel) {
+              @if (hasRating() || hasReviews()) {
+                <span class="product-meta__dot" aria-hidden="true">·</span>
+              }
+              <span class="product-meta__link">{{ stockLabel }}</span>
+            }
+          </div>
+        }
+
+        @if (p.price != null) {
+          <p class="product-price">{{ getPrice() }}</p>
+        }
+
+        @if (p.stock != null && p.stock > 0) {
+          <div class="product-field">
+            <div class="product-field__head">
+              <span class="product-field__label">Số lượng</span>
+              @if (isLowStock()) {
+                <span class="product-field__hint">Chỉ còn {{ p.stock }} sản phẩm</span>
+              }
+            </div>
+            <div class="qty-row">
+              <button
+                type="button"
+                class="qty-chip"
+                (click)="changeQty(-1)"
+                aria-label="Giảm"
+              >
+                −
+              </button>
+              <span class="qty-chip qty-chip--value">{{ quantity() }}</span>
+              <button
+                type="button"
+                class="qty-chip"
+                (click)="changeQty(1)"
+                aria-label="Tăng"
+              >
+                +
+              </button>
+            </div>
+          </div>
+        }
+
+        @if (getDescriptionLines().length) {
+          <div class="product-field" id="mo-ta">
+            <p class="product-field__label">Mô tả:</p>
+            <ul class="product-desc">
+              @for (line of getDescriptionLines(); track line) {
+                <li>{{ line }}</li>
+              }
+            </ul>
+          </div>
+        }
+
+        @if (p.stock != null && p.stock > 0) {
+          <button
+            type="button"
+            class="product-buy-btn"
+            [disabled]="adding()"
+            (click)="addToCart()"
+          >
+            {{ adding() ? 'Đang thêm...' : 'Thêm vào giỏ hàng' }}
+          </button>
+        }
+
+        @if (hasReviews()) {
+          <section class="product-reviews" id="danh-gia">
+            <h2>Đánh giá</h2>
+            <p>
+              @if (hasRating()) {
+                {{ getRatingLabel() }}/5 ·
+              }
+              {{ getReviewLabel() }}
+            </p>
+          </section>
+        }
+      </div>
+    </div>
+  } @else {
+    <div class="product-detail-empty">
+      <p>{{ message() || 'Không tìm thấy sản phẩm' }}</p>
+      <a routerLink="/">Quay lại danh sách</a>
+    </div>
+  }
+</div>

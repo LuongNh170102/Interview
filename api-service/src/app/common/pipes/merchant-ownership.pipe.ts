@@ -15,6 +15,7 @@ import {
   COMMON_MESSAGES,
 } from '../constants/messages.constant';
 import { PRIMITIVE_TYPES } from '../constants/common.constant';
+import { isPlatformAdmin } from '../utils/role.util';
 
 @Injectable({ scope: Scope.REQUEST })
 export class MerchantOwnershipPipe implements PipeTransform {
@@ -89,6 +90,10 @@ export class MerchantOwnershipPipe implements PipeTransform {
     userId: number,
     merchantId: number
   ): Promise<boolean> {
+    if (await isPlatformAdmin(this.prisma, userId)) {
+      return true;
+    }
+
     const userRole = await this.prisma.userRole.findFirst({
       where: {
         userId,

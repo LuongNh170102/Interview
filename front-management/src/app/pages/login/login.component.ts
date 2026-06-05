@@ -71,30 +71,25 @@ export class LoginComponent implements OnInit {
     this.route.queryParams
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((params) => {
-        if (params['success'] === 'true' && params['access_token']) {
-          try {
-            const user = JSON.parse(params['user'] || '{}');
-            const permissions = JSON.parse(params['permissions'] || '[]');
-
-            this.auth.persistGoogleAuth(
-              params['access_token'],
-              user,
-              permissions
-            );
-
-            this.modalService.showSuccess(
-              this.translationService.translate('auth.login.successTitle'),
-              this.translationService.translate('auth.google.loginSuccess')
-            );
-
-            // Navigate directly to dashboard (replaceUrl clears the query params from history)
-            this.router.navigateByUrl('/dashboard', { replaceUrl: true });
-          } catch {
-            this.modalService.showError(
-              this.translationService.translate('auth.login.errorTitle'),
-              'Failed to process Google login response'
-            );
-          }
+        if (params['oauth_code']) {
+          this.auth
+            .exchangeOAuthCode(params['oauth_code'])
+            .pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe({
+              next: () => {
+                this.modalService.showSuccess(
+                  this.translationService.translate('auth.login.successTitle'),
+                  this.translationService.translate('auth.google.loginSuccess')
+                );
+                this.router.navigateByUrl('/dashboard', { replaceUrl: true });
+              },
+              error: () => {
+                this.modalService.showError(
+                  this.translationService.translate('auth.login.errorTitle'),
+                  'Failed to process OAuth login response'
+                );
+              },
+            });
         } else if (params['requiresLinking'] === 'true') {
           // Account linking required - show modal
           this.googleLinkingData.set({

@@ -18,4 +18,6 @@ export interface StatisticCardConfig {
     current: number;
     total: number;
   };
+  /** Compact layout — smaller padding, inline icon, no uppercase labels */
+  compact?: boolean;
 }

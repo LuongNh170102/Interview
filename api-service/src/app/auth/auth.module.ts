@@ -9,6 +9,7 @@ import { JwtStrategy } from './jwt.strategy';
 import { GoogleStrategy } from './strategies/google.strategy';
 import { KakaoStrategy } from './strategies/kakao.strategy';
 import { PrismaService } from '../prisma.service';
+import { OAuthExchangeService } from './oauth-exchange.service';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { PrismaService } from '../prisma.service';
     GoogleStrategy,
     KakaoStrategy,
     PrismaService,
+    OAuthExchangeService,
   ],
   controllers: [AuthController],
   exports: [AuthService],

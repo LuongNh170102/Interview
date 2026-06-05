@@ -118,6 +118,137 @@
       "systemSettings": "System Settings",
       "auditLogs": "Audit Logs"
     },
+    "users": {
+      "couriers": {
+        "title": "Pending Courier Approvals",
+        "filter": {
+          "all": "All statuses",
+          "fromDate": "Registered from",
+          "toDate": "Registered to",
+          "clearDates": "Clear dates"
+        },
+        "pagination": {
+          "items": "couriers"
+        },
+        "searchPlaceholder": "Search by name, phone, email...",
+        "loadError": "Failed to load couriers",
+        "approveTitle": "Approve courier",
+        "approveMessage": "Are you sure you want to approve courier",
+        "approveSuccess": "Courier approved successfully",
+        "approveError": "Failed to approve courier",
+        "rejectTitle": "Reject courier",
+        "rejectDescription": "Enter rejection reason for courier",
+        "rejectReasonLabel": "Rejection reason",
+        "rejectReasonPlaceholder": "e.g. Invalid information, incomplete documents...",
+        "rejectReasonRequired": "Please enter a rejection reason (min 5 characters)",
+        "rejectSuccess": "Courier rejected successfully",
+        "rejectError": "Failed to reject courier",
+        "stats": {
+          "pending": "Pending",
+          "approved": "Approved",
+          "active": "Active"
+        },
+        "table": {
+          "name": "Courier",
+          "phone": "Phone",
+          "email": "Email",
+          "vehicleType": "Vehicle type",
+          "address": "Address",
+          "registeredAt": "Registered at",
+          "status": "Status"
+        },
+        "actions": {
+          "approve": "Approve",
+          "reject": "Reject"
+        }
+      }
+    },
+    "products": {
+      "title": "Product List",
+      "merchantLabel": "Store",
+      "selectMerchant": "Select store",
+      "searchPlaceholder": "Search by SKU, name...",
+      "loadError": "Failed to load products",
+      "createSuccess": "Product created successfully",
+      "updateSuccess": "Product updated successfully",
+      "saveError": "Failed to save product",
+      "deleteTitle": "Delete Product",
+      "deleteMessage": "Are you sure you want to delete",
+      "deleteSuccess": "Product deleted",
+      "deleteError": "Failed to delete product",
+      "pagination": {
+        "items": "products"
+      },
+      "status": {
+        "active": "Active",
+        "inactive": "Inactive",
+        "draft": "Draft",
+        "published": "Published",
+        "archived": "Archived"
+      },
+      "table": {
+        "name": "Product Name",
+        "sku": "SKU",
+        "price": "Price",
+        "stock": "Stock",
+        "status": "Status",
+        "createdAt": "Created At"
+      },
+      "actions": {
+        "add": "Add Product",
+        "edit": "Edit",
+        "delete": "Delete"
+      },
+      "form": {
+        "createTitle": "Add New Product",
+        "editTitle": "Edit Product",
+        "createHint": "Fill in the basic details to list this product",
+        "editHint": "Update the existing product information",
+        "name": "Product Name",
+        "description": "Description",
+        "price": "Price (VND)",
+        "stock": "Stock",
+        "sku": "SKU",
+        "category": "Category",
+        "selectCategory": "Select category",
+        "images": "Images",
+        "uploadHint": "Click to browse or drag and drop images",
+        "uploadFormats": "PNG, JPG — up to 10 images",
+        "filesSelected": "file(s) selected",
+        "isActive": "Active",
+        "publishStatus": "Publish status",
+        "preview": "Preview",
+        "previewTitle": "Product preview",
+        "previewHint": "This is how the product will appear on the B2C storefront"
+      }
+    },
+    "orders": {
+      "title": "Order Management",
+      "subtitle": "Track customer orders",
+      "merchantLabel": "Store",
+      "selectMerchant": "Select store",
+      "allMerchants": "All stores",
+      "loadError": "Failed to load orders",
+      "pagination": {
+        "items": "orders"
+      },
+      "table": {
+        "id": "Order ID",
+        "merchant": "Store",
+        "total": "Total",
+        "items": "Items",
+        "status": "Status",
+        "createdAt": "Created At"
+      },
+      "status": {
+        "pending": "Pending",
+        "confirmed": "Confirmed",
+        "preparing": "Preparing",
+        "delivering": "Delivering",
+        "completed": "Completed",
+        "cancelled": "Cancelled"
+      }
+    },
     "header": {
       "searchPlaceholder": "Search...",
       "profile": "Profile",

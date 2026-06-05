@@ -190,6 +190,12 @@ enum OperationalStatus {
   LOCKED      
 }
 
+enum CourierAvailabilityStatus {
+  ONLINE
+  OFFLINE
+  BUSY
+}
+
 model Brand {
   id          Int     @id @default(autoincrement())
   externalId  String  @unique @default(uuid()) @map("external_id") @db.Uuid
@@ -367,6 +373,12 @@ model OperatingHour {
 
 // --- PRODUCT & MENU ---
 
+enum ProductStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
 model Menu {
   id          Int     @id @default(autoincrement())
   merchantId  Int     @map("merchant_id")
@@ -408,8 +420,9 @@ model Product {
   currency    String?  @default("VND")
   sku         String?
   stock       Int?
-  isActive    Boolean? @default(true) @map("is_active")
-  metadata    Json?
+  isActive      Boolean?      @default(true) @map("is_active")
+  publishStatus ProductStatus @default(DRAFT) @map("publish_status")
+  metadata      Json?
   
   // Denormalized rating stats (updated via service when reviews change)
   averageRating   Float     @default(0) @map("average_rating")
@@ -427,6 +440,7 @@ model Product {
   orderItems        OrderItem[]
   reviews           Review[]
 
+  @@index([publishStatus])
   @@map("products")
 }
 
@@ -481,20 +495,64 @@ model CartItem {
 
 model Courier {
   id              Int      @id @default(autoincrement())
+  externalId      String   @unique @default(uuid()) @map("external_id") @db.Uuid
   userId          Int      @unique @map("user_id")
+
+  // Registration info
   name            String?
-  phone           String?
-  status          String?  // 'available' | 'busy' | 'offline'
+  phone           String?  @unique
+  email           String?  @unique
+  address         String?  @db.Text
   vehicleType     String?  @map("vehicle_type") // 'bike' | 'motorbike' | 'car'
+
+  // Location
+  latitude        Float?
+  longitude       Float?
   currentLocation Json?    @map("current_location")
+
+  // Approval Status (one-time, for registration process)
+  approvalStatus    ApprovalStatus    @default(PENDING) @map("approval_status")
+  approvedAt        DateTime?         @map("approved_at")
+  approvedBy        Int?              @map("approved_by")
+  rejectedAt        DateTime?         @map("rejected_at")
+  rejectedBy        Int?              @map("rejected_by")
+  rejectionReason   String?           @map("rejection_reason") @db.Text
+
+  // Operational Status (ongoing, can change multiple times)
+  operationalStatus OperationalStatus @default(ACTIVE) @map("operational_status")
+
+  // Real-time availability for order assignment
+  availabilityStatus CourierAvailabilityStatus @default(OFFLINE) @map("availability_status")
+
+  deletedAt       DateTime? @map("deleted_at")
+
   createdAt       DateTime @default(now()) @map("created_at")
   updatedAt       DateTime? @updatedAt @map("updated_at")
 
   // Relations
-  user   User    @relation(fields: [userId], references: [id])
-  orders Order[]
+  user        User                    @relation(fields: [userId], references: [id])
+  orders      Order[]
+  approvalAudits CourierApprovalAudit[]
 
+  @@index([approvalStatus])
+  @@index([availabilityStatus])
+  @@index([createdAt])
   @@map("couriers")
+}
+
+model CourierApprovalAudit {
+  id          Int      @id @default(autoincrement())
+  courierId   Int      @map("courier_id")
+  action      String
+  performedBy Int      @map("performed_by")
+  reason      String?  @db.Text
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  courier Courier @relation(fields: [courierId], references: [id], onDelete: Cascade)
+
+  @@index([courierId])
+  @@index([createdAt])
+  @@map("courier_approval_audits")
 }
 
 model Promotion {
@@ -595,13 +653,15 @@ model Review {
 }
 
 model OtpVerification {
-  id        Int      @id @default(autoincrement())
-  phone     String
-  code      String
-  verified  Boolean  @default(false)
-  expiresAt DateTime @map("expires_at")
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  id             Int      @id @default(autoincrement())
+  phone          String
+  code           String
+  verified       Boolean  @default(false)
+  failedAttempts Int      @default(0) @map("failed_attempts")
+  expiresAt      DateTime @map("expires_at")
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @updatedAt @map("updated_at")
 
+  @@index([phone, createdAt])
   @@map("otp_verifications")
 }

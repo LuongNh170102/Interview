@@ -35,8 +35,7 @@
                       [src]="action.icon"
                       alt=""
                       aria-hidden="true"
-                      class="w-3 h-3"
-                      style="filter: invert(1)"
+                      class="w-4 h-4 shrink-0 [filter:brightness(0)_invert(1)]"
                     />
                   }
                   {{ action.labelKey | translate }}
@@ -81,28 +80,49 @@
         <!-- Mobile/Tablet Filter Buttons -->
         @if (headerConfig()?.filters?.length) {
           @for (filter of headerConfig()!.filters; track filter.id) {
-            <button
-              (click)="onHeaderFilterClick(filter.id)"
-              class="flex items-center gap-2 px-3 py-2 bg-surface border border-border rounded-3xl text-content-secondary hover:bg-surface-muted transition-colors whitespace-nowrap shrink-0"
-            >
-              {{ filter.labelKey | translate }}
-              <svg
-                width="9"
-                height="5"
-                viewBox="0 0 9 5"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                class="text-content-tertiary"
+            <div class="relative shrink-0">
+              <button
+                type="button"
+                (click)="onHeaderFilterClick(filter.id, $event)"
+                class="header-filter-trigger flex items-center gap-2 px-3 py-2 bg-surface border border-border rounded-3xl text-content-secondary hover:bg-surface-muted transition-colors whitespace-nowrap"
+                [class.border-primary]="openFilterId() === filter.id"
               >
-                <path
-                  d="M1 1L4.5 4L8 1"
-                  stroke="currentColor"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-              </svg>
-            </button>
+                {{ getFilterLabelKey(filter) | translate }}
+                <svg
+                  width="9"
+                  height="5"
+                  viewBox="0 0 9 5"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="text-content-tertiary transition-transform"
+                  [class.rotate-180]="openFilterId() === filter.id"
+                >
+                  <path
+                    d="M1 1L4.5 4L8 1"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </button>
+              @if (openFilterId() === filter.id && filter.options?.length) {
+                <div class="header-filter-dropdown absolute right-0 top-full z-30 mt-2 min-w-[11rem] rounded-lg border border-border bg-surface-base py-1 shadow-lg">
+                  @for (option of filter.options; track option.value) {
+                    <button
+                      type="button"
+                      (click)="onHeaderFilterSelect(filter.id, option.value, $event)"
+                      class="flex w-full items-center px-4 py-2.5 text-left text-sm transition-colors hover:bg-surface-muted"
+                      [class.text-primary]="isFilterOptionSelected(filter.id, option.value)"
+                      [class.font-medium]="isFilterOptionSelected(filter.id, option.value)"
+                      [class.text-content-primary]="!isFilterOptionSelected(filter.id, option.value)"
+                    >
+                      {{ option.labelKey | translate }}
+                    </button>
+                  }
+                </div>
+              }
+            </div>
           }
         }
       </div>
@@ -132,28 +152,49 @@
         <!-- Filter Buttons -->
         @if (headerConfig()?.filters?.length) {
           @for (filter of headerConfig()!.filters; track filter.id) {
-            <button
-              (click)="onHeaderFilterClick(filter.id)"
-              class="flex items-center gap-2 px-4 py-2.5 bg-surface border border-border rounded-3xl text-base text-content-secondary hover:bg-surface-muted transition-colors whitespace-nowrap"
-            >
-              {{ filter.labelKey | translate }}
-              <svg
-                width="9"
-                height="5"
-                viewBox="0 0 9 5"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                class="text-content-tertiary"
+            <div class="relative">
+              <button
+                type="button"
+                (click)="onHeaderFilterClick(filter.id, $event)"
+                class="header-filter-trigger flex items-center gap-2 px-4 py-2.5 bg-surface border border-border rounded-3xl text-base text-content-secondary hover:bg-surface-muted transition-colors whitespace-nowrap"
+                [class.border-primary]="openFilterId() === filter.id"
               >
-                <path
-                  d="M1 1L4.5 4L8 1"
-                  stroke="currentColor"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-              </svg>
-            </button>
+                {{ getFilterLabelKey(filter) | translate }}
+                <svg
+                  width="9"
+                  height="5"
+                  viewBox="0 0 9 5"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="text-content-tertiary transition-transform"
+                  [class.rotate-180]="openFilterId() === filter.id"
+                >
+                  <path
+                    d="M1 1L4.5 4L8 1"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </button>
+              @if (openFilterId() === filter.id && filter.options?.length) {
+                <div class="header-filter-dropdown absolute right-0 top-full z-30 mt-2 min-w-[11rem] rounded-lg border border-border bg-surface-base py-1 shadow-lg">
+                  @for (option of filter.options; track option.value) {
+                    <button
+                      type="button"
+                      (click)="onHeaderFilterSelect(filter.id, option.value, $event)"
+                      class="flex w-full items-center px-4 py-2.5 text-left text-sm transition-colors hover:bg-surface-muted"
+                      [class.text-primary]="isFilterOptionSelected(filter.id, option.value)"
+                      [class.font-medium]="isFilterOptionSelected(filter.id, option.value)"
+                      [class.text-content-primary]="!isFilterOptionSelected(filter.id, option.value)"
+                    >
+                      {{ option.labelKey | translate }}
+                    </button>
+                  }
+                </div>
+              }
+            </div>
           }
         }
       </div>
@@ -183,8 +224,7 @@
                       [src]="action.icon"
                       alt=""
                       aria-hidden="true"
-                      class="w-3 h-3"
-                      style="filter: invert(1)"
+                      class="w-4 h-4 shrink-0 [filter:brightness(0)_invert(1)]"
                     />
                   }
                   {{ action.labelKey | translate }}
@@ -225,19 +265,6 @@
     [class.max-h-[var(--table-max-height)]]="config().maxHeight"
     [style.--table-max-height]="config().maxHeight"
   >
-    <!-- Loading Overlay -->
-    @if (loading()) {
-      <div class="absolute whitespace-nowrap inset-0 bg-[var(--color-surface-base)]/80 flex items-center justify-center z-10">
-        <div class="flex items-center gap-2 text-[var(--color-text-secondary)]">
-          <svg class="animate-spin w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-          </svg>
-          <span>{{ 'common.loading' | translate }}</span>
-        </div>
-      </div>
-    }
-
     <!-- Table -->
     <div class="overflow-x-auto" [class.overflow-y-auto]="config().maxHeight">
       <table
@@ -314,7 +341,46 @@
 
         <!-- Table Body -->
         <tbody>
-          @if (data().length === 0 && !loading()) {
+          @if (loading()) {
+            @for (rowIndex of skeletonRowIndices(); track rowIndex) {
+              <tr class="table-skeleton-row">
+                @if (config().selectable) {
+                  <td class="w-12 p-4">
+                    <div class="table-skeleton__block table-skeleton__block--checkbox"></div>
+                  </td>
+                }
+                @for (column of visibleColumns(); track trackByColumn($index, column)) {
+                  <td class="p-4">
+                    @if (column.type === 'custom' || column.type === 'avatar') {
+                      <div class="flex items-center gap-3">
+                        <div class="table-skeleton__block table-skeleton__block--avatar"></div>
+                        <div class="flex flex-col gap-2 min-w-0 flex-1">
+                          <div class="table-skeleton__block table-skeleton__block--title"></div>
+                          <div class="table-skeleton__block table-skeleton__block--subtitle"></div>
+                        </div>
+                      </div>
+                    } @else if (column.type === 'status') {
+                      <div class="table-skeleton__block table-skeleton__block--status"></div>
+                    } @else {
+                      <div
+                        class="table-skeleton__block"
+                        [class.table-skeleton__block--wide]="column.type === 'text' && column.key === 'address'"
+                        [class.table-skeleton__block--medium]="column.type !== 'text' || column.key !== 'address'"
+                      ></div>
+                    }
+                  </td>
+                }
+                @if (config().actions?.length) {
+                  <td class="p-4">
+                    <div class="flex items-center justify-center gap-2">
+                      <div class="table-skeleton__block table-skeleton__block--action"></div>
+                      <div class="table-skeleton__block table-skeleton__block--action"></div>
+                    </div>
+                  </td>
+                }
+              </tr>
+            }
+          } @else if (data().length === 0) {
             <!-- Empty State -->
             <tr>
               <td
@@ -493,7 +559,7 @@
     <div class="flex flex-col md:flex-row bg-background px-4 justify-between items-center gap-3 py-3 md:py-[1rem] border-l border-r border-b border-[var(--color-border)] rounded-b-lg">
       <!-- Pagination Info Text -->
       <span class="text-xs md:text-[0.875rem] text-[var(--color-text-tertiary)] font-normal uppercase text-center md:text-left">
-        {{ 'common.pagination.page' | translate }} {{ pagination()?.page ?? 1 }}/{{ totalPages() }} - {{ 'common.pagination.total' | translate }} {{ pagination()?.total ?? 0 }} {{ 'common.pagination.items' | translate }}
+        {{ 'common.pagination.page' | translate }} {{ pagination()?.page ?? 1 }}/{{ totalPages() }} - {{ 'common.pagination.total' | translate }} {{ pagination()?.total ?? 0 }} {{ (config().paginationItemsLabelKey ?? 'common.pagination.items') | translate }}
       </span>
       <div class="flex items-center gap-1 md:gap-[0.25rem]">
         <!-- Previous Button -->
@@ -504,7 +570,16 @@
           class="w-8 h-8 md:w-[2.125rem] md:h-[2.125rem] flex items-center justify-center rounded-[0.25rem] bg-background-muted text-[var(--color-text-primary)] hover:bg-[var(--color-primary-light)] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           [attr.aria-label]="'common.pagination.previous' | translate"
         >
-          <img src="assets/icons/icon-chevron-left.svg" alt="" aria-hidden="true" class="w-3 h-3 md:w-[0.875rem] md:h-[0.875rem]"/>
+          <svg
+            class="w-3 h-3 md:w-[0.875rem] md:h-[0.875rem]"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            aria-hidden="true"
+          >
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+          </svg>
         </button>
 
         <!-- Page Numbers - Hide middle pages on mobile -->
@@ -537,7 +612,16 @@
           class="w-8 h-8 md:w-[2.125rem] md:h-[2.125rem] flex items-center justify-center rounded-[0.25rem] bg-background-muted text-[var(--color-text-primary)] hover:bg-[var(--color-primary-light)] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           [attr.aria-label]="'common.pagination.next' | translate"
         >
-          <img src="assets/icons/icon-chevron-right.svg" alt="" aria-hidden="true" class="w-3 h-3 md:w-[0.875rem] md:h-[0.875rem]"/>
+          <svg
+            class="w-3 h-3 md:w-[0.875rem] md:h-[0.875rem]"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            aria-hidden="true"
+          >
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+          </svg>
         </button>
       </div>
     </div>

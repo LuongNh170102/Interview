@@ -151,6 +151,34 @@ export class MerchantService {
     return { totalApproved, totalPending, totalActive };
   }
 
+  async findMine(userId: number) {
+    const roles = await this.prisma.userRole.findMany({
+      where: {
+        userId,
+        merchantId: { not: null },
+        role: { name: ROLE.MERCHANT_OWNER },
+      },
+      include: {
+        merchant: {
+          include: {
+            agency: { select: { name: true, externalId: true } },
+            owner: { select: { email: true, username: true } },
+          },
+        },
+      },
+    });
+
+    return roles
+      .filter((r) => r.merchant)
+      .map(
+        (r) =>
+          new MerchantEntity(r.merchant!, {
+            agency: r.merchant!.agency,
+            owner: r.merchant!.owner,
+          })
+      );
+  }
+
   async findByExternalId(externalId: string) {
     const merchant = await this.prisma.merchant.findUnique({
       where: { externalId },

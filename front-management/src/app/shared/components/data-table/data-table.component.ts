@@ -35,6 +35,7 @@ import {
   TableConfig,
   TableHeaderActionEvent,
   TableHeaderConfig,
+  TableHeaderFilter,
   TableHeaderFilterEvent,
   TableHeaderSearchEvent,
   TablePageEvent,
@@ -131,6 +132,7 @@ const isStringArray = (value: unknown): value is string[] =>
     ColumnVisibilityDropdownComponent,
   ],
   templateUrl: './data-table.component.html',
+  styleUrl: './data-table.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '(document:click)': 'onDocumentClick($event)',
@@ -151,6 +153,7 @@ export class DataTableComponent<
   readonly selectedIds = input<string[]>([]);
   readonly loading = input<boolean>(false);
   readonly headerConfig = input<TableHeaderConfig | null>(null);
+  readonly filterValues = input<Record<string, string>>({});
   readonly itemCount = input<number | null>(null);
 
   // Outputs
@@ -181,6 +184,7 @@ export class DataTableComponent<
 
   // Action menu state
   private readonly activeActionMenuId = signal<string | null>(null);
+  readonly openFilterId = signal<string | null>(null);
 
   // Computed: Active action menu data for dropdown positioning
   readonly activeMenuData = computed(() => {
@@ -256,6 +260,12 @@ export class DataTableComponent<
     return cols.filter(
       (col) => col.visible !== false && !hiddenKeys.has(col.key)
     );
+  });
+
+  readonly skeletonRowIndices = computed(() => {
+    const count = this.pagination()?.pageSize ?? 8;
+    const rowCount = Math.min(Math.max(count, 5), 12);
+    return Array.from({ length: rowCount }, (_, index) => index);
   });
 
   readonly allColumns = computed(() => {
@@ -632,8 +642,35 @@ export class DataTableComponent<
     this.headerSearch.emit({ query: input.value });
   }
 
-  onHeaderFilterClick(filterId: string): void {
+  onHeaderFilterClick(filterId: string, event: Event): void {
+    event.stopPropagation();
+    const filter = this.headerConfig()?.filters?.find((item) => item.id === filterId);
+    if (filter?.options?.length) {
+      this.openFilterId.update((current) => (current === filterId ? null : filterId));
+      return;
+    }
     this.headerFilter.emit({ filterId, value: null });
+  }
+
+  onHeaderFilterSelect(filterId: string, value: string, event: Event): void {
+    event.stopPropagation();
+    this.openFilterId.set(null);
+    this.headerFilter.emit({ filterId, value });
+  }
+
+  getFilterLabelKey(filter: TableHeaderFilter): string {
+    const selected = this.filterValues()[filter.id];
+    if (selected !== undefined && filter.options?.length) {
+      const option = filter.options.find((item) => item.value === selected);
+      if (option) {
+        return option.labelKey;
+      }
+    }
+    return filter.labelKey;
+  }
+
+  isFilterOptionSelected(filterId: string, value: string): boolean {
+    return this.filterValues()[filterId] === value;
   }
 
   onHeaderActionClick(actionId: string): void {
@@ -677,15 +714,23 @@ export class DataTableComponent<
    * Handle document click to close action menu
    */
   onDocumentClick(event: Event): void {
-    // Close menu if clicking outside
+    const target = event.target as HTMLElement;
+
     if (this.activeActionMenuId()) {
-      const target = event.target as HTMLElement;
-      // Don't close if clicking on the menu itself or the trigger button
       if (
         !target.closest('.action-menu-dropdown') &&
         !target.closest('.action-menu-trigger')
       ) {
         this.closeActionMenu();
+      }
+    }
+
+    if (this.openFilterId()) {
+      if (
+        !target.closest('.header-filter-dropdown') &&
+        !target.closest('.header-filter-trigger')
+      ) {
+        this.openFilterId.set(null);
       }
     }
   }

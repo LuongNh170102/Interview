@@ -42,8 +42,8 @@
             },
             {
               "type": "anyComponentStyle",
-              "maximumWarning": "4kb",
-              "maximumError": "8kb"
+              "maximumWarning": "12kb",
+              "maximumError": "16kb"
             }
           ],
           "outputHashing": "all"
@@ -64,7 +64,8 @@
           "buildTarget": "front-b2c:build:production"
         },
         "development": {
-          "buildTarget": "front-b2c:build:development"
+          "buildTarget": "front-b2c:build:development",
+          "proxyConfig": "front-b2c/proxy.conf.json"
         }
       },
       "defaultConfiguration": "development"

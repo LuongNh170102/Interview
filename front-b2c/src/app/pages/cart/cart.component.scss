@@ -1,0 +1,157 @@
+h1 {
+  margin: 0 0 1.5rem;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 2rem;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.item {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  margin-bottom: 0.75rem;
+}
+
+.item-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.5rem;
+
+  button {
+    border: none;
+    background: none;
+    color: #dc2626;
+    cursor: pointer;
+    font-size: 0.85rem;
+  }
+}
+
+.total {
+  text-align: right;
+  font-size: 1.1rem;
+  margin-top: 1rem;
+}
+
+.checkout {
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 1.25rem;
+  height: fit-content;
+
+  h2 {
+    margin: 0 0 1rem;
+    font-size: 1.1rem;
+  }
+
+  label {
+    display: block;
+    margin: 0.75rem 0 0.25rem;
+    font-size: 0.85rem;
+    color: #374151;
+  }
+
+  input {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    box-sizing: border-box;
+  }
+
+  button[type='submit'] {
+    width: 100%;
+    margin-top: 1.25rem;
+    padding: 0.75rem;
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    cursor: pointer;
+
+    &:disabled {
+      opacity: 0.6;
+    }
+  }
+}
+
+.empty {
+  color: #6b7280;
+
+  a {
+    color: #2563eb;
+  }
+}
+
+.msg {
+  margin-top: 0.75rem;
+  color: #059669;
+  font-size: 0.9rem;
+}
+
+.cart-skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.cart-skeleton__item {
+  padding: 1rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.cart-skeleton__line {
+  height: 0.875rem;
+  border-radius: 6px;
+  background: linear-gradient(90deg, #f2f4f7 25%, #e4e7ec 50%, #f2f4f7 75%);
+  background-size: 200% 100%;
+  animation: cart-skeleton-shimmer 1.4s ease infinite;
+
+  &--title {
+    width: 55%;
+    height: 1rem;
+  }
+
+  &--meta {
+    width: 35%;
+  }
+
+  &--price {
+    width: 25%;
+    align-self: flex-end;
+  }
+}
+
+.cart-skeleton__total {
+  width: 30%;
+  height: 1.25rem;
+  margin-left: auto;
+  margin-top: 0.5rem;
+  border-radius: 6px;
+  background: linear-gradient(90deg, #f2f4f7 25%, #e4e7ec 50%, #f2f4f7 75%);
+  background-size: 200% 100%;
+  animation: cart-skeleton-shimmer 1.4s ease infinite;
+}
+
+@keyframes cart-skeleton-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
