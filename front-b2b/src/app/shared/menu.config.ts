@@ -16,6 +16,7 @@ export interface NavItem {
  */
 export const LANDING_NAV_CONFIG: readonly NavItem[] = [
   { labelKey: 'header.nav.partner', link: '/landing#' },
+  { labelKey: 'Shop', link: '/shop' },
   { labelKey: 'header.nav.intro', link: '/landing#intro' },
   { labelKey: 'header.nav.offers', link: '/landing#offers' },
   { labelKey: 'header.nav.process', link: '/landing#process' },

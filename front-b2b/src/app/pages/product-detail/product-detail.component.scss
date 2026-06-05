@@ -1,0 +1,138 @@
+:host {
+  display: block;
+}
+
+.detail-shell {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 40px 16px 64px;
+}
+
+.back-link,
+.actions a {
+  color: var(--color-primary);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.notice,
+.state-box {
+  border: 1px solid var(--color-border);
+  margin: 18px 0;
+  padding: 16px;
+}
+
+.notice {
+  background: #fff7ed;
+  color: #9a3412;
+}
+
+.state-box {
+  color: var(--color-text-secondary);
+}
+
+.state-box.error {
+  background: #fef2f2;
+  color: #991b1b;
+}
+
+.detail-grid {
+  display: grid;
+  gap: 32px;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 0.9fr);
+  margin-top: 24px;
+}
+
+.image-panel {
+  background: #f3f4f6;
+  border: 1px solid var(--color-border);
+}
+
+.image-panel img {
+  aspect-ratio: 4 / 3;
+  display: block;
+  object-fit: cover;
+  width: 100%;
+}
+
+.content-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.eyebrow {
+  color: var(--color-primary);
+  font-weight: 800;
+  margin: 0;
+}
+
+h1 {
+  color: var(--color-text-primary);
+  font-size: clamp(32px, 5vw, 52px);
+  font-weight: 800;
+  line-height: 1.08;
+  margin: 0;
+}
+
+.merchant,
+.description {
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+.info-list {
+  border-block: 1px solid var(--color-border);
+  display: grid;
+  gap: 0;
+  grid-template-columns: repeat(3, 1fr);
+  margin: 6px 0 0;
+  padding: 18px 0;
+}
+
+.info-list div {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+dt {
+  color: var(--color-text-secondary);
+  font-size: 13px;
+}
+
+dd {
+  color: var(--color-text-primary);
+  font-size: 18px;
+  font-weight: 800;
+  margin: 0;
+}
+
+.actions {
+  align-items: center;
+  display: flex;
+  gap: 18px;
+}
+
+.actions button {
+  background: var(--color-primary);
+  color: white;
+  font-weight: 800;
+  padding: 13px 20px;
+}
+
+.actions button:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+@media (max-width: 820px) {
+  .detail-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .info-list {
+    grid-template-columns: 1fr;
+    row-gap: 14px;
+  }
+}

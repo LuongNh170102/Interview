@@ -34,7 +34,19 @@
             </li>
           </ul>
         </nav>
-        <div class="relative text-left flex shrink-0">
+        <div class="relative text-left flex shrink-0 items-center gap-2">
+          <a
+            routerLink="/checkout"
+            class="relative inline-flex items-center justify-center px-3 py-2 text-sm font-semibold text-text-primary hover:text-primary"
+            aria-label="Cart"
+          >
+            Giỏ
+            <span
+              class="ml-2 min-w-6 rounded-full bg-primary px-2 py-0.5 text-center text-xs font-bold text-white"
+            >
+              {{ cart.count() }}
+            </span>
+          </a>
           <button
             type="button"
             class="flex items-center gap-2 bg-transparent rounded-full px-3 hover:border-primary transition-colors focus:outline-none"
@@ -211,6 +223,16 @@
         />
       </a>
       <div class="flex items-center gap-3">
+        <a
+          routerLink="/checkout"
+          class="inline-flex items-center gap-1 text-sm font-semibold text-text-primary"
+          aria-label="Cart"
+        >
+          Giỏ
+          <span class="rounded-full bg-primary px-2 py-0.5 text-xs text-white">
+            {{ cart.count() }}
+          </span>
+        </a>
         <div class="relative text-left">
           <button
             type="button"

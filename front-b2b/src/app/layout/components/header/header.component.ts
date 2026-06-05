@@ -17,6 +17,7 @@ import {
   SUPPORTED_LANGUAGES,
 } from '@vhandelivery/shared-ui';
 import { GlobalModalService } from '../../../shared/components/global-modal/global-modal.service';
+import { CartService } from '../../../shared/services/cart.service';
 
 type NavItem = {
   readonly labelKey: string;
@@ -35,6 +36,7 @@ type NavItem = {
 export class HeaderComponent {
   private readonly translationService = inject(TranslationService);
   protected readonly auth = inject(AuthService);
+  protected readonly cart = inject(CartService);
   private readonly modalService = inject(GlobalModalService);
   private readonly router = inject(Router);
   private readonly elementRef = inject(ElementRef);

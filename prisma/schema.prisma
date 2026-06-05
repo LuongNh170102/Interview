@@ -481,12 +481,29 @@ model CartItem {
 
 model Courier {
   id              Int      @id @default(autoincrement())
+  externalId      String   @unique @default(uuid()) @map("external_id") @db.Uuid
   userId          Int      @unique @map("user_id")
   name            String?
   phone           String?
-  status          String?  // 'available' | 'busy' | 'offline'
+  email           String?
+  status          String?  // 'ONLINE' | 'BUSY' | 'OFFLINE'
   vehicleType     String?  @map("vehicle_type") // 'bike' | 'motorbike' | 'car'
   currentLocation Json?    @map("current_location")
+  
+  // Approval Status (one-time, for registration process)
+  approvalStatus  ApprovalStatus    @default(PENDING) @map("approval_status")
+  approvedAt      DateTime?         @map("approved_at")
+  approvedBy      Int?              @map("approved_by")
+  rejectedAt      DateTime?         @map("rejected_at")
+  rejectedBy      Int?              @map("rejected_by")
+  rejectionReason String?           @map("rejection_reason") @db.Text
+  
+  // Operational Status (ongoing, can change multiple times)
+  operationalStatus OperationalStatus @default(ACTIVE) @map("operational_status")
+  statusChangedAt   DateTime?         @map("status_changed_at")
+  statusChangedBy   Int?              @map("status_changed_by")
+  statusReason      String?           @map("status_reason") @db.Text
+  
   createdAt       DateTime @default(now()) @map("created_at")
   updatedAt       DateTime? @updatedAt @map("updated_at")
 
@@ -494,6 +511,9 @@ model Courier {
   user   User    @relation(fields: [userId], references: [id])
   orders Order[]
 
+  @@index([approvalStatus])
+  @@index([operationalStatus])
+  @@index([status])
   @@map("couriers")
 }
 

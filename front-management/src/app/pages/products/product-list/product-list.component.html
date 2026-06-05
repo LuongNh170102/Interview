@@ -1,0 +1,299 @@
+<section class="flex flex-col gap-5">
+  <header class="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+    <div>
+      <h1 class="text-2xl font-bold text-content-primary">Product Management</h1>
+      <p class="text-sm text-content-tertiary">
+        Manage products for the stores assigned to your merchant owner account.
+      </p>
+    </div>
+
+    <div class="flex flex-col gap-2 sm:flex-row sm:items-center">
+      <select
+        class="min-w-64 rounded-lg border border-border bg-surface px-4 py-2 text-content-primary outline-none focus:border-primary"
+        [disabled]="isLoadingMerchants() || merchants().length === 0"
+        [ngModel]="selectedMerchantId()"
+        (ngModelChange)="onMerchantChange($event)"
+      >
+        @for (merchant of merchants(); track merchant.externalId) {
+        <option [ngValue]="merchant.externalId">{{ merchant.name }}</option>
+        }
+      </select>
+
+      <button
+        type="button"
+        class="rounded-md bg-primary px-4 py-2 font-semibold text-white disabled:opacity-60"
+        [disabled]="!selectedMerchantId() || isSubmitting()"
+        (click)="openCreateForm()"
+      >
+        Add Product
+      </button>
+    </div>
+  </header>
+
+  @if (isLoadingMerchants()) {
+  <div class="border border-border bg-surface px-4 py-10 text-center text-content-tertiary">
+    Loading your stores...
+  </div>
+  } @else if (merchants().length === 0) {
+  <div class="border border-border bg-surface px-4 py-10 text-center">
+    <h2 class="text-lg font-semibold text-content-primary">No approved stores</h2>
+    <p class="mt-1 text-sm text-content-tertiary">
+      This account is not assigned to an approved merchant yet.
+    </p>
+  </div>
+  } @else {
+  <div class="overflow-hidden border border-border bg-surface">
+    <div class="border-b border-border px-4 py-3 text-sm text-content-tertiary">
+      Store: <span class="font-semibold text-content-primary">{{ selectedMerchant()?.name }}</span>
+    </div>
+
+    <div class="overflow-x-auto">
+      <table class="min-w-full divide-y divide-border">
+        <thead class="bg-surface-muted">
+          <tr>
+            <th class="px-4 py-3 text-left text-xs font-semibold uppercase text-content-tertiary">
+              Product
+            </th>
+            <th class="px-4 py-3 text-left text-xs font-semibold uppercase text-content-tertiary">
+              Price
+            </th>
+            <th class="px-4 py-3 text-left text-xs font-semibold uppercase text-content-tertiary">
+              SKU
+            </th>
+            <th class="px-4 py-3 text-left text-xs font-semibold uppercase text-content-tertiary">
+              Stock
+            </th>
+            <th class="px-4 py-3 text-left text-xs font-semibold uppercase text-content-tertiary">
+              Status
+            </th>
+            <th class="px-4 py-3 text-right text-xs font-semibold uppercase text-content-tertiary">
+              Actions
+            </th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-border">
+          @if (isLoadingProducts()) {
+          <tr>
+            <td colspan="6" class="px-4 py-10 text-center text-content-tertiary">
+              Loading products...
+            </td>
+          </tr>
+          } @else if (products().length === 0) {
+          <tr>
+            <td colspan="6" class="px-4 py-10 text-center text-content-tertiary">
+              No products in this store.
+            </td>
+          </tr>
+          } @else { @for (product of products(); track product.externalId) {
+          <tr class="hover:bg-surface-muted/60">
+            <td class="px-4 py-4">
+              <div class="flex items-center gap-3">
+                <div
+                  class="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-md bg-surface-muted text-xs text-content-tertiary"
+                >
+                  @if (productImages(product)[0]) {
+                  <img
+                    [src]="productImages(product)[0]"
+                    alt=""
+                    class="h-full w-full object-cover"
+                  />
+                  } @else { IMG }
+                </div>
+                <div class="flex flex-col">
+                  <span class="font-semibold text-content-primary">
+                    {{ localizedText(product.name) || 'Unnamed product' }}
+                  </span>
+                  <span class="text-xs text-content-tertiary">
+                    {{ localizedText(product.description) || '-' }}
+                  </span>
+                </div>
+              </div>
+            </td>
+            <td class="px-4 py-4 text-sm text-content-primary">
+              {{ formatPrice(product) }}
+            </td>
+            <td class="px-4 py-4 text-sm text-content-primary">
+              {{ product.sku || '-' }}
+            </td>
+            <td class="px-4 py-4 text-sm text-content-primary">
+              {{ product.stock ?? 0 }}
+            </td>
+            <td class="px-4 py-4">
+              <span
+                class="inline-flex rounded-full px-3 py-1 text-xs font-semibold"
+                [class.bg-status-success-bg]="product.isActive"
+                [class.text-status-success]="product.isActive"
+                [class.bg-status-default-bg]="!product.isActive"
+                [class.text-status-default]="!product.isActive"
+              >
+                {{ product.isActive ? 'Active' : 'Inactive' }}
+              </span>
+            </td>
+            <td class="px-4 py-4">
+              <div class="flex justify-end gap-2">
+                <button
+                  type="button"
+                  class="rounded-md border border-border px-3 py-2 text-sm text-content-primary disabled:opacity-60"
+                  [disabled]="isSubmitting()"
+                  (click)="openEditForm(product)"
+                >
+                  Edit
+                </button>
+                <button
+                  type="button"
+                  class="rounded-md bg-status-error px-3 py-2 text-sm font-semibold text-white disabled:opacity-60"
+                  [disabled]="isSubmitting()"
+                  (click)="deleteProduct(product)"
+                >
+                  Delete
+                </button>
+              </div>
+            </td>
+          </tr>
+          } }
+        </tbody>
+      </table>
+    </div>
+
+    <footer class="flex items-center justify-between border-t border-border px-4 py-3 text-sm">
+      <span class="text-content-tertiary">
+        Page {{ page() }} / {{ lastPage() }} · {{ total() }} products
+      </span>
+      <div class="flex gap-2">
+        <button
+          type="button"
+          class="rounded-md border border-border px-3 py-2 text-content-primary disabled:opacity-50"
+          [disabled]="page() <= 1 || isLoadingProducts()"
+          (click)="previousPage()"
+        >
+          Previous
+        </button>
+        <button
+          type="button"
+          class="rounded-md border border-border px-3 py-2 text-content-primary disabled:opacity-50"
+          [disabled]="page() >= lastPage() || isLoadingProducts()"
+          (click)="nextPage()"
+        >
+          Next
+        </button>
+      </div>
+    </footer>
+  </div>
+  }
+</section>
+
+@if (isFormOpen()) {
+<div class="fixed inset-0 z-[200] flex items-center justify-center bg-black/40 px-4">
+  <section class="relative z-[201] max-h-[90vh] w-full max-w-2xl overflow-y-auto bg-surface p-5 shadow-xl">
+    <h2 class="text-xl font-bold text-content-primary">
+      {{ editingProduct() ? 'Edit product' : 'Add product' }}
+    </h2>
+    <p class="mt-1 text-sm text-content-tertiary">
+      {{ selectedMerchant()?.name }}
+    </p>
+
+    <div class="mt-5 grid gap-4 md:grid-cols-2">
+      <label class="flex flex-col gap-1 text-sm">
+        <span class="font-medium text-content-primary">Name</span>
+        <input
+          class="rounded-lg border border-border bg-surface px-3 py-2 text-content-primary outline-none focus:border-primary"
+          [ngModel]="form().name"
+          (ngModelChange)="updateFormField('name', $event)"
+        />
+      </label>
+
+      <label class="flex flex-col gap-1 text-sm">
+        <span class="font-medium text-content-primary">SKU</span>
+        <input
+          class="rounded-lg border border-border bg-surface px-3 py-2 text-content-primary outline-none focus:border-primary"
+          [ngModel]="form().sku"
+          (ngModelChange)="updateFormField('sku', $event)"
+        />
+      </label>
+
+      <label class="flex flex-col gap-1 text-sm">
+        <span class="font-medium text-content-primary">Price</span>
+        <input
+          type="number"
+          min="0"
+          class="rounded-lg border border-border bg-surface px-3 py-2 text-content-primary outline-none focus:border-primary"
+          [ngModel]="form().price"
+          (ngModelChange)="updateNumberField('price', $event)"
+        />
+      </label>
+
+      <label class="flex flex-col gap-1 text-sm">
+        <span class="font-medium text-content-primary">Stock</span>
+        <input
+          type="number"
+          min="0"
+          class="rounded-lg border border-border bg-surface px-3 py-2 text-content-primary outline-none focus:border-primary"
+          [ngModel]="form().stock"
+          (ngModelChange)="updateNumberField('stock', $event)"
+        />
+      </label>
+
+      <label class="flex flex-col gap-1 text-sm md:col-span-2">
+        <span class="font-medium text-content-primary">Category</span>
+        <input
+          class="rounded-lg border border-border bg-surface px-3 py-2 text-content-primary outline-none focus:border-primary"
+          placeholder="Food, Drinks, Grocery..."
+          [ngModel]="form().category"
+          (ngModelChange)="updateFormField('category', $event)"
+        />
+      </label>
+
+      <label class="flex flex-col gap-1 text-sm md:col-span-2">
+        <span class="font-medium text-content-primary">Description</span>
+        <textarea
+          rows="3"
+          class="rounded-lg border border-border bg-surface px-3 py-2 text-content-primary outline-none focus:border-primary"
+          [ngModel]="form().description"
+          (ngModelChange)="updateFormField('description', $event)"
+        ></textarea>
+      </label>
+
+      <label class="flex items-center gap-2 text-sm text-content-primary">
+        <input
+          type="checkbox"
+          [ngModel]="form().isActive"
+          (ngModelChange)="updateFormField('isActive', $event)"
+        />
+        Active
+      </label>
+
+      @if (!editingProduct()) {
+      <label class="flex flex-col gap-1 text-sm md:col-span-2">
+        <span class="font-medium text-content-primary">Images</span>
+        <input
+          type="file"
+          multiple
+          accept="image/*"
+          class="rounded-lg border border-border bg-surface px-3 py-2 text-content-primary"
+          (change)="onImageChange($event)"
+        />
+      </label>
+      }
+    </div>
+
+    <div class="mt-6 flex justify-end gap-2">
+      <button
+        type="button"
+        class="rounded-md border border-border px-4 py-2 text-content-primary"
+        [disabled]="isSubmitting()"
+        (click)="closeForm()"
+      >
+        Cancel
+      </button>
+      <button
+        type="button"
+        class="rounded-md bg-primary px-4 py-2 font-semibold text-white disabled:opacity-60"
+        [disabled]="isSubmitting() || !form().name.trim() || !form().sku.trim()"
+        (click)="submitForm()"
+      >
+        {{ editingProduct() ? 'Save changes' : 'Create product' }}
+      </button>
+    </div>
+  </section>
+</div>
+}

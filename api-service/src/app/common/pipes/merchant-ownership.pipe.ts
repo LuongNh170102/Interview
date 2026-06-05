@@ -97,17 +97,6 @@ export class MerchantOwnershipPipe implements PipeTransform {
       },
     });
 
-    if (userRole) return true;
-
-    const merchant = await this.prisma.merchant.findUnique({
-      where: { id: merchantId },
-      include: { agency: true },
-    });
-
-    if (merchant?.agency?.ownerId === userId) {
-      return true;
-    }
-
-    return false;
+    return Boolean(userRole);
   }
 }

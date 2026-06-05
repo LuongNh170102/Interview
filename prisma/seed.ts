@@ -207,6 +207,53 @@ async function main() {
       },
     },
 
+    // Courier
+    {
+      resource: 'courier',
+      action: 'create',
+      description: {
+        en: 'Create courier',
+        vi: 'Tạo tài xế giao hàng',
+        ko: '배달 기사 만들기',
+      },
+    },
+    {
+      resource: 'courier',
+      action: 'update',
+      description: {
+        en: 'Update courier info',
+        vi: 'Cập nhật thông tin tài xế',
+        ko: '배달 기사 정보 업데이트',
+      },
+    },
+    {
+      resource: 'courier',
+      action: 'delete',
+      description: {
+        en: 'Delete courier',
+        vi: 'Xóa tài xế',
+        ko: '배달 기사 삭제',
+      },
+    },
+    {
+      resource: 'courier',
+      action: 'update_status',
+      description: {
+        en: 'Approve or reject courier',
+        vi: 'Duyệt hoặc từ chối tài xế',
+        ko: '배달 기사 승인 또는 거절',
+      },
+    },
+    {
+      resource: 'courier',
+      action: 'read',
+      description: {
+        en: 'View courier details',
+        vi: 'Xem chi tiết tài xế',
+        ko: '배달 기사 상세 보기',
+      },
+    },
+
     // System
     {
       resource: 'system',
@@ -350,6 +397,15 @@ async function main() {
         getPerm('product', 'read'),
       ].filter(Boolean), // Filter out undefined
     },
+    {
+      role: 'COURIER',
+      perms: [
+        getPerm('courier', 'read'),
+        getPerm('courier', 'update'),
+        getPerm('order', 'read'),
+        getPerm('order', 'update_status'),
+      ].filter(Boolean),
+    },
   ];
 
   for (const map of rolePermissionsMap) {
@@ -422,6 +478,297 @@ async function main() {
 
     console.log(`Created admin user: ${adminEmail}`);
   }
+
+  // 5. Create sample merchant owner, approved merchant and products for Task 3 local testing
+  const merchantOwnerEmail = 'merchant.owner@vhandelivery.com';
+  const merchantOwnerPassword = 'merchant123';
+  const merchantOwnerHash = await bcrypt.hash(merchantOwnerPassword, 10);
+  const merchantOwnerRole = getRole('MERCHANT_OWNER');
+  const customerRole = getRole('CUSTOMER');
+  const courierRole = getRole('COURIER');
+
+  const merchantOwner = await prisma.user.upsert({
+    where: { email: merchantOwnerEmail },
+    update: {
+      passwordHash: merchantOwnerHash,
+      username: 'MerchantOwner',
+      phone: '0900000001',
+      profile: { firstName: 'Merchant', lastName: 'Owner' },
+    },
+    create: {
+      email: merchantOwnerEmail,
+      passwordHash: merchantOwnerHash,
+      username: 'MerchantOwner',
+      phone: '0900000001',
+      profile: { firstName: 'Merchant', lastName: 'Owner' },
+    },
+  });
+
+  let sampleMerchant = await prisma.merchant.findFirst({
+    where: { phone: '0900000002' },
+  });
+
+  const sampleMerchantData = {
+    name: 'VHan Demo Store',
+    ownerId: merchantOwner.id,
+    address: '123 Nguyen Hue, District 1',
+    city: 'Ho Chi Minh City',
+    contactName: 'Merchant Owner',
+    businessType: 'OFFLINE',
+    businessCategory: 'Food & Beverage',
+    phone: '0900000002',
+    latitude: 10.7758,
+    longitude: 106.701,
+    approvalStatus: 'APPROVED' as any,
+    approvedAt: new Date(),
+    approvedBy: adminUser.id,
+    operationalStatus: 'ACTIVE' as any,
+    isAcceptingOrders: true,
+    metadata: {
+      source: 'seed',
+      purpose: 'Task 3 local product management testing',
+    },
+  };
+
+  if (sampleMerchant) {
+    sampleMerchant = await prisma.merchant.update({
+      where: { id: sampleMerchant.id },
+      data: sampleMerchantData,
+    });
+  } else {
+    sampleMerchant = await prisma.merchant.create({
+      data: sampleMerchantData,
+    });
+  }
+
+  if (merchantOwnerRole) {
+    const existingMerchantOwnerRole = await prisma.userRole.findFirst({
+      where: {
+        userId: merchantOwner.id,
+        roleId: merchantOwnerRole.id,
+        merchantId: sampleMerchant.id,
+        agencyId: null,
+        brandId: null,
+      },
+    });
+
+    if (!existingMerchantOwnerRole) {
+      await prisma.userRole.create({
+        data: {
+          userId: merchantOwner.id,
+          roleId: merchantOwnerRole.id,
+          merchantId: sampleMerchant.id,
+          agencyId: null,
+          brandId: null,
+        },
+      });
+    }
+  }
+
+  const customerEmail = 'customer@vhandelivery.com';
+  const customerPassword = 'customer123';
+  const customerHash = await bcrypt.hash(customerPassword, 10);
+  const customerUser = await prisma.user.upsert({
+    where: { email: customerEmail },
+    update: {
+      passwordHash: customerHash,
+      username: 'CustomerDemo',
+      phone: '0900000003',
+      profile: { firstName: 'Customer', lastName: 'Demo' },
+    },
+    create: {
+      email: customerEmail,
+      passwordHash: customerHash,
+      username: 'CustomerDemo',
+      phone: '0900000003',
+      profile: { firstName: 'Customer', lastName: 'Demo' },
+    },
+  });
+
+  if (customerRole) {
+    const existingCustomerRole = await prisma.userRole.findFirst({
+      where: {
+        userId: customerUser.id,
+        roleId: customerRole.id,
+        merchantId: null,
+        agencyId: null,
+        brandId: null,
+      },
+    });
+
+    if (!existingCustomerRole) {
+      await prisma.userRole.create({
+        data: {
+          userId: customerUser.id,
+          roleId: customerRole.id,
+          merchantId: null,
+          agencyId: null,
+          brandId: null,
+        },
+      });
+    }
+  }
+
+  const courierEmail = 'courier.demo@vhandelivery.com';
+  const courierPassword = 'courier123';
+  const courierHash = await bcrypt.hash(courierPassword, 10);
+  const courierUser = await prisma.user.upsert({
+    where: { email: courierEmail },
+    update: {
+      passwordHash: courierHash,
+      username: 'CourierDemo',
+      phone: '0900000004',
+      profile: { firstName: 'Courier', lastName: 'Demo' },
+    },
+    create: {
+      email: courierEmail,
+      passwordHash: courierHash,
+      username: 'CourierDemo',
+      phone: '0900000004',
+      profile: { firstName: 'Courier', lastName: 'Demo' },
+    },
+  });
+
+  if (courierRole) {
+    const existingCourierRole = await prisma.userRole.findFirst({
+      where: {
+        userId: courierUser.id,
+        roleId: courierRole.id,
+        merchantId: null,
+        agencyId: null,
+        brandId: null,
+      },
+    });
+
+    if (!existingCourierRole) {
+      await prisma.userRole.create({
+        data: {
+          userId: courierUser.id,
+          roleId: courierRole.id,
+          merchantId: null,
+          agencyId: null,
+          brandId: null,
+        },
+      });
+    }
+  }
+
+  await prisma.courier.upsert({
+    where: { userId: courierUser.id },
+    update: {
+      name: 'Courier Demo',
+      phone: '0900000004',
+      email: courierEmail,
+      status: 'ONLINE',
+      vehicleType: 'motorbike',
+      currentLocation: { latitude: 10.776, longitude: 106.701 },
+      approvalStatus: 'APPROVED' as any,
+      approvedAt: new Date(),
+      approvedBy: adminUser.id,
+      operationalStatus: 'ACTIVE' as any,
+      statusChangedAt: new Date(),
+      statusChangedBy: adminUser.id,
+    },
+    create: {
+      userId: courierUser.id,
+      name: 'Courier Demo',
+      phone: '0900000004',
+      email: courierEmail,
+      status: 'ONLINE',
+      vehicleType: 'motorbike',
+      currentLocation: { latitude: 10.776, longitude: 106.701 },
+      approvalStatus: 'APPROVED' as any,
+      approvedAt: new Date(),
+      approvedBy: adminUser.id,
+      operationalStatus: 'ACTIVE' as any,
+      statusChangedAt: new Date(),
+      statusChangedBy: adminUser.id,
+    },
+  });
+
+  const sampleProducts = [
+    {
+      sku: 'VHAN-PHO-001',
+      name: { vi: 'Pho bo dac biet', en: 'Special beef pho' },
+      description: {
+        vi: 'Pho bo nong voi topping day du',
+        en: 'Hot beef pho with full toppings',
+      },
+      price: '65000',
+      stock: 30,
+      metadata: {
+        category: 'Food',
+        images: ['https://placehold.co/480x320?text=Pho'],
+      },
+    },
+    {
+      sku: 'VHAN-COFFEE-001',
+      name: { vi: 'Ca phe sua da', en: 'Vietnamese iced coffee' },
+      description: {
+        vi: 'Ca phe sua da truyen thong',
+        en: 'Classic Vietnamese iced coffee',
+      },
+      price: '30000',
+      stock: 50,
+      metadata: {
+        category: 'Drinks',
+        images: ['https://placehold.co/480x320?text=Coffee'],
+      },
+    },
+    {
+      sku: 'VHAN-BANHMI-001',
+      name: { vi: 'Banh mi ga', en: 'Chicken banh mi' },
+      description: {
+        vi: 'Banh mi ga sot dac biet',
+        en: 'Chicken banh mi with house sauce',
+      },
+      price: '42000',
+      stock: 25,
+      metadata: {
+        category: 'Food',
+        images: ['https://placehold.co/480x320?text=Banh+Mi'],
+      },
+    },
+  ];
+
+  for (const product of sampleProducts) {
+    const existingProduct = await prisma.product.findFirst({
+      where: {
+        merchantId: sampleMerchant.id,
+        sku: product.sku,
+      },
+    });
+
+    const productData = {
+      merchantId: sampleMerchant.id,
+      name: product.name,
+      description: product.description,
+      price: product.price,
+      currency: 'VND',
+      sku: product.sku,
+      stock: product.stock,
+      isActive: true,
+      metadata: product.metadata,
+    };
+
+    if (existingProduct) {
+      await prisma.product.update({
+        where: { id: existingProduct.id },
+        data: productData,
+      });
+    } else {
+      await prisma.product.create({
+        data: productData,
+      });
+    }
+  }
+
+  console.log(
+    `Created sample merchant owner: ${merchantOwnerEmail} / ${merchantOwnerPassword}`
+  );
+  console.log(`Created sample customer: ${customerEmail} / ${customerPassword}`);
+  console.log(`Created sample courier: ${courierEmail} / ${courierPassword}`);
+  console.log(`Created sample merchant and ${sampleProducts.length} products.`);
 
   console.log('Seeding finished.');
 }
