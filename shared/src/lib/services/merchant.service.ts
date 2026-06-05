@@ -56,6 +56,15 @@ export class MerchantService {
   }
 
   /**
+   * Get the merchant profile owned by the current authenticated user.
+   */
+  findMine(): Observable<MerchantApiResponse> {
+    return this.http.get<MerchantApiResponse>(`${this.baseUrl}/me/profile`, {
+      withCredentials: true,
+    });
+  }
+
+  /**
    * Request OTP for phone verification
    */
   requestOtp(phone: string): Observable<RequestOtpResponse> {

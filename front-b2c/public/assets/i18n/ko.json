@@ -1,0 +1,190 @@
+{
+  "b2c": {
+    "common": {
+      "store": "스토어",
+      "product": "상품"
+    },
+    "shell": {
+      "brand": "SharkBee Store",
+      "subtitle": "SharkBee Store에서 공개 상품을 살펴보고 빠르게 주문해 보세요.",
+      "nav": {
+        "products": "상품",
+        "cart": "장바구니"
+      },
+      "account": {
+        "signedIn": "로그인됨",
+        "login": "로그인",
+        "logout": "로그아웃",
+        "roles": {
+          "superAdmin": "플랫폼 관리자",
+          "customer": "고객",
+          "account": "계정"
+        }
+      }
+    },
+    "catalog": {
+      "eyebrow": "B2C 쇼핑",
+      "title": "승인된 상점의 상품을 만나보세요.",
+      "description": "상품 상세를 확인하고 장바구니에 담은 뒤, 더 간결하고 자연스러운 흐름으로 빠르게 주문할 수 있습니다.",
+      "actions": {
+        "openCart": "장바구니 열기",
+        "login": "로그인",
+        "addToCart": "장바구니 담기"
+      },
+      "stats": {
+        "liveProducts": "판매 중 상품",
+        "approvedStores": "승인된 상점",
+        "itemsInCart": "장바구니 상품 수"
+      },
+      "emptyTitle": "공개된 상품이 아직 없습니다",
+      "emptyDescription": "스토어프런트에는 승인된 상점에 속한 활성화된 게시 상품만 노출됩니다. 관리 앱에서 상품을 만든 뒤 다시 새로고침하세요.",
+      "fallbackDescription": "지금 바로 주문할 수 있는 상품입니다.",
+      "stock": {
+        "in": "재고 있음",
+        "out": "품절"
+      },
+      "categoryGeneral": "일반",
+      "status": {
+        "inactive": "비활성",
+        "published": "게시됨",
+        "draft": "초안",
+        "archived": "보관됨"
+      },
+      "loadError": "지금은 공개 상품 목록을 불러올 수 없습니다.",
+      "meta": {
+        "title": "SharkBee Store | 공개 카탈로그",
+        "description": "승인된 상점의 게시 상품을 둘러보고 장바구니에 담은 뒤 로그인하여 주문을 진행하세요."
+      }
+    },
+    "detail": {
+      "backToProducts": "상품 목록으로 돌아가기",
+      "labels": {
+        "status": "상태",
+        "stock": "재고",
+        "previewThumbnail": "상품 미리보기 썸네일"
+      },
+      "actions": {
+        "addToCart": "장바구니 담기",
+        "viewCart": "장바구니 보기"
+      },
+      "notices": {
+        "resetCart": "주문에는 하나의 상점 상품만 담을 수 있어 장바구니가 초기화되었습니다.",
+        "added": "상품이 장바구니에 추가되었습니다."
+      },
+      "notFound": "상품을 찾을 수 없습니다.",
+      "loadError": "상품 상세 정보를 불러올 수 없습니다.",
+      "meta": {
+        "title": "SharkBee Store | 상품 상세",
+        "description": "공개 상품의 상세 정보를 확인하고 수량을 선택한 뒤 장바구니에 담으세요.",
+        "productDescriptionFallback": "상품 상세 정보를 확인하고 SharkBee 장바구니에 추가하세요."
+      }
+    },
+    "cart": {
+      "success": {
+        "eyebrow": "주문 완료",
+        "title": "주문이 확인되었습니다.",
+        "orderCode": "주문 코드",
+        "status": "상태",
+        "total": "총액",
+        "assignedCourier": "배정된 기사"
+      },
+      "empty": {
+        "title": "장바구니가 비어 있습니다.",
+        "description": "B2C 주문 흐름을 시작하려면 카탈로그에서 게시된 상품을 먼저 담아보세요."
+      },
+      "summary": {
+        "eyebrow": "장바구니",
+        "title": "주문 검토",
+        "description": "Task 3 제약을 지키기 위해 장바구니에는 한 상점의 상품만 유지됩니다.",
+        "subtotal": "소계"
+      },
+      "auth": {
+        "eyebrow": "고객 인증",
+        "title": "주문 전에 로그인하세요",
+        "description": "체크아웃 API는 로그인된 고객을 요구합니다. 로그인 페이지를 열고 다시 돌아와 주문을 마무리하세요.",
+        "login": "로그인",
+        "register": "계정 만들기"
+      },
+      "checkout": {
+        "eyebrow": "체크아웃",
+        "title": "배송 정보",
+        "descriptionPrefix": "현재 로그인 계정:",
+        "descriptionSuffix": "아래 주소를 입력하면 주문이 생성되고 가능한 기사가 자동 배정됩니다.",
+        "placeOrder": "주문하기"
+      },
+      "form": {
+        "fullName": "이름",
+        "phone": "전화번호",
+        "addressLine1": "도로명 주소",
+        "addressLine2": "동/호수, 건물명 (선택)",
+        "city": "도시",
+        "note": "배송 메모 (선택)"
+      },
+      "errors": {
+        "checkout": "지금은 주문을 생성할 수 없습니다."
+      },
+      "meta": {
+        "title": "SharkBee Store | 장바구니 및 체크아웃",
+        "description": "장바구니를 검토하고 고객 로그인 후 배송 정보를 입력해 Task 3 주문을 생성하세요."
+      }
+    },
+    "auth": {
+      "eyebrow": "고객 로그인",
+      "title": "Task 3 체크아웃을 완료하려면 로그인하세요.",
+      "description": "공개 스토어프런트에서 주문하려면 고객 계정을 사용하세요. 상점 관리는 management 앱에서 처리하고, 이 페이지는 B2C 구매 흐름을 단순하게 유지합니다.",
+      "stats": {
+        "itemsReady": "장바구니 준비 상품",
+        "singleStore": "단일 상점 주문 규칙",
+        "liveApi": "인증 및 주문 서비스 연결됨",
+        "liveApiValue": "실시간 API"
+      },
+      "support": {
+        "backCatalog": "카탈로그로 돌아가기",
+        "openCart": "장바구니 열기"
+      },
+      "authenticated": {
+        "eyebrow": "인증 완료",
+        "title": "이미 로그인되어 있습니다.",
+        "descriptionPrefix": "다음 계정으로 계속 진행:",
+        "descriptionSuffix": "장바구니로 돌아가 체크아웃을 완료하세요."
+      },
+      "modes": {
+        "login": "로그인",
+        "register": "회원가입"
+      },
+      "login": {
+        "title": "다시 오신 것을 환영합니다",
+        "descriptionPrefix": "로그인 후 다시 이동할 위치:"
+      },
+      "register": {
+        "title": "고객 계정 만들기",
+        "description": "한 번 가입해 두면 이후 주문에도 같은 계정을 사용할 수 있습니다."
+      },
+      "form": {
+        "name": "이름",
+        "email": "이메일",
+        "password": "비밀번호"
+      },
+      "actions": {
+        "continue": "계속",
+        "keepShopping": "쇼핑 계속하기",
+        "login": "로그인 후 계속",
+        "createAccount": "계정 만들기"
+      },
+      "errors": {
+        "login": "지금은 로그인할 수 없습니다.",
+        "register": "지금은 계정을 만들 수 없습니다."
+      },
+      "destination": {
+        "cart": "내 장바구니",
+        "storefront": "스토어프런트"
+      },
+      "meta": {
+        "loginTitle": "SharkBee Store | 고객 로그인",
+        "registerTitle": "SharkBee Store | 고객 계정 만들기",
+        "loginDescription": "고객 계정으로 로그인하여 SharkBee 스토어프런트 체크아웃을 계속 진행하세요.",
+        "registerDescription": "공개 SharkBee 스토어프런트에서 주문하려면 고객 계정을 만드세요."
+      }
+    }
+  }
+}

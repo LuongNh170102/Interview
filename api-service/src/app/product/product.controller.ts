@@ -22,9 +22,9 @@ import { ResourceStatusGuard } from '../common/guards/resource-status.guard';
 import { CheckStatus } from '../common/decorators/check-status.decorator';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { MerchantOwnershipPipe } from '../common/pipes/merchant-ownership.pipe';
-import { PaginationDto } from '../common/dto/pagination.dto';
 import { RESOURCE_TARGETS } from '../common/constants/resource.constant';
 import { PermissionsGuard } from '../common/guards/permissions.guard';
+import { ProductQueryDto } from './dto/product-query.dto';
 
 @Controller('products')
 export class ProductController {
@@ -36,7 +36,6 @@ export class ProductController {
   @Permissions('product:create')
   @UseInterceptors(FilesInterceptor('images', 10))
   async create(
-    @Query('merchantId') merchantId: string,
     @Body(MerchantOwnershipPipe) createProductDto: CreateProductDto,
     @UploadedFiles() files: Array<Express.Multer.File>
   ) {
@@ -44,31 +43,49 @@ export class ProductController {
   }
 
   @Get()
-  findAll() {
-    return this.productService.findAll();
+  findAll(@Query() query: ProductQueryDto) {
+    return this.productService.findPublicCatalog(query);
+  }
+
+  @Get('admin')
+  @UseGuards(JwtAuthGuard, PermissionsGuard)
+  @Permissions('product:read')
+  findAdminList(@Query() query: ProductQueryDto) {
+    return this.productService.findAdminList(query);
   }
 
   @Get('merchant/:merchantId')
+  @UseGuards(JwtAuthGuard, PermissionsGuard)
+  @Permissions('product:read')
   findAllByMerchant(
     @Param('merchantId') merchantId: string,
-    @Query() paginationDto: PaginationDto
+    @Query() query: ProductQueryDto
   ) {
-    return this.productService.findAllByMerchant(merchantId, paginationDto);
+    return this.productService.findAllByMerchant(merchantId, query);
+  }
+
+  @Get('admin/:id')
+  @UseGuards(JwtAuthGuard, PermissionsGuard)
+  @Permissions('product:read')
+  findAdminOne(@Param('id') externalId: string) {
+    return this.productService.findAdminOne(externalId);
   }
 
   @Get(':id')
   findOne(@Param('id') externalId: string) {
-    return this.productService.findOne(externalId);
+    return this.productService.findPublishedOne(externalId);
   }
 
   @Patch(':id')
   @UseGuards(JwtAuthGuard, PermissionsGuard, ProductOwnershipGuard)
   @Permissions('product:update')
+  @UseInterceptors(FilesInterceptor('images', 10))
   update(
     @Param('id') externalId: string,
-    @Body() updateProductDto: UpdateProductDto
+    @Body() updateProductDto: UpdateProductDto,
+    @UploadedFiles() files: Array<Express.Multer.File>
   ) {
-    return this.productService.update(externalId, updateProductDto);
+    return this.productService.update(externalId, updateProductDto, files);
   }
 
   @Delete(':id')

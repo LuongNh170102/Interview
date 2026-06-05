@@ -10,11 +10,16 @@ import {
 @Injectable()
 export class KakaoStrategy extends PassportStrategy(Strategy, 'kakao') {
   constructor(private configService: ConfigService) {
+    const frontendUrl =
+      configService.get<string>('FRONTEND_URL') || 'http://localhost:4300';
+
     super({
-      clientID: configService.get<string>('KAKAO_CLIENT_ID'),
-      clientSecret: configService.get<string>('KAKAO_CLIENT_SECRET'),
-      callbackURL:
-        configService.get<string>('FRONTEND_URL') + '/api/auth/kakao/callback',
+      clientID:
+        configService.get<string>('KAKAO_CLIENT_ID') || 'local-kakao-client-id',
+      clientSecret:
+        configService.get<string>('KAKAO_CLIENT_SECRET') ||
+        'local-kakao-client-secret',
+      callbackURL: `${frontendUrl}/api/auth/kakao/callback`,
       scope: ['profile_nickname', 'profile_image'],
     } as any);
   }

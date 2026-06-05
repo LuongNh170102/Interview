@@ -47,6 +47,13 @@ export class MerchantController {
     return this.merchantService.findByExternalId(externalId);
   }
 
+  @Get('me/profile')
+  @UseGuards(JwtAuthGuard, PermissionsGuard)
+  @Permissions('merchant:read')
+  findMine(@Request() req) {
+    return this.merchantService.findMine(req.user.userId);
+  }
+
   @Patch(':id/status')
   @UseGuards(JwtAuthGuard, PermissionsGuard)
   @Permissions('merchant:update_status')

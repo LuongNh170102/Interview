@@ -1,6 +1,6 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { catchError, of } from 'rxjs';
+import { catchError, finalize, of } from 'rxjs';
 import { LocalizedString } from '../interfaces/localized-string.interface';
 import {
   getFromStorage,
@@ -32,6 +32,9 @@ export class TranslationService {
     this.getStoredLanguage()
   );
   private readonly translations = signal<Record<string, unknown>>({});
+  private readonly loadedLang = signal<SupportedLanguage | null>(null);
+  private readonly isLoading = signal(false);
+  private reloadQueued = false;
 
   constructor() {
     this.loadTranslations(this.currentLang());
@@ -70,18 +73,56 @@ export class TranslationService {
     return this.currentLang();
   }
 
-  private loadTranslations(lang: string): void {
+  private loadTranslations(lang: SupportedLanguage, force = false): void {
+    if (
+      !force &&
+      this.loadedLang() === lang &&
+      Object.keys(this.translations()).length > 0
+    ) {
+      return;
+    }
+
+    if (this.isLoading()) {
+      return;
+    }
+
+    this.isLoading.set(true);
     this.http
-      .get<Record<string, unknown>>(`assets/i18n/${lang}.json`)
+      .get<Record<string, unknown>>(`/assets/i18n/${lang}.json`)
       .pipe(
         catchError((err) => {
           console.error(`Could not load translations for ${lang}`, err);
           return of({});
+        }),
+        finalize(() => {
+          this.isLoading.set(false);
         })
       )
       .subscribe((data) => {
         this.translations.set(data);
+
+        if (Object.keys(data).length > 0) {
+          this.loadedLang.set(lang);
+        }
       });
+  }
+
+  ensureCurrentLanguageLoaded(): void {
+    if (
+      this.isLoading() ||
+      this.reloadQueued ||
+      (this.loadedLang() === this.currentLang() &&
+        Object.keys(this.translations()).length > 0)
+    ) {
+      return;
+    }
+
+    this.reloadQueued = true;
+
+    queueMicrotask(() => {
+      this.reloadQueued = false;
+      this.loadTranslations(this.currentLang(), true);
+    });
   }
 
   translate(key: string): string {

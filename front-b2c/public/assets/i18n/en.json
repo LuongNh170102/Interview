@@ -1,0 +1,190 @@
+{
+  "b2c": {
+    "common": {
+      "store": "Store",
+      "product": "Product"
+    },
+    "shell": {
+      "brand": "SharkBee Store",
+      "subtitle": "Browse public products and place orders quickly on SharkBee Store.",
+      "nav": {
+        "products": "Products",
+        "cart": "Cart"
+      },
+      "account": {
+        "signedIn": "Signed in",
+        "login": "Login",
+        "logout": "Logout",
+        "roles": {
+          "superAdmin": "Platform Admin",
+          "customer": "Customer",
+          "account": "Account"
+        }
+      }
+    },
+    "catalog": {
+      "eyebrow": "B2C Shopping",
+      "title": "Discover products from approved stores.",
+      "description": "Explore product details, add items to your cart, and complete orders quickly through a clear, streamlined shopping flow.",
+      "actions": {
+        "openCart": "Open cart",
+        "login": "Login",
+        "addToCart": "Add to cart"
+      },
+      "stats": {
+        "liveProducts": "Live products",
+        "approvedStores": "Approved stores",
+        "itemsInCart": "Items in cart"
+      },
+      "emptyTitle": "No public products yet",
+      "emptyDescription": "The storefront only shows published, active products attached to approved merchants. Create one in the management app, then refresh this page.",
+      "fallbackDescription": "Freshly published and ready to order.",
+      "stock": {
+        "in": "in stock",
+        "out": "Out of stock"
+      },
+      "categoryGeneral": "General",
+      "status": {
+        "inactive": "Inactive",
+        "published": "Published",
+        "draft": "Draft",
+        "archived": "Archived"
+      },
+      "loadError": "Unable to load the public product catalog right now.",
+      "meta": {
+        "title": "SharkBee Store | Public Catalog",
+        "description": "Browse published products from approved merchants, add them to cart, and continue to authenticated checkout."
+      }
+    },
+    "detail": {
+      "backToProducts": "Back to products",
+      "labels": {
+        "status": "Status",
+        "stock": "Stock",
+        "previewThumbnail": "Product preview thumbnail"
+      },
+      "actions": {
+        "addToCart": "Add to cart",
+        "viewCart": "View cart"
+      },
+      "notices": {
+        "resetCart": "Your cart was reset because orders can only contain products from one store.",
+        "added": "Product added to cart."
+      },
+      "notFound": "Product not found.",
+      "loadError": "Unable to load this product.",
+      "meta": {
+        "title": "SharkBee Store | Product Details",
+        "description": "Inspect a published product, choose quantity, and add it to your SharkBee cart.",
+        "productDescriptionFallback": "View product details and add this item to your SharkBee cart."
+      }
+    },
+    "cart": {
+      "success": {
+        "eyebrow": "Order placed",
+        "title": "Your order is confirmed.",
+        "orderCode": "Order code",
+        "status": "Status",
+        "total": "Total",
+        "assignedCourier": "Assigned courier"
+      },
+      "empty": {
+        "title": "Your cart is empty.",
+        "description": "Add a few published products from the storefront to start the B2C order flow."
+      },
+      "summary": {
+        "eyebrow": "Cart",
+        "title": "Review your order",
+        "description": "The cart only keeps products from one store so the order flow stays aligned with the Task 3 merchant constraint.",
+        "subtotal": "Subtotal"
+      },
+      "auth": {
+        "eyebrow": "Customer auth",
+        "title": "Sign in before placing the order",
+        "description": "The checkout API requires an authenticated customer. Use the login page, then come back here to finish the order.",
+        "login": "Login",
+        "register": "Create account"
+      },
+      "checkout": {
+        "eyebrow": "Checkout",
+        "title": "Delivery details",
+        "descriptionPrefix": "Signed in as",
+        "descriptionSuffix": "Complete the address below to create the order and auto-assign an eligible courier.",
+        "placeOrder": "Place order"
+      },
+      "form": {
+        "fullName": "Full name",
+        "phone": "Phone number",
+        "addressLine1": "Street address",
+        "addressLine2": "Apartment, suite, building (optional)",
+        "city": "City",
+        "note": "Delivery note (optional)"
+      },
+      "errors": {
+        "checkout": "Unable to place the order right now."
+      },
+      "meta": {
+        "title": "SharkBee Store | Cart and Checkout",
+        "description": "Review cart items, sign in as a customer, and submit delivery details to create a Task 3 order."
+      }
+    },
+    "auth": {
+      "eyebrow": "Customer login",
+      "title": "Sign in to complete the Task 3 checkout flow.",
+      "description": "Use a customer account to place orders from the public storefront. Merchant management stays in the management app, while this page keeps the B2C buying journey clear.",
+      "stats": {
+        "itemsReady": "Items ready in cart",
+        "singleStore": "Single-store rule",
+        "liveApi": "Connected to auth and order services",
+        "liveApiValue": "Live API"
+      },
+      "support": {
+        "backCatalog": "Back to catalog",
+        "openCart": "Open cart"
+      },
+      "authenticated": {
+        "eyebrow": "Authenticated",
+        "title": "You're already signed in.",
+        "descriptionPrefix": "Continue as",
+        "descriptionSuffix": "and go back to the cart page to finish checkout."
+      },
+      "modes": {
+        "login": "Login",
+        "register": "Register"
+      },
+      "login": {
+        "title": "Welcome back",
+        "descriptionPrefix": "Sign in, then return to"
+      },
+      "register": {
+        "title": "Create customer account",
+        "description": "Register once, then use the same account for future orders."
+      },
+      "form": {
+        "name": "Your name",
+        "email": "Email",
+        "password": "Password"
+      },
+      "actions": {
+        "continue": "Continue",
+        "keepShopping": "Keep shopping",
+        "login": "Login to continue",
+        "createAccount": "Create account"
+      },
+      "errors": {
+        "login": "Unable to login.",
+        "register": "Unable to create your account."
+      },
+      "destination": {
+        "cart": "your cart",
+        "storefront": "the storefront"
+      },
+      "meta": {
+        "loginTitle": "SharkBee Store | Customer Login",
+        "registerTitle": "SharkBee Store | Create Customer Account",
+        "loginDescription": "Sign in with a customer account to continue checkout on the SharkBee storefront.",
+        "registerDescription": "Create a customer account to place B2C orders from the public SharkBee storefront."
+      }
+    }
+  }
+}

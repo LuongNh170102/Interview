@@ -42,6 +42,7 @@
     },
     "loading": "로딩 중...",
     "noData": "데이터가 없습니다",
+    "noResults": "검색 결과가 없습니다",
     "actions": "작업",
     "selectAll": "전체 선택",
     "selectRow": "행 선택",
@@ -213,6 +214,52 @@
       "comingSoon": "개발 중인 기능",
       "filter": "필터"
     },
+    "users": {
+      "couriers": {
+        "title": "승인 대기 기사",
+        "searchPlaceholder": "기사 검색...",
+        "stats": {
+          "pendingApproval": "승인 대기",
+          "approvedCouriers": "승인된 기사",
+          "onlineCouriers": "온라인 기사",
+          "requiresReview": "검토 필요"
+        },
+        "table": {
+          "courier": "기사",
+          "phone": "전화번호",
+          "vehicleType": "차량",
+          "availability": "상태",
+          "approvalStatus": "승인",
+          "orders": "주문",
+          "createdAt": "등록일",
+          "actions": "작업"
+        },
+        "availability": {
+          "offline": "오프라인",
+          "online": "온라인",
+          "busy": "배차 중"
+        },
+        "actions": {
+          "approve": "승인",
+          "reject": "반려",
+          "confirmReject": "기사 반려"
+        },
+        "reject": {
+          "title": "기사 신청 반려",
+          "description": "다음 기사에 대한 반려 사유를 입력하세요:",
+          "reasonLabel": "반려 사유",
+          "reasonPlaceholder": "반려 사유를 입력하세요",
+          "reasonRequired": "반려 사유는 필수입니다"
+        },
+        "toasts": {
+          "loadError": "기사 목록을 불러올 수 없습니다.",
+          "approveSuccess": "기사가 승인되었습니다.",
+          "approveError": "기사 승인을 완료할 수 없습니다.",
+          "rejectSuccess": "기사가 반려되었습니다.",
+          "rejectError": "기사 반려를 완료할 수 없습니다."
+        }
+      }
+    },
     "partners": {
       "tabs": {
         "agencies": "파트너",
@@ -371,6 +418,78 @@
     },
     "categories": {
       "subtitle": "상품 카테고리 관리"
+    },
+    "productsPage": {
+      "title": "상품",
+      "searchPlaceholder": "상품 검색...",
+      "addNew": "상품 추가",
+      "stats": {
+        "published": "게시된 상품",
+        "draft": "임시 저장",
+        "outOfStock": "품절"
+      },
+      "table": {
+        "product": "상품",
+        "merchant": "매장",
+        "category": "카테고리",
+        "price": "가격",
+        "stock": "재고",
+        "status": "상태",
+        "visibility": "노출",
+        "createdAt": "생성일"
+      },
+      "status": {
+        "draft": "초안",
+        "published": "게시됨",
+        "archived": "보관됨"
+      },
+      "form": {
+        "createTitle": "상품 생성",
+        "editTitle": "상품 수정",
+        "basicInfo": "상품 정보",
+        "merchant": "매장",
+        "selectMerchant": "매장을 선택하세요",
+        "category": "카테고리",
+        "selectCategory": "카테고리를 선택하세요",
+        "nameVi": "상품명 (VI)",
+        "nameEn": "상품명 (EN)",
+        "namePlaceholder": "상품명을 입력하세요",
+        "nameEnPlaceholder": "영문 이름을 입력하세요",
+        "description": "설명",
+        "descriptionPlaceholder": "상품 설명을 입력하세요",
+        "images": "상품 이미지",
+        "imagesDropTitle": "상품 이미지를 여기로 끌어다 놓으세요",
+        "imagesDropActive": "이미지를 놓아 갤러리에 추가하세요",
+        "imagesDropDescription": "스토어프론트 갤러리용 JPG, PNG, WEBP, GIF 파일을 업로드할 수 있습니다.",
+        "imagesBrowse": "파일 선택",
+        "imagesHint": "저장 한 번에 최대 10장의 새 이미지를 업로드할 수 있습니다. 수정 모드에서는 새 파일이 기존 갤러리에 이어서 추가됩니다.",
+        "currentImages": "현재 이미지",
+        "newImages": "추가할 새 이미지",
+        "currentImageAlt": "현재 상품 이미지",
+        "previewImageAlt": "선택한 이미지 미리보기",
+        "removeImage": "선택한 이미지 제거",
+        "status": "게시 상태",
+        "selectStatus": "상태 선택",
+        "price": "가격",
+        "stock": "재고",
+        "sku": "SKU",
+        "skuPlaceholder": "SKU를 입력하세요",
+        "currency": "통화",
+        "visible": "스토어프론트에 노출"
+      },
+      "delete": {
+        "title": "상품 삭제",
+        "description": "이 상품은 카탈로그에서 영구적으로 삭제됩니다."
+      },
+      "toasts": {
+        "loadError": "상품 목록을 불러올 수 없습니다.",
+        "createSuccess": "상품이 생성되었습니다.",
+        "createError": "상품을 생성할 수 없습니다.",
+        "updateSuccess": "상품이 수정되었습니다.",
+        "updateError": "상품을 수정할 수 없습니다.",
+        "deleteSuccess": "상품이 삭제되었습니다.",
+        "deleteError": "상품을 삭제할 수 없습니다."
+      }
     },
     "orders": {
       "subtitle": "주문 관리"

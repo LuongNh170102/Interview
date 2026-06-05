@@ -7,13 +7,19 @@ import { GoogleProfile } from '../../common/interfaces/auth.interface';
 @Injectable()
 export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
   constructor(private configService: ConfigService) {
+    const frontendUrl =
+      configService.get<string>('FRONTEND_URL') || 'http://localhost:4300';
+
     super({
-      clientID: configService.get<string>('GOOGLE_CLIENT_ID'),
-      clientSecret: configService.get<string>('GOOGLE_CLIENT_SECRET'),
+      clientID:
+        configService.get<string>('GOOGLE_CLIENT_ID') ||
+        'local-google-client-id',
+      clientSecret:
+        configService.get<string>('GOOGLE_CLIENT_SECRET') ||
+        'local-google-client-secret',
       // Callback URL is set dynamically by GoogleAuthGuard based on Host header
       // This placeholder will be overridden at runtime
-      callbackURL:
-        configService.get<string>('FRONTEND_URL') + '/api/auth/google/callback',
+      callbackURL: `${frontendUrl}/api/auth/google/callback`,
       scope: ['email', 'profile'],
     });
   }

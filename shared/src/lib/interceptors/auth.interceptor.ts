@@ -1,20 +1,38 @@
-import { HttpErrorResponse, HttpEvent, HttpHandlerFn, HttpInterceptorFn, HttpRequest } from '@angular/common/http';
+import {
+  HttpErrorResponse,
+  HttpEvent,
+  HttpHandlerFn,
+  HttpInterceptorFn,
+  HttpRequest,
+} from '@angular/common/http';
 import { inject } from '@angular/core';
-import { catchError, switchMap, throwError, BehaviorSubject, filter, take, Observable } from 'rxjs';
+import {
+  catchError,
+  switchMap,
+  throwError,
+  BehaviorSubject,
+  filter,
+  take,
+  Observable,
+} from 'rxjs';
 import { AuthService } from '../services/auth.service';
 
 let isRefreshing = false;
 const refreshTokenSubject = new BehaviorSubject<string | null>(null);
 
-export const authInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, next: HttpHandlerFn): Observable<HttpEvent<unknown>> => {
+export const authInterceptor: HttpInterceptorFn = (
+  req: HttpRequest<unknown>,
+  next: HttpHandlerFn
+): Observable<HttpEvent<unknown>> => {
   const authService = inject(AuthService);
   const token = authService.accessToken();
+  const isApiRequest = req.url.includes('/api/');
 
-  if (token && !req.url.includes('/api/auth/refresh')) {
+  if (token && isApiRequest && !req.url.includes('/api/auth/refresh')) {
     req = req.clone({
       setHeaders: {
-        Authorization: `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     });
   }
 
@@ -23,6 +41,7 @@ export const authInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, ne
       if (
         error instanceof HttpErrorResponse &&
         error.status === 401 &&
+        isApiRequest &&
         !req.url.includes('/api/auth/login') &&
         !req.url.includes('/api/auth/refresh')
       ) {
@@ -33,7 +52,11 @@ export const authInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, ne
   );
 };
 
-const handle401Error = (req: HttpRequest<unknown>, next: HttpHandlerFn, authService: AuthService): Observable<HttpEvent<unknown>> => {
+const handle401Error = (
+  req: HttpRequest<unknown>,
+  next: HttpHandlerFn,
+  authService: AuthService
+): Observable<HttpEvent<unknown>> => {
   if (!isRefreshing) {
     isRefreshing = true;
     refreshTokenSubject.next(null);
@@ -45,8 +68,8 @@ const handle401Error = (req: HttpRequest<unknown>, next: HttpHandlerFn, authServ
         return next(
           req.clone({
             setHeaders: {
-              Authorization: `Bearer ${res.access_token}`
-            }
+              Authorization: `Bearer ${res.access_token}`,
+            },
           })
         );
       }),
@@ -64,12 +87,11 @@ const handle401Error = (req: HttpRequest<unknown>, next: HttpHandlerFn, authServ
         return next(
           req.clone({
             setHeaders: {
-              Authorization: `Bearer ${token!}`
-            }
+              Authorization: `Bearer ${token!}`,
+            },
           })
         );
       })
     );
   }
 };
-

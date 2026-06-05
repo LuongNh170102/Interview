@@ -1,0 +1,190 @@
+{
+  "b2c": {
+    "common": {
+      "store": "Cửa hàng",
+      "product": "Sản phẩm"
+    },
+    "shell": {
+      "brand": "SharkBee Store",
+      "subtitle": "Khám phá sản phẩm công khai và đặt hàng nhanh trên SharkBee Store.",
+      "nav": {
+        "products": "Sản phẩm",
+        "cart": "Giỏ hàng"
+      },
+      "account": {
+        "signedIn": "Đã đăng nhập",
+        "login": "Đăng nhập",
+        "logout": "Đăng xuất",
+        "roles": {
+          "superAdmin": "Quản trị nền tảng",
+          "customer": "Khách hàng",
+          "account": "Tài khoản"
+        }
+      }
+    },
+    "catalog": {
+      "eyebrow": "Mua sắm B2C",
+      "title": "Khám phá sản phẩm từ các cửa hàng đã được duyệt.",
+      "description": "Xem chi tiết sản phẩm, thêm vào giỏ hàng và hoàn tất đơn nhanh chóng trên một trải nghiệm mua sắm rõ ràng, gọn gàng.",
+      "actions": {
+        "openCart": "Mở giỏ hàng",
+        "login": "Đăng nhập",
+        "addToCart": "Thêm vào giỏ"
+      },
+      "stats": {
+        "liveProducts": "Sản phẩm đang bán",
+        "approvedStores": "Cửa hàng đã duyệt",
+        "itemsInCart": "Sản phẩm trong giỏ"
+      },
+      "emptyTitle": "Chưa có sản phẩm công khai",
+      "emptyDescription": "Storefront chỉ hiển thị sản phẩm đang xuất bản, còn hoạt động và thuộc cửa hàng đã được duyệt. Hãy tạo hoặc cập nhật sản phẩm trong trang quản trị rồi tải lại trang này.",
+      "fallbackDescription": "Sản phẩm đã sẵn sàng để khách hàng đặt mua.",
+      "stock": {
+        "in": "còn hàng",
+        "out": "Hết hàng"
+      },
+      "categoryGeneral": "Tổng quan",
+      "status": {
+        "inactive": "Ngừng hoạt động",
+        "published": "Đã xuất bản",
+        "draft": "Bản nháp",
+        "archived": "Lưu trữ"
+      },
+      "loadError": "Hiện không thể tải danh mục sản phẩm công khai.",
+      "meta": {
+        "title": "SharkBee Store | Danh mục sản phẩm",
+        "description": "Xem sản phẩm đã xuất bản từ các cửa hàng được duyệt, thêm vào giỏ và chuyển sang bước checkout xác thực khách hàng."
+      }
+    },
+    "detail": {
+      "backToProducts": "Quay lại danh mục",
+      "labels": {
+        "status": "Trạng thái",
+        "stock": "Tồn kho",
+        "previewThumbnail": "Ảnh xem nhanh sản phẩm"
+      },
+      "actions": {
+        "addToCart": "Thêm vào giỏ",
+        "viewCart": "Xem giỏ hàng"
+      },
+      "notices": {
+        "resetCart": "Giỏ hàng đã được làm mới vì mỗi đơn chỉ được chứa sản phẩm từ một cửa hàng.",
+        "added": "Đã thêm sản phẩm vào giỏ hàng."
+      },
+      "notFound": "Không tìm thấy sản phẩm.",
+      "loadError": "Không thể tải chi tiết sản phẩm này.",
+      "meta": {
+        "title": "SharkBee Store | Chi tiết sản phẩm",
+        "description": "Xem thông tin sản phẩm đang xuất bản, chọn số lượng và thêm vào giỏ hàng SharkBee.",
+        "productDescriptionFallback": "Xem chi tiết sản phẩm và thêm mặt hàng này vào giỏ hàng SharkBee."
+      }
+    },
+    "cart": {
+      "success": {
+        "eyebrow": "Đặt hàng thành công",
+        "title": "Đơn hàng của bạn đã được xác nhận.",
+        "orderCode": "Mã đơn hàng",
+        "status": "Trạng thái",
+        "total": "Tổng tiền",
+        "assignedCourier": "Tài xế được gán"
+      },
+      "empty": {
+        "title": "Giỏ hàng đang trống.",
+        "description": "Thêm một vài sản phẩm đã xuất bản từ storefront để bắt đầu luồng đặt hàng B2C."
+      },
+      "summary": {
+        "eyebrow": "Giỏ hàng",
+        "title": "Xem lại đơn hàng của bạn",
+        "description": "Mỗi đơn chỉ được chứa sản phẩm từ một cửa hàng, nên giỏ hàng luôn bám đúng ràng buộc merchant của Task 3.",
+        "subtotal": "Tạm tính"
+      },
+      "auth": {
+        "eyebrow": "Xác thực khách hàng",
+        "title": "Đăng nhập trước khi đặt hàng",
+        "description": "API checkout yêu cầu khách hàng đã xác thực. Hãy dùng trang đăng nhập mới rồi quay lại để hoàn tất đơn hàng.",
+        "login": "Đăng nhập",
+        "register": "Tạo tài khoản"
+      },
+      "checkout": {
+        "eyebrow": "Checkout",
+        "title": "Thông tin giao hàng",
+        "descriptionPrefix": "Bạn đang đăng nhập với tài khoản",
+        "descriptionSuffix": "Hoàn tất địa chỉ bên dưới để tạo đơn và tự động gán tài xế phù hợp.",
+        "placeOrder": "Đặt hàng"
+      },
+      "form": {
+        "fullName": "Họ và tên",
+        "phone": "Số điện thoại",
+        "addressLine1": "Địa chỉ giao hàng",
+        "addressLine2": "Căn hộ, tòa nhà, ghi chú thêm (không bắt buộc)",
+        "city": "Thành phố",
+        "note": "Ghi chú giao hàng (không bắt buộc)"
+      },
+      "errors": {
+        "checkout": "Hiện chưa thể tạo đơn hàng. Vui lòng thử lại sau."
+      },
+      "meta": {
+        "title": "SharkBee Store | Giỏ hàng và Checkout",
+        "description": "Xem lại giỏ hàng, đăng nhập với vai trò khách hàng và gửi địa chỉ giao hàng để tạo đơn Task 3."
+      }
+    },
+    "auth": {
+      "eyebrow": "Đăng nhập khách hàng",
+      "title": "Đăng nhập để hoàn tất luồng checkout của Task 3.",
+      "description": "Dùng tài khoản khách hàng để đặt đơn từ storefront công khai. Phần quản lý merchant vẫn nằm ở app quản trị, còn trang này giữ cho hành trình mua hàng B2C rõ ràng và gọn gàng.",
+      "stats": {
+        "itemsReady": "Sản phẩm đang chờ trong giỏ",
+        "singleStore": "Một cửa hàng cho mỗi đơn",
+        "liveApi": "Kết nối tới auth và order service",
+        "liveApiValue": "API live"
+      },
+      "support": {
+        "backCatalog": "Quay lại storefront",
+        "openCart": "Mở giỏ hàng"
+      },
+      "authenticated": {
+        "eyebrow": "Đã xác thực",
+        "title": "Bạn đã đăng nhập rồi.",
+        "descriptionPrefix": "Tiếp tục với tài khoản",
+        "descriptionSuffix": "và quay lại giỏ hàng để hoàn tất checkout."
+      },
+      "modes": {
+        "login": "Đăng nhập",
+        "register": "Đăng ký"
+      },
+      "login": {
+        "title": "Chào mừng quay lại",
+        "descriptionPrefix": "Đăng nhập rồi quay lại"
+      },
+      "register": {
+        "title": "Tạo tài khoản khách hàng",
+        "description": "Đăng ký một lần và dùng lại tài khoản này cho các đơn hàng tiếp theo."
+      },
+      "form": {
+        "name": "Tên của bạn",
+        "email": "Email",
+        "password": "Mật khẩu"
+      },
+      "actions": {
+        "continue": "Tiếp tục",
+        "keepShopping": "Tiếp tục mua sắm",
+        "login": "Đăng nhập để tiếp tục",
+        "createAccount": "Tạo tài khoản"
+      },
+      "errors": {
+        "login": "Không thể đăng nhập vào lúc này.",
+        "register": "Không thể tạo tài khoản lúc này."
+      },
+      "destination": {
+        "cart": "giỏ hàng của bạn",
+        "storefront": "storefront"
+      },
+      "meta": {
+        "loginTitle": "SharkBee Store | Đăng nhập khách hàng",
+        "registerTitle": "SharkBee Store | Tạo tài khoản khách hàng",
+        "loginDescription": "Đăng nhập bằng tài khoản khách hàng để tiếp tục checkout trên storefront SharkBee.",
+        "registerDescription": "Tạo tài khoản khách hàng để đặt đơn B2C từ storefront công khai của SharkBee."
+      }
+    }
+  }
+}
