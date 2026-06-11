@@ -6,6 +6,17 @@ export const COMMON_MESSAGES = {
   INVALID_MERCHANT_ID_FORMAT: 'Invalid Merchant ID format',
 };
 
+export const COURIER_MESSAGES = {
+  REGISTRATION_SUCCESS:
+    'Courier registration submitted successfully. Pending admin approval.',
+  APPROVED: 'Courier has been approved successfully',
+  REJECTED: 'Courier has been rejected',
+  ALREADY_PROCESSED: 'This courier registration has already been processed',
+  NOT_FOUND: 'Courier not found',
+  INVALID_STATUS_TRANSITION:
+    'Invalid status transition. Courier is already processed.',
+};
+
 export const AUTH_MESSAGES = {
   INVALID_CREDENTIALS: 'Invalid credentials',
   ACCESS_DENIED: 'Access Denied',
@@ -47,6 +58,23 @@ export const AUTH_MESSAGES = {
     `Tài khoản này được tạo bằng ${providers}. Vui lòng đăng nhập bằng ${providers} hoặc đặt mật khẩu trong cài đặt tài khoản.`,
   PASSWORD_SET_SUCCESS: 'Password has been set successfully',
   PASSWORD_ALREADY_SET: 'Account already has a password set',
+};
+
+export const CART_MESSAGES = {
+  CART_NOT_FOUND: 'Cart not found',
+  CART_EMPTY: 'Cart is empty',
+  PRODUCT_NOT_AVAILABLE: 'Product is not available',
+  ADDED_TO_CART: 'Product added to cart',
+  UPDATED: 'Cart updated successfully',
+};
+
+export const ORDER_MESSAGES = {
+  ORDER_NOT_FOUND: 'Order not found',
+  ORDER_CREATED: 'Order created successfully',
+  NO_COURIER_AVAILABLE:
+    'No courier available in your area at the moment',
+  COURIER_ASSIGNED: 'Courier assigned to your order',
+  INVALID_CART: 'Invalid cart or cart is empty',
 };
 
 export const PRODUCT_MESSAGES = {

@@ -1,0 +1,40 @@
+import { IsOptional, IsString, IsEnum } from 'class-validator';
+import { PaginationDto } from '../../common/dto/pagination.dto';
+import { COURIER_STATUS, COURIER_OPERATIONAL_STATUS } from '../../common/constants/courier.constant';
+
+export class CourierQueryDto extends PaginationDto {
+  @IsOptional()
+  @IsString()
+  include?: string;
+
+  @IsOptional()
+  @IsEnum(COURIER_STATUS)
+  approvalStatus?: string;
+
+  @IsOptional()
+  @IsEnum(COURIER_OPERATIONAL_STATUS)
+  operationalStatus?: string;
+
+  @IsOptional()
+  @IsString()
+  search?: string;
+
+  get shouldIncludeStatistics(): boolean {
+    return this.include?.split(',').includes('statistics') ?? false;
+  }
+}
+
+export interface CourierStatistics {
+  totalApproved: number;
+  totalPending: number;
+  totalRejected: number;
+  totalActive: number;
+}
+
+export interface CourierListResponse<T> {
+  data: T[];
+  total: number;
+  page: number;
+  limit: number;
+  statistics?: CourierStatistics;
+}

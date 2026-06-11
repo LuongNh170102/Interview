@@ -207,6 +207,35 @@ async function main() {
       },
     },
 
+    // Courier
+    {
+      resource: 'courier',
+      action: 'read',
+      description: {
+        en: 'View courier details',
+        vi: 'Xem chi tiết tài xế',
+        ko: '배달 기사 상세 보기',
+      },
+    },
+    {
+      resource: 'courier',
+      action: 'approve',
+      description: {
+        en: 'Approve courier registration',
+        vi: 'Duyệt đăng ký tài xế',
+        ko: '배달 기사 승인',
+      },
+    },
+    {
+      resource: 'courier',
+      action: 'reject',
+      description: {
+        en: 'Reject courier registration',
+        vi: 'Từ chối đăng ký tài xế',
+        ko: '배달 기사 거절',
+      },
+    },
+
     // System
     {
       resource: 'system',
@@ -349,6 +378,13 @@ async function main() {
         getPerm('order', 'read'),
         getPerm('product', 'read'),
       ].filter(Boolean), // Filter out undefined
+    },
+    {
+      role: 'COURIER',
+      perms: [
+        getPerm('order', 'read'),
+        getPerm('order', 'update_status'),
+      ].filter(Boolean),
     },
   ];
 

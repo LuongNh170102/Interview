@@ -34,6 +34,10 @@ model User {
   orders        Order[]
   reviews       Review[]
   linkedAccounts LinkedAccount[] // OAuth linked accounts
+  
+  // Courier approval/rejection relations
+  approvedCouriers Courier[] @relation("ApprovedCourier")
+  rejectedCouriers Courier[] @relation("RejectedCourier")
 
   @@map("users")
 }
@@ -481,6 +485,7 @@ model CartItem {
 
 model Courier {
   id              Int      @id @default(autoincrement())
+  externalId      String   @unique @default(uuid()) @map("external_id") @db.Uuid
   userId          Int      @unique @map("user_id")
   name            String?
   phone           String?
@@ -490,10 +495,29 @@ model Courier {
   createdAt       DateTime @default(now()) @map("created_at")
   updatedAt       DateTime? @updatedAt @map("updated_at")
 
+  // Approval / Operational Status
+  approvalStatus    ApprovalStatus    @default(PENDING) @map("approval_status")
+  approvedAt        DateTime?         @map("approved_at")
+  approvedBy        Int?              @map("approved_by")
+  rejectedAt        DateTime?         @map("rejected_at")
+  rejectedBy        Int?              @map("rejected_by")
+  rejectionReason   String?           @map("rejection_reason") @db.Text
+  operationalStatus OperationalStatus @default(ACTIVE) @map("operational_status")
+  
+  // Identity verification
+  idCardNumber      String?           @map("id_card_number")
+  dateOfBirth       DateTime?         @map("date_of_birth")
+  vehicleNumber     String?           @map("vehicle_number")
+
   // Relations
   user   User    @relation(fields: [userId], references: [id])
+  approvedByUser User? @relation("ApprovedCourier", fields: [approvedBy], references: [id])
+  rejectedByUser User? @relation("RejectedCourier", fields: [rejectedBy], references: [id])
   orders Order[]
 
+  @@unique([phone])
+  @@index([approvalStatus])
+  @@index([operationalStatus])
   @@map("couriers")
 }
 

@@ -66,6 +66,36 @@ export const appRoutes: Route[] = [
             './pages/registration-success/registration-success.component'
           ).then((m) => m.RegistrationSuccessComponent),
       },
+      // Product Management (Merchant)
+      {
+        path: 'merchant',
+        canActivate: [authGuard],
+        loadComponent: () =>
+          import('./layout/layout.component').then((m) => m.LayoutComponent),
+        children: [
+          {
+            path: 'products',
+            loadComponent: () =>
+              import('./pages/products/products.component').then(
+                (m) => m.ProductsComponent
+              ),
+          },
+          {
+            path: 'products/create',
+            loadComponent: () =>
+              import('./pages/products/product-form.component').then(
+                (m) => m.ProductFormComponent
+              ),
+          },
+          {
+            path: 'products/:id/edit',
+            loadComponent: () =>
+              import('./pages/products/product-form.component').then(
+                (m) => m.ProductFormComponent
+              ),
+          },
+        ],
+      },
     ],
   },
   // Fallback redirect to landing

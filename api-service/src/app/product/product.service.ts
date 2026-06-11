@@ -13,6 +13,7 @@ import { PRODUCT_CONSTANTS } from '../common/constants/product.constant';
 import { PRIMITIVE_TYPES } from '../common/constants/common.constant';
 import { PaginationDto } from '../common/dto/pagination.dto';
 import { PaginatedResult } from '../common/interfaces/paginated-result.interface';
+import { MERCHANT_STATUS } from '../common/constants/merchant.constant';
 
 @Injectable()
 export class ProductService {
@@ -127,6 +128,115 @@ export class ProductService {
     if (!product) {
       throw new NotFoundException(PRODUCT_MESSAGES.PRODUCT_NOT_FOUND);
     }
+    return product;
+  }
+
+  // ==========================================
+  // B2C Public Methods
+  // ==========================================
+
+  /**
+   * Get active products by merchant for B2C browsing
+   */
+  async findB2CProducts(
+    merchantExternalId: string,
+    paginationDto: PaginationDto
+  ): Promise<PaginatedResult<any>> {
+    const merchant = await this.prisma.merchant.findUnique({
+      where: { externalId: merchantExternalId },
+      select: { id: true, name: true, logoUrl: true, approvalStatus: true },
+    });
+
+    if (!merchant) {
+      throw new NotFoundException(COMMON_MESSAGES.INVALID_MERCHANT_ID);
+    }
+
+    // Only show products from APPROVED merchants
+    if (merchant.approvalStatus !== MERCHANT_STATUS.APPROVED) {
+      throw new NotFoundException(COMMON_MESSAGES.INVALID_MERCHANT_ID);
+    }
+
+    const { page = 1, limit = 20 } = paginationDto;
+    const skip = (page - 1) * limit;
+
+    const where = {
+      merchantId: merchant.id,
+      isActive: true,
+    };
+
+    const [data, total] = await Promise.all([
+      this.prisma.product.findMany({
+        where,
+        skip,
+        take: limit,
+        orderBy: { createdAt: 'desc' },
+        select: {
+          externalId: true,
+          name: true,
+          price: true,
+          currency: true,
+          isActive: true,
+          averageRating: true,
+          totalReviews: true,
+          metadata: true,
+          createdAt: true,
+        },
+      }),
+      this.prisma.product.count({ where }),
+    ]);
+
+    return {
+      data,
+      meta: {
+        total,
+        page,
+        lastPage: Math.ceil(total / limit),
+        limit,
+      },
+    };
+  }
+
+  /**
+   * Get single product detail for B2C
+   */
+  async findB2CProduct(externalId: string) {
+    const product = await this.prisma.product.findUnique({
+      where: { externalId },
+      select: {
+        externalId: true,
+        name: true,
+        description: true,
+        price: true,
+        currency: true,
+        stock: true,
+        isActive: true,
+        averageRating: true,
+        totalReviews: true,
+        metadata: true,
+        createdAt: true,
+        merchant: {
+          select: {
+            externalId: true,
+            name: true,
+            logoUrl: true,
+            phone: true,
+            address: true,
+            averageRating: true,
+            approvalStatus: true,
+          },
+        },
+      },
+    });
+
+    if (!product || product.isActive === false) {
+      throw new NotFoundException(PRODUCT_MESSAGES.PRODUCT_NOT_FOUND);
+    }
+
+    // Only show products from APPROVED merchants
+    if (product.merchant.approvalStatus !== MERCHANT_STATUS.APPROVED) {
+      throw new NotFoundException(PRODUCT_MESSAGES.PRODUCT_NOT_FOUND);
+    }
+
     return product;
   }
 

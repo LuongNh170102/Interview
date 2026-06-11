@@ -40,6 +40,11 @@ export class MerchantController {
     return this.merchantService.findAll(query);
   }
 
+  @Get('b2c')
+  findB2CMerchants(@Query() query: MerchantQueryDto) {
+    return this.merchantService.findB2CMerchants(query);
+  }
+
   @Get(':id')
   @UseGuards(JwtAuthGuard, PermissionsGuard)
   @Permissions('merchant:read')

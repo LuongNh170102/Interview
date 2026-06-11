@@ -1,0 +1,100 @@
+<div class="couriers-page">
+  <!-- Header -->
+  <div class="page-header">
+    <h1>Quản lý tài xế</h1>
+    <p class="page-description">Duyệt và quản lý đăng ký tài xế giao hàng</p>
+  </div>
+
+  <!-- Statistic Cards -->
+  <div class="statistics-row">
+    <app-statistic-card
+      [config]="{ value: statisticsData().totalApproved.toString(), labelKey: 'Đã duyệt', icon: 'assets/icons/icon-stat-check.svg', variant: 'success' }"
+    />
+    <app-statistic-card
+      [config]="{ value: statisticsData().totalPending.toString(), labelKey: 'Chờ duyệt', icon: 'assets/icons/icon-stat-bell.svg', variant: 'warning', subtitleKey: 'Cần xử lý' }"
+    />
+    <app-statistic-card
+      [config]="{ value: statisticsData().totalRejected.toString(), labelKey: 'Đã từ chối', icon: 'assets/icons/icon-stat-x.svg', variant: 'error' }"
+    />
+    <app-statistic-card
+      [config]="{ value: statisticsData().totalActive.toString(), labelKey: 'Đang hoạt động', icon: 'assets/icons/icon-stat-user.svg', variant: 'primary' }"
+    />
+  </div>
+
+  <!-- Data Table -->
+  <app-data-table
+    [config]="tableConfig"
+    [data]="couriers()"
+    [pagination]="pagination()"
+    [loading]="isLoading()"
+    [headerConfig]="{
+      show: true,
+      title: { labelKey: 'Danh sách tài xế', showCount: true },
+      search: { enabled: true, placeholderKey: 'Tìm kiếm tài xế...' },
+      filters: [{ id: 'status', labelKey: statusFilter() === 'PENDING' ? 'Chờ duyệt' : 'Tất cả', type: 'button' }],
+      actions: []
+    }"
+    (pageChange)="onPageChange($event)"
+    (headerSearch)="onHeaderSearch($event)"
+    (headerFilter)="onHeaderFilter($event)"
+    (headerAction)="onHeaderAction($event)"
+    (actionClick)="onMenuAction($event.actionId, $event.row)"
+  >
+    <!-- Custom template for courier info -->
+    <ng-template
+      [appTableCell]="'courierInfo'"
+      let-row
+    >
+      <div class="courier-info">
+        <div class="courier-avatar">{{ getInitials(row.name) }}</div>
+        <div class="courier-details">
+          <span class="courier-name">{{ row.name }}</span>
+          <span class="courier-subtitle">{{ row.vehicleNumber || row.vehicleType }}</span>
+        </div>
+      </div>
+    </ng-template>
+
+  </app-data-table>
+
+  <!-- Action Modal (Approve / Reject) -->
+  @if (actionModalState().visible && actionModalState().courier) {
+    <div class="modal-backdrop" (click)="closeActionModal()" (keydown.escape)="closeActionModal()" tabindex="0">
+      <div class="action-modal" (click)="$event.stopPropagation()" (keydown.escape)="closeActionModal()" tabindex="-1">
+        @if (actionModalState().action === 'approve') {
+          <div class="modal-header">
+            <h2>Xác nhận duyệt tài xế</h2>
+          </div>
+          <div class="modal-body">
+            <p>Bạn có chắc chắn muốn duyệt tài xế <strong>{{ actionModalState().courier?.name }}</strong>?</p>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" (click)="closeActionModal()">Hủy</button>
+            <button class="btn btn-primary" (click)="confirmAction()">Xác nhận duyệt</button>
+          </div>
+        }
+
+        @if (actionModalState().action === 'reject') {
+          <div class="modal-header">
+            <h2>Từ chối tài xế</h2>
+          </div>
+          <div class="modal-body">
+            <p>Bạn có chắc chắn muốn từ chối tài xế <strong>{{ actionModalState().courier?.name }}</strong>?</p>
+            <div class="form-group">
+              <label for="rejectionReason">Lý do từ chối</label>
+              <textarea
+                id="rejectionReason"
+                [(ngModel)]="rejectionReason"
+                placeholder="Nhập lý do từ chối..."
+                rows="3"
+              ></textarea>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" (click)="closeActionModal()">Hủy</button>
+            <button class="btn btn-danger" (click)="confirmAction()">Xác nhận từ chối</button>
+          </div>
+        }
+      </div>
+    </div>
+  }
+</div>
