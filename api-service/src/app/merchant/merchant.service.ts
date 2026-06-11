@@ -151,6 +151,47 @@ export class MerchantService {
     return { totalApproved, totalPending, totalActive };
   }
 
+  async findB2CMerchants(query: MerchantQueryDto) {
+    const take = query.limit ?? 50;
+    const skip = query.skip ?? 0;
+
+    const where: any = {
+      approvalStatus: 'APPROVED',
+    };
+
+    // Optional search by name or business category
+    if (query.search) {
+      where.OR = [
+        { name: { contains: query.search, mode: 'insensitive' } },
+        { businessCategory: { contains: query.search, mode: 'insensitive' } },
+      ];
+    }
+
+    const [data, total] = await this.prisma.$transaction([
+      this.prisma.merchant.findMany({
+        where,
+        skip,
+        take,
+        orderBy: { createdAt: 'desc' },
+        select: {
+          externalId: true,
+          name: true,
+          logoUrl: true,
+          address: true,
+          averageRating: true,
+          totalReviews: true,
+          businessCategory: true,
+          phone: true,
+          city: true,
+          createdAt: true,
+        },
+      }),
+      this.prisma.merchant.count({ where }),
+    ]);
+
+    return { data, total, page: query.page ?? 1, limit: take };
+  }
+
   async findByExternalId(externalId: string) {
     const merchant = await this.prisma.merchant.findUnique({
       where: { externalId },

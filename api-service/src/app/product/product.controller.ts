@@ -56,6 +56,23 @@ export class ProductController {
     return this.productService.findAllByMerchant(merchantId, paginationDto);
   }
 
+  // ==========================================
+  // B2C Public Endpoints (no auth required)
+  // ==========================================
+
+  @Get('b2c/merchant/:merchantId')
+  findB2CProducts(
+    @Param('merchantId') merchantId: string,
+    @Query() paginationDto: PaginationDto
+  ) {
+    return this.productService.findB2CProducts(merchantId, paginationDto);
+  }
+
+  @Get('b2c/:id')
+  findB2CProduct(@Param('id') externalId: string) {
+    return this.productService.findB2CProduct(externalId);
+  }
+
   @Get(':id')
   findOne(@Param('id') externalId: string) {
     return this.productService.findOne(externalId);

@@ -17,7 +17,9 @@ export class OtpService {
     const expiresAt = new Date(Date.now() + 5 * 60 * 1000); // 5 minutes
 
     // TODO: Here I will integrate with an SMS service to send the OTP in the future
-    console.log(`[OTP-DEBUG] OTP for ${dto.phone}: ${code}`);
+    if (process.env.NODE_ENV !== 'production') {
+      console.log(`[OTP-DEBUG] OTP for ${dto.phone}: ${code}`);
+    }
 
     await this.prisma.otpVerification.create({
       data: {
