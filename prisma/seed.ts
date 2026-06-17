@@ -207,6 +207,44 @@ async function main() {
       },
     },
 
+    // Courier
+    {
+      resource: 'courier',
+      action: 'create',
+      description: {
+        en: 'Register as courier',
+        vi: 'Đăng ký làm tài xế',
+        ko: '배달 기사 등록',
+      },
+    },
+    {
+      resource: 'courier',
+      action: 'read',
+      description: {
+        en: 'View courier details',
+        vi: 'Xem thông tin tài xế',
+        ko: '배달 기사 정보 보기',
+      },
+    },
+    {
+      resource: 'courier',
+      action: 'update',
+      description: {
+        en: 'Update courier info',
+        vi: 'Cập nhật thông tin tài xế',
+        ko: '배달 기사 정보 업데이트',
+      },
+    },
+    {
+      resource: 'courier',
+      action: 'approve',
+      description: {
+        en: 'Approve or reject courier',
+        vi: 'Duyệt hoặc từ chối tài xế',
+        ko: '배달 기사 승인 또는 거절',
+      },
+    },
+
     // System
     {
       resource: 'system',
