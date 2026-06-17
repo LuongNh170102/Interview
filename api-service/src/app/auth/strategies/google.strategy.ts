@@ -8,10 +8,8 @@ import { GoogleProfile } from '../../common/interfaces/auth.interface';
 export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
   constructor(private configService: ConfigService) {
     super({
-      clientID: configService.get<string>('GOOGLE_CLIENT_ID'),
-      clientSecret: configService.get<string>('GOOGLE_CLIENT_SECRET'),
-      // Callback URL is set dynamically by GoogleAuthGuard based on Host header
-      // This placeholder will be overridden at runtime
+      clientID: configService.get<string>('GOOGLE_CLIENT_ID') || process.env.GOOGLE_CLIENT_ID || 'dummy',
+      clientSecret: configService.get<string>('GOOGLE_CLIENT_SECRET') || process.env.GOOGLE_CLIENT_SECRET || 'dummy',
       callbackURL:
         configService.get<string>('FRONTEND_URL') + '/api/auth/google/callback',
       scope: ['email', 'profile'],
