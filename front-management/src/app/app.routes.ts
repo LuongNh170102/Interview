@@ -73,7 +73,7 @@ export const appRoutes: Route[] = [
           import(
             './pages/partners/partners-layout/partners-layout.component'
           ).then((m) => m.PartnersLayoutComponent),
-        canActivate: [withPermissions('agency:read', 'merchant:read')],
+        canActivate: [withPermissions('agency:read', 'merchant:read', 'courier:read')],
         children: [
           {
             path: 'agencies',
@@ -95,6 +95,14 @@ export const appRoutes: Route[] = [
                 (m) => m.MerchantsComponent
               ),
             canActivate: [withPermissions('merchant:read')],
+          },
+          {
+            path: 'couriers',
+            loadComponent: () =>
+              import('./pages/partners/couriers/couriers.component').then(
+                (m) => m.CouriersComponent
+              ),
+            canActivate: [withPermissions('courier:read')],
           },
           {
             path: 'tags',
