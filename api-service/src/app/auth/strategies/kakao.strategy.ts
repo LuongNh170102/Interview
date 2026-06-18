@@ -11,8 +11,8 @@ import {
 export class KakaoStrategy extends PassportStrategy(Strategy, 'kakao') {
   constructor(private configService: ConfigService) {
     super({
-      clientID: configService.get<string>('KAKAO_CLIENT_ID'),
-      clientSecret: configService.get<string>('KAKAO_CLIENT_SECRET'),
+      clientID: configService.get<string>('KAKAO_CLIENT_ID') || process.env.KAKAO_CLIENT_ID || 'dummy',
+      clientSecret: configService.get<string>('KAKAO_CLIENT_SECRET') || process.env.KAKAO_CLIENT_SECRET || 'dummy',
       callbackURL:
         configService.get<string>('FRONTEND_URL') + '/api/auth/kakao/callback',
       scope: ['profile_nickname', 'profile_image'],

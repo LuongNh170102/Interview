@@ -13,6 +13,8 @@ export * from './lib/services/auth.service';
 export * from './lib/services/agency.service';
 export * from './lib/services/category.service';
 export * from './lib/services/merchant.service';
+export * from './lib/services/courier.service';
+export * from './lib/services/product.service';
 // interceptors
 export * from './lib/interceptors/auth.interceptor';
 // pipes

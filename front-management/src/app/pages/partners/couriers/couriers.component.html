@@ -1,0 +1,115 @@
+<div class="flex flex-col gap-4 md:gap-6">
+
+  <!-- Data Table -->
+  <div class="relative mt-4 md:mt-10">
+    <app-data-table
+      [config]="tableConfig"
+      [data]="couriers()"
+      [pagination]="pagination()"
+      [headerConfig]="tableHeaderConfig"
+      [itemCount]="pagination().total"
+      (pageChange)="onPageChange($event)"
+      (sortChange)="onSortChange($event)"
+      (headerSearch)="onHeaderSearch($event)"
+      (headerFilter)="onHeaderFilter($event)"
+      (headerAction)="onHeaderAction($event)"
+    >
+      <!-- Action Menu -->
+      <ng-template appActionMenu let-courier let-closeMenu="closeMenu">
+        <button
+          (click)="onApprove(courier); closeMenu()"
+          class="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-status-success hover:bg-surface-muted transition-colors"
+        >
+          ✓ Duyệt
+        </button>
+        <div class="border-t border-border my-1"></div>
+        <button
+          (click)="openRejectModal(courier); closeMenu()"
+          class="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-status-error hover:bg-surface-muted transition-colors"
+        >
+          ✕ Từ chối
+        </button>
+      </ng-template>
+
+      <!-- Mobile Card Template -->
+      <ng-template appMobileCard let-courier let-isLast="isLast">
+        <div
+          class="bg-surface py-5 px-5"
+          [class.border-b]="!isLast"
+          [class.border-border]="!isLast"
+        >
+          <div class="flex items-start gap-4 mb-4">
+            <div class="w-14 h-14 rounded-full flex items-center justify-center text-xl font-bold bg-avatar-info text-status-info">
+              {{ courier.name?.charAt(0) ?? 'C' }}
+            </div>
+            <div class="flex flex-col flex-1 min-w-0 pt-1">
+              <h3 class="text-xl font-bold text-content-primary truncate">{{ courier.name }}</h3>
+              <span class="text-sm text-content-tertiary">{{ courier.phone }}</span>
+            </div>
+          </div>
+
+          <div class="px-2 flex flex-col gap-2">
+            <div class="flex items-center gap-2">
+              <span class="text-content-tertiary uppercase w-[6.25rem] shrink-0">Email</span>
+              <span class="text-content-primary truncate">{{ courier.email }}</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="text-content-tertiary uppercase w-[6.25rem] shrink-0">Loại xe</span>
+              <span class="text-content-primary">{{ courier.vehicleType }}</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="text-content-tertiary uppercase w-[6.25rem] shrink-0">Ngày đăng ký</span>
+              <span class="text-content-primary">{{ courier.createdAt | date:'yyyy/MM/dd' }}</span>
+            </div>
+
+            <div class="flex items-center gap-2 mt-2">
+              <button
+                (click)="onApprove(courier)"
+                class="px-3 py-1.5 text-sm bg-status-success text-white rounded-lg"
+              >
+                Duyệt
+              </button>
+              <button
+                (click)="openRejectModal(courier)"
+                class="px-3 py-1.5 text-sm bg-status-error text-white rounded-lg"
+              >
+                Từ chối
+              </button>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </app-data-table>
+  </div>
+
+  <!-- Reject Modal -->
+  @if (showRejectModal()) {
+  <div class="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+    <div class="bg-surface rounded-xl shadow-xl w-full max-w-md mx-4 p-6">
+      <h2 class="text-xl font-bold text-content-primary mb-4">Từ chối tài xế</h2>
+      <p class="text-content-secondary mb-4">Vui lòng nhập lý do từ chối:</p>
+      <textarea
+        [(ngModel)]="rejectReason"
+        rows="4"
+        placeholder="Nhập lý do từ chối..."
+        class="w-full border border-border rounded-lg px-3 py-2 text-sm text-content-primary bg-surface focus:outline-none focus:ring-2 focus:ring-primary resize-none"
+      ></textarea>
+      <div class="flex justify-end gap-3 mt-4">
+        <button
+          (click)="closeRejectModal()"
+          class="px-4 py-2 text-sm border border-border rounded-lg text-content-primary hover:bg-surface-muted transition-colors"
+        >
+          Hủy
+        </button>
+        <button
+          (click)="confirmReject()"
+          [disabled]="!rejectReason().trim()"
+          class="px-4 py-2 text-sm bg-status-error text-white rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:opacity-90 transition-opacity"
+        >
+          Xác nhận từ chối
+        </button>
+      </div>
+    </div>
+  </div>
+  }
+</div>

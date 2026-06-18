@@ -69,6 +69,11 @@ export const ADMIN_NAV_CONFIG: readonly NavItem[] = [
         link: '/partners/tags',
         permission: { resource: 'merchant', action: 'read' },
       },
+      {
+        labelKey: 'admin.nav.couriers',
+        link: '/partners/couriers',
+        permission: { resource: 'courier', action: 'read' },
+      },
     ],
   },
   {
@@ -90,6 +95,11 @@ export const ADMIN_NAV_CONFIG: readonly NavItem[] = [
         labelKey: 'admin.nav.menu',
         link: '/products/menu',
         permission: { resource: 'product', action: 'read' },
+      },
+      {
+        labelKey: 'admin.nav.productManagement',
+        link: '/products/product-management',
+        permission: { resource: 'product', action: 'create' },
       },
     ],
   },
@@ -182,5 +192,10 @@ export const PARTNERS_TAB_CONFIG: readonly NavItem[] = [
     labelKey: 'admin.partners.tabs.merchants',
     link: '/partners/merchants',
     permission: { resource: 'merchant', action: 'read' },
+  },
+  {
+    labelKey: 'admin.partners.tabs.couriers',
+    link: '/partners/couriers',
+    permission: { resource: 'courier', action: 'read' },
   },
 ] as const;

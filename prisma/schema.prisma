@@ -417,6 +417,7 @@ model Product {
   
   createdAt   DateTime @default(now()) @map("created_at")
   updatedAt   DateTime? @updatedAt @map("updated_at")
+  isDeleted   Boolean @default(false) @map("is_deleted")
 
   // Relations
   merchant          Merchant          @relation(fields: [merchantId], references: [id])
@@ -479,18 +480,40 @@ model CartItem {
   @@map("cart_items")
 }
 
+enum CourierStatus {
+  AVAILABLE
+  BUSY
+  OFFLINE
+  ONLINE
+}
+
+enum VehicleType {
+  BIKE
+  MOTORBIKE
+  CAR
+}
+
 model Courier {
   id              Int      @id @default(autoincrement())
+  externalId      String   @unique @default(uuid()) @map("external_id") @db.Uuid
   userId          Int      @unique @map("user_id")
   name            String?
-  phone           String?
-  status          String?  // 'available' | 'busy' | 'offline'
-  vehicleType     String?  @map("vehicle_type") // 'bike' | 'motorbike' | 'car'
+  phone           String?  @unique
+  email           String?  @unique
+  status          CourierStatus @default(OFFLINE)
+  vehicleType     VehicleType?  @map("vehicle_type")
   currentLocation Json?    @map("current_location")
+
+  approvalStatus    ApprovalStatus    @default(PENDING) @map("approval_status")
+  approvedAt        DateTime?         @map("approved_at")
+  approvedBy        Int?              @map("approved_by")
+  rejectedAt        DateTime?         @map("rejected_at")
+  rejectedBy        Int?              @map("rejected_by")
+  rejectionReason   String?           @map("rejection_reason") @db.Text
+
   createdAt       DateTime @default(now()) @map("created_at")
   updatedAt       DateTime? @updatedAt @map("updated_at")
 
-  // Relations
   user   User    @relation(fields: [userId], references: [id])
   orders Order[]
 
