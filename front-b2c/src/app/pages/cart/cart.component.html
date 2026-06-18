@@ -1,0 +1,44 @@
+<div class="min-h-screen bg-gray-50">
+  <header class="bg-white shadow-sm px-4 py-3 flex items-center gap-3">
+    <button (click)="goBack()" class="text-gray-600 hover:text-gray-800">← Tiếp tục mua</button>
+    <h1 class="text-xl font-bold">Giỏ hàng</h1>
+  </header>
+
+  <main class="max-w-2xl mx-auto px-4 py-6">
+    @if (items().length === 0) {
+      <div class="text-center py-20">
+        <p class="text-6xl mb-4">🛒</p>
+        <p class="text-gray-500">Giỏ hàng trống</p>
+        <button (click)="goBack()" class="mt-4 px-6 py-2 bg-primary text-white rounded-lg">Mua sắm ngay</button>
+      </div>
+    } @else {
+      <div class="flex flex-col gap-3">
+        @for (item of items(); track item.product.externalId) {
+          <div class="bg-white rounded-xl shadow-sm p-4 flex items-center gap-4">
+            <div class="w-16 h-16 bg-gray-100 rounded-lg flex items-center justify-center text-2xl">🛍️</div>
+            <div class="flex-1">
+              <h3 class="font-semibold text-gray-800">{{ getName(item) }}</h3>
+              <p class="text-primary font-bold">{{ item.product.price | number }} VND</p>
+            </div>
+            <div class="flex items-center gap-2">
+              <button (click)="decrease(item.product.externalId, item.quantity)" class="w-8 h-8 border rounded-lg flex items-center justify-center hover:bg-gray-50">-</button>
+              <span class="w-8 text-center font-semibold">{{ item.quantity }}</span>
+              <button (click)="increase(item.product.externalId, item.quantity)" class="w-8 h-8 border rounded-lg flex items-center justify-center hover:bg-gray-50">+</button>
+            </div>
+            <button (click)="remove(item.product.externalId)" class="text-red-500 hover:text-red-700 ml-2">✕</button>
+          </div>
+        }
+      </div>
+
+      <div class="mt-6 bg-white rounded-xl shadow-sm p-4">
+        <div class="flex justify-between items-center mb-4">
+          <span class="text-gray-600">Tổng cộng:</span>
+          <span class="text-2xl font-bold text-primary">{{ total() | number }} VND</span>
+        </div>
+        <button (click)="placeOrder()" class="w-full py-3 bg-primary text-white rounded-xl font-semibold hover:opacity-90 transition-opacity">
+          Đặt hàng
+        </button>
+      </div>
+    }
+  </main>
+</div>

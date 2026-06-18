@@ -1,0 +1,87 @@
+<div class="flex flex-col gap-4 md:gap-6">
+  <div class="relative mt-4 md:mt-10">
+    <app-data-table
+      [config]="tableConfig"
+      [data]="products()"
+      [pagination]="pagination()"
+      [headerConfig]="tableHeaderConfig"
+      [itemCount]="pagination().total"
+      (pageChange)="onPageChange($event)"
+      (sortChange)="onSortChange($event)"
+      (headerSearch)="onHeaderSearch($event)"
+      (headerFilter)="onHeaderFilter($event)"
+      (headerAction)="onHeaderAction($event)"
+    >
+      <ng-template appActionMenu let-product let-closeMenu="closeMenu">
+        <button
+          (click)="onMenuAction('edit', product); closeMenu()"
+          class="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-content-primary hover:bg-surface-muted transition-colors"
+        >
+          ✏️ Chỉnh sửa
+        </button>
+        <div class="border-t border-border my-1"></div>
+        <button
+          (click)="onMenuAction('delete', product); closeMenu()"
+          class="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-status-error hover:bg-surface-muted transition-colors"
+        >
+          🗑️ Xóa
+        </button>
+      </ng-template>
+
+      <ng-template appMobileCard let-product let-isLast="isLast">
+        <div class="bg-surface py-5 px-5" [class.border-b]="!isLast" [class.border-border]="!isLast">
+          <div class="flex items-start justify-between mb-3">
+            <h3 class="text-lg font-bold text-content-primary">{{ product.name }}</h3>
+            <div class="flex gap-2">
+              <button (click)="onMenuAction('edit', product)" class="px-3 py-1 text-xs border border-border rounded-lg">Sửa</button>
+              <button (click)="onMenuAction('delete', product)" class="px-3 py-1 text-xs bg-status-error text-white rounded-lg">Xóa</button>
+            </div>
+          </div>
+          <div class="flex flex-col gap-1 text-sm">
+            <span class="text-content-secondary">Giá: {{ product.price }}</span>
+            <span class="text-content-secondary">SKU: {{ product.sku }}</span>
+            <span class="text-content-secondary">Tồn kho: {{ product.stock }}</span>
+          </div>
+        </div>
+      </ng-template>
+    </app-data-table>
+  </div>
+
+  <!-- Add/Edit Modal -->
+  @if (showFormModal()) {
+  <div class="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+    <div class="bg-surface rounded-xl shadow-xl w-full max-w-lg mx-4 p-6">
+      <h2 class="text-xl font-bold text-content-primary mb-4">
+        {{ isEditing() ? 'Chỉnh sửa sản phẩm' : 'Thêm sản phẩm mới' }}
+      </h2>
+      <div class="flex flex-col gap-3">
+        <input [(ngModel)]="formName" placeholder="Tên sản phẩm *" class="border border-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary" />
+        <input [(ngModel)]="formDescription" placeholder="Mô tả" class="border border-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary" />
+        <input [(ngModel)]="formPrice" type="number" placeholder="Giá" class="border border-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary" />
+        <input [(ngModel)]="formSku" placeholder="SKU" class="border border-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary" />
+        <input [(ngModel)]="formStock" type="number" placeholder="Tồn kho" class="border border-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary" />
+      </div>
+      <div class="flex justify-end gap-3 mt-4">
+        <button (click)="closeFormModal()" class="px-4 py-2 text-sm border border-border rounded-lg hover:bg-surface-muted transition-colors">Hủy</button>
+        <button (click)="submitForm()" [disabled]="!formName().trim()" class="px-4 py-2 text-sm bg-primary text-white rounded-lg disabled:opacity-50 hover:opacity-90 transition-opacity">
+          {{ isEditing() ? 'Cập nhật' : 'Thêm mới' }}
+        </button>
+      </div>
+    </div>
+  </div>
+  }
+
+  <!-- Delete Modal -->
+  @if (showDeleteModal()) {
+  <div class="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+    <div class="bg-surface rounded-xl shadow-xl w-full max-w-sm mx-4 p-6">
+      <h2 class="text-xl font-bold text-content-primary mb-2">Xác nhận xóa</h2>
+      <p class="text-content-secondary mb-4">Bạn có chắc muốn xóa sản phẩm này không?</p>
+      <div class="flex justify-end gap-3">
+        <button (click)="closeDeleteModal()" class="px-4 py-2 text-sm border border-border rounded-lg hover:bg-surface-muted transition-colors">Hủy</button>
+        <button (click)="confirmDelete()" class="px-4 py-2 text-sm bg-status-error text-white rounded-lg hover:opacity-90 transition-opacity">Xóa</button>
+      </div>
+    </div>
+  </div>
+  }
+</div>

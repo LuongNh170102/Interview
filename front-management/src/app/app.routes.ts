@@ -145,6 +145,14 @@ export const appRoutes: Route[] = [
             canActivate: [withPermissions('product:read')],
           },
           {
+            path: 'product-management',
+            loadComponent: () =>
+              import('./pages/products/product-management/product-management.component').then(
+                (m) => m.ProductManagementComponent
+              ),
+            canActivate: [withPermissions('product:create')],
+          },
+          {
             path: '',
             redirectTo: 'categories',
             pathMatch: 'full',

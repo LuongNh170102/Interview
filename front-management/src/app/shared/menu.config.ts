@@ -96,6 +96,11 @@ export const ADMIN_NAV_CONFIG: readonly NavItem[] = [
         link: '/products/menu',
         permission: { resource: 'product', action: 'read' },
       },
+      {
+        labelKey: 'admin.nav.productManagement',
+        link: '/products/product-management',
+        permission: { resource: 'product', action: 'create' },
+      },
     ],
   },
   {

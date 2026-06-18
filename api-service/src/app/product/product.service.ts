@@ -72,9 +72,8 @@ export class ProductService {
 
   async findAll() {
     return this.prisma.product.findMany({
-      include: {
-        merchant: true,
-      },
+      where: { isDeleted: false },
+      include: { merchant: true },
     });
   }
 
@@ -95,14 +94,14 @@ export class ProductService {
 
     const [data, total] = await Promise.all([
       this.prisma.product.findMany({
-        where: { merchantId: merchant.id },
+        where: { merchantId: merchant.id, isDeleted: false },
         skip,
         take: limit,
         orderBy: { createdAt: 'desc' },
         include: {},
       }),
       this.prisma.product.count({
-        where: { merchantId: merchant.id },
+        where: { merchantId: merchant.id, isDeleted: false },
       }),
     ]);
 
@@ -157,8 +156,9 @@ export class ProductService {
 
   async remove(externalId: string) {
     await this.findOne(externalId);
-    return this.prisma.product.delete({
+    return this.prisma.product.update({
       where: { externalId },
+      data: { isDeleted: true },
     });
   }
 }
