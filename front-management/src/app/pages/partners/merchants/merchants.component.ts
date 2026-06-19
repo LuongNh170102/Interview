@@ -298,11 +298,22 @@ export class MerchantsComponent implements OnInit {
     return value.toLocaleString('vi-VN');
   }
 
+  // Active merchant being edited
+  readonly editingMerchant = signal<Merchant | null>(null);
+
   // Event handlers
   onMenuAction(action: string, merchant: Merchant): void {
     console.log(`Menu action: ${action}`, merchant);
     this.activeMobileMenuId.set(null);
-    // TODO: Handle menu actions - modify, activate/deactivate, delete
+    
+    if (action === 'edit') {
+      this.editingMerchant.set(merchant);
+      this.isAddMerchantPanelOpen.set(true);
+    } else if (action === 'delete') {
+      this.onDeleteMerchant(merchant);
+    } else if (action === 'activate' || action === 'deactivate') {
+      this.onToggleOperationalStatus(merchant, action);
+    }
   }
 
   /**
@@ -334,58 +345,133 @@ export class MerchantsComponent implements OnInit {
   }
 
   onAddMerchant(): void {
+    this.editingMerchant.set(null);
     this.isAddMerchantPanelOpen.set(true);
   }
 
   /** Close add merchant panel */
   closeAddMerchantPanel(): void {
     this.isAddMerchantPanelOpen.set(false);
+    this.editingMerchant.set(null);
   }
 
   /** Reference to the add merchant form component */
   private readonly addMerchantForm = viewChild(AddMerchantFormComponent);
 
-  /** Handle add merchant form submission */
-  onAddMerchantSubmit(formData: AdminCreateMerchantRequest): void {
-    this.merchantService
-      .adminCreate(formData)
+  /** Handle delete merchant action */
+  private onDeleteMerchant(merchant: Merchant): void {
+    const title = this.translationService.translate('common.confirm.deleteTitle') || 'Xác nhận xóa';
+    const message = `Bạn có chắc chắn muốn xóa cửa hàng "${merchant.name}"?`;
+    this.modalService.showConfirmation(title, message, () => {
+      this.isLoading.set(true);
+      this.merchantService.delete(merchant.id)
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe({
+          next: () => {
+            this.modalService.showSuccess(
+              this.translationService.translate('common.status.success'),
+              'Xóa cửa hàng thành công'
+            );
+            this.loadMerchants();
+          },
+          error: (error) => {
+            console.error('Failed to delete merchant:', error);
+            this.isLoading.set(false);
+            this.modalService.showError(
+              this.translationService.translate('common.status.error'),
+              error?.error?.message || 'Xóa cửa hàng thất bại'
+            );
+          }
+        });
+    });
+  }
+
+  /** Handle toggle operational status */
+  private onToggleOperationalStatus(merchant: Merchant, action: string): void {
+    const nextStatus = action === 'activate' ? 'ACTIVE' : 'INACTIVE';
+    this.isLoading.set(true);
+    this.merchantService.update(merchant.id, { operationalStatus: nextStatus })
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: () => {
-          // Reset loading state first
-          this.addMerchantForm()?.isLoading.set(false);
-
-          // Show success modal
           this.modalService.showSuccess(
             this.translationService.translate('common.status.success'),
-            this.translationService.translate(
-              'admin.partners.merchants.createSuccess'
-            )
+            'Cập nhật trạng thái hoạt động thành công'
           );
-
-          // Close panel, reset form, reload list
-          this.closeAddMerchantPanel();
-          this.addMerchantForm()?.resetForm();
           this.loadMerchants();
         },
         error: (error) => {
-          console.error('Failed to create merchant:', error);
-
-          // Reset loading state
-          this.addMerchantForm()?.isLoading.set(false);
-
-          // Show error modal with error details
-          const errorMessage =
-            error?.error?.message ||
-            this.translationService.translate(
-              'admin.partners.merchants.createError'
-            );
+          console.error('Failed to update operational status:', error);
+          this.isLoading.set(false);
           this.modalService.showError(
             this.translationService.translate('common.status.error'),
-            errorMessage
+            error?.error?.message || 'Cập nhật trạng thái thất bại'
           );
-        },
+        }
       });
+  }
+
+  /** Handle add/edit merchant form submission */
+  onAddMerchantSubmit(formData: AdminCreateMerchantRequest): void {
+    const editId = this.editingMerchant()?.id;
+    if (editId) {
+      // Edit mode
+      this.merchantService
+        .update(editId, formData)
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe({
+          next: () => {
+            this.addMerchantForm()?.isLoading.set(false);
+            this.modalService.showSuccess(
+              this.translationService.translate('common.status.success'),
+              'Cập nhật cửa hàng thành công'
+            );
+            this.closeAddMerchantPanel();
+            this.addMerchantForm()?.resetForm();
+            this.loadMerchants();
+          },
+          error: (error) => {
+            console.error('Failed to update merchant:', error);
+            this.addMerchantForm()?.isLoading.set(false);
+            this.modalService.showError(
+              this.translationService.translate('common.status.error'),
+              error?.error?.message || 'Cập nhật cửa hàng thất bại'
+            );
+          }
+        });
+    } else {
+      // Create mode
+      this.merchantService
+        .adminCreate(formData)
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe({
+          next: () => {
+            this.addMerchantForm()?.isLoading.set(false);
+            this.modalService.showSuccess(
+              this.translationService.translate('common.status.success'),
+              this.translationService.translate(
+                'admin.partners.merchants.createSuccess'
+              )
+            );
+            this.closeAddMerchantPanel();
+            this.addMerchantForm()?.resetForm();
+            this.loadMerchants();
+          },
+          error: (error) => {
+            console.error('Failed to create merchant:', error);
+            this.addMerchantForm()?.isLoading.set(false);
+            const errorMessage =
+              error?.error?.message ||
+              this.translationService.translate(
+                'admin.partners.merchants.createError'
+              );
+            this.modalService.showError(
+              this.translationService.translate('common.status.error'),
+              errorMessage
+            );
+          },
+        });
+    }
   }
 
   // Header event handlers

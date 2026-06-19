@@ -1,6 +1,6 @@
 import {
-  ApprovalStatusValue,
-  OperationalStatusValue,
+  ApprovalStatus,
+  OperationalStatus,
 } from '../constants/status.constant';
 
 export interface CreateAgencyRequest {
@@ -35,9 +35,6 @@ export interface AgencyResponse {
   createdAt: string | Date;
   updatedAt?: string | Date | null;
 }
-
-export type ApprovalStatus = ApprovalStatusValue;
-export type OperationalStatus = OperationalStatusValue;
 
 export interface AgencyStatistics {
   totalApproved: number;

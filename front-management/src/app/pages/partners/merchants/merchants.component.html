@@ -476,6 +476,7 @@
   (closePanel)="closeAddMerchantPanel()"
 >
   <app-add-merchant-form
+    [merchant]="editingMerchant()"
     (submitForm)="onAddMerchantSubmit($event)"
     (cancel)="closeAddMerchantPanel()"
   />

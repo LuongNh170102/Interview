@@ -18,6 +18,7 @@ export const APPROVAL_STATUS = {
 
 export type ApprovalStatusValue =
   (typeof APPROVAL_STATUS)[keyof typeof APPROVAL_STATUS];
+export type ApprovalStatus = ApprovalStatusValue;
 
 export const OPERATIONAL_STATUS = {
   ACTIVE: 'ACTIVE',
@@ -28,3 +29,4 @@ export const OPERATIONAL_STATUS = {
 
 export type OperationalStatusValue =
   (typeof OPERATIONAL_STATUS)[keyof typeof OPERATIONAL_STATUS];
+export type OperationalStatus = OperationalStatusValue;

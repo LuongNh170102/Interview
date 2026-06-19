@@ -49,6 +49,25 @@ export class MerchantService {
     return this.otpService.verifyOtp(dto, MERCHANT_REGISTRATION_OTP);
   }
 
+  async findPublic() {
+    return this.prisma.merchant.findMany({
+      where: {
+        approvalStatus: MERCHANT_STATUS.APPROVED as ApprovalStatus,
+        operationalStatus: MERCHANT_OPERATIONAL_STATUS.ACTIVE as OperationalStatus,
+      },
+      select: {
+        externalId: true,
+        name: true,
+        address: true,
+        city: true,
+        logoUrl: true,
+        averageRating: true,
+        totalReviews: true,
+        businessCategory: true,
+      },
+    });
+  }
+
   async findAll(
     query: MerchantQueryDto
   ): Promise<MerchantListResponse<MerchantEntity>> {
@@ -200,11 +219,20 @@ export class MerchantService {
         });
 
         if (existingMerchantRole) {
-          // Update existing merchant role with merchantId if missing
-          await this.prisma.userRole.update({
-            where: { id: existingMerchantRole.id },
-            data: { merchantId: merchant.id },
-          });
+          if (existingMerchantRole.merchantId !== null && existingMerchantRole.merchantId !== merchant.id) {
+            await this.prisma.userRole.create({
+              data: {
+                userId: merchant.ownerId,
+                roleId: merchantOwnerRole.id,
+                merchantId: merchant.id,
+              },
+            });
+          } else if (existingMerchantRole.merchantId === null) {
+            await this.prisma.userRole.update({
+              where: { id: existingMerchantRole.id },
+              data: { merchantId: merchant.id },
+            });
+          }
         } else {
           // 2. If not, check if user has CUSTOMER role to switch
           const existingCustomerRole = customerRole
@@ -366,5 +394,48 @@ export class MerchantService {
     // await this.emailService.sendWelcomeEmail(dto.email, tempPassword);
 
     return result;
+  }
+
+  async update(externalId: string, dto: any) {
+    const merchant = await this.prisma.merchant.findUnique({
+      where: { externalId },
+    });
+
+    if (!merchant) {
+      throw new NotFoundException(
+        RESOURCE_MESSAGES.NOT_FOUND(RESOURCE_TARGETS.MERCHANT)
+      );
+    }
+
+    return this.prisma.merchant.update({
+      where: { externalId },
+      data: {
+        name: dto.name,
+        phone: dto.phone,
+        address: dto.address,
+        city: dto.city,
+        contactName: dto.contactName,
+        businessType: dto.businessType,
+        businessCategory: dto.businessCategory,
+        operationalStatus: dto.operationalStatus,
+        logoUrl: dto.logoUrl,
+      },
+    });
+  }
+
+  async remove(externalId: string) {
+    const merchant = await this.prisma.merchant.findUnique({
+      where: { externalId },
+    });
+
+    if (!merchant) {
+      throw new NotFoundException(
+        RESOURCE_MESSAGES.NOT_FOUND(RESOURCE_TARGETS.MERCHANT)
+      );
+    }
+
+    return this.prisma.merchant.delete({
+      where: { externalId },
+    });
   }
 }

@@ -1,0 +1,13 @@
+export enum COURIER_APPROVAL_STATUS {
+  PENDING = 'PENDING',
+  APPROVED = 'APPROVED',
+  REJECTED = 'REJECTED',
+}
+
+export enum COURIER_OPERATIONAL_STATUS {
+  AVAILABLE = 'available',
+  BUSY = 'busy',
+  OFFLINE = 'offline',
+}
+
+export const COURIER_REGISTRATION_OTP = 'COURIER_REGISTRATION_OTP' as const;

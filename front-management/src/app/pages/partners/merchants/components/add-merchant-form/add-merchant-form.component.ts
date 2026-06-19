@@ -3,6 +3,7 @@ import {
   Component,
   DestroyRef,
   inject,
+  Input,
   OnInit,
   output,
   signal,
@@ -46,6 +47,38 @@ export class AddMerchantFormComponent implements OnInit {
   private readonly destroyRef = inject(DestroyRef);
   private readonly agencyService = inject(AgencyService);
   private readonly categoryService = inject(CategoryService);
+
+  readonly isEditMode = signal(false);
+
+  @Input() set merchant(val: any) {
+    if (val) {
+      this.isEditMode.set(true);
+      this.form.patchValue({
+        name: val.name,
+        phone: val.phone,
+        email: val.owner?.email || val.email || '',
+        address: val.address,
+        city: val.city,
+        operationalStatus: val.operationalStatus,
+        contactName: val.contactName,
+        businessType: val.businessType,
+        businessCategory: val.businessCategory,
+        hasBusinessLicense: val.hasBusinessLicense || false,
+        referralSource: val.referralSource || '',
+        socialLinks: val.metadata?.socialLinks || '',
+        agencyId: val.agency?.externalId || '',
+        brandId: val.brand?.externalId || '',
+        logoUrl: val.logoUrl || '',
+      });
+      this.form.get('email')?.disable();
+      if (val.logoUrl) {
+        this.logoPreview.set(val.logoUrl);
+      }
+    } else {
+      this.isEditMode.set(false);
+      this.form.get('email')?.enable();
+    }
+  }
 
   /** Agency options for CustomSelectComponent */
   readonly agencyOptions = signal<SelectOption[]>([]);
@@ -207,9 +240,10 @@ export class AddMerchantFormComponent implements OnInit {
     }
 
     this.isLoading.set(true);
+    const rawValue = this.form.getRawValue();
     const formData = {
-      ...this.form.value,
-      phone: cleanPhoneNumber(this.form.value.phone ?? ''),
+      ...rawValue,
+      phone: cleanPhoneNumber(rawValue.phone ?? ''),
     } as AdminCreateMerchantRequest;
     this.submitForm.emit(formData);
   }

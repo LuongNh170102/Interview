@@ -1,0 +1,379 @@
+<div class="min-h-screen bg-slate-50 flex flex-col text-slate-800 antialiased">
+  <!-- Top Navigation Header -->
+  <header class="sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-slate-100 px-4 md:px-8 py-4 flex items-center justify-between shadow-sm">
+    <div class="flex items-center gap-3 cursor-pointer" (click)="deselectStore()">
+      <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-orange-500 to-amber-500 flex items-center justify-center shadow-md shadow-orange-500/20">
+        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+        </svg>
+      </div>
+      <div>
+        <h1 class="text-xl font-black tracking-tight bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent">VHan Delivery</h1>
+        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-none">B2C Customer portal</p>
+      </div>
+    </div>
+
+    <!-- Search input in header (Desktop) -->
+    <div class="hidden md:flex items-center relative max-w-md w-full mx-8">
+      <span class="absolute left-4 text-slate-400">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+      </span>
+      <input
+        type="text"
+        [(ngModel)]="searchQuery"
+        [placeholder]="selectedStore() ? 'Search products in store...' : 'Search restaurants, cuisines, stores...'"
+        class="w-full bg-slate-100 text-slate-900 pl-11 pr-4 py-2.5 rounded-full border-none focus:ring-2 focus:ring-orange-500/20 focus:bg-white transition-all text-sm outline-none"
+      />
+    </div>
+
+    <!-- Right Controls: Cart toggle -->
+    <div class="flex items-center gap-4">
+      <button
+        (click)="toggleCart()"
+        class="relative flex items-center gap-2 px-4 py-2 rounded-full bg-orange-50 hover:bg-orange-100 text-orange-600 transition-colors font-semibold text-sm cursor-pointer"
+      >
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+        </svg>
+        <span>Cart</span>
+        <span class="bg-orange-600 text-white font-bold text-xs rounded-full px-2 py-0.5 min-w-[20px] text-center" *ngIf="cartItemCount() > 0">
+          {{ cartItemCount() }}
+        </span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <div *ngIf="!selectedStore()" class="relative overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-orange-950 text-white py-12 md:py-20 px-6 md:px-12 text-center">
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(243,91,42,0.15),rgba(255,255,255,0))]"></div>
+    <div class="max-w-3xl mx-auto relative z-10 space-y-6">
+      <span class="px-3 py-1 text-xs font-bold bg-orange-500/20 text-orange-400 border border-orange-500/30 rounded-full tracking-wider uppercase">⚡ Instant delivery</span>
+      <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight">Your favorite meals & goods, <br><span class="text-orange-500">delivered fast.</span></h2>
+      <p class="text-slate-400 text-sm md:text-base max-w-lg mx-auto">Order from the finest local stores, supermarkets, and pharmacies at competitive B2C rates.</p>
+      
+      <!-- Mobile Search bar -->
+      <div class="md:hidden flex items-center relative max-w-md w-full mx-auto">
+        <span class="absolute left-4 text-slate-400">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+        </span>
+        <input
+          type="text"
+          [(ngModel)]="searchQuery"
+          placeholder="Search restaurants, cuisines, stores..."
+          class="w-full bg-white text-slate-900 pl-11 pr-4 py-3 rounded-full border-none shadow-md text-sm outline-none"
+        />
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content Wrapper -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 md:px-8 py-8">
+    <!-- loading spinner -->
+    <div class="flex flex-col items-center justify-center py-20" *ngIf="isLoading()">
+      <div class="w-12 h-12 rounded-full border-4 border-orange-500/25 border-t-orange-500 animate-spin"></div>
+      <p class="text-slate-500 text-sm mt-4 font-medium">Fetching stores & products...</p>
+    </div>
+
+    <div *ngIf="!isLoading()">
+      <!-- VIEW: STORES LIST -->
+      <div *ngIf="!selectedStore()">
+        <div class="flex items-center justify-between mb-6">
+          <div>
+            <h3 class="text-2xl font-bold tracking-tight text-slate-900">Featured Stores</h3>
+            <p class="text-xs text-slate-500">Active and approved merchant partners</p>
+          </div>
+          <span class="text-sm font-semibold text-slate-500">{{ filteredStores().length }} stores found</span>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div
+            *ngFor="let store of filteredStores()"
+            (click)="selectStore(store)"
+            class="group bg-white border border-slate-100 hover:border-orange-500/20 rounded-2xl p-5 hover:shadow-xl hover:shadow-orange-500/5 transition-all duration-300 cursor-pointer flex flex-col justify-between"
+          >
+            <div>
+              <div class="flex items-start gap-4">
+                <!-- Logo -->
+                <div class="w-16 h-16 rounded-2xl bg-orange-100 text-orange-600 flex items-center justify-center font-bold text-xl overflow-hidden shrink-0 border border-slate-100">
+                  <img *ngIf="store.logoUrl" [src]="store.logoUrl" alt="" class="w-full h-full object-cover" />
+                  <span *ngIf="!store.logoUrl">{{ store.name.substring(0, 2).toUpperCase() }}</span>
+                </div>
+                <div class="space-y-1">
+                  <h4 class="font-bold text-slate-900 group-hover:text-orange-600 transition-colors line-clamp-1 text-lg">{{ store.name }}</h4>
+                  <div class="flex items-center gap-1 text-amber-500 text-sm">
+                    <svg class="w-4 h-4 fill-amber-500" viewBox="0 0 20 20">
+                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                    <span class="font-bold text-slate-700">{{ store.averageRating ? store.averageRating.toFixed(1) : '4.8' }}</span>
+                    <span class="text-slate-400 text-xs font-normal">({{ store.totalReviews || 12 }}+ reviews)</span>
+                  </div>
+                  <span class="inline-block px-2.5 py-0.5 rounded-full text-xs font-semibold bg-slate-100 text-slate-600 uppercase tracking-wider">
+                    {{ store.businessCategory || 'Grocery' }}
+                  </span>
+                </div>
+              </div>
+
+              <!-- Address -->
+              <p class="text-xs text-slate-500 mt-4 line-clamp-2">
+                <svg class="w-3.5 h-3.5 inline mr-1 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+                {{ store.address || 'Address info' }}
+              </p>
+            </div>
+
+            <!-- Footer Action -->
+            <div class="mt-5 pt-4 border-t border-slate-100 flex items-center justify-between text-sm">
+              <span class="text-emerald-600 font-bold flex items-center gap-1">
+                <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-ping"></span> Open
+              </span>
+              <span class="text-orange-600 group-hover:translate-x-1 transition-transform font-bold flex items-center gap-1">
+                Browse products
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="filteredStores().length === 0" class="text-center py-20 bg-white border border-slate-100 rounded-2xl max-w-md mx-auto mt-6">
+          <p class="text-slate-400 text-lg font-semibold">No stores matching search criteria.</p>
+          <button (click)="searchQuery.set('')" class="mt-4 px-4 py-2 bg-orange-600 text-white rounded-full text-xs font-bold">Clear search</button>
+        </div>
+      </div>
+
+      <!-- VIEW: STORE PRODUCT BROWSING -->
+      <div *ngIf="selectedStore()">
+        <!-- Breadcrumb & Banner -->
+        <button (click)="deselectStore()" class="flex items-center gap-2 text-slate-500 hover:text-orange-600 text-sm font-semibold mb-6 transition-colors">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+          </svg>
+          Back to all stores
+        </button>
+
+        <div class="bg-gradient-to-r from-orange-500 to-amber-500 rounded-3xl p-6 md:p-8 text-white flex flex-col md:flex-row justify-between items-start md:items-center gap-6 shadow-xl shadow-orange-500/10 mb-8">
+          <div class="flex items-center gap-5">
+            <div class="w-20 h-20 bg-white/10 rounded-2xl flex items-center justify-center text-3xl font-extrabold border border-white/20 overflow-hidden shadow-inner">
+              <img *ngIf="selectedStore().logoUrl" [src]="selectedStore().logoUrl" alt="" class="w-full h-full object-cover" />
+              <span *ngIf="!selectedStore().logoUrl">{{ selectedStore().name.substring(0,2).toUpperCase() }}</span>
+            </div>
+            <div class="space-y-1">
+              <h3 class="text-2xl md:text-3xl font-black tracking-tight">{{ selectedStore().name }}</h3>
+              <p class="text-orange-100 text-xs md:text-sm font-semibold">
+                {{ selectedStore().businessCategory || 'Grocery' }} • {{ selectedStore().address }}
+              </p>
+            </div>
+          </div>
+          <div class="flex items-center gap-6 bg-white/10 backdrop-blur px-5 py-3 rounded-2xl border border-white/20">
+            <div class="text-center">
+              <span class="block text-xl font-bold">4.8</span>
+              <span class="text-[10px] uppercase font-bold text-orange-200 tracking-wide">Rating</span>
+            </div>
+            <div class="w-px h-8 bg-white/20"></div>
+            <div class="text-center">
+              <span class="block text-xl font-bold">15-30m</span>
+              <span class="text-[10px] uppercase font-bold text-orange-200 tracking-wide">Delivery</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Store Products list -->
+        <h4 class="text-xl font-bold text-slate-900 mb-6">Menu & Products</h4>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" *ngIf="products().length > 0">
+          <div
+            *ngFor="let product of products()"
+            class="bg-white border border-slate-100 rounded-2xl p-4 flex gap-4 hover:shadow-lg transition-all duration-300 group"
+          >
+            <!-- Product image -->
+            <div class="w-24 h-24 rounded-xl bg-slate-100 flex items-center justify-center text-slate-400 overflow-hidden shrink-0 border border-slate-100">
+              <img *ngIf="product.thumbnail" [src]="product.thumbnail" alt="" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+              <svg *ngIf="!product.thumbnail" class="w-8 h-8 opacity-45" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+            </div>
+
+            <!-- Product Details -->
+            <div class="flex-1 flex flex-col justify-between min-w-0">
+              <div>
+                <h5 class="font-bold text-slate-900 group-hover:text-orange-600 transition-colors line-clamp-1 leading-snug">{{ product.displayName }}</h5>
+                <p class="text-xs text-slate-500 mt-1 line-clamp-2">{{ product.description || 'Delicious freshly made selection.' }}</p>
+              </div>
+              <div class="flex items-center justify-between mt-3">
+                <span class="font-black text-orange-600 text-base">{{ formatPrice(product.price) }}</span>
+                <button
+                  (click)="addToCart(product)"
+                  class="flex items-center gap-1.5 bg-orange-600 hover:bg-orange-700 text-white font-bold text-xs px-3.5 py-2 rounded-xl transition-colors cursor-pointer"
+                >
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4" />
+                  </svg>
+                  Add
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="products().length === 0" class="text-center py-20 bg-white border border-slate-100 rounded-2xl max-w-md mx-auto">
+          <svg class="w-16 h-16 text-slate-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+          </svg>
+          <p class="text-slate-500 font-bold">No products available in this store.</p>
+          <p class="text-xs text-slate-400 mt-1">This merchant hasn't listed any items for ordering yet.</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Side Panel: Cart Drawer -->
+  <div
+    class="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-sm transition-opacity"
+    [class.opacity-100]="isCartOpen()"
+    [class.pointer-events-auto]="isCartOpen()"
+    [class.opacity-0]="!isCartOpen()"
+    [class.pointer-events-none]="!isCartOpen()"
+    (click)="toggleCart()"
+  >
+    <div
+      class="absolute right-0 top-0 bottom-0 max-w-md w-full bg-white shadow-2xl flex flex-col justify-between transition-transform duration-300 ease-out"
+      [class.translate-x-0]="isCartOpen()"
+      [class.translate-x-full]="!isCartOpen()"
+      (click)="$event.stopPropagation()"
+    >
+      <!-- Header -->
+      <div class="px-6 py-5 border-b border-slate-100 flex items-center justify-between bg-slate-50">
+        <div class="flex items-center gap-2">
+          <svg class="w-6 h-6 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+          </svg>
+          <h3 class="font-extrabold text-lg text-slate-900">Your Basket</h3>
+        </div>
+        <button (click)="toggleCart()" class="p-2 hover:bg-slate-200 rounded-full text-slate-400 hover:text-slate-600 transition-colors">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Items List -->
+      <div class="flex-1 overflow-y-auto px-6 py-4 space-y-4">
+        <div *ngIf="cart().length === 0" class="text-center py-20">
+          <svg class="w-16 h-16 text-slate-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+          </svg>
+          <p class="text-slate-500 font-bold">Your cart is empty</p>
+          <p class="text-xs text-slate-400 mt-1">Browse stores and add products to start ordering.</p>
+        </div>
+
+        <div *ngFor="let item of cart()" class="flex items-center gap-4 py-3 border-b border-slate-100">
+          <div class="w-12 h-12 rounded-lg bg-slate-100 flex items-center justify-center overflow-hidden shrink-0 border border-slate-100">
+            <img *ngIf="item.thumbnail" [src]="item.thumbnail" alt="" class="w-full h-full object-cover" />
+            <svg *ngIf="!item.thumbnail" class="w-6 h-6 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+          </div>
+          <div class="flex-1 min-w-0">
+            <h5 class="font-bold text-slate-900 truncate text-sm">{{ item.name }}</h5>
+            <span class="text-xs text-orange-600 font-bold block mt-0.5">{{ formatPrice(item.price) }}</span>
+          </div>
+
+          <!-- Quantity Selectors -->
+          <div class="flex items-center gap-2 border border-slate-200 rounded-full px-2.5 py-1">
+            <button (click)="updateQuantity(item.id, -1)" class="text-slate-400 hover:text-orange-600 font-bold text-xs p-0.5">-</button>
+            <span class="text-slate-800 text-xs font-bold min-w-[15px] text-center">{{ item.quantity }}</span>
+            <button (click)="updateQuantity(item.id, 1)" class="text-slate-400 hover:text-orange-600 font-bold text-xs p-0.5">+</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pricing Summary & Button -->
+      <div class="px-6 py-6 border-t border-slate-100 bg-slate-50 space-y-4" *ngIf="cart().length > 0">
+        <div class="space-y-2 text-sm text-slate-600">
+          <div class="flex justify-between">
+            <span>Subtotal</span>
+            <span class="font-bold text-slate-900">{{ formatPrice(cartSubtotal()) }}</span>
+          </div>
+          <div class="flex justify-between">
+            <span>VAT (10%)</span>
+            <span class="font-bold text-slate-900">{{ formatPrice(cartTax()) }}</span>
+          </div>
+          <div class="flex justify-between">
+            <span>Delivery Fee</span>
+            <span class="font-bold text-slate-900">{{ formatPrice(deliveryFee()) }}</span>
+          </div>
+          <div class="h-px bg-slate-200 my-2"></div>
+          <div class="flex justify-between text-base font-black text-slate-900">
+            <span>Total amount</span>
+            <span class="text-orange-600">{{ formatPrice(cartTotal()) }}</span>
+          </div>
+        </div>
+
+        <button
+          (click)="placeOrder()"
+          [disabled]="isLoading()"
+          class="w-full bg-orange-600 hover:bg-orange-700 text-white font-bold py-4 rounded-2xl flex items-center justify-center gap-2 shadow-lg shadow-orange-500/20 transition-colors disabled:opacity-50 cursor-pointer"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" *ngIf="!isLoading()">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+          </svg>
+          <div class="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin" *ngIf="isLoading()"></div>
+          <span>Place Order Now</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Success Notification Dialog Overlay -->
+  <div
+    class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur flex items-center justify-center p-4 transition-opacity duration-300"
+    [class.opacity-100]="orderSuccess()"
+    [class.pointer-events-auto]="orderSuccess()"
+    [class.opacity-0]="!orderSuccess()"
+    [class.pointer-events-none]="!orderSuccess()"
+  >
+    <div class="bg-white rounded-3xl p-6 md:p-8 max-w-md w-full shadow-2xl text-center transform scale-100 transition-all space-y-6">
+      <div class="w-20 h-20 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto text-4xl shadow-lg shadow-emerald-500/10">
+        🎉
+      </div>
+      <div>
+        <h3 class="text-2xl font-black text-slate-900">Order Confirmed!</h3>
+        <p class="text-slate-500 text-sm mt-1">Your order has been sent to {{ orderSuccess()?.storeName }}</p>
+      </div>
+
+      <div class="bg-slate-50 rounded-2xl p-4 text-left space-y-2.5 text-xs text-slate-600">
+        <div class="flex justify-between">
+          <span class="font-semibold">Order ID</span>
+          <span class="font-bold text-slate-900">{{ orderSuccess()?.orderId }}</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="font-semibold">Merchant Store</span>
+          <span class="font-bold text-slate-900 text-right">{{ orderSuccess()?.storeName }}</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="font-semibold">Total Paid</span>
+          <span class="font-bold text-orange-600">{{ orderSuccess() ? formatPrice(orderSuccess().totalAmount) : '' }}</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="font-semibold">Delivery Courier</span>
+          <span class="font-bold text-slate-900 flex items-center gap-1">
+            <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-ping"></span> Dispatching...
+          </span>
+        </div>
+      </div>
+
+      <p class="text-slate-400 text-[11px]">A courier will pick up your package and deliver it within 30 minutes.</p>
+
+      <button (click)="closeOrderSuccess()" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-3.5 rounded-2xl transition-colors cursor-pointer text-sm">
+        Back to storefront
+      </button>
+    </div>
+  </div>
+</div>

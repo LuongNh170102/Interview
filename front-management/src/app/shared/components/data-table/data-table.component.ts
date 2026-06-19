@@ -138,7 +138,7 @@ const isStringArray = (value: unknown): value is string[] =>
   },
 })
 export class DataTableComponent<
-  T extends Record<string, unknown> = Record<string, unknown>
+  T extends Record<string, any> = any
 > {
   // Math reference for template
   readonly Math = Math;

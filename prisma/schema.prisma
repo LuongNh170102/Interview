@@ -484,16 +484,26 @@ model Courier {
   userId          Int      @unique @map("user_id")
   name            String?
   phone           String?
-  status          String?  // 'available' | 'busy' | 'offline'
+  status          String?  @default("offline") // 'available' | 'busy' | 'offline'
   vehicleType     String?  @map("vehicle_type") // 'bike' | 'motorbike' | 'car'
   currentLocation Json?    @map("current_location")
   createdAt       DateTime @default(now()) @map("created_at")
   updatedAt       DateTime? @updatedAt @map("updated_at")
+  deletedAt       DateTime? @map("deleted_at")
+
+  approvalStatus  ApprovalStatus @default(PENDING) @map("approval_status")
+  approvedAt      DateTime?      @map("approved_at")
+  approvedBy      Int?           @map("approved_by")
+  rejectedAt      DateTime?      @map("rejected_at")
+  rejectedBy      Int?           @map("rejected_by")
+  rejectionReason String?        @map("rejection_reason") @db.Text
 
   // Relations
   user   User    @relation(fields: [userId], references: [id])
   orders Order[]
 
+  @@index([approvalStatus])
+  @@index([status])
   @@map("couriers")
 }
 

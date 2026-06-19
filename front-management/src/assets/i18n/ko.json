@@ -216,7 +216,8 @@
     "partners": {
       "tabs": {
         "agencies": "파트너",
-        "merchants": "매장"
+        "merchants": "매장",
+        "couriers": "배달 기사"
       },
       "stats": {
         "totalAgencies": "총 파트너 수",
@@ -367,6 +368,33 @@
         "activation": "활성화",
         "deactivation": "비활성화",
         "delete": "삭제"
+      },
+      "couriers": {
+        "title": "배달 기사",
+        "subtitle": "배달 기사 가입 및 승인 요청 관리",
+        "searchPlaceholder": "이름 또는 전화번호로 배달 기사 검색...",
+        "stats": {
+          "totalCouriers": "총 배달 기사",
+          "pendingApproval": "승인 대기",
+          "activeCouriers": "활성 배달 기사",
+          "operationalCouriers": "운영 배달 기사"
+        },
+        "table": {
+          "name": "기사 이름",
+          "phone": "전화번호",
+          "vehicleType": "차량 종류",
+          "status": "상태",
+          "approvalStatus": "승인 상태",
+          "createdAt": "가입일",
+          "actions": "작업"
+        },
+        "rejectionModal": {
+          "title": "배달 기사 가입 거절",
+          "reasonLabel": "거절 사유",
+          "reasonPlaceholder": "거절 사유를 입력하세요...",
+          "submit": "가입 거절",
+          "cancel": "취소"
+        }
       }
     },
     "categories": {

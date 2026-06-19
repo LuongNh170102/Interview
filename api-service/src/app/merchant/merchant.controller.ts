@@ -8,6 +8,7 @@ import {
   Param,
   Get,
   Query,
+  Delete,
 } from '@nestjs/common';
 import { MerchantService } from './merchant.service';
 import { CreateMerchantDto } from './dto/create-merchant.dto';
@@ -31,6 +32,11 @@ export class MerchantController {
   @Post('otp/verify')
   verifyOtp(@Body() dto: VerifyOtpDto) {
     return this.merchantService.verifyOtp(dto);
+  }
+
+  @Get('public/list')
+  findPublic() {
+    return this.merchantService.findPublic();
   }
 
   @Get()
@@ -68,5 +74,19 @@ export class MerchantController {
   @Permissions('system:manage_users')
   adminCreate(@Request() req, @Body() dto: AdminCreateMerchantDto) {
     return this.merchantService.adminCreate(req.user.userId, dto);
+  }
+
+  @Patch(':id')
+  @UseGuards(JwtAuthGuard, PermissionsGuard)
+  @Permissions('system:manage_users')
+  update(@Param('id') externalId: string, @Body() dto: any) {
+    return this.merchantService.update(externalId, dto);
+  }
+
+  @Delete(':id')
+  @UseGuards(JwtAuthGuard, PermissionsGuard)
+  @Permissions('system:manage_users')
+  remove(@Param('id') externalId: string) {
+    return this.merchantService.remove(externalId);
   }
 }
