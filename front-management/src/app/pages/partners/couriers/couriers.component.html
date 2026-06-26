@@ -1,0 +1,230 @@
+<div class="flex flex-col gap-4 md:gap-6">
+  <!-- Reusable Templates -->
+  <!-- Status Badge Template -->
+  <ng-template #statusBadge let-courier>
+    @switch (courier.status?.toLowerCase()) {
+      @case ('available') {
+        <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-status-success-bg text-status-success text-xs font-semibold">
+          <span class="w-1.5 h-1.5 rounded-full bg-status-success"></span>
+          {{ 'common.status.active' | translate }}
+        </span>
+      }
+      @case ('busy') {
+        <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-status-info-bg text-status-info">
+          <span class="w-1.5 h-1.5 rounded-full bg-status-info"></span>
+          {{ 'common.status.suspended' | translate }}
+        </span>
+      }
+      @default {
+        <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-status-default-bg text-status-default">
+          <span class="w-1.5 h-1.5 rounded-full bg-status-default"></span>
+          {{ 'common.status.inactive' | translate }}
+        </span>
+      }
+    }
+  </ng-template>
+
+  <!-- Approval Status Badge Template -->
+  <ng-template #approvalBadge let-courier>
+    @switch (courier.approvalStatus?.toLowerCase()) {
+      @case ('approved') {
+        <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-status-success-bg text-status-success text-xs font-semibold">
+          {{ 'common.status.approved' | translate }}
+        </span>
+      }
+      @case ('rejected') {
+        <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-status-error-bg text-status-error text-xs font-semibold">
+          {{ 'common.status.rejected' | translate }}
+        </span>
+      }
+      @default {
+        <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-status-info-bg text-status-info text-xs font-semibold animate-pulse">
+          {{ 'common.status.pending' | translate }}
+        </span>
+      }
+    }
+  </ng-template>
+
+  <!-- Statistics Cards -->
+  <section class="-mx-4 px-4 xl:mx-0 xl:px-0 overflow-x-auto scrollbar-hide">
+    <div class="xl:mt-0 flex xl:grid xl:grid-cols-3 gap-3 xl:gap-[13px] min-w-max xl:min-w-0">
+      @for (card of statisticCards(); track card.labelKey) {
+        <div class="w-fit xl:w-auto shrink-0 xl:shrink">
+          <app-statistic-card [config]="card" />
+        </div>
+      }
+    </div>
+  </section>
+
+  <!-- Data Table -->
+  <div class="relative mt-4 md:mt-10">
+    <app-data-table
+      [config]="tableConfig"
+      [data]="couriers()"
+      [pagination]="pagination()"
+      [headerConfig]="tableHeaderConfig"
+      [itemCount]="pagination().total"
+      (pageChange)="onPageChange($event)"
+      (sortChange)="onSortChange($event)"
+      (headerSearch)="onHeaderSearch($event)"
+      (headerFilter)="onHeaderFilter($event)"
+      (headerAction)="onHeaderAction($event)"
+      (actionClick)="onMenuAction($event.actionId, $event.row)"
+    >
+      <!-- Action Menu Template (Desktop) -->
+      <ng-template appActionMenu let-courier let-closeMenu="closeMenu">
+        @if (courier.approvalStatus?.toLowerCase() === 'pending') {
+          <button
+            (click)="onMenuAction('approve', courier); closeMenu()"
+            class="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-status-success hover:bg-surface-muted transition-colors font-semibold"
+          >
+            <span class="w-2 h-2 rounded-full bg-status-success"></span>
+            {{ 'common.status.approved' | translate }}
+          </button>
+          <button
+            (click)="onMenuAction('reject', courier); closeMenu()"
+            class="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-status-error hover:bg-surface-muted transition-colors font-semibold"
+          >
+            <span class="w-2 h-2 rounded-full bg-status-error"></span>
+            {{ 'common.status.rejected' | translate }}
+          </button>
+        } @else {
+          <span class="px-4 py-2 text-xs text-content-tertiary block italic">
+            No actions available
+          </span>
+        }
+      </ng-template>
+
+      <!-- Custom template for courier info column -->
+      <ng-template appTableCell="courierInfo" let-row>
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-primary bg-opacity-10 text-primary flex items-center justify-center font-bold text-sm">
+            {{ row.name ? row.name.charAt(0).toUpperCase() : 'C' }}
+          </div>
+          <div class="flex flex-col">
+            <span class="text-sm font-semibold text-content-primary">{{ row.name }}</span>
+            <span class="text-xs text-content-tertiary">ID: {{ row.id }}</span>
+          </div>
+        </div>
+      </ng-template>
+
+      <!-- Mobile Card Template -->
+      <ng-template
+        appMobileCard
+        let-courier
+        let-isLast="isLast"
+        let-isColumnVisible="isColumnVisible"
+      >
+        <div
+          class="bg-surface py-5 px-5"
+          [class.border-b]="!isLast"
+          [class.border-border]="!isLast"
+        >
+          <div class="flex items-start gap-4 mb-4">
+            <div class="w-12 h-12 rounded-full bg-primary bg-opacity-10 text-primary flex items-center justify-center font-bold text-lg shrink-0">
+              {{ courier.name ? courier.name.charAt(0).toUpperCase() : 'C' }}
+            </div>
+            <div class="flex flex-col flex-1 min-w-0 pt-1">
+              <h3 class="text-lg font-bold text-content-primary truncate">
+                {{ courier.name }}
+              </h3>
+              <span class="text-xs text-content-tertiary">ID: {{ courier.id }}</span>
+            </div>
+          </div>
+
+          <div class="px-2 flex flex-col gap-2">
+            @if (isColumnVisible('phone')) {
+              <div class="flex items-center gap-2">
+                <span class="text-content-tertiary text-xs uppercase w-24 shrink-0">
+                  {{ 'admin.partners.couriers.table.phone' | translate }}
+                </span>
+                <span class="text-sm text-content-primary">{{ courier.phone }}</span>
+              </div>
+            }
+            @if (isColumnVisible('vehicleType')) {
+              <div class="flex items-center gap-2">
+                <span class="text-content-tertiary text-xs uppercase w-24 shrink-0">
+                  {{ 'admin.partners.couriers.table.vehicleType' | translate }}
+                </span>
+                <span class="text-sm text-content-primary">{{ courier.vehicleType }}</span>
+              </div>
+            }
+            <div class="flex items-center gap-2">
+              <span class="text-content-tertiary text-xs uppercase w-24 shrink-0">
+                {{ 'admin.partners.couriers.table.status' | translate }}
+              </span>
+              <ng-container *ngTemplateOutlet="statusBadge; context: { $implicit: courier }"></ng-container>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="text-content-tertiary text-xs uppercase w-24 shrink-0">
+                {{ 'admin.partners.couriers.table.approvalStatus' | translate }}
+              </span>
+              <ng-container *ngTemplateOutlet="approvalBadge; context: { $implicit: courier }"></ng-container>
+            </div>
+
+            @if (courier.approvalStatus?.toLowerCase() === 'pending') {
+              <div class="flex justify-end gap-2 mt-4 pt-3 border-t border-border">
+                <button
+                  (click)="onMenuAction('reject', courier)"
+                  class="px-3 py-1.5 bg-status-error-bg text-status-error text-xs font-semibold rounded-lg hover:bg-opacity-80 transition-colors"
+                >
+                  {{ 'common.status.rejected' | translate }}
+                </button>
+                <button
+                  (click)="onMenuAction('approve', courier)"
+                  class="px-3 py-1.5 bg-status-success-bg text-status-success text-xs font-semibold rounded-lg hover:bg-opacity-80 transition-colors"
+                >
+                  {{ 'common.status.approved' | translate }}
+                </button>
+              </div>
+            }
+          </div>
+        </div>
+      </ng-template>
+    </app-data-table>
+  </div>
+</div>
+
+<!-- Rejection Reason Modal Overlay -->
+@if (isRejectionModalOpen()) {
+  <div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60 backdrop-blur-sm p-4">
+    <div class="bg-surface rounded-xl shadow-2xl p-6 w-full max-w-md border border-border">
+      <div class="flex items-center gap-3 mb-4">
+        <div class="w-10 h-10 rounded-full bg-status-error-bg text-status-error flex items-center justify-center font-bold text-lg">
+          !
+        </div>
+        <h3 class="text-lg font-bold text-content-primary">
+          {{ 'admin.partners.couriers.rejectionModal.title' | translate }}
+        </h3>
+      </div>
+      <p class="text-sm text-content-secondary mb-4">
+        Please specify why courier <strong>{{ selectedCourierForReject()?.name }}</strong> is being rejected. This reasoning will be recorded.
+      </p>
+      <div class="flex flex-col gap-2 mb-6">
+        <label class="text-xs font-semibold text-content-secondary uppercase">
+          {{ 'admin.partners.couriers.rejectionModal.reasonLabel' | translate }}
+        </label>
+        <textarea
+          [(ngModel)]="rejectionReason"
+          [placeholder]="'admin.partners.couriers.rejectionModal.reasonPlaceholder' | translate"
+          class="w-full h-28 px-3 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-sm text-content-primary bg-surface-muted resize-none"
+        ></textarea>
+      </div>
+      <div class="flex justify-end gap-3">
+        <button
+          (click)="closeRejectionModal()"
+          class="px-4 py-2 border border-border text-sm font-semibold text-content-secondary rounded-lg hover:bg-surface-muted transition-colors"
+        >
+          {{ 'admin.partners.couriers.rejectionModal.cancel' | translate }}
+        </button>
+        <button
+          (click)="submitRejection()"
+          [disabled]="!rejectionReason().trim()"
+          class="px-4 py-2 bg-status-error text-white text-sm font-semibold rounded-lg hover:bg-opacity-95 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          {{ 'admin.partners.couriers.rejectionModal.submit' | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+}

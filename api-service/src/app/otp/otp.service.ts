@@ -12,6 +12,17 @@ export class OtpService {
   ) {}
 
   async requestOtp(dto: RequestOtpDto) {
+    const recentOtp = await this.prisma.otpVerification.findFirst({
+      where: {
+        phone: dto.phone,
+        createdAt: { gt: new Date(Date.now() - 60 * 1000) },
+      },
+    });
+
+    if (recentOtp) {
+      throw new BadRequestException('Please wait 1 minute before requesting another OTP.');
+    }
+
     // Generate 6 digit code
     const code = Math.floor(100000 + Math.random() * 900000).toString();
     const expiresAt = new Date(Date.now() + 5 * 60 * 1000); // 5 minutes

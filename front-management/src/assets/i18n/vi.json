@@ -147,7 +147,8 @@
     "partners": {
       "tabs": {
         "agencies": "Đối tác",
-        "merchants": "Cửa hàng"
+        "merchants": "Cửa hàng",
+        "couriers": "Tài xế"
       },
       "stats": {
         "totalAgencies": "Tổng số đối tác",
@@ -304,6 +305,33 @@
         "activation": "Kích hoạt",
         "deactivation": "Tạm ngừng",
         "delete": "Xóa"
+      },
+      "couriers": {
+        "title": "Tài xế",
+        "subtitle": "Quản lý đăng ký tài xế và yêu cầu duyệt",
+        "searchPlaceholder": "Tìm kiếm tài xế theo tên hoặc số điện thoại...",
+        "stats": {
+          "totalCouriers": "Tổng tài xế",
+          "pendingApproval": "Chờ duyệt",
+          "activeCouriers": "Tài xế hoạt động",
+          "operationalCouriers": "Tài xế sẵn sàng"
+        },
+        "table": {
+          "name": "TÊN TÀI XẾ",
+          "phone": "SỐ ĐIỆN THOẠI",
+          "vehicleType": "LOẠI PHƯƠNG TIỆN",
+          "status": "TRẠNG THÁI",
+          "approvalStatus": "TRẠNG THÁI DUYỆT",
+          "createdAt": "NGÀY ĐĂNG KÝ",
+          "actions": "THAO TÁC"
+        },
+        "rejectionModal": {
+          "title": "Từ chối đăng ký tài xế",
+          "reasonLabel": "Lý do từ chối",
+          "reasonPlaceholder": "Nhập lý do từ chối...",
+          "submit": "Từ chối tài xế",
+          "cancel": "Hủy"
+        }
       }
     },
     "categories": {

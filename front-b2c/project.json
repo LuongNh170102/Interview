@@ -61,10 +61,12 @@
       "executor": "@angular/build:dev-server",
       "configurations": {
         "production": {
-          "buildTarget": "front-b2c:build:production"
+          "buildTarget": "front-b2c:build:production",
+          "proxyConfig": "front-b2c/proxy.conf.json"
         },
         "development": {
-          "buildTarget": "front-b2c:build:development"
+          "buildTarget": "front-b2c:build:development",
+          "proxyConfig": "front-b2c/proxy.conf.json"
         }
       },
       "defaultConfiguration": "development"

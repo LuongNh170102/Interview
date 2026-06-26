@@ -226,6 +226,52 @@ async function main() {
         ko: '시스템 보고서 보기',
       },
     },
+    // Courier permissions
+    {
+      resource: 'courier',
+      action: 'create',
+      description: {
+        en: 'Create courier profile',
+        vi: 'Tạo thông tin tài xế',
+        ko: '배달 기사 프로필 생성',
+      },
+    },
+    {
+      resource: 'courier',
+      action: 'update',
+      description: {
+        en: 'Update courier profile',
+        vi: 'Cập nhật thông tin tài xế',
+        ko: '배달 기사 프로필 cập nhật',
+      },
+    },
+    {
+      resource: 'courier',
+      action: 'delete',
+      description: {
+        en: 'Delete courier profile',
+        vi: 'Xóa thông tin tài xế',
+        ko: '배달 기사 프로필 삭제',
+      },
+    },
+    {
+      resource: 'courier',
+      action: 'update_status',
+      description: {
+        en: 'Update courier status',
+        vi: 'Cập nhật trạng thái tài xế',
+        ko: '배달 기사 trạng thái cập nhật',
+      },
+    },
+    {
+      resource: 'courier',
+      action: 'read',
+      description: {
+        en: 'View courier details',
+        vi: 'Xem chi tiết tài xế',
+        ko: '배달 기사 상세 보기',
+      },
+    },
   ];
 
   console.log(`Creating ${permissionsData.length} permissions...`);
@@ -350,6 +396,15 @@ async function main() {
         getPerm('product', 'read'),
       ].filter(Boolean), // Filter out undefined
     },
+    {
+      role: 'COURIER',
+      perms: [
+        getPerm('order', 'read'),
+        getPerm('order', 'update_status'),
+        getPerm('courier', 'read'),
+        getPerm('courier', 'update'),
+      ].filter(Boolean),
+    },
   ];
 
   for (const map of rolePermissionsMap) {
@@ -422,6 +477,36 @@ async function main() {
 
     console.log(`Created admin user: ${adminEmail}`);
   }
+
+  const categoriesData = [
+    { name: { vi: 'Món Chính', en: 'Main Dishes' }, slug: 'mon-chinh' },
+    { name: { vi: 'Tráng Miệng', en: 'Desserts' }, slug: 'trang-mieng' },
+    { name: { vi: 'Đồ Uống', en: 'Beverages' }, slug: 'do-uong' },
+    { name: { vi: 'Ăn Nhẹ', en: 'Snacks' }, slug: 'an-nhe' },
+  ];
+
+  console.log(`Seeding ${categoriesData.length} categories...`);
+  for (const cat of categoriesData) {
+    const existing = await prisma.category.findFirst({
+      where: { slug: cat.slug },
+    });
+    if (!existing) {
+      await prisma.category.create({
+        data: {
+          name: cat.name,
+          slug: cat.slug,
+        },
+      });
+    }
+  }
+
+  // 6. Automatically approve all merchants in the database for testing purposes
+  const merchantsCount = await prisma.merchant.updateMany({
+    data: {
+      approvalStatus: 'APPROVED',
+    },
+  });
+  console.log(`Approved ${merchantsCount.count} merchants in database.`);
 
   console.log('Seeding finished.');
 }

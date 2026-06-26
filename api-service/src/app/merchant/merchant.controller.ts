@@ -8,6 +8,7 @@ import {
   Param,
   Get,
   Query,
+  Delete,
 } from '@nestjs/common';
 import { MerchantService } from './merchant.service';
 import { CreateMerchantDto } from './dto/create-merchant.dto';
@@ -33,11 +34,27 @@ export class MerchantController {
     return this.merchantService.verifyOtp(dto);
   }
 
+  @Get('public/list')
+  findPublic() {
+    return this.merchantService.findPublic();
+  }
+
   @Get()
   @UseGuards(JwtAuthGuard, PermissionsGuard)
   @Permissions('system:manage_users')
   findAll(@Query() query: MerchantQueryDto) {
     return this.merchantService.findAll(query);
+  }
+
+  @Get('my-merchant')
+  @UseGuards(JwtAuthGuard)
+  findMyMerchant(@Request() req) {
+    return this.merchantService.findMyMerchant(req.user.userId);
+  }
+
+  @Get('public/:id')
+  findOnePublic(@Param('id') externalId: string) {
+    return this.merchantService.findByExternalId(externalId);
   }
 
   @Get(':id')
@@ -68,5 +85,19 @@ export class MerchantController {
   @Permissions('system:manage_users')
   adminCreate(@Request() req, @Body() dto: AdminCreateMerchantDto) {
     return this.merchantService.adminCreate(req.user.userId, dto);
+  }
+
+  @Patch(':id')
+  @UseGuards(JwtAuthGuard, PermissionsGuard)
+  @Permissions('system:manage_users')
+  update(@Param('id') externalId: string, @Body() dto: any) {
+    return this.merchantService.update(externalId, dto);
+  }
+
+  @Delete(':id')
+  @UseGuards(JwtAuthGuard, PermissionsGuard)
+  @Permissions('system:manage_users')
+  remove(@Param('id') externalId: string) {
+    return this.merchantService.remove(externalId);
   }
 }

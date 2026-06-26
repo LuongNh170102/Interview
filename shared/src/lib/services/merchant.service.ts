@@ -99,4 +99,28 @@ export class MerchantService {
       { withCredentials: true }
     );
   }
+
+  /**
+   * Update merchant fields
+   */
+  update(
+    externalId: string,
+    payload: any
+  ): Observable<MerchantResponse> {
+    return this.http.patch<MerchantResponse>(
+      `${this.baseUrl}/${externalId}`,
+      payload,
+      { withCredentials: true }
+    );
+  }
+
+  /**
+   * Delete a merchant
+   */
+  delete(externalId: string): Observable<any> {
+    return this.http.delete<any>(
+      `${this.baseUrl}/${externalId}`,
+      { withCredentials: true }
+    );
+  }
 }

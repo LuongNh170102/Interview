@@ -78,7 +78,7 @@ export interface TableAction<T = unknown> {
   labelKey: string;
 
   /** Icon type (using heroicons) */
-  icon: 'view' | 'edit' | 'delete' | 'download' | 'copy' | 'more' | 'custom';
+  icon: 'view' | 'edit' | 'delete' | 'download' | 'copy' | 'more' | 'custom' | 'activate' | 'deactivate';
 
   /** Custom SVG for 'custom' icon type */
   customIcon?: string;

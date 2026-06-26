@@ -1,0 +1,263 @@
+<div class="min-h-screen bg-slate-50 antialiased text-slate-800">
+
+  <!-- Header -->
+  <header class="sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-slate-100 px-4 md:px-8 py-4 flex items-center justify-between shadow-sm">
+    <button (click)="goBack()" class="flex items-center gap-2 px-3 py-2 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors font-semibold text-sm cursor-pointer">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+      </svg>
+      All Stores
+    </button>
+    <div class="flex items-center gap-2">
+      <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-orange-500 to-amber-500 flex items-center justify-center shadow">
+        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+        </svg>
+      </div>
+      <span class="text-lg font-black bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent">VHan Delivery</span>
+    </div>
+    <!-- Cart button -->
+    <button
+      (click)="isCartOpen.set(true)"
+      id="btn-open-cart"
+      class="relative flex items-center gap-2 px-4 py-2 rounded-full bg-orange-50 hover:bg-orange-100 text-orange-600 transition-colors font-semibold text-sm cursor-pointer"
+    >
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+      </svg>
+      <span>Cart</span>
+      <span *ngIf="cartService.cartItemCount() > 0" class="bg-orange-600 text-white font-bold text-xs rounded-full px-2 py-0.5 min-w-[20px] text-center">
+        {{ cartService.cartItemCount() }}
+      </span>
+    </button>
+  </header>
+
+  <!-- Skeleton loading -->
+  <div *ngIf="isLoading()" class="max-w-7xl mx-auto px-4 md:px-8 py-8">
+    <div class="bg-gradient-to-r from-slate-200 to-slate-100 rounded-3xl h-36 animate-pulse mb-8"></div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div *ngFor="let i of [1,2,3,4,5,6]" class="bg-white border border-slate-100 rounded-2xl p-4 flex gap-4 animate-pulse">
+        <div class="w-24 h-24 bg-slate-200 rounded-xl shrink-0"></div>
+        <div class="flex-1 space-y-2 py-1">
+          <div class="h-4 bg-slate-200 rounded-lg w-3/4"></div>
+          <div class="h-3 bg-slate-200 rounded-lg w-full"></div>
+          <div class="h-3 bg-slate-200 rounded-lg w-2/3"></div>
+          <div class="mt-2 flex justify-between">
+            <div class="h-5 bg-slate-200 rounded-lg w-1/3"></div>
+            <div class="h-8 w-16 bg-slate-200 rounded-xl"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Store content -->
+  <main *ngIf="!isLoading() && store()" class="max-w-7xl mx-auto px-4 md:px-8 py-8">
+
+    <!-- Store Banner -->
+    <div class="bg-gradient-to-r from-orange-500 to-amber-500 rounded-3xl p-6 md:p-8 text-white flex flex-col md:flex-row justify-between items-start md:items-center gap-6 shadow-xl shadow-orange-500/10 mb-8">
+      <div class="flex items-center gap-5">
+        <div class="w-20 h-20 bg-white/10 rounded-2xl flex items-center justify-center text-3xl font-extrabold border border-white/20 overflow-hidden shadow-inner">
+          <img *ngIf="store().logoUrl" [src]="store().logoUrl" alt="" class="w-full h-full object-cover" />
+          <span *ngIf="!store().logoUrl">{{ store().name?.substring(0, 2)?.toUpperCase() }}</span>
+        </div>
+        <div>
+          <h2 class="text-2xl md:text-3xl font-black tracking-tight">{{ store().name }}</h2>
+          <p class="text-orange-100 text-sm font-semibold mt-1">
+            {{ store().businessCategory || 'Restaurant' }} • {{ store().address }}, {{ store().city }}
+          </p>
+        </div>
+      </div>
+      <div class="flex items-center gap-6 bg-white/10 backdrop-blur px-5 py-3 rounded-2xl border border-white/20">
+        <div class="text-center">
+          <span class="block text-xl font-bold">{{ store().averageRating || '4.8' }}</span>
+          <span class="text-[10px] uppercase font-bold text-orange-200 tracking-wide">Rating</span>
+        </div>
+        <div class="w-px h-8 bg-white/20"></div>
+        <div class="text-center">
+          <span class="block text-xl font-bold">15-30m</span>
+          <span class="text-[10px] uppercase font-bold text-orange-200 tracking-wide">Delivery</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Products -->
+    <h3 class="text-xl font-bold text-slate-900 mb-6">Menu &amp; Products</h3>
+
+    <!-- Product Grid -->
+    <div *ngIf="products().length > 0" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div
+        *ngFor="let product of products()"
+        id="product-card-{{ product.externalId }}"
+        class="bg-white border border-slate-100 rounded-2xl p-4 flex gap-4 hover:shadow-lg transition-all duration-300 group"
+        [class.opacity-60]="isOutOfStock(product)"
+      >
+        <!-- Image -->
+        <div class="w-24 h-24 rounded-xl bg-slate-100 flex items-center justify-center text-slate-400 overflow-hidden shrink-0 border border-slate-100 relative">
+          <img *ngIf="product.thumbnail" [src]="product.thumbnail" alt="" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+          <svg *ngIf="!product.thumbnail" class="w-8 h-8 opacity-45" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+          </svg>
+          <!-- Out of stock overlay -->
+          <div *ngIf="isOutOfStock(product)" class="absolute inset-0 bg-slate-900/60 flex items-center justify-center rounded-xl">
+            <span class="text-white text-xs font-bold text-center leading-tight px-1">Hết<br>hàng</span>
+          </div>
+        </div>
+
+        <!-- Info -->
+        <div class="flex-1 flex flex-col justify-between min-w-0">
+          <div>
+            <h5 class="font-bold text-slate-900 group-hover:text-orange-600 transition-colors line-clamp-1 leading-snug">{{ product.displayName }}</h5>
+            <p class="text-xs text-slate-500 mt-1 line-clamp-2">{{ product.description || 'Delicious freshly made selection.' }}</p>
+          </div>
+          <div class="mt-3">
+            <div class="flex items-center justify-between">
+              <span class="font-black text-orange-600 text-base">{{ formatPrice(product.price) }}</span>
+              <div class="flex items-center gap-1.5">
+                <!-- View detail button -->
+                <a
+                  [routerLink]="['/product', product.externalId]"
+                  class="flex items-center gap-1 bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold text-xs px-3 py-2 rounded-xl transition-colors cursor-pointer"
+                >
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                  </svg>
+                  Detail
+                </a>
+                <!-- Out of stock badge -->
+                <span
+                  *ngIf="isOutOfStock(product)"
+                  class="flex items-center bg-slate-100 text-slate-400 font-bold text-xs px-3.5 py-2 rounded-xl cursor-not-allowed select-none"
+                >
+                  Hết hàng
+                </span>
+                <!-- Add to cart button -->
+                <button
+                  *ngIf="!isOutOfStock(product)"
+                  (click)="addToCart(product)"
+                  id="btn-add-{{ product.externalId }}"
+                  class="flex items-center gap-1.5 bg-orange-600 hover:bg-orange-700 text-white font-bold text-xs px-3.5 py-2 rounded-xl transition-colors cursor-pointer"
+                >
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4" />
+                  </svg>
+                  Add
+                </button>
+              </div>
+            </div>
+            <!-- Stock error toast -->
+            <div
+              *ngIf="stockErrorId() === product.externalId"
+              class="mt-2 flex items-center gap-1.5 text-xs font-semibold text-red-600 bg-red-50 border border-red-100 rounded-lg px-3 py-1.5"
+            >
+              <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
+              </svg>
+              Hết hàng! Sản phẩm này hiện không còn tồn kho.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- No products -->
+    <div *ngIf="products().length === 0" class="text-center py-20 bg-white border border-slate-100 rounded-2xl max-w-md mx-auto">
+      <svg class="w-14 h-14 text-slate-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+      </svg>
+      <p class="text-slate-500 font-bold">No products available in this store.</p>
+    </div>
+  </main>
+
+  <!-- ========== CART SIDEBAR ========== -->
+  <div *ngIf="isCartOpen()" class="fixed inset-0 z-50 flex">
+    <!-- Backdrop -->
+    <div class="flex-1 bg-black/40 backdrop-blur-sm" (click)="isCartOpen.set(false)"></div>
+    <!-- Panel -->
+    <div class="w-full max-w-sm bg-white h-full shadow-2xl flex flex-col">
+      <div class="flex items-center justify-between px-6 py-4 border-b border-slate-100">
+        <h3 class="font-black text-slate-900 text-lg">Your Cart</h3>
+        <button (click)="isCartOpen.set(false)" class="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center hover:bg-slate-200 cursor-pointer">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Empty cart -->
+      <div *ngIf="cartService.cart().length === 0" class="flex-1 flex flex-col items-center justify-center text-center p-8 text-slate-400">
+        <svg class="w-14 h-14 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+        </svg>
+        <p class="font-bold text-slate-500">Your cart is empty</p>
+        <p class="text-xs mt-1">Add products to start ordering.</p>
+      </div>
+
+      <!-- Cart items -->
+      <div *ngIf="cartService.cart().length > 0" class="flex-1 overflow-y-auto px-4 py-3 space-y-3">
+        <div *ngFor="let item of cartService.cart()" class="flex items-center gap-3 bg-slate-50 rounded-2xl p-3">
+          <div class="w-12 h-12 rounded-xl bg-slate-200 overflow-hidden shrink-0">
+            <img *ngIf="item.thumbnail" [src]="item.thumbnail" alt="" class="w-full h-full object-cover" />
+          </div>
+          <div class="flex-1 min-w-0">
+            <p class="font-bold text-slate-900 text-sm line-clamp-1">{{ item.name }}</p>
+            <p class="text-orange-600 font-black text-sm">{{ formatPrice(item.price) }}</p>
+          </div>
+          <div class="flex items-center gap-2 bg-white rounded-xl p-1 border border-slate-100">
+            <button (click)="cartService.updateQuantity(item.id, -1)" class="w-6 h-6 rounded-lg bg-slate-100 flex items-center justify-center text-slate-600 hover:bg-red-50 hover:text-red-500 transition-colors cursor-pointer font-bold text-sm">−</button>
+            <span class="w-5 text-center text-sm font-black text-slate-900">{{ item.quantity }}</span>
+            <button (click)="cartService.updateQuantity(item.id, 1)" class="w-6 h-6 rounded-lg bg-slate-100 flex items-center justify-center text-slate-600 hover:bg-orange-50 hover:text-orange-600 transition-colors cursor-pointer font-bold text-sm">+</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Order summary & checkout -->
+      <div *ngIf="cartService.cart().length > 0" class="border-t border-slate-100 p-4 space-y-3">
+        <div class="space-y-1.5 text-sm">
+          <div class="flex justify-between text-slate-500"><span>Subtotal</span><span class="font-semibold text-slate-800">{{ formatPrice(cartService.cartSubtotal()) }}</span></div>
+          <div class="flex justify-between text-slate-500"><span>VAT (10%)</span><span class="font-semibold text-slate-800">{{ formatPrice(cartService.cartTax()) }}</span></div>
+          <div class="flex justify-between text-slate-500"><span>Delivery fee</span><span class="font-semibold text-slate-800">{{ formatPrice(cartService.deliveryFee()) }}</span></div>
+          <div class="flex justify-between font-black text-slate-900 text-base pt-1 border-t border-slate-100">
+            <span>Total</span><span class="text-orange-600">{{ formatPrice(cartService.cartTotal()) }}</span>
+          </div>
+        </div>
+        <button
+          (click)="placeOrder()"
+          id="btn-place-order"
+          [disabled]="isPlacingOrder()"
+          class="w-full bg-orange-600 hover:bg-orange-700 disabled:opacity-60 disabled:cursor-not-allowed text-white font-black py-3.5 rounded-2xl transition-colors cursor-pointer flex items-center justify-center gap-2 shadow-lg shadow-orange-500/20 text-sm"
+        >
+          <span *ngIf="!isPlacingOrder()">Place Order →</span>
+          <span *ngIf="isPlacingOrder()" class="flex items-center gap-2">
+            <svg class="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path></svg>
+            Processing...
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== ORDER SUCCESS MODAL ========== -->
+  <div *ngIf="orderSuccess()" class="fixed inset-0 z-50 flex items-center justify-center px-4 bg-black/50 backdrop-blur-sm">
+    <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full p-8 text-center">
+      <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl">🎉</div>
+      <h3 class="text-2xl font-black text-slate-900 mb-1">Order Confirmed!</h3>
+      <p class="text-slate-500 text-sm mb-6">Your order has been sent to {{ orderSuccess().storeName }}</p>
+      <div class="bg-slate-50 rounded-2xl border border-slate-100 p-4 text-sm text-left space-y-2.5 mb-6">
+        <div class="flex justify-between"><span class="text-slate-500 font-medium">Order ID</span><span class="font-black text-slate-800 text-xs">{{ orderSuccess().orderId }}</span></div>
+        <div class="flex justify-between"><span class="text-slate-500 font-medium">Merchant Store</span><span class="font-bold text-slate-800">{{ orderSuccess().storeName }}</span></div>
+        <div class="flex justify-between"><span class="text-slate-500 font-medium">Total Paid</span><span class="font-black text-orange-600">{{ formatPrice(orderSuccess().totalAmount) }}</span></div>
+        <ng-container *ngIf="orderSuccess().courier">
+          <div class="flex justify-between"><span class="text-slate-500 font-medium">Delivery Courier</span><span class="font-bold text-slate-800">{{ orderSuccess().courier.name }} ({{ orderSuccess().courier.vehicleType?.toLowerCase() }})</span></div>
+          <div class="flex justify-between"><span class="text-slate-500 font-medium">Courier Phone</span><span class="font-bold text-slate-800">{{ orderSuccess().courier.phone }}</span></div>
+          <div class="flex justify-between"><span class="text-slate-500 font-medium">Distance</span><span class="font-bold text-orange-600">{{ orderSuccess().courier.distanceKm }} km</span></div>
+        </ng-container>
+      </div>
+      <p class="text-xs text-slate-400 mb-5">A courier will pick up your package and deliver it within 30 minutes.</p>
+      <button (click)="orderSuccess.set(null)" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-black py-3.5 rounded-2xl transition-colors cursor-pointer text-sm">
+        Back to storefront
+      </button>
+    </div>
+  </div>
+</div>

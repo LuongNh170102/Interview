@@ -61,3 +61,5 @@ vitest.config.*.timestamp*
 # MinIO Data
 minio_data/
 
+# Code intelligence index (local only)
+.codegraph/

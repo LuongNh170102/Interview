@@ -147,7 +147,8 @@
     "partners": {
       "tabs": {
         "agencies": "Agencies",
-        "merchants": "Merchants"
+        "merchants": "Merchants",
+        "couriers": "Couriers"
       },
       "stats": {
         "totalAgencies": "Total Agencies",
@@ -286,6 +287,33 @@
         "activation": "Activation",
         "deactivation": "Deactivation",
         "delete": "Delete"
+      },
+      "couriers": {
+        "title": "Couriers",
+        "subtitle": "Manage courier registration and approval requests",
+        "searchPlaceholder": "Search couriers by name or phone...",
+        "stats": {
+          "totalCouriers": "Total Couriers",
+          "pendingApproval": "Pending Approval",
+          "activeCouriers": "Active Couriers",
+          "operationalCouriers": "Operational Couriers"
+        },
+        "table": {
+          "name": "COURIER NAME",
+          "phone": "PHONE",
+          "vehicleType": "VEHICLE TYPE",
+          "status": "STATUS",
+          "approvalStatus": "APPROVAL STATUS",
+          "createdAt": "REGISTERED AT",
+          "actions": "ACTIONS"
+        },
+        "rejectionModal": {
+          "title": "Reject Courier Registration",
+          "reasonLabel": "Reason for Rejection",
+          "reasonPlaceholder": "Enter reason for rejection...",
+          "submit": "Reject Courier",
+          "cancel": "Cancel"
+        }
       }
     },
     "categories": {

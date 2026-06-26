@@ -394,6 +394,12 @@ model MenuSection {
   @@map("menu_sections")
 }
 
+enum ProductStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
 model Product {
   id          Int      @id @default(autoincrement())
   externalId  String   @unique @default(uuid()) @map("external_id") @db.Uuid
@@ -409,6 +415,7 @@ model Product {
   sku         String?
   stock       Int?
   isActive    Boolean? @default(true) @map("is_active")
+  status      ProductStatus @default(PUBLISHED) @map("status")
   metadata    Json?
   
   // Denormalized rating stats (updated via service when reviews change)
@@ -484,16 +491,26 @@ model Courier {
   userId          Int      @unique @map("user_id")
   name            String?
   phone           String?
-  status          String?  // 'available' | 'busy' | 'offline'
+  status          String?  @default("offline") // 'available' | 'busy' | 'offline'
   vehicleType     String?  @map("vehicle_type") // 'bike' | 'motorbike' | 'car'
   currentLocation Json?    @map("current_location")
   createdAt       DateTime @default(now()) @map("created_at")
   updatedAt       DateTime? @updatedAt @map("updated_at")
+  deletedAt       DateTime? @map("deleted_at")
+
+  approvalStatus  ApprovalStatus @default(PENDING) @map("approval_status")
+  approvedAt      DateTime?      @map("approved_at")
+  approvedBy      Int?           @map("approved_by")
+  rejectedAt      DateTime?      @map("rejected_at")
+  rejectedBy      Int?           @map("rejected_by")
+  rejectionReason String?        @map("rejection_reason") @db.Text
 
   // Relations
   user   User    @relation(fields: [userId], references: [id])
   orders Order[]
 
+  @@index([approvalStatus])
+  @@index([status])
   @@map("couriers")
 }
 
