@@ -136,7 +136,10 @@ export const appRoutes: Route[] = [
           },
           {
             path: 'list',
-            loadComponent: loadUnderDevelopment,
+            loadComponent: () =>
+              import('./pages/products/products-list/products-list.component').then(
+                (m) => m.ProductsListComponent
+              ),
             canActivate: [withPermissions('product:read')],
           },
           {

@@ -12,6 +12,7 @@ import {
 } from '../../common/constants/messages.constant';
 import { MERCHANT_STATUS } from '../../common/constants/merchant.constant';
 import { RESOURCE_TARGETS } from '../../common/constants/resource.constant';
+import { ROLE } from '../../common/constants/role.constants';
 
 @Injectable()
 export class ProductOwnershipGuard implements CanActivate {
@@ -49,6 +50,10 @@ export class ProductOwnershipGuard implements CanActivate {
           product.merchant.approvalStatus
         )
       );
+    }
+
+    if (user.roles?.includes(ROLE.PLATFORM_ADMIN)) {
+      return true;
     }
 
     const isMerchantOwner = product.merchant.ownerId === user.userId;

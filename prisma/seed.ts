@@ -478,6 +478,36 @@ async function main() {
     console.log(`Created admin user: ${adminEmail}`);
   }
 
+  const categoriesData = [
+    { name: { vi: 'Món Chính', en: 'Main Dishes' }, slug: 'mon-chinh' },
+    { name: { vi: 'Tráng Miệng', en: 'Desserts' }, slug: 'trang-mieng' },
+    { name: { vi: 'Đồ Uống', en: 'Beverages' }, slug: 'do-uong' },
+    { name: { vi: 'Ăn Nhẹ', en: 'Snacks' }, slug: 'an-nhe' },
+  ];
+
+  console.log(`Seeding ${categoriesData.length} categories...`);
+  for (const cat of categoriesData) {
+    const existing = await prisma.category.findFirst({
+      where: { slug: cat.slug },
+    });
+    if (!existing) {
+      await prisma.category.create({
+        data: {
+          name: cat.name,
+          slug: cat.slug,
+        },
+      });
+    }
+  }
+
+  // 6. Automatically approve all merchants in the database for testing purposes
+  const merchantsCount = await prisma.merchant.updateMany({
+    data: {
+      approvalStatus: 'APPROVED',
+    },
+  });
+  console.log(`Approved ${merchantsCount.count} merchants in database.`);
+
   console.log('Seeding finished.');
 }
 

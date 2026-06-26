@@ -21,11 +21,29 @@ export class ProductService {
     private storageService: StorageService
   ) {}
 
+  private async attachCategoryToProduct(product: any) {
+    if (!product) return product;
+    const meta = product.metadata as Record<string, any>;
+    if (meta?.categoryExternalId) {
+      const category = await this.prisma.category.findUnique({
+        where: { externalId: meta.categoryExternalId },
+      });
+      if (category) {
+        product.category = {
+          id: category.id,
+          externalId: category.externalId,
+          name: category.name,
+        };
+      }
+    }
+    return product;
+  }
+
   async create(
     createProductDto: CreateProductDto,
     files?: Array<Express.Multer.File>
   ) {
-    const { name, description, metadata, merchantId, ...rest } =
+    const { name, description, metadata, merchantId, categoryExternalId, ...rest } =
       createProductDto;
 
     const imageUrls: string[] = [];
@@ -50,6 +68,10 @@ export class ProductService {
         : metadata
       : {};
 
+    if (categoryExternalId) {
+      metaObj.categoryExternalId = categoryExternalId;
+    }
+
     if (imageUrls.length > 0) {
       metaObj[PRODUCT_CONSTANTS.METADATA.IMAGES] = imageUrls;
       if (!metaObj[PRODUCT_CONSTANTS.METADATA.THUMBNAIL]) {
@@ -59,7 +81,7 @@ export class ProductService {
 
     const metaJson = metaObj as unknown as Prisma.InputJsonValue;
 
-    return this.prisma.product.create({
+    const created = await this.prisma.product.create({
       data: {
         ...rest,
         merchantId: merchantId as unknown as number,
@@ -68,19 +90,22 @@ export class ProductService {
         metadata: metaJson,
       },
     });
+
+    return this.attachCategoryToProduct(created);
   }
 
   async findAll() {
-    return this.prisma.product.findMany({
+    const products = await this.prisma.product.findMany({
       include: {
         merchant: true,
       },
     });
+    return Promise.all(products.map((prod) => this.attachCategoryToProduct(prod)));
   }
 
   async findAllByMerchant(
     merchantExternalId: string,
-    paginationDto: PaginationDto
+    paginationDto: PaginationDto & { search?: string }
   ): Promise<PaginatedResult<any>> {
     const merchant = await this.prisma.merchant.findUnique({
       where: { externalId: merchantExternalId },
@@ -90,24 +115,46 @@ export class ProductService {
       throw new NotFoundException(COMMON_MESSAGES.INVALID_MERCHANT_ID);
     }
 
-    const { page = 1, limit = 10 } = paginationDto;
+    const { page = 1, limit = 10, search } = paginationDto;
     const skip = (page - 1) * limit;
+
+    const where: any = { merchantId: merchant.id };
+    if (search && search.trim()) {
+      const q = search.trim();
+      where.OR = [
+        { sku: { contains: q, mode: 'insensitive' } },
+        {
+          name: {
+            path: ['vi'],
+            string_contains: q,
+          },
+        },
+        {
+          name: {
+            path: ['en'],
+            string_contains: q,
+          },
+        },
+      ];
+    }
 
     const [data, total] = await Promise.all([
       this.prisma.product.findMany({
-        where: { merchantId: merchant.id },
+        where,
         skip,
         take: limit,
         orderBy: { createdAt: 'desc' },
         include: {},
       }),
-      this.prisma.product.count({
-        where: { merchantId: merchant.id },
-      }),
+      this.prisma.product.count({ where }),
     ]);
 
+    const enrichedData = await Promise.all(
+      data.map((prod) => this.attachCategoryToProduct(prod))
+    );
+
     return {
-      data,
+      data: enrichedData,
       meta: {
         total,
         page,
@@ -116,6 +163,7 @@ export class ProductService {
       },
     };
   }
+
 
   async findOne(externalId: string) {
     const product = await this.prisma.product.findUnique({
@@ -127,13 +175,13 @@ export class ProductService {
     if (!product) {
       throw new NotFoundException(PRODUCT_MESSAGES.PRODUCT_NOT_FOUND);
     }
-    return product;
+    return this.attachCategoryToProduct(product);
   }
 
   async update(externalId: string, updateProductDto: UpdateProductDto) {
-    await this.findOne(externalId);
+    const product = await this.findOne(externalId);
 
-    const { name, description, metadata, ...rest } = updateProductDto;
+    const { name, description, metadata, categoryExternalId, ...rest } = updateProductDto;
 
     const data: Prisma.ProductUpdateInput = {
       ...rest,
@@ -145,14 +193,33 @@ export class ProductService {
     if (description) {
       data.description = description as unknown as Prisma.InputJsonValue;
     }
+
+    const existingMeta = (product.metadata as Record<string, any>) || {};
+    const newMeta = { ...existingMeta };
+
     if (metadata) {
-      data.metadata = metadata as unknown as Prisma.InputJsonValue;
+      const parsedMeta = typeof metadata === PRIMITIVE_TYPES.STRING
+        ? JSON.parse(metadata as unknown as string)
+        : metadata;
+      Object.assign(newMeta, parsedMeta);
     }
 
-    return this.prisma.product.update({
+    if (categoryExternalId !== undefined) {
+      if (categoryExternalId) {
+        newMeta.categoryExternalId = categoryExternalId;
+      } else {
+        delete newMeta.categoryExternalId;
+      }
+    }
+
+    data.metadata = newMeta as unknown as Prisma.InputJsonValue;
+
+    const updated = await this.prisma.product.update({
       where: { externalId },
       data,
     });
+
+    return this.attachCategoryToProduct(updated);
   }
 
   async remove(externalId: string) {

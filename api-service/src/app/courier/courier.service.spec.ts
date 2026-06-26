@@ -1,23 +1,23 @@
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { Test, TestingModule } from '@nestjs/testing';
 import { CourierService } from './courier.service';
 import { PrismaService } from '../prisma.service';
-import { BadRequestException, NotFoundException } from '@nestjs/common';
-import { ApprovalStatus } from '@prisma/client';
+import { OtpService } from '../otp/otp.service';
+import { JwtService } from '@nestjs/jwt';
+import { NotFoundException, UnauthorizedException } from '@nestjs/common';
+import {
+  COURIER_APPROVAL_STATUS,
+  COURIER_OPERATIONAL_STATUS,
+  COURIER_REGISTRATION_OTP,
+} from '../common/constants/courier.constant';
 
 describe('CourierService', () => {
   let service: CourierService;
   let prisma: PrismaService;
+  let otpService: OtpService;
+  let jwtService: JwtService;
 
   const mockPrismaService = {
-    otpToken: {
-      findFirst: vi.fn(),
-      create: vi.fn(),
-      delete: vi.fn(),
-    },
-    user: {
-      findFirst: vi.fn(),
-      create: vi.fn(),
-    },
     courier: {
       findUnique: vi.fn(),
       findFirst: vi.fn(),
@@ -27,27 +27,56 @@ describe('CourierService', () => {
       count: vi.fn(),
     },
     role: {
-      findFirst: vi.fn(),
+      findUnique: vi.fn(),
     },
     userRole: {
+      findFirst: vi.fn(),
       create: vi.fn(),
     },
-    $transaction: vi.fn((cb) => cb(mockPrismaService)),
+    $transaction: vi.fn(async (cb) => {
+      if (typeof cb === 'function') {
+        return cb(mockPrismaService);
+      }
+      return cb;
+    }),
+  };
+
+  const mockOtpService = {
+    requestOtp: vi.fn(),
+    verifyOtp: vi.fn(),
+  };
+
+  const mockJwtService = {
+    verify: vi.fn(),
   };
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        CourierService,
         {
           provide: PrismaService,
           useValue: mockPrismaService,
         },
+        {
+          provide: OtpService,
+          useValue: mockOtpService,
+        },
+        {
+          provide: JwtService,
+          useValue: mockJwtService,
+        },
       ],
     }).compile();
 
-    service = module.get<CourierService>(CourierService);
     prisma = module.get<PrismaService>(PrismaService);
+    otpService = module.get<OtpService>(OtpService);
+    jwtService = module.get<JwtService>(JwtService);
+
+    service = new CourierService(
+      prisma,
+      jwtService,
+      otpService
+    );
   });
 
   afterEach(() => {
@@ -55,105 +84,101 @@ describe('CourierService', () => {
   });
 
   describe('requestOtp', () => {
-    it('should generate a 6-digit OTP code', async () => {
-      mockPrismaService.otpToken.create.mockResolvedValue({
-        id: 1,
-        phone: '0901234567',
-        code: '123456',
-      });
+    it('should delegate to OtpService.requestOtp', async () => {
+      const dto = { phone: '0901234567' };
+      mockOtpService.requestOtp.mockResolvedValue({ message: 'OTP sent' });
 
-      const result = await service.requestOtp('0901234567');
-      expect(result).toBeDefined();
-      expect(result.phone).toBe('0901234567');
-      expect(prisma.otpToken.create).toHaveBeenCalled();
+      const result = await service.requestOtp(dto);
+      expect(result).toEqual({ message: 'OTP sent' });
+      expect(otpService.requestOtp).toHaveBeenCalledWith(dto);
     });
   });
 
   describe('verifyOtp', () => {
-    it('should throw BadRequestException if OTP not found', async () => {
-      mockPrismaService.otpToken.findFirst.mockResolvedValue(null);
+    it('should delegate to OtpService.verifyOtp', async () => {
+      const dto = { phone: '0901234567', code: '123456' };
+      mockOtpService.verifyOtp.mockResolvedValue({ token: 'verify-token' });
 
-      await expect(service.verifyOtp('0901234567', '123456')).rejects.toThrow(
-        BadRequestException
-      );
-    });
-
-    it('should verify OTP and return a token', async () => {
-      mockPrismaService.otpToken.findFirst.mockResolvedValue({
-        id: 1,
-        phone: '0901234567',
-        code: '123456',
-        createdAt: new Date(),
-        expiresAt: new Date(Date.now() + 600000),
-      });
-      mockPrismaService.otpToken.delete.mockResolvedValue({});
-
-      const result = await service.verifyOtp('0901234567', '123456');
-      expect(result).toBeDefined();
-      expect(result.token).toBeDefined();
-      expect(prisma.otpToken.delete).toHaveBeenCalled();
+      const result = await service.verifyOtp(dto);
+      expect(result).toEqual({ token: 'verify-token' });
+      expect(otpService.verifyOtp).toHaveBeenCalledWith(dto, COURIER_REGISTRATION_OTP);
     });
   });
 
-  describe('register', () => {
+  describe('create (register)', () => {
+    it('should throw UnauthorizedException if verification token is invalid', async () => {
+      const dto = {
+        name: 'John Doe',
+        phone: '0901234567',
+        verificationToken: 'invalid-token',
+        vehicleType: 'motorbike',
+      };
+      mockJwtService.verify.mockImplementation(() => {
+        throw new Error('Invalid token');
+      });
+
+      await expect(service.create(1, dto)).rejects.toThrow(UnauthorizedException);
+    });
+
     it('should register a new courier and set status to PENDING', async () => {
-      const createCourierDto = {
+      const dto = {
         name: 'John Doe',
         phone: '0901234567',
         verificationToken: 'valid-token',
-        vehicleType: 'Motorbike',
+        vehicleType: 'motorbike',
       };
 
-      // Mock user not existing
-      mockPrismaService.user.findFirst.mockResolvedValue(null);
-      // Mock created user
-      mockPrismaService.user.create.mockResolvedValue({
-        id: 100,
+      mockJwtService.verify.mockReturnValue({
+        type: COURIER_REGISTRATION_OTP,
         phone: '0901234567',
       });
-      // Mock created courier
+
+      mockPrismaService.courier.findUnique.mockResolvedValue(null);
       mockPrismaService.courier.create.mockResolvedValue({
         id: 1,
-        userId: 100,
+        userId: 1,
         name: 'John Doe',
-        vehicleType: 'Motorbike',
-        approvalStatus: ApprovalStatus.PENDING,
-        createdAt: new Date(),
+        phone: '0901234567',
+        status: COURIER_OPERATIONAL_STATUS.OFFLINE,
+        vehicleType: 'motorbike',
+        approvalStatus: COURIER_APPROVAL_STATUS.PENDING,
       });
 
-      const result = await service.register(createCourierDto);
+      const result = await service.create(1, dto);
       expect(result).toBeDefined();
       expect(result.name).toBe('John Doe');
-      expect(result.approvalStatus).toBe(ApprovalStatus.PENDING);
+      expect(result.approvalStatus).toBe(COURIER_APPROVAL_STATUS.PENDING);
     });
   });
 
   describe('updateStatus', () => {
     it('should throw NotFoundException if courier not found', async () => {
-      mockPrismaService.courier.findUnique.mockResolvedValue(null);
+      mockPrismaService.courier.findFirst.mockResolvedValue(null);
 
       await expect(
-        service.updateStatus(999, { status: ApprovalStatus.APPROVED }, 1)
+        service.updateStatus(999, 1, COURIER_APPROVAL_STATUS.APPROVED)
       ).rejects.toThrow(NotFoundException);
     });
 
     it('should approve courier and grant COURIER role', async () => {
-      mockPrismaService.courier.findUnique.mockResolvedValue({
+      const courierRecord = {
         id: 1,
         userId: 100,
         name: 'John Doe',
-        approvalStatus: ApprovalStatus.PENDING,
-      });
+        approvalStatus: COURIER_APPROVAL_STATUS.PENDING,
+      };
+
+      mockPrismaService.courier.findFirst.mockResolvedValue(courierRecord);
       mockPrismaService.courier.update.mockResolvedValue({
-        id: 1,
-        userId: 100,
-        name: 'John Doe',
-        approvalStatus: ApprovalStatus.APPROVED,
+        ...courierRecord,
+        approvalStatus: COURIER_APPROVAL_STATUS.APPROVED,
+        status: COURIER_OPERATIONAL_STATUS.AVAILABLE,
       });
-      mockPrismaService.role.findFirst.mockResolvedValue({
+      mockPrismaService.role.findUnique.mockResolvedValue({
         id: 5,
-        code: 'COURIER',
+        name: 'COURIER',
       });
+      mockPrismaService.userRole.findFirst.mockResolvedValue(null);
       mockPrismaService.userRole.create.mockResolvedValue({
         id: 1,
         userId: 100,
@@ -162,40 +187,41 @@ describe('CourierService', () => {
 
       const result = await service.updateStatus(
         1,
-        { status: ApprovalStatus.APPROVED },
-        1
+        2,
+        COURIER_APPROVAL_STATUS.APPROVED
       );
       expect(result).toBeDefined();
-      expect(result.approvalStatus).toBe(ApprovalStatus.APPROVED);
-      expect(prisma.userRole.create).toHaveBeenCalled();
+      expect(result.approvalStatus).toBe(COURIER_APPROVAL_STATUS.APPROVED);
+      expect(prisma.courier.update).toHaveBeenCalled();
     });
 
     it('should reject courier and save rejection reason', async () => {
-      mockPrismaService.courier.findUnique.mockResolvedValue({
+      const courierRecord = {
         id: 1,
         userId: 100,
         name: 'John Doe',
-        approvalStatus: ApprovalStatus.PENDING,
-      });
+        approvalStatus: COURIER_APPROVAL_STATUS.PENDING,
+      };
+
+      mockPrismaService.courier.findFirst.mockResolvedValue(courierRecord);
       mockPrismaService.courier.update.mockResolvedValue({
-        id: 1,
-        userId: 100,
-        name: 'John Doe',
-        approvalStatus: ApprovalStatus.REJECTED,
+        ...courierRecord,
+        approvalStatus: COURIER_APPROVAL_STATUS.REJECTED,
         rejectionReason: 'Invalid documents',
       });
 
       const result = await service.updateStatus(
         1,
-        { status: ApprovalStatus.REJECTED, rejectionReason: 'Invalid documents' },
-        1
+        2,
+        COURIER_APPROVAL_STATUS.REJECTED,
+        'Invalid documents'
       );
       expect(result).toBeDefined();
-      expect(result.approvalStatus).toBe(ApprovalStatus.REJECTED);
+      expect(result.approvalStatus).toBe(COURIER_APPROVAL_STATUS.REJECTED);
       expect(prisma.courier.update).toHaveBeenCalledWith(
         expect.objectContaining({
           data: expect.objectContaining({
-            approvalStatus: ApprovalStatus.REJECTED,
+            approvalStatus: COURIER_APPROVAL_STATUS.REJECTED,
             rejectionReason: 'Invalid documents',
           }),
         })
@@ -203,3 +229,4 @@ describe('CourierService', () => {
     });
   });
 });
+

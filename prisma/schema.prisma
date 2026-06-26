@@ -394,6 +394,12 @@ model MenuSection {
   @@map("menu_sections")
 }
 
+enum ProductStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
 model Product {
   id          Int      @id @default(autoincrement())
   externalId  String   @unique @default(uuid()) @map("external_id") @db.Uuid
@@ -409,6 +415,7 @@ model Product {
   sku         String?
   stock       Int?
   isActive    Boolean? @default(true) @map("is_active")
+  status      ProductStatus @default(PUBLISHED) @map("status")
   metadata    Json?
   
   // Denormalized rating stats (updated via service when reviews change)

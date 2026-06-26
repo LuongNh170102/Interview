@@ -438,4 +438,45 @@ export class MerchantService {
       where: { externalId },
     });
   }
+
+  async findMyMerchant(userId: number) {
+    const userRole = await this.prisma.userRole.findFirst({
+      where: {
+        userId,
+        role: { name: ROLE.MERCHANT_OWNER },
+      },
+      include: {
+        merchant: true,
+      },
+    });
+
+    if (userRole?.merchant) {
+      return userRole.merchant;
+    }
+
+    const agencyMerchant = await this.prisma.merchant.findFirst({
+      where: {
+        agency: {
+          ownerId: userId,
+        },
+      },
+    });
+
+    if (agencyMerchant) {
+      return agencyMerchant;
+    }
+
+    // Fallback: If no explicit association is found, return the first merchant they own
+    const ownerMerchant = await this.prisma.merchant.findFirst({
+      where: {
+        ownerId: userId,
+      },
+    });
+
+    if (ownerMerchant) {
+      return ownerMerchant;
+    }
+
+    throw new NotFoundException('No merchant managed by this user.');
+  }
 }

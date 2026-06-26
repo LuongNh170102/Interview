@@ -30,6 +30,7 @@ import {
   TableHeaderActionEvent,
   TableHeaderSearchEvent,
   TableHeaderFilterEvent,
+  TableHeaderConfig,
 } from '../../../shared/interfaces/table.interface';
 import { StatisticCardComponent } from '../../../shared/components/statistic-card';
 import {
@@ -76,7 +77,25 @@ export class CouriersComponent implements OnInit {
 
   readonly couriers = signal<CourierResponse[]>([]);
   readonly tableConfig = COURIERS_TABLE_CONFIG;
-  readonly tableHeaderConfig = COURIERS_TABLE_HEADER_CONFIG;
+
+  get tableHeaderConfig(): TableHeaderConfig {
+    const currentStatus = this.approvalStatusFilter();
+    let statusSuffix = 'All';
+    if (currentStatus === 'PENDING') statusSuffix = 'Pending';
+    if (currentStatus === 'APPROVED') statusSuffix = 'Approved';
+    if (currentStatus === 'REJECTED') statusSuffix = 'Rejected';
+
+    return {
+      ...COURIERS_TABLE_HEADER_CONFIG,
+      filters: [
+        {
+          id: 'approvalStatus',
+          labelKey: `Status: ${statusSuffix}`,
+          type: 'button',
+        },
+      ],
+    };
+  }
 
   readonly pagination = signal<TablePagination>({
     page: 1,
@@ -157,7 +176,24 @@ export class CouriersComponent implements OnInit {
       'Approve Courier',
       `Are you sure you want to approve courier ${courier.name}?`,
       () => {
-        this.isLoading.set(true);
+        const originalCouriers = this.couriers();
+        const originalStats = this.statisticsData();
+
+        // Optimistically update lists and counts
+        this.couriers.update((list) =>
+          list.map((c) =>
+            c.id === courier.id
+              ? { ...c, approvalStatus: 'APPROVED', status: 'available' }
+              : c
+          )
+        );
+        this.statisticsData.update((stats) => ({
+          ...stats,
+          totalPending: Math.max(0, stats.totalPending - 1),
+          totalApproved: stats.totalApproved + 1,
+          totalActive: stats.totalActive + 1,
+        }));
+
         this.courierService
           .updateStatus(courier.id, 'APPROVED')
           .pipe(takeUntilDestroyed(this.destroyRef))
@@ -167,12 +203,15 @@ export class CouriersComponent implements OnInit {
               this.loadCouriers();
             },
             error: (err) => {
+              // Rollback on error
+              this.couriers.set(originalCouriers);
+              this.statisticsData.set(originalStats);
+
               console.error(err);
               const message = Array.isArray(err?.error?.message)
                 ? err.error.message.join(', ')
                 : (err?.error?.message || 'Failed to approve courier.');
               this.modalService.showError('Error', message);
-              this.isLoading.set(false);
             },
           });
       }
@@ -196,8 +235,27 @@ export class CouriersComponent implements OnInit {
     const reason = this.rejectionReason().trim();
     if (!courier || !reason) return;
 
-    this.isLoading.set(true);
     this.isRejectionModalOpen.set(false);
+    const originalCouriers = this.couriers();
+    const originalStats = this.statisticsData();
+
+    // Optimistically update lists and counts
+    this.couriers.update((list) =>
+      list.map((c) =>
+        c.id === courier.id
+          ? {
+              ...c,
+              approvalStatus: 'REJECTED',
+              status: 'offline',
+              rejectionReason: reason,
+            }
+          : c
+      )
+    );
+    this.statisticsData.update((stats) => ({
+      ...stats,
+      totalPending: Math.max(0, stats.totalPending - 1),
+    }));
 
     this.courierService
       .updateStatus(courier.id, 'REJECTED', reason)
@@ -209,12 +267,15 @@ export class CouriersComponent implements OnInit {
           this.loadCouriers();
         },
         error: (err) => {
+          // Rollback on error
+          this.couriers.set(originalCouriers);
+          this.statisticsData.set(originalStats);
+
           console.error(err);
           const message = Array.isArray(err?.error?.message)
             ? err.error.message.join(', ')
             : (err?.error?.message || 'Failed to reject courier.');
           this.modalService.showError('Error', message);
-          this.isLoading.set(false);
         },
       });
   }
@@ -245,7 +306,18 @@ export class CouriersComponent implements OnInit {
   }
 
   onHeaderFilter(event: TableHeaderFilterEvent): void {
-    console.log('Filter clicked', event);
+    if (event.filterId === 'approvalStatus') {
+      const current = this.approvalStatusFilter();
+      let next = '';
+      if (current === '') next = 'PENDING';
+      else if (current === 'PENDING') next = 'APPROVED';
+      else if (current === 'APPROVED') next = 'REJECTED';
+      else if (current === 'REJECTED') next = '';
+
+      this.approvalStatusFilter.set(next);
+      this.pagination.update((prev) => ({ ...prev, page: 1 }));
+      this.loadCouriers();
+    }
   }
 
   onHeaderAction(event: TableHeaderActionEvent): void {

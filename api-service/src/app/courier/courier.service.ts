@@ -140,6 +140,14 @@ export class CourierService {
       throw new BadRequestException('Courier profile already exists for this user.');
     }
 
+    const existingPhone = await this.prisma.courier.findFirst({
+      where: { phone: dto.phone, deletedAt: null },
+    });
+
+    if (existingPhone) {
+      throw new BadRequestException('Phone number is already registered to another courier.');
+    }
+
     const courier = await this.prisma.courier.create({
       data: {
         userId,

@@ -46,6 +46,17 @@ export class MerchantController {
     return this.merchantService.findAll(query);
   }
 
+  @Get('my-merchant')
+  @UseGuards(JwtAuthGuard)
+  findMyMerchant(@Request() req) {
+    return this.merchantService.findMyMerchant(req.user.userId);
+  }
+
+  @Get('public/:id')
+  findOnePublic(@Param('id') externalId: string) {
+    return this.merchantService.findByExternalId(externalId);
+  }
+
   @Get(':id')
   @UseGuards(JwtAuthGuard, PermissionsGuard)
   @Permissions('merchant:read')

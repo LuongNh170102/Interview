@@ -51,9 +51,9 @@ export class ProductController {
   @Get('merchant/:merchantId')
   findAllByMerchant(
     @Param('merchantId') merchantId: string,
-    @Query() paginationDto: PaginationDto
+    @Query() query: PaginationDto & { search?: string }
   ) {
-    return this.productService.findAllByMerchant(merchantId, paginationDto);
+    return this.productService.findAllByMerchant(merchantId, query);
   }
 
   @Get(':id')

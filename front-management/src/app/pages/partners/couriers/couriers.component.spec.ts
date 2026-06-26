@@ -1,9 +1,9 @@
+import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { CouriersComponent } from './couriers.component';
 import { CourierService, TranslationService } from '@vhandelivery/shared-ui';
 import { GlobalModalService } from '../../../shared/components/global-modal/global-modal.service';
-import { of, throwError } from 'rxjs';
-import { signal } from '@angular/core';
+import { of } from 'rxjs';
 
 describe('CouriersComponent', () => {
   let component: CouriersComponent;
@@ -72,8 +72,8 @@ describe('CouriersComponent', () => {
   });
 
   it('should approve courier successfully', () => {
-    const courier = {
-      id: '1',
+    const courier: any = {
+      id: 1,
       code: 'C-1',
       name: 'John Doe',
       phone: '0123456789',
@@ -86,17 +86,15 @@ describe('CouriersComponent', () => {
       createdAt: '2026-06-19',
     };
 
-    component.onApprove(courier);
+    component.approveCourier(courier);
 
-    expect(mockCourierService.updateStatus).toHaveBeenCalledWith('1', {
-      approvalStatus: 'APPROVED',
-    });
+    expect(mockCourierService.updateStatus).toHaveBeenCalledWith(1, 'APPROVED');
     expect(mockModalService.showSuccess).toHaveBeenCalled();
   });
 
   it('should handle rejection reason input and submit rejection', () => {
-    const courier = {
-      id: '2',
+    const courier: any = {
+      id: 2,
       code: 'C-2',
       name: 'Jane Doe',
       phone: '0123456788',
@@ -110,19 +108,16 @@ describe('CouriersComponent', () => {
     };
 
     // Open rejection dialog
-    component.openRejectionDialog(courier);
-    expect(component.isRejectionDialogOpen()).toBe(true);
-    expect(component.selectedCourierForRejection()).toEqual(courier);
+    component.openRejectionModal(courier);
+    expect(component.isRejectionModalOpen()).toBe(true);
+    expect(component.selectedCourierForReject()).toEqual(courier);
 
     // Set rejection reason and submit
     component.rejectionReason.set('Invalid license plate documents');
     component.submitRejection();
 
-    expect(mockCourierService.updateStatus).toHaveBeenCalledWith('2', {
-      approvalStatus: 'REJECTED',
-      rejectionReason: 'Invalid license plate documents',
-    });
-    expect(component.isRejectionDialogOpen()).toBe(false);
+    expect(mockCourierService.updateStatus).toHaveBeenCalledWith(2, 'REJECTED', 'Invalid license plate documents');
+    expect(component.isRejectionModalOpen()).toBe(false);
     expect(mockModalService.showSuccess).toHaveBeenCalled();
   });
 });

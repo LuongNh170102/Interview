@@ -1,0 +1,416 @@
+<div class="flex flex-col gap-4 md:gap-6">
+  <!-- Header -->
+  <header class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-surface p-6 rounded-xl border border-border shadow-sm">
+    <div>
+      <h1 class="text-2xl font-bold text-content-primary tracking-tight">
+        {{ 'admin.nav.products' | translate }}
+      </h1>
+      <p class="text-content-secondary text-sm mt-1" *ngIf="merchant()">
+        Managing products for <span class="font-semibold text-primary">{{ merchant().name }}</span>
+      </p>
+    </div>
+    <button
+      (click)="openAddForm()"
+      class="bg-primary hover:bg-primary-hover text-content-on-primary font-semibold py-2.5 px-5 rounded-lg shadow-sm transition-colors flex items-center gap-2 cursor-pointer text-sm"
+    >
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+      </svg>
+      <span>Add New Product</span>
+    </button>
+  </header>
+
+  <!-- Statistics Cards -->
+  <section class="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <!-- Card 1 -->
+    <div class="bg-surface p-5 rounded-xl border border-border shadow-sm flex items-center gap-4">
+     
+      <div>
+        <span class="text-content-tertiary text-xs block font-medium">Total Products</span>
+        <span class="text-xl font-bold text-content-primary">{{ products().length }}</span>
+      </div>
+    </div>
+    <!-- Card 2 -->
+    <div class="bg-surface p-5 rounded-xl border border-border shadow-sm flex items-center gap-4">
+     
+      <div>
+        <span class="text-content-tertiary text-xs block font-medium">Active Products</span>
+        <span class="text-xl font-bold text-content-primary">
+          {{ products().length }}
+        </span>
+      </div>
+    </div>
+    <!-- Card 3 -->
+    <div class="bg-surface p-5 rounded-xl border border-border shadow-sm flex items-center gap-4">
+     
+      <div>
+        <span class="text-content-tertiary text-xs block font-medium">Out of Stock</span>
+        <span class="text-xl font-bold text-content-primary">0</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Loading State -->
+  <div class="flex flex-col items-center justify-center py-20 bg-surface rounded-xl border border-border" *ngIf="isLoading()">
+    <div class="w-10 h-10 border-4 border-surface-muted border-t-primary rounded-full animate-spin"></div>
+    <p class="text-content-secondary text-sm mt-4 font-medium animate-pulse">Loading products list...</p>
+  </div>
+
+  <!-- Empty State -->
+  <div class="flex flex-col items-center justify-center py-20 bg-surface rounded-xl border border-border text-center px-4" *ngIf="!isLoading() && products().length === 0">
+    <div class="w-16 h-16 bg-surface-muted rounded-full flex items-center justify-center text-3xl mb-4">
+      🛍️
+    </div>
+    <h3 class="text-lg font-bold text-content-primary">No products found</h3>
+    <p class="text-content-secondary text-sm max-w-sm mt-1">Get started by creating your first product item for your storefront.</p>
+    <button
+      (click)="openAddForm()"
+      class="mt-6 bg-primary hover:bg-primary-hover text-content-on-primary font-semibold py-2 px-4 rounded-lg transition-colors text-sm cursor-pointer"
+    >
+      Create Product
+    </button>
+  </div>
+
+  <!-- Search bar -->
+  <div class="flex items-center gap-3 bg-surface px-4 py-3 rounded-xl border border-border shadow-sm" *ngIf="!isLoading() && products().length > 0">
+    <svg class="w-4 h-4 text-content-tertiary shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+    </svg>
+    <input
+      type="text"
+      [ngModel]="searchQuery()"
+      (ngModelChange)="onSearch($event)"
+      placeholder="Search by name or SKU..."
+      class="flex-1 bg-transparent text-sm text-content-primary placeholder-content-tertiary outline-none"
+    />
+    <button *ngIf="searchQuery()" type="button" (click)="onSearch('')" class="text-content-tertiary hover:text-content-primary text-xs cursor-pointer">✕ Clear</button>
+  </div>
+
+  <!-- Product Table -->
+  <div class="bg-surface rounded-xl border border-border shadow-sm overflow-hidden" *ngIf="!isLoading() && products().length > 0">
+    <div class="overflow-x-auto">
+      <table class="w-full text-left border-collapse">
+        <thead>
+          <tr class="bg-surface-muted border-b border-border text-xs font-bold text-content-secondary uppercase tracking-wider">
+            <th class="py-4 px-6">Product info</th>
+            <th class="py-4 px-6">Category</th>
+            <th class="py-4 px-6">SKU</th>
+            <th class="py-4 px-6">Price</th>
+            <th class="py-4 px-6">Stock</th>
+            <th class="py-4 px-6">Status</th>
+            <th class="py-4 px-6 text-right">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-border text-sm">
+          <tr class="hover:bg-surface-muted/50 transition-colors" *ngFor="let product of products()">
+            <td class="py-4 px-6 flex items-center gap-3">
+              <img
+                [src]="product.metadata?.thumbnail || 'assets/images/default-food.png'"
+                alt=""
+                class="w-12 h-12 rounded-lg object-cover border border-border"
+              />
+              <div>
+                <span class="font-semibold text-content-primary block">{{ getLocalizedName(product.name) }}</span>
+                <span class="text-content-tertiary text-xs block line-clamp-1 max-w-xs">{{ getLocalizedDescription(product.description) }}</span>
+              </div>
+            </td>
+            <td class="py-4 px-6">
+              <span class="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-semibold bg-surface-muted text-content-secondary border border-border">
+                {{ product.category ? getLocalizedName(product.category.name) : 'Unassigned' }}
+              </span>
+            </td>
+            <td class="py-4 px-6 text-content-secondary font-mono text-xs">{{ product.sku || '--' }}</td>
+            <td class="py-4 px-6 font-bold text-content-primary">{{ formatPrice(product.price) }}</td>
+            <td class="py-4 px-6 text-content-secondary">{{ product.stock !== null && product.stock !== undefined ? product.stock : '--' }}</td>
+            <td class="py-4 px-6">
+              <button
+                (click)="toggleActive(product)"
+                class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold transition-all cursor-pointer border"
+                [ngClass]="product.isActive ? 'bg-status-success-bg text-status-success border-status-success/10' : 'bg-status-default-bg text-status-default border-status-default/10'"
+              >
+                <span class="w-1.5 h-1.5 rounded-full" [ngClass]="product.isActive ? 'bg-status-success' : 'bg-status-default'"></span>
+                {{ product.isActive ? 'Active' : 'Draft' }}
+              </button>
+            </td>
+            <td class="py-4 px-6 text-right">
+              <div class="flex items-center justify-end gap-2">
+                <button
+                  (click)="openEditForm(product)"
+                  class="w-8 h-8 rounded-lg hover:bg-surface-muted text-content-secondary hover:text-content-primary flex items-center justify-center transition-colors cursor-pointer border border-border bg-surface"
+                  title="Edit Product"
+                >
+                  <img src="assets/icons/icon-modify.svg" alt="edit" class="w-4 h-4" />
+                </button>
+                <button
+                  (click)="deleteProduct(product)"
+                  class="w-8 h-8 rounded-lg hover:bg-status-error-bg text-status-error flex items-center justify-center transition-colors cursor-pointer border border-border bg-surface"
+                  title="Delete Product"
+                >
+                  <img src="assets/icons/icon-delete.svg" alt="delete" class="w-4 h-4" />
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Pagination Footer -->
+    <div class="bg-surface-muted border-t border-border px-6 py-4 flex items-center justify-between">
+      <span class="text-xs text-content-secondary">Showing all {{ products().length }} products</span>
+    </div>
+  </div>
+</div>
+
+<!-- Slide-over panel using app-slide-over-panel -->
+<app-slide-over-panel
+  [isOpen]="isFormOpen()"
+  [config]="slideOverConfig()"
+  (closePanel)="closeForm()"
+>
+  <div class="p-6 overflow-y-auto h-full flex flex-col bg-surface">
+    <form [formGroup]="productForm" (ngSubmit)="saveProduct()" class="space-y-5 flex-1">
+      <div>
+        <label class="block text-xs font-bold text-content-secondary uppercase tracking-wide mb-2">Product Name (VI) *</label>
+        <input
+          type="text"
+          formControlName="nameVi"
+          placeholder="e.g. Bún bò Huế đặc biệt"
+          class="w-full bg-surface border border-border rounded-lg px-4 py-2.5 text-sm text-content-primary placeholder-content-tertiary focus:outline-none focus:border-primary transition-colors"
+        />
+        <span class="text-status-error text-xs mt-1 block font-semibold" *ngIf="productForm.get('nameVi')?.touched && productForm.get('nameVi')?.invalid">
+          Name in Vietnamese is required.
+        </span>
+      </div>
+
+      <div>
+        <label class="block text-xs font-bold text-content-secondary uppercase tracking-wide mb-2">Product Name (EN)</label>
+        <input
+          type="text"
+          formControlName="nameEn"
+          placeholder="e.g. Special Bun Bo Hue"
+          class="w-full bg-surface border border-border rounded-lg px-4 py-2.5 text-sm text-content-primary placeholder-content-tertiary focus:outline-none focus:border-primary transition-colors"
+        />
+      </div>
+
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label class="block text-xs font-bold text-content-secondary uppercase tracking-wide mb-2">SKU *</label>
+          <input
+            type="text"
+            formControlName="sku"
+            placeholder="e.g. BUNBO-SPEC"
+            class="w-full bg-surface border border-border rounded-lg px-4 py-2.5 text-sm text-content-primary placeholder-content-tertiary focus:outline-none focus:border-primary transition-colors"
+          />
+          <span class="text-status-error text-xs mt-1 block font-semibold" *ngIf="productForm.get('sku')?.touched && productForm.get('sku')?.invalid">
+            SKU is required.
+          </span>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-content-secondary uppercase tracking-wide mb-2">Category</label>
+          <select
+            formControlName="categoryExternalId"
+            class="w-full bg-surface border border-border rounded-lg px-4 py-2.5 text-sm text-content-primary placeholder-content-tertiary focus:outline-none focus:border-primary transition-colors"
+          >
+            <option value="">None (Unassigned)</option>
+            <option *ngFor="let cat of categories()" [value]="cat.externalId">
+              {{ getLocalizedName(cat.name) }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label class="block text-xs font-bold text-content-secondary uppercase tracking-wide mb-2">Price (VND) *</label>
+          <input
+            type="number"
+            formControlName="price"
+            class="w-full bg-surface border border-border rounded-lg px-4 py-2.5 text-sm text-content-primary placeholder-content-tertiary focus:outline-none focus:border-primary transition-colors"
+          />
+          <span class="text-status-error text-xs mt-1 block font-semibold" *ngIf="productForm.get('price')?.touched && productForm.get('price')?.invalid">
+            Enter a valid price >= 0.
+          </span>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-content-secondary uppercase tracking-wide mb-2">Stock count *</label>
+          <input
+            type="number"
+            formControlName="stock"
+            class="w-full bg-surface border border-border rounded-lg px-4 py-2.5 text-sm text-content-primary placeholder-content-tertiary focus:outline-none focus:border-primary transition-colors"
+          />
+          <span class="text-status-error text-xs mt-1 block font-semibold" *ngIf="productForm.get('stock')?.touched && productForm.get('stock')?.invalid">
+            Enter a valid stock level >= 0.
+          </span>
+        </div>
+      </div>
+
+      <div>
+        <label class="block text-xs font-bold text-content-secondary uppercase tracking-wide mb-2">Product Image</label>
+        <!-- Drop zone -->
+        <div
+          class="border-2 border-dashed rounded-xl p-4 text-center transition-colors cursor-pointer"
+          [class.border-primary]="isDragOver()"
+          [class.bg-primary/5]="isDragOver()"
+          [class.border-border]="!isDragOver()"
+          (dragover)="onDragOver($event)"
+          (dragleave)="onDragLeave()"
+          (drop)="onDrop($event)"
+          (click)="fileInput.click()"
+        >
+          <!-- Preview if image exists -->
+          <div *ngIf="productForm.get('imageUrl')?.value" class="flex items-center gap-3">
+            <img [src]="productForm.get('imageUrl')?.value" alt="preview" class="w-16 h-16 rounded-lg object-cover border border-border shrink-0" />
+            <div class="text-left flex-1 min-w-0">
+              <p class="text-xs font-semibold text-content-primary truncate">Image ready</p>
+              <p class="text-xs text-content-tertiary truncate">{{ productForm.get('imageUrl')?.value }}</p>
+            </div>
+            <button type="button" (click)="$event.stopPropagation(); clearImage()" class="text-status-error text-xs hover:underline cursor-pointer shrink-0">Remove</button>
+          </div>
+          <!-- Empty state -->
+          <div *ngIf="!productForm.get('imageUrl')?.value" class="py-2">
+            <svg class="w-8 h-8 mx-auto text-content-tertiary mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+            <p class="text-xs text-content-secondary font-semibold">Drag & drop an image here</p>
+            <p class="text-xs text-content-tertiary mt-0.5">or click to browse — PNG, JPG, WEBP</p>
+          </div>
+        </div>
+        <!-- Hidden file input -->
+        <input #fileInput type="file" accept="image/*" class="hidden" (change)="onFileSelected($event)" multiple />
+        <!-- URL input fallback -->
+        <input
+          type="text"
+          formControlName="imageUrl"
+          placeholder="...or paste an image URL directly"
+          class="mt-2 w-full bg-surface border border-border rounded-lg px-3 py-2 text-xs text-content-primary placeholder-content-tertiary focus:outline-none focus:border-primary transition-colors"
+        />
+      </div>
+
+      <div>
+        <label class="block text-xs font-bold text-content-secondary uppercase tracking-wide mb-2">Description (VI)</label>
+        <textarea
+          formControlName="descriptionVi"
+          rows="3"
+          placeholder="e.g. Sợi bún to, chả cua cua tươi ngọt thơm..."
+          class="w-full bg-surface border border-border rounded-lg px-4 py-2.5 text-sm text-content-primary placeholder-content-tertiary focus:outline-none focus:border-primary transition-colors"
+        ></textarea>
+      </div>
+
+      <div>
+        <label class="block text-xs font-bold text-content-secondary uppercase tracking-wide mb-2">Description (EN)</label>
+        <textarea
+          formControlName="descriptionEn"
+          rows="3"
+          placeholder="e.g. Traditional beef noodle soup with rich spices..."
+          class="w-full bg-surface border border-border rounded-lg px-4 py-2.5 text-sm text-content-primary placeholder-content-tertiary focus:outline-none focus:border-primary transition-colors"
+        ></textarea>
+      </div>
+
+      <!-- Product Status (A7: DRAFT / PUBLISHED / ARCHIVED) -->
+      <div>
+        <label class="block text-xs font-bold text-content-secondary uppercase tracking-wide mb-1.5">
+          Publication Status
+        </label>
+        <select
+          formControlName="status"
+          id="productStatus"
+          class="w-full bg-surface border border-border text-content-primary rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+        >
+          <option value="PUBLISHED">Published – Visible to customers</option>
+          <option value="DRAFT">Draft – Hidden from customers</option>
+          <option value="ARCHIVED">Archived – No longer available</option>
+        </select>
+        <p class="text-xs text-content-tertiary mt-1">Controls visibility of the product on B2C storefront.</p>
+      </div>
+
+      <div class="flex items-center gap-2 py-2">
+        <input
+          type="checkbox"
+          formControlName="isActive"
+          id="isActive"
+          class="w-4 h-4 text-primary border-border bg-surface rounded focus:ring-primary cursor-pointer"
+        />
+        <label for="isActive" class="text-sm font-semibold text-content-primary cursor-pointer">Publish immediately (Active)</label>
+      </div>
+
+
+      <div class="pt-4 border-t border-border flex gap-2">
+        <button
+          type="button"
+          (click)="closeForm()"
+          class="flex-1 bg-surface-muted hover:bg-surface-elevated text-content-primary border border-border font-semibold py-2.5 rounded-lg transition-colors cursor-pointer text-sm"
+        >
+          Cancel
+        </button>
+        <button
+          type="button"
+          (click)="openPreview()"
+          class="px-4 bg-surface border border-border hover:bg-surface-muted text-content-secondary font-semibold py-2.5 rounded-lg transition-colors cursor-pointer text-sm flex items-center gap-1.5"
+          title="Preview how product looks in B2C storefront"
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+          </svg>
+          Preview
+        </button>
+        <button
+          type="submit"
+          [disabled]="isSaving()"
+          class="flex-1 bg-primary hover:bg-primary-hover text-content-on-primary font-semibold py-2.5 rounded-lg shadow-sm transition-colors flex items-center justify-center gap-2 cursor-pointer text-sm"
+        >
+          <div class="w-4 h-4 border-2 border-content-on-primary/20 border-t-content-on-primary rounded-full animate-spin" *ngIf="isSaving()"></div>
+          <span>{{ editingProduct() ? 'Update changes' : 'Create product' }}</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</app-slide-over-panel>
+
+<!-- B11: Product Preview Modal -->
+<div *ngIf="isPreviewOpen()" class="fixed inset-0 z-[60] flex items-center justify-center px-4 bg-black/60 backdrop-blur-sm" (click)="isPreviewOpen.set(false)">
+  <div class="bg-white rounded-3xl shadow-2xl max-w-sm w-full overflow-hidden" (click)="$event.stopPropagation()">
+    <!-- Modal header -->
+    <div class="flex items-center justify-between px-5 py-4 border-b border-slate-100">
+      <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">B2C Preview</span>
+      <button type="button" (click)="isPreviewOpen.set(false)" class="w-7 h-7 rounded-lg bg-slate-100 flex items-center justify-center hover:bg-slate-200 cursor-pointer text-slate-500">✕</button>
+    </div>
+    <!-- Product card preview -->
+    <div class="p-5 flex gap-4">
+      <div class="w-24 h-24 rounded-xl bg-slate-100 overflow-hidden shrink-0 border border-slate-100">
+        <img *ngIf="productForm.get('imageUrl')?.value" [src]="productForm.get('imageUrl')?.value" alt="" class="w-full h-full object-cover" />
+        <div *ngIf="!productForm.get('imageUrl')?.value" class="w-full h-full flex items-center justify-center text-slate-300">
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+        </div>
+      </div>
+      <div class="flex-1 flex flex-col justify-between min-w-0">
+        <div>
+          <h5 class="font-bold text-slate-900 line-clamp-1 leading-snug">{{ productForm.get('nameVi')?.value || 'Product Name' }}</h5>
+          <p class="text-xs text-slate-500 mt-1 line-clamp-2">{{ productForm.get('descriptionVi')?.value || 'No description yet.' }}</p>
+        </div>
+        <div class="flex items-center justify-between mt-3">
+          <span class="font-black text-orange-600">{{ formatPreviewPrice(productForm.get('price')?.value) }}</span>
+          <div class="flex items-center gap-1">
+            <span class="text-xs px-2 py-1 rounded-lg font-bold"
+              [ngClass]="{
+                'bg-green-100 text-green-700': productForm.get('status')?.value === 'PUBLISHED',
+                'bg-yellow-100 text-yellow-700': productForm.get('status')?.value === 'DRAFT',
+                'bg-slate-100 text-slate-500': productForm.get('status')?.value === 'ARCHIVED'
+              }"
+            >{{ productForm.get('status')?.value || 'PUBLISHED' }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="px-5 pb-5">
+      <div class="bg-slate-50 rounded-xl p-3 text-xs text-slate-500 border border-slate-100 space-y-1">
+        <div class="flex justify-between"><span>SKU</span><span class="font-mono font-bold text-slate-700">{{ productForm.get('sku')?.value || 'N/A' }}</span></div>
+        <div class="flex justify-between"><span>Stock</span><span class="font-bold" [class.text-green-600]="productForm.get('stock')?.value > 0" [class.text-red-500]="productForm.get('stock')?.value <= 0">{{ productForm.get('stock')?.value > 0 ? (productForm.get('stock')?.value + ' available') : 'Out of stock' }}</span></div>
+      </div>
+      <p class="text-center text-xs text-slate-400 mt-3">This is how the product appears on the B2C storefront</p>
+    </div>
+  </div>
+</div>
