@@ -60,4 +60,4 @@ package-lock.json
 
 /generated/prisma
 package-lock.json
-.env.local
+.env.*
