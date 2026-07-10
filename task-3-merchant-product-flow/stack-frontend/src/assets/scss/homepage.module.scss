@@ -1,0 +1,7 @@
+.wrapper {
+  background-image: url("../images/nature.jpg");
+  .container {
+    backdrop-filter: blur(7px);
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+}
