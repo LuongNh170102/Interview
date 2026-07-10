@@ -11,9 +11,6 @@ class Courier {
   email: string | undefined;
 
   @Column()
-  password: string | undefined;
-
-  @Column()
   firstname: string | undefined;
 
   @Column()

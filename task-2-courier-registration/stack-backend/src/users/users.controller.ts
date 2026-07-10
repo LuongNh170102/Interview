@@ -1,4 +1,4 @@
-import { Public, ResponseMessage } from "@/src/decorator/customize";
+import { Public, ResponseMessage } from "@/src/decorator";
 import { Body, Controller, Get, Param, Post, Query } from "@nestjs/common";
 import { CreateUserDto } from "./dto";
 import { UsersService } from "./users.service";

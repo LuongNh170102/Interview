@@ -5,12 +5,13 @@ import { CreateStatusDto, UpdateStatusDto } from "./dto";
 export class StatusController {
   constructor(private readonly statusService: StatusService) {}
 
-  @Post()
+  @Post("create")
   create(@Body() createStatusDto: CreateStatusDto) {
+    console.log("createStatusDto: ", createStatusDto);
     return this.statusService.create(createStatusDto);
   }
 
-  @Get()
+  @Get("list")
   findAll() {
     return this.statusService.findAll();
   }

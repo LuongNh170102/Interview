@@ -6,28 +6,28 @@ import { CreateCourierDto, UpdateCourierDto } from "./dto";
 export class CourierController {
   constructor(private readonly courierService: CourierService) {}
 
-  @Post()
+  @Post("create")
   create(@Body() createCourierDto: CreateCourierDto) {
     return this.courierService.create(createCourierDto);
   }
 
-  @Get()
+  @Get("list")
   findAll() {
     return this.courierService.findAll();
   }
 
-  @Get(":id")
+  @Get("detail/:id")
   findOne(@Param("id") id: string) {
     return this.courierService.findOne(+id);
   }
 
-  @Patch(":id")
+  @Post("update/:id")
   update(@Param("id") id: string, @Body() updateCourierDto: UpdateCourierDto) {
-    return this.courierService.update(+id, updateCourierDto);
+    return this.courierService.update(id, updateCourierDto);
   }
 
-  @Delete(":id")
+  @Delete("delete/:id")
   remove(@Param("id") id: string) {
-    return this.courierService.remove(+id);
+    return this.courierService.remove(id);
   }
 }

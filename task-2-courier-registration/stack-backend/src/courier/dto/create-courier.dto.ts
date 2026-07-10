@@ -7,9 +7,6 @@ class CreateCourierDto {
   email: string | undefined;
 
   @IsNotEmpty()
-  password: string | undefined;
-
-  @IsNotEmpty()
   firstname: string | undefined;
 
   @IsNotEmpty()

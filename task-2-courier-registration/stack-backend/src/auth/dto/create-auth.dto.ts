@@ -1,6 +1,6 @@
 import { IsNotEmpty } from "class-validator";
 class CreateAuthDto {
   @IsNotEmpty()
-  token: string;
+  token?: string;
 }
 export { CreateAuthDto };

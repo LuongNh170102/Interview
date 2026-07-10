@@ -7,9 +7,8 @@ export class CourierService {
   create(createCourierDto: CreateCourierDto) {
     return prisma.courier.create({
       data: {
-        status_id: createCourierDto.status_id ? createCourierDto.status_id : undefined,
+        status_id: createCourierDto.status_id ? parseInt(createCourierDto.status_id.toString()) : undefined,
         email: createCourierDto.email ? createCourierDto.email : "",
-        password: createCourierDto.password ? createCourierDto.password : "",
         firstname: createCourierDto.firstname ? createCourierDto.firstname : "",
         lastname: createCourierDto.lastname ? createCourierDto.lastname : "",
         phone: createCourierDto.phone ? createCourierDto.phone : "",
@@ -18,21 +17,25 @@ export class CourierService {
     });
   }
 
-  findAll() {
-    return prisma.courier.findMany();
-  }
+  findAll = async () => {
+    let couriers = await prisma.courier.findMany();
+    let total = await prisma.courier.count();
+    return {
+      couriers,
+      total
+    };
+  };
 
   findOne(id: number) {
-    return prisma.courier.findFirst();
+    return prisma.courier.findUnique({ where: { id } });
   }
 
-  update(id: number, updateCourierDto: UpdateCourierDto) {
+  update(id: string, updateCourierDto: UpdateCourierDto) {
     return prisma.courier.update({
-      where: { id },
+      where: { id: id ? parseInt(id) : 0 },
       data: {
         status_id: updateCourierDto.status_id ? updateCourierDto.status_id : undefined,
         email: updateCourierDto.email ? updateCourierDto.email : "",
-        password: updateCourierDto.password ? updateCourierDto.password : "",
         firstname: updateCourierDto.firstname ? updateCourierDto.firstname : "",
         lastname: updateCourierDto.lastname ? updateCourierDto.lastname : "",
         phone: updateCourierDto.phone ? updateCourierDto.phone : "",
@@ -41,7 +44,7 @@ export class CourierService {
     });
   }
 
-  remove(id: number) {
-    return prisma.courier.delete({ where: { id } });
+  remove(id: string) {
+    return prisma.courier.delete({ where: { id: id ? parseInt(id) : 0 } });
   }
 }

@@ -5,15 +5,14 @@ import { CreateUserDto } from "./dto";
 export class UsersService {
   constructor() {}
   create = (createUserDto: CreateUserDto) => {
-    return prisma.user.create({
+    return prisma.users.create({
       data: {
-        username: createUserDto.username,
-        password: getHashPassword(createUserDto.password),
-        fullname: createUserDto.fullname,
-        email: createUserDto.email,
-        phone: createUserDto.phone
+        username: createUserDto.username ?? "",
+        password: getHashPassword(createUserDto.password ?? ""),
+        fullname: createUserDto.fullname ?? "",
+        email: createUserDto.email ?? "",
+        phone: createUserDto.phone ?? ""
       }
     });
   };
-  
 }

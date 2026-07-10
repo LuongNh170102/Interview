@@ -11,35 +11,53 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
-model Status{
-  id      Int      @id @default(autoincrement())
-  tag_name String @unique  
-  courier Courier[]
+
+model Status {
+  id       Int       @id @default(autoincrement())
+  tag_name String    @unique
+  courier  Courier[]
+
   @@map("status")
 }
-model Courier{
-  id      Int      @id @default(autoincrement())
-  status_id Int?
-  email String @unique
-  password String
-  firstname String
-  lastname String
-  phone String 
-  address String
-  status    Status?    @relation(fields: [status_id], references: [id])
-  orders Orders[]
+
+model Courier {
+  id               Int      @id @default(autoincrement())
+  status_id        Int?
+  email            String   @unique
+  firstname        String
+  lastname         String
+  phone            String
+  address          String?
+  otp_registration String?
+  status           Status?  @relation(fields: [status_id], references: [id])
+  orders           Orders[]
+
   @@map("courier")
 }
-model Orders{
-  id      Int      @id @default(autoincrement())
-  courier_id Int?
+
+model Orders {
+  id                Int      @id @default(autoincrement())
+  courier_id        Int?
   courier_firstname String
-  courier_lastname String
-  order_sku String 
-  order_date String
-  customer_name String
-  customer_phone String
-  customer_address String
-  courier    Courier?    @relation(fields: [courier_id], references: [id])
+  courier_lastname  String
+  order_sku         String
+  order_date        DateTime
+  customer_name     String
+  customer_phone    String
+  customer_address  String?
+  courier           Courier? @relation(fields: [courier_id], references: [id])
+
   @@map("orders")
+}
+
+model Users {
+  id       Int     @id @default(autoincrement())
+  username String  @unique
+  password String
+  email    String  @unique
+  fullname String
+  phone    String  @unique
+  token    String? @db.Text
+
+  @@map("users")
 }

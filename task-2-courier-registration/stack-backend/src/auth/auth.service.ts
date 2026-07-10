@@ -1,4 +1,4 @@
-import { IUser } from "@/src/types/user.type";
+import { IUser } from "@/src/types";
 import { prisma } from "@/src/utils";
 import { BadGatewayException, Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
@@ -14,7 +14,7 @@ export class AuthService {
 
   validateUser = async (username: string, password: string) => {
     let user: any = null;
-    user = await prisma.user.findUnique({ where: { username } });
+    user = await prisma.users.findUnique({ where: { username } });
     if (user) {
       const isValid = compareSync(password, user.password);
       if (isValid === true) {
@@ -37,7 +37,7 @@ export class AuthService {
     const token: string = await this.jwt.sign(payload, {
       secret: this.confService.get<string>("JWT_ACCESS_TOKEN_SECRET")
     });
-    await prisma.user.update({ where: { id }, data: { token } });
+    await prisma.users.update({ where: { id }, data: { token } });
     return {
       user: {
         id,
@@ -51,7 +51,7 @@ export class AuthService {
   };
   logout = async (user: IUser) => {
     const { id } = user;
-    const data: any = await prisma.user.update({ where: { id }, data: { token: null } });
+    const data: any = await prisma.users.update({ where: { id }, data: { token: null } });
     return {
       user: {
         id: data && data.id ? data.id : 0,
@@ -64,12 +64,12 @@ export class AuthService {
     };
   };
   checkValidToken = async (createAuthDto: CreateAuthDto, user: IUser) => {
-    const userDecode: any = this.jwt.decode(createAuthDto.token, { complete: true });
+    const userDecode: any = this.jwt.decode(createAuthDto.token ?? "", { complete: true });
     const payload: IUser = userDecode.payload;
     const signature: string = userDecode.signature;
     let item: IUser | null = null;
     if (payload.id === user.id && payload.username === user.username) {
-      const data: any = await prisma.user.findFirstOrThrow({ where: { id: user.id, username: user.username } });
+      const data: any = await prisma.users.findFirstOrThrow({ where: { id: user.id, username: user.username } });
       if (data) {
         const tokenV2: string = data.token;
         const decodeV2: any = this.jwt.decode(tokenV2, { complete: true });

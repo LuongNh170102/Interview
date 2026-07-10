@@ -4,6 +4,8 @@ import { ServeStaticModule } from "@nestjs/serve-static";
 import { join } from "path";
 import { AuthModule } from "./auth/auth.module";
 import { UserModule } from "./users/users.module";
+import { StatusModule } from "./status/status.module";
+import { CourierModule } from "./courier/courier.module";
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -13,7 +15,9 @@ import { UserModule } from "./users/users.module";
       rootPath: join(__dirname, "..", "public")
     }),
     AuthModule,
-    UserModule
+    UserModule,
+    StatusModule,
+    CourierModule
   ]
 })
 export class AppModule {}

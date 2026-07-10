@@ -1,5 +1,5 @@
-import { CurrentUser, Public, ResponseMessage } from "@/src/decorator/customize";
-import { IUser } from "@/src/types/user.type";
+import { CurrentUser, Public, ResponseMessage } from "@/src/decorator";
+import { IUser } from "@/src/types";
 import { Body, Controller, Get, Post, UseGuards } from "@nestjs/common";
 import { AuthService } from "./auth.service";
 import { CreateAuthDto } from "./dto";
@@ -28,7 +28,7 @@ export class AuthController {
     return user;
   }
 
-  @Get("logout")
+  @Post("logout")
   logout(@CurrentUser() user: IUser) {
     return this.auth.logout(user);
   }
