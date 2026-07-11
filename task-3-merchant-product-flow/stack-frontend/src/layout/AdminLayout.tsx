@@ -30,8 +30,8 @@ const AdminLayout = () => {
           <h1 className={clsx(["text-white", "text-center", "font-bold", "text-3xl", "mb-5", styles.logoText])}>{import.meta.env.VITE_ENV}</h1>
           <ul className={clsx(["text-white", "text-md", styles.menuList])}>
             <li className={clsx(["rounded-3xl", "hover:bg-sky-900"])}>
-              <Link to={"/admin/courier/list"} className={clsx(["block"])}>
-                Courier
+              <Link to={"/admin/prduct/list"} className={clsx(["block"])}>
+                Product
               </Link>
             </li>
           </ul>

@@ -1,24 +1,40 @@
+import { prisma } from "@/src/utils";
 import { Injectable } from "@nestjs/common";
 import { CreateProductDto, UpdateProductDto } from "./dto";
 @Injectable()
 export class ProductService {
   create(createProductDto: CreateProductDto) {
-    return "This action adds a new product";
+    return prisma.product.create({
+      data: {
+        sku: createProductDto.sku ?? "",
+        productName: createProductDto.productName ?? "",
+        price: createProductDto.price ? parseFloat(createProductDto.price.toString()) : 0,
+        featuredImage: createProductDto.featuredImage ?? ""
+      }
+    });
   }
 
-  findAll() {
-    return `This action returns all product`;
+  findAll = async () => {
+    let productList = await prisma.product.findMany();
+    let total = await prisma.product.count();
+    return {
+      productList,
+      total
+    };
+  };
+
+  findOne(id: string) {
+    return prisma.product.findUnique({ where: { id: id ? parseInt(id) : 0 } });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} product`;
+  update(id: string, updateProductDto: UpdateProductDto) {
+    return prisma.product.update({
+      where: { id: id ? parseInt(id) : 0 },
+      data: { sku: updateProductDto.sku ?? "", productName: updateProductDto.productName ?? "", price: updateProductDto.price ?? 0, featuredImage: updateProductDto.featuredImage ?? "" }
+    });
   }
 
-  update(id: number, updateProductDto: UpdateProductDto) {
-    return `This action updates a #${id} product`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} product`;
+  remove(id: string) {
+    return prisma.product.delete({ where: { id: id ? parseInt(id) : 0 } });
   }
 }

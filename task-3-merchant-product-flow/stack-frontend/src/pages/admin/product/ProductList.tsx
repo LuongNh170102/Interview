@@ -11,13 +11,11 @@ import { produce } from "immer";
 type TablePaginationConfig = Exclude<GetProp<TableProps, "pagination">, boolean>;
 interface DataType {
   key: string;
-  name: string;
   id: number;
-  email: string;
-  firstname: string;
-  lastname: string;
-  phone: string;
-  address: string;
+  sku: string;
+  productName: string;
+  price: number;
+  featuredImage: string;
 }
 const Toast = Swal.mixin({
   toast: true,
@@ -39,28 +37,28 @@ interface TableParams {
 const ProductList = () => {
   const columns: TableProps<DataType>["columns"] = [
     {
-      title: "Email",
-      dataIndex: "email",
-      key: "email",
+      title: "Sku",
+      dataIndex: "sku",
+      key: "sku",
       render: (text) => <span>{text}</span>
     },
     {
       title: "Name",
-      dataIndex: "name",
-      key: "name",
+      dataIndex: "productName",
+      key: "productName",
       render: (text) => <span>{text}</span>
     },
     {
-      title: "Phone",
-      dataIndex: "phone",
-      key: "phone",
+      title: "Price",
+      dataIndex: "price",
+      key: "price",
       render: (text) => <span>{text}</span>
     },
     {
-      title: "Address",
-      dataIndex: "address",
-      key: "address",
-      render: (text) => <span>{text}</span>
+      title: "Image",
+      dataIndex: "featuredImage",
+      key: "featuredImage",
+      render: (text) => <img src={`${import.meta.env.VITE_BACKEND_URI}/images/${text}`} />
     },
     {
       title: "",
@@ -92,13 +90,13 @@ const ProductList = () => {
       .then((response: any) => {
         let total = 0;
         const { statusCode, data } = response.data;
+        console.log("response = ", response);
         if (parseInt(statusCode) >= 200 && parseInt(statusCode) <= 299) {
           total = parseInt(data.total);
           let productList: DataType[] = data.productList;
           let nextState: DataType[] = produce(productList, (draft) => {
             draft.forEach((item: DataType) => {
               item.key = item.id ? item.id.toString() : "";
-              item.name = item.lastname + " " + item.firstname;
             });
           });
           setProductList(nextState);
@@ -132,7 +130,7 @@ const ProductList = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         AxiosService()
-          .delete("/product/delete/" + id, { headers: { isShowLoading: true } })
+          .delete("/product/" + id, { headers: { isShowLoading: true } })
           .then((response: any) => {
             const { statusCode, message } = response.data;
             if (parseInt(statusCode) >= 200 && parseInt(statusCode) <= 299) {

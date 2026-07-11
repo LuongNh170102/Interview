@@ -8,19 +8,10 @@ import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 type FieldType = {
-  status_id: string;
-  email: string;
-  firstname: string;
-  lastname: string;
-  phone: string;
-  address: string;
-};
-type IStatus = {
-  label: string;
-  value: string;
-  id: number;
-  tag_name: string;
-  status_id: number;
+  sku: string;
+  productName: string;
+  price: string;
+  featuredImage: string;
 };
 const Toast = Swal.mixin({
   toast: true,
@@ -42,7 +33,7 @@ const ProductForm = () => {
     navigate("/admin/product/list");
   };
   const onFinish: FormProps<FieldType>["onFinish"] = (values) => {
-    const { email, firstname, lastname, phone, address, status_id } = values;
+    const { sku, productName, price, featuredImage } = values;
     let actionUrl: string = "";
     if (productId) {
       actionUrl = "/product/update/" + productId;
@@ -50,7 +41,7 @@ const ProductForm = () => {
       actionUrl = "/product/create";
     }
     AxiosService()
-      .post(actionUrl, { email, firstname, lastname, phone, address, status_id: status_id ? parseInt(status_id) : 2 }, { headers: { isShowLoading: true } })
+      .post(actionUrl, { sku, productName, price, featuredImage }, { headers: { isShowLoading: true } })
       .then((response: any) => {
         const { statusCode } = response.data;
         if (parseInt(statusCode) >= 200 && parseInt(statusCode) <= 299) {
@@ -81,13 +72,11 @@ const ProductForm = () => {
           .then((response: any) => {
             const { statusCode, message, data } = response.data;
             if (parseInt(statusCode) >= 200 && parseInt(statusCode) <= 299) {
-              const { email, firstname, lastname, phone, address, status_id } = data;
-              frm.setFieldValue("email", email);
-              frm.setFieldValue("firstname", firstname);
-              frm.setFieldValue("lastname", lastname);
-              frm.setFieldValue("phone", phone);
-              frm.setFieldValue("address", address);
-              frm.setFieldValue("status_id", status_id ? status_id.toString() : "2");
+              const { sku, productName, price, featuredImage } = data;
+              frm.setFieldValue("sku", sku);
+              frm.setFieldValue("productName", productName);
+              frm.setFieldValue("price", price);
+              frm.setFieldValue("featuredImage", featuredImage);
             } else {
               Toast.fire({
                 icon: "error",
@@ -116,31 +105,26 @@ const ProductForm = () => {
         }
       >
         <Row gutter={16}>
-          <Col span={8}>
-            <Form.Item<FieldType> label={t("Firstname")} name="firstname" rules={[{ required: true }]}>
+          <Col span={12}>
+            <Form.Item<FieldType> label={t("Sku")} name="sku" rules={[{ required: true }]}>
               <Input />
             </Form.Item>
           </Col>
-          <Col span={8}>
-            <Form.Item<FieldType> label={t("Lastname")} name="lastname" rules={[{ required: true }]}>
+          <Col span={12}>
+            <Form.Item<FieldType> label={t("Product name")} name="productName" rules={[{ required: true }]}>
               <Input />
             </Form.Item>
           </Col>
           <Col span={8}></Col>
         </Row>
         <Row gutter={16}>
-          <Col span={8}>
-            <Form.Item<FieldType> label={t("Phone")} name="phone" rules={[{ required: true }]}>
+          <Col span={12}>
+            <Form.Item<FieldType> label={t("Price")} name="price" rules={[{ required: true }]}>
               <Input />
             </Form.Item>
           </Col>
-          <Col span={8}>
-            <Form.Item<FieldType> label={t("Email")} name="email" rules={[{ required: true }]}>
-              <Input />
-            </Form.Item>
-          </Col>
-          <Col span={8}>
-            <Form.Item<FieldType> label={t("Address")} name="address" rules={[{ required: true }]}>
+          <Col span={12}>
+            <Form.Item<FieldType> label={t("Image")} name="featuredImage" rules={[{ required: true }]}>
               <Input />
             </Form.Item>
           </Col>

@@ -55,7 +55,7 @@ model OrdersDetail {
   productSku         String
   productName        String
   productPrice       Float
-  producFeatureImage String
+  productFeaturedImage String
   orders             Orders  @relation(fields: [ordersId], references: [id])
   product            Product @relation(fields: [productId], references: [id])
 

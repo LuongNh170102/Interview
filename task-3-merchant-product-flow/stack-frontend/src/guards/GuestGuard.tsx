@@ -14,7 +14,7 @@ const GuestGuard: React.FC<React.PropsWithChildren> = ({ children }) => {
   const { isLoggedIn } = useAuth();
   React.useEffect(() => {
     if (isLoggedIn) {
-      navigate("/admin/courier/list");
+      navigate("/admin/product/list");
     }
   }, [isLoggedIn]);
   return children;
