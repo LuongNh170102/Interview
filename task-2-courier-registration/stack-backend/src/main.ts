@@ -1,0 +1,30 @@
+import { AppModule } from "@/src/app.module";
+import { JwtAuthGuard } from "@/src/auth/jwt-auth.guard";
+import { TransformInterceptor } from "@/src/core";
+import { ValidationPipe } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
+import { NestFactory, Reflector } from "@nestjs/core";
+import { NestExpressApplication } from "@nestjs/platform-express";
+import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
+import cookieParser from "cookie-parser";
+import { join } from "path";
+async function bootstrap() {
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
+  const confService = app.get(ConfigService);
+  const reflector = app.get(Reflector);
+  app.useGlobalGuards(new JwtAuthGuard(reflector));
+  app.useGlobalInterceptors(new TransformInterceptor(reflector));
+  app.useStaticAssets(join(__dirname, "..", "public"));
+  app.setBaseViewsDir(join(__dirname, "..", "views"));
+  app.useGlobalPipes(new ValidationPipe());
+  app.use(cookieParser());
+  app.enableCors();
+  const port: string | undefined = confService.get<string>("PORT");
+  const app_env: string | undefined = confService.get<string>("APP_ENV");
+  const config = new DocumentBuilder().setTitle("Slasify Multilevel messages test example").setDescription("The hierachy messages API description").setVersion("1.0").addTag("comments").build();
+  const documentFactory = () => SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup("api", app, documentFactory);
+  console.log({ port, app_env });
+  await app.listen(port ? port : 3000);
+}
+bootstrap();

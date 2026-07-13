@@ -1,0 +1,401 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 15.3
+-- Dumped by pg_dump version 15.3
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- Name: _prisma_migrations; Type: TABLE; Schema: public; Owner: root
+--
+
+CREATE TABLE public._prisma_migrations (
+    id character varying(36) NOT NULL,
+    checksum character varying(64) NOT NULL,
+    finished_at timestamp with time zone,
+    migration_name character varying(255) NOT NULL,
+    logs text,
+    rolled_back_at timestamp with time zone,
+    started_at timestamp with time zone DEFAULT now() NOT NULL,
+    applied_steps_count integer DEFAULT 0 NOT NULL
+);
+
+
+ALTER TABLE public._prisma_migrations OWNER TO root;
+
+--
+-- Name: courier; Type: TABLE; Schema: public; Owner: root
+--
+
+CREATE TABLE public.courier (
+    id integer NOT NULL,
+    status_id integer,
+    email text NOT NULL,
+    firstname text NOT NULL,
+    lastname text NOT NULL,
+    phone text NOT NULL,
+    address text,
+    otp_registration text
+);
+
+
+ALTER TABLE public.courier OWNER TO root;
+
+--
+-- Name: courier_id_seq; Type: SEQUENCE; Schema: public; Owner: root
+--
+
+CREATE SEQUENCE public.courier_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.courier_id_seq OWNER TO root;
+
+--
+-- Name: courier_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: root
+--
+
+ALTER SEQUENCE public.courier_id_seq OWNED BY public.courier.id;
+
+
+--
+-- Name: orders; Type: TABLE; Schema: public; Owner: root
+--
+
+CREATE TABLE public.orders (
+    id integer NOT NULL,
+    courier_id integer,
+    courier_firstname text NOT NULL,
+    courier_lastname text NOT NULL,
+    order_sku text NOT NULL,
+    order_date timestamp(3) without time zone NOT NULL,
+    customer_name text NOT NULL,
+    customer_phone text NOT NULL,
+    customer_address text
+);
+
+
+ALTER TABLE public.orders OWNER TO root;
+
+--
+-- Name: orders_id_seq; Type: SEQUENCE; Schema: public; Owner: root
+--
+
+CREATE SEQUENCE public.orders_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.orders_id_seq OWNER TO root;
+
+--
+-- Name: orders_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: root
+--
+
+ALTER SEQUENCE public.orders_id_seq OWNED BY public.orders.id;
+
+
+--
+-- Name: status; Type: TABLE; Schema: public; Owner: root
+--
+
+CREATE TABLE public.status (
+    id integer NOT NULL,
+    tag_name text NOT NULL
+);
+
+
+ALTER TABLE public.status OWNER TO root;
+
+--
+-- Name: status_id_seq; Type: SEQUENCE; Schema: public; Owner: root
+--
+
+CREATE SEQUENCE public.status_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.status_id_seq OWNER TO root;
+
+--
+-- Name: status_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: root
+--
+
+ALTER SEQUENCE public.status_id_seq OWNED BY public.status.id;
+
+
+--
+-- Name: users; Type: TABLE; Schema: public; Owner: root
+--
+
+CREATE TABLE public.users (
+    id integer NOT NULL,
+    username text NOT NULL,
+    password text NOT NULL,
+    email text NOT NULL,
+    fullname text NOT NULL,
+    phone text NOT NULL,
+    token text
+);
+
+
+ALTER TABLE public.users OWNER TO root;
+
+--
+-- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: root
+--
+
+CREATE SEQUENCE public.users_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.users_id_seq OWNER TO root;
+
+--
+-- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: root
+--
+
+ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
+
+
+--
+-- Name: courier id; Type: DEFAULT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.courier ALTER COLUMN id SET DEFAULT nextval('public.courier_id_seq'::regclass);
+
+
+--
+-- Name: orders id; Type: DEFAULT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.orders ALTER COLUMN id SET DEFAULT nextval('public.orders_id_seq'::regclass);
+
+
+--
+-- Name: status id; Type: DEFAULT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.status ALTER COLUMN id SET DEFAULT nextval('public.status_id_seq'::regclass);
+
+
+--
+-- Name: users id; Type: DEFAULT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_id_seq'::regclass);
+
+
+--
+-- Data for Name: _prisma_migrations; Type: TABLE DATA; Schema: public; Owner: root
+--
+
+COPY public._prisma_migrations (id, checksum, finished_at, migration_name, logs, rolled_back_at, started_at, applied_steps_count) FROM stdin;
+921701fe-885d-4303-bf04-3dce656f01a9	dc4f9c98328c21850315c63c69fd89db37f1a0c11e33b97569932c72812074a6	2026-07-10 11:51:06.870838+00	20260710115106_init_database	\N	\N	2026-07-10 11:51:06.849396+00	1
+\.
+
+
+--
+-- Data for Name: courier; Type: TABLE DATA; Schema: public; Owner: root
+--
+
+COPY public.courier (id, status_id, email, firstname, lastname, phone, address, otp_registration) FROM stdin;
+1	1	courier1@example.com	Hà	Trần Thị	988162751	121 Main St	\N
+2	2	courier2@example.com	Lợi	Lê Văn	988162752	122 Main St	\N
+3	3	courier3@example.com	Hùng	Trần Văn Hùng	988162754	123 Main St	\N
+4	1	courier4@example.com	Mai	Lê Thị Thảo	988162755	124 Main St	\N
+5	1	courier5@example.com	Nga	Đỗ Thị	988162756	125 Main St	\N
+6	1	courier6@example.com	Hậu	Trần Công Hậu	988162757	126 Main St	\N
+7	1	courier7@example.com	Vinh	Mai Quốc	988162758	127 Main St	\N
+8	1	courier8@example.com	Hồng	Phan Thị	988162759	128 Main St	\N
+9	1	courier9@example.com	Duy	Lê Hồng	988162710	129 Main St	\N
+10	1	courier10@example.com	Bảo	Trần Văn	988162711	130 Main St	\N
+11	1	courier11@example.com	Cường	Lê Văn	988162712	131 Main St	\N
+\.
+
+
+--
+-- Data for Name: orders; Type: TABLE DATA; Schema: public; Owner: root
+--
+
+COPY public.orders (id, courier_id, courier_firstname, courier_lastname, order_sku, order_date, customer_name, customer_phone, customer_address) FROM stdin;
+\.
+
+
+--
+-- Data for Name: status; Type: TABLE DATA; Schema: public; Owner: root
+--
+
+COPY public.status (id, tag_name) FROM stdin;
+1	approve
+2	reject
+3	pending
+\.
+
+
+--
+-- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: root
+--
+
+COPY public.users (id, username, password, email, fullname, phone, token) FROM stdin;
+1	diennk	$2a$10$TECML5d1s.mOx2Z4AK1LQeDYDF1I1lgdNxBDwHZc/kqEVyddzh5U2	nguyenkimdien02@gmail.com	Nguyễn Kim Điền	0988162753	eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0b2tlbiBsb2dpbiIsImlzcyI6ImZyb20gc2VydmVyIiwiaWQiOjEsInBob25lIjoiMDk4ODE2Mjc1MyIsImVtYWlsIjoibmd1eWVua2ltZGllbjAyQGdtYWlsLmNvbSIsImZ1bGxuYW1lIjoiTmd1eeG7hW4gS2ltIMSQaeG7gW4iLCJ1c2VybmFtZSI6ImRpZW5uayIsImlhdCI6MTc4MzY4NDM4NX0.QGTsYm37hKJlnGTioDZitMUOxrx8l_hdat0kFbh-Wus
+\.
+
+
+--
+-- Name: courier_id_seq; Type: SEQUENCE SET; Schema: public; Owner: root
+--
+
+SELECT pg_catalog.setval('public.courier_id_seq', 11, true);
+
+
+--
+-- Name: orders_id_seq; Type: SEQUENCE SET; Schema: public; Owner: root
+--
+
+SELECT pg_catalog.setval('public.orders_id_seq', 1, false);
+
+
+--
+-- Name: status_id_seq; Type: SEQUENCE SET; Schema: public; Owner: root
+--
+
+SELECT pg_catalog.setval('public.status_id_seq', 3, true);
+
+
+--
+-- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: root
+--
+
+SELECT pg_catalog.setval('public.users_id_seq', 1, true);
+
+
+--
+-- Name: _prisma_migrations _prisma_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public._prisma_migrations
+    ADD CONSTRAINT _prisma_migrations_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: courier courier_pkey; Type: CONSTRAINT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.courier
+    ADD CONSTRAINT courier_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: orders orders_pkey; Type: CONSTRAINT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.orders
+    ADD CONSTRAINT orders_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: status status_pkey; Type: CONSTRAINT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.status
+    ADD CONSTRAINT status_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: courier_email_key; Type: INDEX; Schema: public; Owner: root
+--
+
+CREATE UNIQUE INDEX courier_email_key ON public.courier USING btree (email);
+
+
+--
+-- Name: status_tag_name_key; Type: INDEX; Schema: public; Owner: root
+--
+
+CREATE UNIQUE INDEX status_tag_name_key ON public.status USING btree (tag_name);
+
+
+--
+-- Name: users_email_key; Type: INDEX; Schema: public; Owner: root
+--
+
+CREATE UNIQUE INDEX users_email_key ON public.users USING btree (email);
+
+
+--
+-- Name: users_phone_key; Type: INDEX; Schema: public; Owner: root
+--
+
+CREATE UNIQUE INDEX users_phone_key ON public.users USING btree (phone);
+
+
+--
+-- Name: users_username_key; Type: INDEX; Schema: public; Owner: root
+--
+
+CREATE UNIQUE INDEX users_username_key ON public.users USING btree (username);
+
+
+--
+-- Name: courier courier_status_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.courier
+    ADD CONSTRAINT courier_status_id_fkey FOREIGN KEY (status_id) REFERENCES public.status(id) ON UPDATE CASCADE ON DELETE SET NULL;
+
+
+--
+-- Name: orders orders_courier_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.orders
+    ADD CONSTRAINT orders_courier_id_fkey FOREIGN KEY (courier_id) REFERENCES public.courier(id) ON UPDATE CASCADE ON DELETE SET NULL;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
