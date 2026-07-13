@@ -1,13 +1,13 @@
-import { AxiosService } from "@/utils";
+import { AppButton } from "@/components";
+import { AxiosService, formatCurrency, getUriBackend } from "@/utils";
 import { PlusOutlined } from "@ant-design/icons";
-import { Table, type TableProps, Card, type GetProp } from "antd";
+import { Card, Table, type GetProp, type TableProps } from "antd";
 import clsx from "clsx";
+import { produce } from "immer";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { AppButton } from "@/components";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import { produce } from "immer";
 type TablePaginationConfig = Exclude<GetProp<TableProps, "pagination">, boolean>;
 interface DataType {
   key: string;
@@ -52,13 +52,13 @@ const ProductList = () => {
       title: "Price",
       dataIndex: "price",
       key: "price",
-      render: (text) => <span>{text}</span>
+      render: (text) => <span>{formatCurrency(text)}</span>
     },
     {
       title: "Image",
       dataIndex: "featuredImage",
       key: "featuredImage",
-      render: (text) => <img src={`${import.meta.env.VITE_BACKEND_URI}/images/${text}`} />
+      render: (text) => <img src={`${getUriBackend()}/images/${text ? text : "no-image.png"}`} width={100} height={50} />
     },
     {
       title: "",
@@ -80,7 +80,7 @@ const ProductList = () => {
   const [tableParams, setTableParams] = React.useState<TableParams>({
     pagination: {
       current: 1,
-      pageSize: 5
+      pageSize: 100
     }
   });
   const [productList, setProductList] = React.useState<DataType[]>([]);

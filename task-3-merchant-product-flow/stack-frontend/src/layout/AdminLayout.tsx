@@ -25,7 +25,7 @@ const AdminLayout = () => {
   };
   return (
     <React.Fragment>
-      <div className={clsx([stylesContainer.container, "ml-auto", "mr-auto", "h-screen", "flex"])}>
+      <div className={clsx([stylesContainer.container, "ml-auto", "mr-auto", "flex"])}>
         <div className={clsx(["bg-sky-800", "w-80", "pt-5", "pb-5", "pl-5", "pr-5"])}>
           <h1 className={clsx(["text-white", "text-center", "font-bold", "text-3xl", "mb-5", styles.logoText])}>{import.meta.env.VITE_ENV}</h1>
           <ul className={clsx(["text-white", "text-md", styles.menuList])}>

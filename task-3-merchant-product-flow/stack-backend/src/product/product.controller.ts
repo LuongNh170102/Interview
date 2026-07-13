@@ -1,6 +1,6 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from "@nestjs/common";
-import { ProductService } from "./product.service";
+import { Body, Controller, Delete, Get, Param, Post } from "@nestjs/common";
 import { CreateProductDto, UpdateProductDto } from "./dto";
+import { ProductService } from "./product.service";
 @Controller("product")
 export class ProductController {
   constructor(private readonly productService: ProductService) {}

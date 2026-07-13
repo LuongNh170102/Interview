@@ -3,11 +3,13 @@ import React from "react";
 type IButton = {
   lblCtrl: string;
   iconCtrl: React.ReactNode;
-  onClickForm: () => void;
+  onClickForm?: () => void;
 };
 const AppButton: React.FC<IButton> = ({ lblCtrl, iconCtrl, onClickForm }) => {
   const handleClickForm = () => {
-    onClickForm();
+    if (onClickForm) {
+      onClickForm();
+    }
   };
   return (
     <button

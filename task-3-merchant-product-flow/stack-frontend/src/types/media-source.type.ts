@@ -8,4 +8,4 @@ type IMediaSource = {
   created_at: string;
   updated_at: string;
 };
-export { type IMediaSource };
+export type { IMediaSource };

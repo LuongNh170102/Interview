@@ -13,6 +13,11 @@
   "dependencies": {
     "@ant-design/icons": "^6.1.0",
     "@apollo/client": "^3.9.11",
+    "@fortawesome/fontawesome-svg-core": "^7.3.0",
+    "@fortawesome/free-brands-svg-icons": "^7.3.0",
+    "@fortawesome/free-regular-svg-icons": "^7.3.0",
+    "@fortawesome/free-solid-svg-icons": "^7.3.0",
+    "@fortawesome/react-fontawesome": "^3.4.0",
     "@hookform/resolvers": "^2.8.8",
     "@reduxjs/toolkit": "^2.11.0",
     "@tailwindcss/vite": "^4.1.17",
@@ -35,7 +40,8 @@
     "redux": "^5.0.1",
     "sweetalert2": "^11.10.8",
     "tailwindcss": "^4.1.17",
-    "yup": "0.32.11"
+    "yup": "0.32.11",
+    "react-drag-drop-files": "^2.3.10"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",

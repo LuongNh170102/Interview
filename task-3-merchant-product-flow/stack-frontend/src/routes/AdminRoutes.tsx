@@ -4,7 +4,7 @@ import { AdminLayout } from "@/layout";
 import { delayTimeout } from "@/utils";
 import React from "react";
 const ProductList = Loadable(React.lazy(() => delayTimeout(import("@/pages/admin/product/ProductList"))));
-const ProductForm = Loadable(React.lazy(() => delayTimeout(import("@/pages/admin/product/ProductForm"))));
+const ProductFrm = Loadable(React.lazy(() => delayTimeout(import("@/pages/admin/product/ProductFrm"))));
 const AdminRoutes = {
   path: "admin",
   element: (
@@ -22,11 +22,11 @@ const AdminRoutes = {
         },
         {
           path: "add",
-          element: <ProductForm />
+          element: <ProductFrm />
         },
         {
           path: "edit/:productId",
-          element: <ProductForm />
+          element: <ProductFrm />
         }
       ]
     }
