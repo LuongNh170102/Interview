@@ -5,6 +5,7 @@ import { join } from "path";
 import { AuthModule } from "./auth/auth.module";
 import { UserModule } from "./users/users.module";
 import { ProductModule } from './product/product.module';
+import { MediaFileModule } from './media-file/media-file.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -15,7 +16,8 @@ import { ProductModule } from './product/product.module';
     }),
     AuthModule,
     UserModule,
-    ProductModule
+    ProductModule,
+    MediaFileModule
   ]
 })
 export class AppModule {}

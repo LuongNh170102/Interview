@@ -15,7 +15,7 @@ export class ProductService {
   }
 
   findAll = async () => {
-    let productList = await prisma.product.findMany();
+    let productList = await prisma.product.findMany({ orderBy: { id: "desc" } });
     let total = await prisma.product.count();
     return {
       productList,
@@ -30,7 +30,12 @@ export class ProductService {
   update(id: string, updateProductDto: UpdateProductDto) {
     return prisma.product.update({
       where: { id: id ? parseInt(id) : 0 },
-      data: { sku: updateProductDto.sku ?? "", productName: updateProductDto.productName ?? "", price: updateProductDto.price ?? 0, featuredImage: updateProductDto.featuredImage ?? "" }
+      data: {
+        sku: updateProductDto.sku ?? "",
+        productName: updateProductDto.productName ?? "",
+        price: updateProductDto.price ? parseFloat(updateProductDto.price.toString()) : 0,
+        featuredImage: updateProductDto.featuredImage ?? ""
+      }
     });
   }
 
