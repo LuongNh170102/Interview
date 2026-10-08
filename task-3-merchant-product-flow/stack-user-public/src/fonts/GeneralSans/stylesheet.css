@@ -1,0 +1,273 @@
+@font-face {
+    font-family: 'General Sans';
+    src: url('GeneralSans-Bold.eot');
+    src: url('GeneralSans-Bold.eot?#iefix') format('embedded-opentype'),
+        url('GeneralSans-Bold.woff2') format('woff2'),
+        url('GeneralSans-Bold.woff') format('woff'),
+        url('GeneralSans-Bold.ttf') format('truetype'),
+        url('GeneralSans-Bold.svg#GeneralSans-Bold') format('svg');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'General Sans';
+    src: url('false.eot');
+    src: url('false.eot?#iefix') format('embedded-opentype'),
+        url('false.woff2') format('woff2'),
+        url('false.woff') format('woff'),
+        url('false.ttf') format('truetype'),
+        url('false.svg#false') format('svg');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'General Sans';
+    src: url('GeneralSans-Extralight.eot');
+    src: url('GeneralSans-Extralight.eot?#iefix') format('embedded-opentype'),
+        url('GeneralSans-Extralight.woff2') format('woff2'),
+        url('GeneralSans-Extralight.woff') format('woff'),
+        url('GeneralSans-Extralight.ttf') format('truetype'),
+        url('GeneralSans-Extralight.svg#GeneralSans-Extralight') format('svg');
+    font-weight: 200;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'General Sans';
+    src: url('false_1.eot');
+    src: url('false_1.eot?#iefix') format('embedded-opentype'),
+        url('false_1.woff2') format('woff2'),
+        url('false_1.woff') format('woff'),
+        url('false_1.ttf') format('truetype'),
+        url('false_1.svg#false') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'General Sans';
+    src: url('GeneralSans-Medium.eot');
+    src: url('GeneralSans-Medium.eot?#iefix') format('embedded-opentype'),
+        url('GeneralSans-Medium.woff2') format('woff2'),
+        url('GeneralSans-Medium.woff') format('woff'),
+        url('GeneralSans-Medium.ttf') format('truetype'),
+        url('GeneralSans-Medium.svg#GeneralSans-Medium') format('svg');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'false';
+    src: url('false_2.eot');
+    src: url('false_2.eot?#iefix') format('embedded-opentype'),
+        url('false_2.woff2') format('woff2'),
+        url('false_2.woff') format('woff'),
+        url('false_2.ttf') format('truetype'),
+        url('false_2.svg#false') format('svg');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'General Sans';
+    src: url('false_3.eot');
+    src: url('false_3.eot?#iefix') format('embedded-opentype'),
+        url('false_3.woff2') format('woff2'),
+        url('false_3.woff') format('woff'),
+        url('false_3.ttf') format('truetype'),
+        url('false_3.svg#false') format('svg');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'General Sans';
+    src: url('false_4.eot');
+    src: url('false_4.eot?#iefix') format('embedded-opentype'),
+        url('false_4.woff2') format('woff2'),
+        url('false_4.woff') format('woff'),
+        url('false_4.ttf') format('truetype'),
+        url('false_4.svg#false') format('svg');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'General Sans';
+    src: url('false_5.eot');
+    src: url('false_5.eot?#iefix') format('embedded-opentype'),
+        url('false_5.woff2') format('woff2'),
+        url('false_5.woff') format('woff'),
+        url('false_5.ttf') format('truetype'),
+        url('false_5.svg#false') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'false';
+    src: url('false_6.eot');
+    src: url('false_6.eot?#iefix') format('embedded-opentype'),
+        url('false_6.woff2') format('woff2'),
+        url('false_6.woff') format('woff'),
+        url('false_6.ttf') format('truetype'),
+        url('false_6.svg#false') format('svg');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'General Sans';
+    src: url('false_7.eot');
+    src: url('false_7.eot?#iefix') format('embedded-opentype'),
+        url('false_7.woff2') format('woff2'),
+        url('false_7.woff') format('woff'),
+        url('false_7.ttf') format('truetype'),
+        url('false_7.svg#false') format('svg');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'General Sans';
+    src: url('GeneralSans-Light.eot');
+    src: url('GeneralSans-Light.eot?#iefix') format('embedded-opentype'),
+        url('GeneralSans-Light.woff2') format('woff2'),
+        url('GeneralSans-Light.woff') format('woff'),
+        url('GeneralSans-Light.ttf') format('truetype'),
+        url('GeneralSans-Light.svg#GeneralSans-Light') format('svg');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'General Sans Variable';
+    src: url('GeneralSansVariable-Extralight.eot');
+    src: url('GeneralSansVariable-Extralight.eot?#iefix') format('embedded-opentype'),
+        url('GeneralSansVariable-Extralight.woff2') format('woff2'),
+        url('GeneralSansVariable-Extralight.woff') format('woff'),
+        url('GeneralSansVariable-Extralight.ttf') format('truetype'),
+        url('GeneralSansVariable-Extralight.svg#GeneralSansVariable-Extralight') format('svg');
+    font-weight: 200;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'General Sans Variable';
+    src: url('GeneralSansVariable-Extralight_1.eot');
+    src: url('GeneralSansVariable-Extralight_1.eot?#iefix') format('embedded-opentype'),
+        url('GeneralSansVariable-Extralight_1.woff2') format('woff2'),
+        url('GeneralSansVariable-Extralight_1.woff') format('woff'),
+        url('GeneralSansVariable-Extralight_1.ttf') format('truetype'),
+        url('GeneralSansVariable-Extralight_1.svg#GeneralSansVariable-Extralight') format('svg');
+    font-weight: 200;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'General Sans';
+    src: url('GeneralSans-Regular.eot');
+    src: url('GeneralSans-Regular.eot?#iefix') format('embedded-opentype'),
+        url('GeneralSans-Regular.woff2') format('woff2'),
+        url('GeneralSans-Regular.woff') format('woff'),
+        url('GeneralSans-Regular.ttf') format('truetype'),
+        url('GeneralSans-Regular.svg#GeneralSans-Regular') format('svg');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'false';
+    src: url('false_8.eot');
+    src: url('false_8.eot?#iefix') format('embedded-opentype'),
+        url('false_8.woff2') format('woff2'),
+        url('false_8.woff') format('woff'),
+        url('false_8.ttf') format('truetype'),
+        url('false_8.svg#false') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'General Sans';
+    src: url('false_9.eot');
+    src: url('false_9.eot?#iefix') format('embedded-opentype'),
+        url('false_9.woff2') format('woff2'),
+        url('false_9.woff') format('woff'),
+        url('false_9.ttf') format('truetype'),
+        url('false_9.svg#false') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'General Sans Variable';
+    src: url('GeneralSansVariable-Extralight_2.eot');
+    src: url('GeneralSansVariable-Extralight_2.eot?#iefix') format('embedded-opentype'),
+        url('GeneralSansVariable-Extralight_2.woff2') format('woff2'),
+        url('GeneralSansVariable-Extralight_2.woff') format('woff'),
+        url('GeneralSansVariable-Extralight_2.ttf') format('truetype'),
+        url('GeneralSansVariable-Extralight_2.svg#GeneralSansVariable-Extralight') format('svg');
+    font-weight: 200;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'false';
+    src: url('false_10.eot');
+    src: url('false_10.eot?#iefix') format('embedded-opentype'),
+        url('false_10.woff2') format('woff2'),
+        url('false_10.woff') format('woff'),
+        url('false_10.ttf') format('truetype'),
+        url('false_10.svg#false') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'General Sans';
+    src: url('false_11.eot');
+    src: url('false_11.eot?#iefix') format('embedded-opentype'),
+        url('false_11.woff2') format('woff2'),
+        url('false_11.woff') format('woff'),
+        url('false_11.ttf') format('truetype'),
+        url('false_11.svg#false') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'General Sans';
+    src: url('GeneralSans-Semibold.eot');
+    src: url('GeneralSans-Semibold.eot?#iefix') format('embedded-opentype'),
+        url('GeneralSans-Semibold.woff2') format('woff2'),
+        url('GeneralSans-Semibold.woff') format('woff'),
+        url('GeneralSans-Semibold.ttf') format('truetype'),
+        url('GeneralSans-Semibold.svg#GeneralSans-Semibold') format('svg');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+

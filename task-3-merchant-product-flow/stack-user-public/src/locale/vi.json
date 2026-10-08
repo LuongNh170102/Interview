@@ -1,0 +1,15 @@
+{
+  "page_translate": {
+    "field_required": "Bắt buộc",
+    "password_not_match": "Password not match",
+    "Error": "Lỗi",
+    "Say hello": "Say hello",
+    "Register": "Register",
+    "Fullname": "Fullname",
+    "Mobile": "Mobile",
+    "Email": "Email",
+    "Password": "Password",
+    "Confirm password": "Confirm password",
+    "Create customer successfully": "Create customer successfully"
+  }
+}

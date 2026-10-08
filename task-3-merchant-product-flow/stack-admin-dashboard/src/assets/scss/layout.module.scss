@@ -1,0 +1,14 @@
+@use "font";
+.logoText {
+  font-family: font.$f_Jost;
+}
+.menuList {
+  li {
+    a {
+      padding-top: 0.8rem;
+      padding-bottom: 0.8rem;
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+  }
+}

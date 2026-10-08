@@ -40,7 +40,7 @@ import {
 export class AuthController {
   constructor(
     private authService: AuthService,
-    private configService: ConfigService
+    private configService: ConfigService,
   ) {}
 
   /**
@@ -62,7 +62,7 @@ export class AuthController {
   @Post('login')
   async login(
     @Body() loginDto: LoginDto,
-    @Res({ passthrough: true }) res: Response
+    @Res({ passthrough: true }) res: Response,
   ) {
     const { refresh_token, ...result } = await this.authService.login(loginDto);
 
@@ -79,11 +79,10 @@ export class AuthController {
   @Post('register')
   async register(
     @Body() registerDto: RegisterDto,
-    @Res({ passthrough: true }) res: Response
+    @Res({ passthrough: true }) res: Response,
   ) {
-    const { refresh_token, ...result } = await this.authService.register(
-      registerDto
-    );
+    const { refresh_token, ...result } =
+      await this.authService.register(registerDto);
 
     res.cookie(TOKEN_TYPE.REFRESH_TOKEN, refresh_token, {
       httpOnly: true,
@@ -99,7 +98,7 @@ export class AuthController {
   @Post('logout')
   async logout(
     @Request() req: AuthenticatedRequest,
-    @Res({ passthrough: true }) res: Response
+    @Res({ passthrough: true }) res: Response,
   ) {
     await this.authService.logout(req.user.userId);
     res.clearCookie(TOKEN_TYPE.REFRESH_TOKEN);
@@ -109,7 +108,7 @@ export class AuthController {
   @Post('refresh')
   async refresh(
     @Req() req: RequestWithCookies,
-    @Res({ passthrough: true }) res: Response
+    @Res({ passthrough: true }) res: Response,
   ) {
     const refreshToken = req.cookies['refresh_token'];
     if (!refreshToken)
@@ -138,7 +137,7 @@ export class AuthController {
   @Get('permissions')
   async getPermissions(@Request() req: AuthenticatedRequest) {
     const permissions = await this.authService.getUserPermissions(
-      req.user.userId
+      req.user.userId,
     );
     return { permissions };
   }
@@ -166,7 +165,7 @@ export class AuthController {
   @UseGuards(GoogleAuthGuard)
   async googleAuthCallback(
     @Req() req: ExpressRequest & { user: GoogleProfile },
-    @Res() res: Response
+    @Res() res: Response,
   ) {
     const googleProfile = req.user;
     const result = await this.authService.handleGoogleAuth(googleProfile);
@@ -214,7 +213,7 @@ export class AuthController {
   @Post('google/link')
   async linkGoogleAccount(
     @Body() dto: LinkGoogleAccountDto,
-    @Res({ passthrough: true }) res: Response
+    @Res({ passthrough: true }) res: Response,
   ) {
     const result = await this.authService.linkGoogleAccount(dto);
 
@@ -267,7 +266,7 @@ export class AuthController {
   @Post('set-password')
   async setPassword(
     @Request() req: AuthenticatedRequest,
-    @Body() dto: SetPasswordDto
+    @Body() dto: SetPasswordDto,
   ) {
     await this.authService.setPassword(req.user.userId, dto.password);
     return { message: AUTH_MESSAGES.PASSWORD_SET_SUCCESS };
@@ -303,7 +302,7 @@ export class AuthController {
   @UseGuards(KakaoAuthGuard)
   async kakaoAuthCallback(
     @Req() req: ExpressRequest & { user: KakaoProfile },
-    @Res() res: Response
+    @Res() res: Response,
   ) {
     const kakaoProfile = req.user;
     const result = await this.authService.handleKakaoAuth(kakaoProfile);
@@ -351,7 +350,7 @@ export class AuthController {
   @Post('kakao/link')
   async linkKakaoAccount(
     @Body() dto: LinkKakaoAccountDto,
-    @Res({ passthrough: true }) res: Response
+    @Res({ passthrough: true }) res: Response,
   ) {
     const result = await this.authService.linkKakaoAccount(dto);
 

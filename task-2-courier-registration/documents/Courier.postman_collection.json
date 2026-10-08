@@ -1,0 +1,294 @@
+{
+  "info": {
+    "_postman_id": "3a510c74-2dee-4ce0-90cc-2790464a46de",
+    "name": "Courier",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "31572820",
+    "_collection_link": "https://go.postman.co/collection/31572820-3a510c74-2dee-4ce0-90cc-2790464a46de?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Create courier",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": [
+            {
+              "key": "address",
+              "value": "01 Trần Quang Diệu",
+              "type": "text",
+              "uuid": "59874911-927b-4e85-a2f4-f8aae73709e7"
+            },
+            {
+              "key": "email",
+              "value": "loilevan@diennk.vn",
+              "type": "text",
+              "uuid": "d966d216-477e-4f2c-958d-12cef45e4791"
+            },
+            {
+              "key": "firstname",
+              "value": "Lợi",
+              "type": "text",
+              "uuid": "93007a23-8285-4fa7-84fb-ebb8b2d0be9e"
+            },
+            {
+              "key": "lastname",
+              "value": "Lê Văn",
+              "type": "text",
+              "uuid": "2052ae45-9aaa-4dbb-aeca-14a998ee3398"
+            },
+            {
+              "key": "phone",
+              "value": "0988245601",
+              "type": "text",
+              "uuid": "43764e1b-e5de-4f00-a4bf-fc39fb7519bc"
+            },
+            {
+              "key": "status_id",
+              "value": "1",
+              "type": "text",
+              "uuid": "31929d15-4bab-4077-a9dd-3fbacfc24b75"
+            }
+          ]
+        },
+        "url": {
+          "raw": "{{base_url}}/courier/create",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "courier",
+            "create"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Delete courier",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [],
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": [
+            {
+              "key": "address",
+              "value": "01 Trần Quang Diệu",
+              "type": "text",
+              "uuid": "59874911-927b-4e85-a2f4-f8aae73709e7"
+            },
+            {
+              "key": "email",
+              "value": "loilevan@diennk.vn",
+              "type": "text",
+              "uuid": "d966d216-477e-4f2c-958d-12cef45e4791"
+            },
+            {
+              "key": "firstname",
+              "value": "Lợi",
+              "type": "text",
+              "uuid": "93007a23-8285-4fa7-84fb-ebb8b2d0be9e"
+            },
+            {
+              "key": "lastname",
+              "value": "Lê Văn",
+              "type": "text",
+              "uuid": "2052ae45-9aaa-4dbb-aeca-14a998ee3398"
+            },
+            {
+              "key": "phone",
+              "value": "0988245601",
+              "type": "text",
+              "uuid": "43764e1b-e5de-4f00-a4bf-fc39fb7519bc"
+            },
+            {
+              "key": "status_id",
+              "value": "1",
+              "type": "text",
+              "uuid": "31929d15-4bab-4077-a9dd-3fbacfc24b75"
+            }
+          ]
+        },
+        "url": {
+          "raw": "{{base_url}}/courier/1",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "courier",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get list",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": [
+            {
+              "key": "address",
+              "value": "01 Trần Quang Diệu",
+              "type": "text",
+              "uuid": "59874911-927b-4e85-a2f4-f8aae73709e7"
+            },
+            {
+              "key": "email",
+              "value": "loilevan@diennk.vn",
+              "type": "text",
+              "uuid": "d966d216-477e-4f2c-958d-12cef45e4791"
+            },
+            {
+              "key": "firstname",
+              "value": "Lợi",
+              "type": "text",
+              "uuid": "93007a23-8285-4fa7-84fb-ebb8b2d0be9e"
+            },
+            {
+              "key": "lastname",
+              "value": "Lê Văn",
+              "type": "text",
+              "uuid": "2052ae45-9aaa-4dbb-aeca-14a998ee3398"
+            },
+            {
+              "key": "phone",
+              "value": "0988245601",
+              "type": "text",
+              "uuid": "43764e1b-e5de-4f00-a4bf-fc39fb7519bc"
+            },
+            {
+              "key": "status_id",
+              "value": "1",
+              "type": "text",
+              "uuid": "31929d15-4bab-4077-a9dd-3fbacfc24b75"
+            }
+          ]
+        },
+        "url": {
+          "raw": "{{base_url}}/courier/list",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "courier",
+            "list"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get detail",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": [
+            {
+              "key": "address",
+              "value": "01 Trần Quang Diệu",
+              "type": "text",
+              "uuid": "59874911-927b-4e85-a2f4-f8aae73709e7"
+            },
+            {
+              "key": "email",
+              "value": "loilevan@diennk.vn",
+              "type": "text",
+              "uuid": "d966d216-477e-4f2c-958d-12cef45e4791"
+            },
+            {
+              "key": "firstname",
+              "value": "Lợi",
+              "type": "text",
+              "uuid": "93007a23-8285-4fa7-84fb-ebb8b2d0be9e"
+            },
+            {
+              "key": "lastname",
+              "value": "Lê Văn",
+              "type": "text",
+              "uuid": "2052ae45-9aaa-4dbb-aeca-14a998ee3398"
+            },
+            {
+              "key": "phone",
+              "value": "0988245601",
+              "type": "text",
+              "uuid": "43764e1b-e5de-4f00-a4bf-fc39fb7519bc"
+            },
+            {
+              "key": "status_id",
+              "value": "1",
+              "type": "text",
+              "uuid": "31929d15-4bab-4077-a9dd-3fbacfc24b75"
+            }
+          ]
+        },
+        "url": {
+          "raw": "{{base_url}}/courier/detail/2",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "courier",
+            "detail",
+            "2"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}

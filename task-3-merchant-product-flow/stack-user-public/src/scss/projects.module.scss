@@ -1,0 +1,15 @@
+.projectsForYouOnScroll {
+  animation: myAnimation;
+  animation-duration: 1s;
+  animation-timing-function: ease-in;
+}
+@keyframes myAnimation {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}

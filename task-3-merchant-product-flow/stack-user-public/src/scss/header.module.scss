@@ -1,0 +1,171 @@
+.headerList {
+  > li {
+    position: relative;
+    padding: 0.6rem 1.5rem;
+    border-right: 1px solid white;
+    > a {
+      color: white;
+      text-transform: uppercase;
+    }
+    &:hover {
+      ul {
+        display: block;
+        position: absolute;
+        top: 2.9rem;
+        left: 0;
+        z-index: 2;
+        border-radius: 0rem;
+        background: oklch(0.5 0.13 242.75 / 0.92);
+        li {
+          a {
+            padding: 0.5rem 1rem;
+            display: block;
+            color: white;
+            font-size: 1rem;
+            text-wrap: nowrap;
+            &:hover {
+              background: oklch(0.5 0.13 242.75);
+            }
+          }
+        }
+      }
+    }
+  }
+}
+.menuMobile {
+  opacity: 0;
+  transform: translateX(-100%);
+  transition:
+    opacity 500ms ease-in,
+    transform 500ms ease-in;
+  &.active {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  ul {
+    li {
+      padding: 15px 30px;
+    }
+  }
+}
+.logo {
+  font-weight: 700;
+  font-size: 2rem;
+  font-family: var(--font-jost);
+}
+.menuSidebar {
+  li {
+    position: relative;
+    span {
+      a {
+        padding-top: 0.75rem;
+        padding-bottom: 0.75rem;
+        display: block;
+      }
+      button {
+        span {
+          &.arrowDown {
+            &::before {
+              content: "";
+              display: block;
+              width: 0.75rem;
+              height: 0.75rem;
+              border-top: 2px solid black;
+              border-right: 2px solid black;
+              transform: rotate(135deg);
+              animation-name: myAnimationArrowDown;
+              animation-duration: 0.5s;
+            }
+          }
+          &.arrowUp {
+            &::before {
+              content: "";
+              display: block;
+              width: 0.75rem;
+              height: 0.75rem;
+              border-top: 2px solid black;
+              border-right: 2px solid black;
+              transform: rotate(-45deg);
+              animation-name: myAnimationArrowUp;
+              animation-duration: 0.5s;
+            }
+          }
+        }
+      }
+    }
+    a {
+      padding-top: 0.75rem;
+      padding-bottom: 0.75rem;
+      display: block;
+    }
+    ul {
+      padding-left: 1rem;
+      padding-right: 1rem;
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0;
+      transform: translateY(-1%);
+      z-index: -1;
+      transition:
+        position 0.2s,
+        opacity 0.2s,
+        transform 0.5s;
+      &.active {
+        position: relative;
+        opacity: 1;
+        transform: translateY(0);
+        z-index: 1;
+      }
+    }
+  }
+}
+@keyframes myAnimationArrowDown {
+  from {
+    transform: rotate(-45deg);
+  }
+  to {
+    transform: rotate(135deg);
+  }
+}
+@keyframes myAnimationArrowUp {
+  from {
+    transform: rotate(135deg);
+  }
+  to {
+    transform: rotate(-45deg);
+  }
+}
+.modal {
+  z-index: -9999;
+  &.active {
+    z-index: 9999;
+  }
+  .maskModal {
+    background: rgba(0, 0, 0, 0.423);
+    opacity: 0;
+    transition: opacity 0.5s;
+    &.active {
+      opacity: 1;
+    }
+  }
+  .menuModal {
+    opacity: 0;
+    transform: translateX(-100%);
+    transition:
+      opacity 0.5s,
+      transform 0.5s;
+    &.active {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  .loginFrm,
+  .registerFrm {
+    opacity: 0;
+    transition: opacity 0.5s;
+    &.active {
+      opacity: 1;
+    }
+  }
+}
