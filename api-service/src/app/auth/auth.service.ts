@@ -39,12 +39,12 @@ export class AuthService {
     private usersService: UsersService,
     private jwtService: JwtService,
     private configService: ConfigService,
-    private prisma: PrismaService
+    private prisma: PrismaService,
   ) {}
 
   async validateUser(
     email: string,
-    pass: string
+    pass: string,
   ): Promise<Omit<UserWithRoles, 'passwordHash'> | null> {
     const user = await this.usersService.findOne(email);
     if (!user) {
@@ -66,10 +66,10 @@ export class AuthService {
 
   async getTokens(userId: number, username: string, roles: string[]) {
     const accessExpiresIn = this.configService.get<string>(
-      JWT_CONSTANTS.EXPIRATION
+      JWT_CONSTANTS.EXPIRATION,
     );
     const refreshExpiresIn = this.configService.get<string>(
-      JWT_CONSTANTS.REFRESH_EXPIRATION
+      JWT_CONSTANTS.REFRESH_EXPIRATION,
     );
 
     const [access_token, refresh_token] = await Promise.all([
@@ -82,7 +82,7 @@ export class AuthService {
         {
           secret: this.configService.get<string>(JWT_CONSTANTS.SECRET),
           expiresIn: accessExpiresIn,
-        } as JwtSignOptions
+        } as JwtSignOptions,
       ),
       this.jwtService.signAsync(
         {
@@ -93,7 +93,7 @@ export class AuthService {
         {
           secret: this.configService.get<string>(JWT_CONSTANTS.REFRESH_SECRET),
           expiresIn: refreshExpiresIn,
-        } as JwtSignOptions
+        } as JwtSignOptions,
       ),
     ]);
 
@@ -126,7 +126,7 @@ export class AuthService {
       if (linkedAccounts.length > 0) {
         const providers = linkedAccounts.map((la) => la.provider).join(', ');
         throw new UnauthorizedException(
-          AUTH_MESSAGES.OAUTH_ONLY_ACCOUNT_PROVIDERS(providers)
+          AUTH_MESSAGES.OAUTH_ONLY_ACCOUNT_PROVIDERS(providers),
         );
       }
     }
@@ -175,7 +175,7 @@ export class AuthService {
 
       const refreshTokenMatches = await bcrypt.compare(
         refreshToken,
-        user.hashedRefreshToken
+        user.hashedRefreshToken,
       );
       if (!refreshTokenMatches)
         throw new ForbiddenException(AUTH_MESSAGES.ACCESS_DENIED);
@@ -252,7 +252,7 @@ export class AuthService {
    * 3. Email doesn't exist → Create new user with Google account
    */
   async handleGoogleAuth(
-    googleProfile: GoogleProfile
+    googleProfile: GoogleProfile,
   ): Promise<GoogleAuthResponse> {
     const { providerId, email, displayName, avatarUrl } = googleProfile;
 
@@ -335,7 +335,7 @@ export class AuthService {
    * Link Google account to existing user (after password confirmation)
    */
   async linkGoogleAccount(
-    dto: LinkGoogleAccountDto
+    dto: LinkGoogleAccountDto,
   ): Promise<GoogleAuthResponse> {
     const {
       email,
@@ -412,7 +412,7 @@ export class AuthService {
    * Create new user from Google profile
    */
   private async createUserWithGoogle(
-    profile: GoogleProfile
+    profile: GoogleProfile,
   ): Promise<UserWithRoles> {
     const {
       email,
@@ -462,7 +462,7 @@ export class AuthService {
    * Handle Kakao OAuth callback
    */
   async handleKakaoAuth(
-    kakaoProfile: KakaoProfile
+    kakaoProfile: KakaoProfile,
   ): Promise<KakaoAuthResponse> {
     const { providerId, email, displayName, avatarUrl } = kakaoProfile;
 
@@ -620,7 +620,7 @@ export class AuthService {
    * Create new user from Kakao profile
    */
   private async createUserWithKakao(
-    profile: KakaoProfile
+    profile: KakaoProfile,
   ): Promise<UserWithRoles> {
     const {
       email,
@@ -666,7 +666,7 @@ export class AuthService {
    * Login user with linked OAuth account
    */
   private async loginWithLinkedAccount(
-    user: UserWithRoles | null
+    user: UserWithRoles | null,
   ): Promise<AuthSuccessResponse> {
     if (!user) {
       throw new UnauthorizedException(AUTH_MESSAGES.INVALID_CREDENTIALS);
@@ -729,7 +729,7 @@ export class AuthService {
 
     if (!user?.passwordHash) {
       throw new BadRequestException(
-        AUTH_MESSAGES.CANNOT_UNLINK_KAKAO_ONLY_AUTH
+        AUTH_MESSAGES.CANNOT_UNLINK_KAKAO_ONLY_AUTH,
       );
     }
 

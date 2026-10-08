@@ -1,0 +1,249 @@
+{
+  "info": {
+    "_postman_id": "fd3e06fb-75c0-41ac-984c-aa0d712ff09a",
+    "name": "Users",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "31572820",
+    "_collection_link": "https://go.postman.co/collection/31572820-fd3e06fb-75c0-41ac-984c-aa0d712ff09a?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Create user",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": [
+            {
+              "key": "password",
+              "value": "246357",
+              "type": "text",
+              "uuid": "09fab2e7-d8d7-4e6d-8924-a21ca78d7239"
+            },
+            {
+              "key": "fullname",
+              "value": "Nguyễn Kim Điền",
+              "type": "text",
+              "uuid": "9712210c-251f-4cda-a08c-c7b1b6c1f7f2"
+            },
+            {
+              "key": "email",
+              "value": "nguyenkimdien02@gmail.com",
+              "type": "text",
+              "uuid": "08d929c3-13c2-4058-a193-03092333908b"
+            },
+            {
+              "key": "phone",
+              "value": "0988162753",
+              "type": "text",
+              "uuid": "fbd0a12c-5b2c-49f6-bc69-86dc80b5cbaa"
+            },
+            {
+              "key": "username",
+              "value": "diennk",
+              "type": "text",
+              "uuid": "82c96dc5-bb83-4c59-8c53-770601124814"
+            }
+          ]
+        },
+        "url": {
+          "raw": "{{base_url}}/users/create",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "users",
+            "create"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Login",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": [
+            {
+              "key": "username",
+              "value": "diennk",
+              "type": "text",
+              "uuid": "4f4b0189-87d0-49fe-ad7f-85ddafb7724b"
+            },
+            {
+              "key": "password",
+              "value": "246357",
+              "type": "text",
+              "uuid": "09fab2e7-d8d7-4e6d-8924-a21ca78d7239"
+            }
+          ]
+        },
+        "url": {
+          "raw": "{{base_url}}/auth/login",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "auth",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get profile user",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": [
+            {
+              "key": "username",
+              "value": "diennk",
+              "type": "text",
+              "uuid": "4f4b0189-87d0-49fe-ad7f-85ddafb7724b"
+            },
+            {
+              "key": "password",
+              "value": "nguyenvanninh",
+              "type": "text",
+              "uuid": "09fab2e7-d8d7-4e6d-8924-a21ca78d7239"
+            }
+          ]
+        },
+        "url": {
+          "raw": "{{base_url}}/auth/profile",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "auth",
+            "profile"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Check valid token",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": [
+            {
+              "key": "token",
+              "value": "{{supabase_service_role_api_key_02mc}}",
+              "type": "text",
+              "uuid": "4f4b0189-87d0-49fe-ad7f-85ddafb7724b"
+            }
+          ]
+        },
+        "url": {
+          "raw": "{{base_url}}/auth/check-valid-token",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "auth",
+            "check-valid-token"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Logout",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": [
+            {
+              "key": "token",
+              "value": "{{supabase_service_role_api_key_0ew3}}",
+              "type": "text",
+              "uuid": "4f4b0189-87d0-49fe-ad7f-85ddafb7724b"
+            }
+          ]
+        },
+        "url": {
+          "raw": "{{base_url}}/auth/logout",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "auth",
+            "logout"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "New Request",
+      "request": {
+        "method": "GET",
+        "header": []
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "supabase_service_role_api_key_0ew3",
+      "secret": true
+    },
+    {
+      "key": "supabase_service_role_api_key_02mc",
+      "secret": true
+    }
+  ]
+}

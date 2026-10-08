@@ -1,0 +1,413 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 15.3
+-- Dumped by pg_dump version 15.3
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- Name: _prisma_migrations; Type: TABLE; Schema: public; Owner: root
+--
+
+CREATE TABLE public._prisma_migrations (
+    id character varying(36) NOT NULL,
+    checksum character varying(64) NOT NULL,
+    finished_at timestamp with time zone,
+    migration_name character varying(255) NOT NULL,
+    logs text,
+    rolled_back_at timestamp with time zone,
+    started_at timestamp with time zone DEFAULT now() NOT NULL,
+    applied_steps_count integer DEFAULT 0 NOT NULL
+);
+
+
+ALTER TABLE public._prisma_migrations OWNER TO root;
+
+--
+-- Name: orders; Type: TABLE; Schema: public; Owner: root
+--
+
+CREATE TABLE public.orders (
+    id integer NOT NULL,
+    "ordersCode" text NOT NULL,
+    "ordersDate" timestamp(3) without time zone NOT NULL,
+    "customerName" text NOT NULL,
+    "customerPhone" text NOT NULL,
+    "customerEmail" text NOT NULL,
+    "customerAddress" text NOT NULL
+);
+
+
+ALTER TABLE public.orders OWNER TO root;
+
+--
+-- Name: ordersDetail; Type: TABLE; Schema: public; Owner: root
+--
+
+CREATE TABLE public."ordersDetail" (
+    id integer NOT NULL,
+    "ordersId" integer NOT NULL,
+    "productId" integer NOT NULL,
+    "productSku" text NOT NULL,
+    "productName" text NOT NULL,
+    "productPrice" double precision NOT NULL,
+    "productFeaturedImage" text NOT NULL
+);
+
+
+ALTER TABLE public."ordersDetail" OWNER TO root;
+
+--
+-- Name: ordersDetail_id_seq; Type: SEQUENCE; Schema: public; Owner: root
+--
+
+CREATE SEQUENCE public."ordersDetail_id_seq"
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public."ordersDetail_id_seq" OWNER TO root;
+
+--
+-- Name: ordersDetail_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: root
+--
+
+ALTER SEQUENCE public."ordersDetail_id_seq" OWNED BY public."ordersDetail".id;
+
+
+--
+-- Name: orders_id_seq; Type: SEQUENCE; Schema: public; Owner: root
+--
+
+CREATE SEQUENCE public.orders_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.orders_id_seq OWNER TO root;
+
+--
+-- Name: orders_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: root
+--
+
+ALTER SEQUENCE public.orders_id_seq OWNED BY public.orders.id;
+
+
+--
+-- Name: product; Type: TABLE; Schema: public; Owner: root
+--
+
+CREATE TABLE public.product (
+    id integer NOT NULL,
+    sku text NOT NULL,
+    "productName" text NOT NULL,
+    price double precision NOT NULL,
+    "featuredImage" text NOT NULL
+);
+
+
+ALTER TABLE public.product OWNER TO root;
+
+--
+-- Name: product_id_seq; Type: SEQUENCE; Schema: public; Owner: root
+--
+
+CREATE SEQUENCE public.product_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.product_id_seq OWNER TO root;
+
+--
+-- Name: product_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: root
+--
+
+ALTER SEQUENCE public.product_id_seq OWNED BY public.product.id;
+
+
+--
+-- Name: users; Type: TABLE; Schema: public; Owner: root
+--
+
+CREATE TABLE public.users (
+    id integer NOT NULL,
+    username text NOT NULL,
+    password text NOT NULL,
+    email text NOT NULL,
+    fullname text NOT NULL,
+    phone text NOT NULL,
+    token text
+);
+
+
+ALTER TABLE public.users OWNER TO root;
+
+--
+-- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: root
+--
+
+CREATE SEQUENCE public.users_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.users_id_seq OWNER TO root;
+
+--
+-- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: root
+--
+
+ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
+
+
+--
+-- Name: orders id; Type: DEFAULT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.orders ALTER COLUMN id SET DEFAULT nextval('public.orders_id_seq'::regclass);
+
+
+--
+-- Name: ordersDetail id; Type: DEFAULT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public."ordersDetail" ALTER COLUMN id SET DEFAULT nextval('public."ordersDetail_id_seq"'::regclass);
+
+
+--
+-- Name: product id; Type: DEFAULT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.product ALTER COLUMN id SET DEFAULT nextval('public.product_id_seq'::regclass);
+
+
+--
+-- Name: users id; Type: DEFAULT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_id_seq'::regclass);
+
+
+--
+-- Data for Name: _prisma_migrations; Type: TABLE DATA; Schema: public; Owner: root
+--
+
+COPY public._prisma_migrations (id, checksum, finished_at, migration_name, logs, rolled_back_at, started_at, applied_steps_count) FROM stdin;
+4617cd06-6985-4ca1-be68-bb37e1d62f7c	c6b165744a1c4c74936548ad2213dc5646a52f77fdbebf84cf8572a21c94d62c	2026-07-10 20:11:54.687488+00	20260710201154_init_database	\N	\N	2026-07-10 20:11:54.650597+00	1
+ba1c0f9e-0beb-4160-a2f6-4afef360ef27	97152243e0c564658b7a1bf841e915765d749843365211c5c3144991fe416c55	2026-07-11 10:09:17.887819+00	20260711100917_fix_field_name_product_featured_image	\N	\N	2026-07-11 10:09:17.876316+00	1
+\.
+
+
+--
+-- Data for Name: orders; Type: TABLE DATA; Schema: public; Owner: root
+--
+
+COPY public.orders (id, "ordersCode", "ordersDate", "customerName", "customerPhone", "customerEmail", "customerAddress") FROM stdin;
+\.
+
+
+--
+-- Data for Name: ordersDetail; Type: TABLE DATA; Schema: public; Owner: root
+--
+
+COPY public."ordersDetail" (id, "ordersId", "productId", "productSku", "productName", "productPrice", "productFeaturedImage") FROM stdin;
+\.
+
+
+--
+-- Data for Name: product; Type: TABLE DATA; Schema: public; Owner: root
+--
+
+COPY public.product (id, sku, "productName", price, "featuredImage") FROM stdin;
+25	LTAS26	LAPTOP ASUS VIVOBOOK X1404VAP (CORE 5 120U / RAM 8GB / SSD 256GB / 14' FHD / WIN11 / BLUE)_N	13790000	LTAS26.jpg
+27	LTHP13	LAPTOP HP 15 - FD0133WM ( INTEL CORE I3.1315U / RAM 8GB / SSD 256GB / 15.6INCH FHD / WIN 11 / SILVER _B4KT4UA )	12590000	LTHP13.jpg
+28	LTDE04	LAPTOP DELL 15 DC15250 I5-1334U/8GB/512GB SSD/15.6 FHD/ DOS/ CARBON BLACK_N	14790000	LTDE04.jpg
+29	LTAC02	ACER GAMING ASPIRE 7 A715-59G-59RD NH.DXUSV.001 (CORE™ 5 210H | 16GB | 512GB | RTX 3050 4GB | 15.6 INCH FHD 144HZ | WIN 11 | ĐEN)	25990000	LTAC02.jpg
+30	LTDE40	LAPTOP DELL 15 DC15250, I5-1334U, 16GB DDR5, 512GB SSD, INTEL GRAPHICS, 15.6 INCH FHD, 3C 41WH, AX+BT, OFFICEHS24+365, MCAFEE LS, WIN 11 HOME, BẠC (PLATINUM SILVER)	24950000	LTDE40.jpg
+31	LTAS32	LAPTOP ASUS VIVOBOOK X1404VAP (CORE 5 120U / RAM 16GB / SSD 256GB / 14 FHD / WIN11 / BLUE)_ NK UP16G	14990000	LTAS32.jpg
+32	LTAS44	LAPTOP ASUS GAMING V16 V3607VU-RP343W (INTEL CORE 5 210H | RTX 4050 6GB | 16 INCH WUXGA 144HZ | 16GB | 512GB | WIN 11 | ĐEN)	25290000	LTAS44.jpg
+33	LTLE20	LAPTOP LENOVO THINKBOOK 16 G7 ARP (21MW009QSA) AMD RYZEN 7 7735HS, 16GB, 512GB, AMD RADEON 680M, 16 WUXGA, DOS, ARCTIC GREY, NK	19490000	LTLE20.jpg
+34	LTDE18	DELL 15 DC15250 CORE™ I5-1334U/ 512GB SSD/ 8GB DDR4/ 15.6 (1920X1080) TOUCHSCREEN/ WIN11 S-MODE/ CARBON BLACK _NK	15990000	LTDE18.jpg
+35	LTAS14	Laptop ASUS Zenbook 14 UX3405CA-ST628W (Intel Core Ultra 5 225H | 16GB | 512GB SSD | Intel Arc Graphics | 14.0 3K OLED | Windows 11 | Xanh)	28790000	LTAS14.png
+36	LTDE31	LAPTOP DELL DC15250-7982BLK (I7-1355U, 16GB DDR4, 1TB NVME, 15.6 FHD TOUCH, WIN 11, BLACK	20990000	LTDE31.png
+37	LTAS40	Laptop ASUS Vivobook S14 S3407AA-SF945W (Intel Core Ultra 5 325 | 16GB | 512GB | Intel Arc | 14 WUXGA OLED | Win 11 | Xám)	28790000	LTAS40.png
+38	LTAS41	Laptop ASUS Vivobook Go 15 E1504FA-BQ340W (Ryzen 5 40 | 16GB | 512GB | AMD Radeon | 15.6 inch FHD | Win 11 | Bạc)	18190000	LTAS41.png
+39	LTLE21	LAPTOP GAMING LENOVO LOQ -15IAX9E/ 83LK0079VN (CORE I5 12450HX | 16GB DDR5 | SSD 512GB | RTX 3050 6GB GDDR6 | 15.6 FHD 144HZ  | WIN 11)	23990000	LTLE21.jpg
+40	LTLE22	LAPTOP LENOVO LOQ Essential -15IAX9E (CORE I5-12450HX | 16GB | 512GB | RTX 3050 6GB  | 15.6 FHD 144HZ | WIN 11 | LUNA GREY) NK	20890000	LTLE22.jpg
+41	LTDE06	Laptop Dell Pro 15 Essential PV15250 VKVKD (Core 3-100U | 8GB | 512GB SSD | 15.6 FHD | Intel Graphics | Ubuntu | Black)	12590000	LTDE06.jpg
+42	LTLE36	LAPTOP LENOVO IDEAPAD SLIM 3 14IRH10 83K00009VN (INTEL CORE I7-13620H | 24GB | 512GB | INTEL UHD | 14 INCH WUXGA IPS | WIN 11 | XÁM)	23990000	LTLE36.jpg
+43	LTAS45	LAPTOP ASUS GAMING V16 V3607VJ-RP071W ( INTEL CORE 5 210H | RTX 3050 6GB | 16 INCH WUXGA | 16GB | 512GB | WIN 11 | ĐEN)	24690000	LTAS45.jpg
+44	LTHP04	Laptop HP 14 - ep1179TU C89ZSPA (Intel Core 5 120U | 16GB | 512GB | Intel Graphics | 14 inch FHD | Win 11 | Bạc)	22290000	LTHP04.jpg
+45	LTAS01	Laptop Gaming ASUS TUF A15 FA506NCG-HN184W (AMD Ryzen 7 7445HS | RTX 3050 4GB | 16GB | 512GB SSD | 15.6 FHD 144Hz | Win11 | Đen)	22390000	LTAS01.jpg
+46	LTDE24	LAPTOP DELL 15 DC15250 DC5I7952W1 (INTEL CORE I7-1355U | 16GB | 512GB | INTEL GRAPHICS | 15.6 INCH FHD IPS | WIN 11 | OFFICEHOME24 | OS365 | BẠC)	24190000	LTDE24.png
+47	LTDE29	Laptop Dell 14 DC14250 C7U161W11SLU (Intel Core i7-150U | 16GB | 1TB | Intel Graphics | 14 1920×1200 | Win 11 | Office | Bạc)	27890000	LTDE29.png
+48	LTAS02	Laptop ASUS Gaming V16 V3607VM-RP044W (Core™ 7 240H | 16GB | 1TB | RTX 5060 | 16inch WUXGA 144Hz | Win 11 | Đen)	34450000	LTAS02.jpg
+54	sku2	productname2	2000000	
+26	LTAS42	LAPTOP ASUS VIVOBOOK 14 M1405NAQ-LY010W (AMD RYZEN 5 150 | 16GB | 512GB | AMD RADEON | 14 INCH WUXGA | WIN 11 | BẠC)	17590000	a542d693123e95c6aac78f65f12da477.png
+\.
+
+
+--
+-- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: root
+--
+
+COPY public.users (id, username, password, email, fullname, phone, token) FROM stdin;
+1	diennk	$2a$10$OW3.3RVsq1MHgXpe4pwE1O.r8OywCdTorRuIF5060ZXmJ0B8KhMQ2	nguyenkimdien02@gmail.com	Nguyễn Kim Điền	0988162753	eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0b2tlbiBsb2dpbiIsImlzcyI6ImZyb20gc2VydmVyIiwiaWQiOjEsInBob25lIjoiMDk4ODE2Mjc1MyIsImVtYWlsIjoibmd1eWVua2ltZGllbjAyQGdtYWlsLmNvbSIsImZ1bGxuYW1lIjoiTmd1eeG7hW4gS2ltIMSQaeG7gW4iLCJ1c2VybmFtZSI6ImRpZW5uayIsImlhdCI6MTc4Mzc2MTAwMX0.SCrfeQIZ7gLD_PQ9Hnp7XeNDmNyTYOkxxZrVCKQebZg
+\.
+
+
+--
+-- Name: ordersDetail_id_seq; Type: SEQUENCE SET; Schema: public; Owner: root
+--
+
+SELECT pg_catalog.setval('public."ordersDetail_id_seq"', 1, false);
+
+
+--
+-- Name: orders_id_seq; Type: SEQUENCE SET; Schema: public; Owner: root
+--
+
+SELECT pg_catalog.setval('public.orders_id_seq', 1, false);
+
+
+--
+-- Name: product_id_seq; Type: SEQUENCE SET; Schema: public; Owner: root
+--
+
+SELECT pg_catalog.setval('public.product_id_seq', 54, true);
+
+
+--
+-- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: root
+--
+
+SELECT pg_catalog.setval('public.users_id_seq', 2, true);
+
+
+--
+-- Name: _prisma_migrations _prisma_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public._prisma_migrations
+    ADD CONSTRAINT _prisma_migrations_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: ordersDetail ordersDetail_pkey; Type: CONSTRAINT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public."ordersDetail"
+    ADD CONSTRAINT "ordersDetail_pkey" PRIMARY KEY (id);
+
+
+--
+-- Name: orders orders_pkey; Type: CONSTRAINT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.orders
+    ADD CONSTRAINT orders_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: product product_pkey; Type: CONSTRAINT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.product
+    ADD CONSTRAINT product_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: orders_ordersCode_key; Type: INDEX; Schema: public; Owner: root
+--
+
+CREATE UNIQUE INDEX "orders_ordersCode_key" ON public.orders USING btree ("ordersCode");
+
+
+--
+-- Name: product_sku_key; Type: INDEX; Schema: public; Owner: root
+--
+
+CREATE UNIQUE INDEX product_sku_key ON public.product USING btree (sku);
+
+
+--
+-- Name: users_email_key; Type: INDEX; Schema: public; Owner: root
+--
+
+CREATE UNIQUE INDEX users_email_key ON public.users USING btree (email);
+
+
+--
+-- Name: users_phone_key; Type: INDEX; Schema: public; Owner: root
+--
+
+CREATE UNIQUE INDEX users_phone_key ON public.users USING btree (phone);
+
+
+--
+-- Name: users_username_key; Type: INDEX; Schema: public; Owner: root
+--
+
+CREATE UNIQUE INDEX users_username_key ON public.users USING btree (username);
+
+
+--
+-- Name: ordersDetail ordersDetail_ordersId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public."ordersDetail"
+    ADD CONSTRAINT "ordersDetail_ordersId_fkey" FOREIGN KEY ("ordersId") REFERENCES public.orders(id) ON UPDATE CASCADE ON DELETE RESTRICT;
+
+
+--
+-- Name: ordersDetail ordersDetail_productId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public."ordersDetail"
+    ADD CONSTRAINT "ordersDetail_productId_fkey" FOREIGN KEY ("productId") REFERENCES public.product(id) ON UPDATE CASCADE ON DELETE RESTRICT;
+
+
+--
+-- PostgreSQL database dump complete
+--
+

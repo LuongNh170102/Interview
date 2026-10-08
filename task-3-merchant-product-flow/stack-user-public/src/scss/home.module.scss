@@ -1,0 +1,44 @@
+.sectionIntro {
+  &::before {
+    background-image: url("../images/section-intro.png");
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+  }
+}
+.bgDiem {
+  background-image: linear-gradient(to bottom, #0000007a, transparent);
+}
+.categoryNews {
+  li {
+    a {
+      display: block;
+      padding: 0.25rem 0.25rem;
+      background-color: var(--color-gray-200);
+    }
+  }
+}
+.realEstateBox {
+  box-shadow: 1px 2px 4px 2px #e4e4e4;
+}
+.menu {
+  li {
+    padding: 0.5rem 2.5rem;
+    border-bottom: 1px solid var(--color-gray-200);
+    position: relative;
+    &::before {
+      position: absolute;
+      top: 0.8125rem;
+      left: 0.8rem;
+      width: 0.625rem;
+      height: 0.625rem;
+      background: var(--color-red-600);
+      content: " ";
+    }
+  }
+}

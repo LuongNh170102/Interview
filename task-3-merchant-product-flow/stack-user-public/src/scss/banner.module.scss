@@ -1,0 +1,81 @@
+$maskRotate: 160deg;
+$colorLeft: #82828214;
+$colorCenter: #ffffff25;
+$colorRight: #82828214;
+.sliders {
+  .banners {
+    .slide {
+      &.activeSliderPrev {
+        animation: myAnimationSliderPrev;
+        animation-duration: 0.5s;
+        animation-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+      }
+      &.activeSliderNext {
+        animation: myAnimationSliderNext;
+        animation-duration: 0.5s;
+        animation-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+      }
+      .mask {
+        animation: myAnimationSlider;
+        animation-duration: 0.2s;
+        animation-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+        animation-delay: 1s;
+      }
+    }
+  }
+}
+@keyframes myAnimationSlider {
+  0% {
+    background: linear-gradient($maskRotate, $colorLeft 0%, $colorCenter 0%, $colorRight 100%);
+  }
+  10% {
+    background: linear-gradient($maskRotate, $colorLeft 0%, $colorCenter 10%, $colorRight 100%);
+  }
+  20% {
+    background: linear-gradient($maskRotate, $colorLeft 0%, $colorCenter 20%, $colorRight 100%);
+  }
+  30% {
+    background: linear-gradient($maskRotate, $colorLeft 0%, $colorCenter 30%, $colorRight 100%);
+  }
+  40% {
+    background: linear-gradient($maskRotate, $colorLeft 0%, $colorCenter 40%, $colorRight 100%);
+  }
+  50% {
+    background: linear-gradient($maskRotate, $colorLeft 0%, $colorCenter 50%, $colorRight 100%);
+  }
+  60% {
+    background: linear-gradient($maskRotate, $colorLeft 0%, $colorCenter 60%, $colorRight 100%);
+  }
+  70% {
+    background: linear-gradient($maskRotate, $colorLeft 0%, $colorCenter 70%, $colorRight 100%);
+  }
+  80% {
+    background: linear-gradient($maskRotate, $colorLeft 0%, $colorCenter 80%, $colorRight 100%);
+  }
+  90% {
+    background: linear-gradient($maskRotate, $colorLeft 0%, $colorCenter 90%, $colorRight 100%);
+  }
+  100% {
+    background: linear-gradient($maskRotate, $colorLeft 0%, $colorCenter 100%, $colorRight 100%);
+  }
+}
+@keyframes myAnimationSliderPrev {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes myAnimationSliderNext {
+  from {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
